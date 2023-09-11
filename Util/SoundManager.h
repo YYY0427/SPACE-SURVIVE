@@ -64,11 +64,11 @@ private:
 	{
 		SoundType type;		// BGMか3DのSEか2DのSEか
 		string extension;	// サウンドファイルの拡張子
-		float volumeRate;		// ボリューム調整
+		float volumeRate;	// ボリューム調整
 		int handle;			// ハンドル
 	};
 private:
-	// シングルトンパターンなのでコンストラクタはprivateに置く
+	// コンストラクタ(シングルトンパターンなのでprivateに置く)
 	SoundManager();
 
 	// コピーも代入も禁止する

@@ -1,46 +1,29 @@
 #pragma once
 #include <DxLib.h>
 
+/// <summary>
+/// モデルの管理クラス
+/// </summary>
 class Model
 {
 public:
-	// ファイル名を指定してロードを行う
-	Model(const char* fileName);
+	// コンストラクタ
+	Model(const char* fileName);	// ファイル名を指定してロードを行う
+	Model(int orgModel);			// 指定されたハンドルのモデルをDuplicateして生成する
 
-	// 指定されたハンドルのモデルをDuplicateして生成する
-	Model(int orgModel);
-
+	// デストラクタ
 	virtual ~Model();
 
 	// 当たり判定設定
 	void SetUseCollision(bool isUse, bool isNeedUpdate = true);
 
+	// 更新
 	void Update();
+
+	// 描画
 	void Draw();
 
-	// モデルのハンドルの取得
-	int GetModelHandle() const { return m_modelHandle; }
-
-	// 当たり判定に使用するフレームインデックスを取得する
-	int GetColFrameIndex() const { return m_colFrameIndex; }
-
-	// 表示位置の設定
-	void SetPos(VECTOR pos);
-
-	// 回転状態の設定
-	void SetRot(VECTOR rot);
-
-	// 拡大値の設定
-	void SetScale(VECTOR scale);
-
-	// アニメーションの制御
-
-	/// <summary>
-	/// アニメーションを設定する(ぱっと切り替える)
-	/// </summary>
-	/// <param name="animNo">変更先アニメーション番号</param>
-	/// <param name="isLoop">アニメーションをループさせるか</param>
-	/// <param name="isForceChange">すでに指定されたアニメが再生されている場合も変更するか</param>
+	// アニメーションを設定する(ぱっと切り替える)
 	void SetAnimation(int animNo, bool isLoop, bool isForceChange);
 
 	// アニメーションを変化させる(数フレームかけて切り替える)
@@ -48,6 +31,15 @@ public:
 
 	// 現在のアニメーションが終了しているかどうかを取得する(Loopアニメの場合は取得できません falseを返す)
 	bool IsAnimEnd();
+
+	// ゲッター
+	int GetModelHandle() const { return modelHandle_; }		// モデルのハンドルの取得
+	int GetColFrameIndex() const { return m_colFrameIndex; }	// 当たり判定に使用するフレームインデックスを取得する
+
+	// セッター
+	void SetPos(VECTOR pos);		// 表示位置の設定
+	void SetRot(VECTOR rot);		// 回転状態の設定
+	void SetScale(VECTOR scale);	// 拡大値の設定
 
 private:
 	// アニメーション情報
@@ -70,7 +62,7 @@ private:
 	void UpdateAnimBlendRate();
 private:
 	// モデルのハンドル
-	int m_modelHandle;
+	int modelHandle_;
 
 	// 当たり判定情報を使用する
 	bool m_isUseCollision;
@@ -82,10 +74,10 @@ private:
 	int m_colFrameIndex;
 
 	// アニメーションのアタッチ番号
-	AnimData m_animPrev;	// 変更前アニメーション情報
-	AnimData m_animNext;	// 変更後アニメーション情報
+	AnimData animPrev_;	// 変更前アニメーション情報
+	AnimData animNext_;	// 変更後アニメーション情報
 
 	// アニメーションの切り替え情報
-	int m_animChangeFrame;			// 現在の切り替えフレーム数
-	int m_animChangeFrameTotal;		// 切り替えにかける総フレーム数
+	int animChangeFrame_;			// 現在の切り替えフレーム数
+	int animChangeFrameTotal_;		// 切り替えにかける総フレーム数
 };

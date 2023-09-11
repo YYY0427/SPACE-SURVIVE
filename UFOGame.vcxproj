@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Util\SaveData.cpp" />
     <ClCompile Include="Util\DrawFunctions.cpp" />
     <ClCompile Include="Util\Geometry.cpp" />
     <ClCompile Include="InputState.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Util\SaveData.h" />
     <ClInclude Include="Util\DrawFunctions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Util\Geometry.h" />

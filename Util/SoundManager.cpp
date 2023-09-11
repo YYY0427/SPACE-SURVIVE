@@ -1,5 +1,6 @@
 #include "SoundManager.h"
 #include "../Game.h"
+#include "SaveData.h"
 #include <cassert>
 #include <fstream>
 #include <sstream>
@@ -224,12 +225,12 @@ void SoundManager::SetVolume(string fileName, int volume)
 	// BGM
 	if (soundNameAndHandleTable_[fileName].type == SoundType::BGM)
 	{
-		
+		configVolume = SaveData::GetInstance().GetBgmVolume();
 	}
 	// SE
 	else
 	{
-
+		configVolume = SaveData::GetInstance().GetSeVolume();
 	}
 
 	// 設定したい音量とサウンドに設定された音量とコンフィグで設定された音量から求めた最終的な音量に設定

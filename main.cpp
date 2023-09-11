@@ -1,11 +1,12 @@
 #include <DxLib.h>
+#include "EffekseerForDXLib.h"
 #include "Game.h"
 #include "InputState.h"
 #include "Util/SoundManager.h"
 #include "Scene/SceneManager.h"
 #include "Scene/TitleScene.h"
 #include "Util/Effekseer3DEffectManager.h"
-#include "EffekseerForDXLib.h"
+#include "Util/SaveData.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -47,22 +48,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// １メートルに相当する値を設定する
 	Set3DSoundOneMetre(Game::one_meter);
 
+	// シングルトンクラスのインスタンスの取得
 	auto& soundManager = SoundManager::GetInstance();
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	auto& saveData = SaveData::GetInstance();
 
 	// ＤＸライブラリ初期化処理
 	if (DxLib_Init() == -1)
 	{
-		// エラーが起きたら直ちに終了
-		return -1;
+		// エラーが起きたら止める
+		assert(0);
 	}
 	// Effekseerの初期化
 	if (effectManager.Init() == -1)
 	{
-		// エラーが起きたら直ちに終了
-		return -1;
+		// エラーが起きたら止める
+		assert(0);
 	}
 	
+	// セーブデータの読み込み
+	saveData.Load();
+
 	// csvファイルに沿ってサウンドをロード
 	soundManager.LoadAndSaveSoundFileData();
 
@@ -111,6 +117,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		}
 	}
 
+	// Effekseerの終了処理
 	effectManager.End();
 
 	// ＤＸライブラリ使用の終了処理

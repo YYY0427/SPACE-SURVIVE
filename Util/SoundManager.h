@@ -82,5 +82,5 @@ private:
 	void LoadSoundFile3D(string fileName, string ext);
 private:
 	// ロードしたサウンドのファイル名とハンドル
-	std::unordered_map<string, SoundData> soundNameAndHandleTable_;
+	unordered_map<string, SoundData> soundNameAndHandleTable_;
 };

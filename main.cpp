@@ -48,6 +48,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// １メートルに相当する値を設定する
 	Set3DSoundOneMetre(Game::one_meter);
 
+	// Zバッファを有効化
+	SetUseZBufferFlag(TRUE);
+
 	// シングルトンクラスのインスタンスの取得
 	auto& soundManager = SoundManager::GetInstance();
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();

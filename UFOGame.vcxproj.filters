@@ -54,12 +54,6 @@
     <ClCompile Include="Scene\SoundSettingScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="PlatinumDataLoder.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
@@ -73,6 +67,9 @@
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="Util\SaveData.cpp">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Model.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,12 +101,6 @@
     <ClInclude Include="Scene\SoundSettingScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="PlatinumDataLoder.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Util\Effekseer3DEffectManager.h">
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
@@ -123,6 +114,9 @@
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="Util\SaveData.h">
+      <Filter>ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Model.h">
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
   </ItemGroup>

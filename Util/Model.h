@@ -1,5 +1,10 @@
 #pragma once
 #include <DxLib.h>
+#include <string>
+
+using namespace std;
+
+// TODO : 当たり判定関係の関数の追加
 
 /// <summary>
 /// モデルの管理クラス
@@ -8,8 +13,8 @@ class Model
 {
 public:
 	// コンストラクタ
-	Model(const char* fileName);	// ファイル名を指定してロードを行う
-	Model(int orgModel);			// 指定されたハンドルのモデルをDuplicateして生成する
+	Model(string fileName);		// ファイル名を指定してロードを行う
+	Model(int orgModel);		// 指定されたハンドルのモデルをDuplicateして生成する
 
 	// デストラクタ
 	virtual ~Model();
@@ -33,13 +38,13 @@ public:
 	bool IsAnimEnd();
 
 	// ゲッター
-	int GetModelHandle() const { return modelHandle_; }		// モデルのハンドルの取得
-	int GetColFrameIndex() const { return m_colFrameIndex; }	// 当たり判定に使用するフレームインデックスを取得する
+	int GetModelHandle() const;		// モデルのハンドルの取得
+	int GetColFrameIndex() const;	// 当たり判定に使用するフレームインデックスを取得する
 
 	// セッター
 	void SetPos(VECTOR pos);		// 表示位置の設定
 	void SetRot(VECTOR rot);		// 回転状態の設定
-	void SetScale(VECTOR scale);	// 拡大値の設定
+	void SetScale(VECTOR scale);	// 拡大率の設定
 
 private:
 	// アニメーション情報
@@ -53,7 +58,7 @@ private:
 
 private:
 	// アニメーション情報のクリア
-	void ClearAnimData(AnimData& anim);
+	void InitAnimData(AnimData& anim);
 
 	// アニメーションの更新
 	void UpdateAnim(AnimData anim, float dt = 1.0f);
@@ -65,17 +70,17 @@ private:
 	int modelHandle_;
 
 	// 当たり判定情報を使用する
-	bool m_isUseCollision;
+	bool isUseCollision_;
 
 	// 当たり判定情報を毎フレーム更新する
-	bool m_isUpdateColision;
+	bool isUpdateColision_;
 
 	// 当たり判定として使用するフレームのインデックス
-	int m_colFrameIndex;
+	int colFrameIndex_;
 
 	// アニメーションのアタッチ番号
-	AnimData animPrev_;	// 変更前アニメーション情報
-	AnimData animNext_;	// 変更後アニメーション情報
+	AnimData animPrev_;		// 変更前アニメーション情報
+	AnimData animNext_;		// 変更後アニメーション情報
 
 	// アニメーションの切り替え情報
 	int animChangeFrame_;			// 現在の切り替えフレーム数

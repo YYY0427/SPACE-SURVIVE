@@ -34,6 +34,7 @@ public:
 	/// </summary>
 	/// <param name="input">入力ステート</param>
 	void Update(const InputState& input);
+
 	/// <summary>
 	/// 各シーンの描画を行う
 	/// </summary>

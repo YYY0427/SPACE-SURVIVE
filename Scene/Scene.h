@@ -1,8 +1,8 @@
 #pragma once
 
-//プロトタイプ宣言
-class SceneManager;	//シーンマネージャー
-class InputState;	//入力ステート
+// プロトタイプ宣言
+class SceneManager;	// シーンマネージャー
+class InputState;	// 入力ステート
 
 //この時点ではSceneManagerとInputStateは
 //ポインタもしくは参照としてしか扱えない。
@@ -12,20 +12,26 @@ class InputState;	//入力ステート
 /// </summary>
 class Scene
 {
+public:
+	Scene(SceneManager& manager);
+	virtual ~Scene() {};
+
+	// 更新
+	virtual void Update(const InputState& input) = 0;
+
+	// 描画
+	virtual void Draw() = 0;
+
+	// フェード
+	void UpdateFade();
+	void DrawFade();
 protected:
 	// シーンマネーシャーへの参照
 	SceneManager& manager_; 
-public:
-	Scene(SceneManager& manager) :
-		manager_(manager)
-	{
-	}
-	virtual ~Scene() {};
 
-	// シーンを更新する
-	virtual void Update(const InputState& input) = 0;
-
-	// シーンを描画する
-	virtual void Draw() = 0;
+	// フェード
+	int fadeColor_;		// フェードする色
+	int fadeBright_;	//	
+	int fadeSpeed_;		// フェードする速度
 };
 

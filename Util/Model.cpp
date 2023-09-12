@@ -4,28 +4,29 @@
 namespace
 {
 	// 当たり判定として使用するフレームの名前
-	const char* const collision_frame_name = "Collision";
+	const string collision_frame_name = "Collision";
 }
 
 /// <summary>
-/// 
+/// ファイル名を指定してロードを行う
 /// </summary>
-/// <param name="fileName"></param>
-Model::Model(const char* fileName) :
-	m_isUseCollision(false),
-	m_isUpdateColision(false),
-	m_colFrameIndex(-1),
+/// <param name="fileName">モデルハンドルのファイル名</param>
+Model::Model(string fileName) :
+	isUseCollision_(false),
+	isUpdateColision_(false),
+	colFrameIndex_(-1),
 	animChangeFrame_(0),
 	animChangeFrameTotal_(0)
 {
-	modelHandle_ = MV1LoadModel(fileName);
+	// モデルのロード
+	modelHandle_ = MV1LoadModel(fileName.c_str());
 
-	// モデルのロードに失敗した
+	// モデルのロードに失敗したしたら止める
 	assert(modelHandle_ != -1);
 
-	// アニメーション情報のクリア
-	ClearAnimData(animPrev_);
-	ClearAnimData(animNext_);
+	// アニメーション情報の初期化
+	InitAnimData(animPrev_);
+	InitAnimData(animNext_);
 }
 
 /// <summary>
@@ -33,9 +34,9 @@ Model::Model(const char* fileName) :
 /// </summary>
 /// <param name="orgModel">モデルハンドル</param>
 Model::Model(int orgModel) :
-	m_isUseCollision(false),
-	m_isUpdateColision(false),
-	m_colFrameIndex(-1),
+	isUseCollision_(false),
+	isUpdateColision_(false),
+	colFrameIndex_(-1),
 	animChangeFrame_(0),
 	animChangeFrameTotal_(0)
 {
@@ -43,9 +44,9 @@ Model::Model(int orgModel) :
 	assert(modelHandle_ != -1);
 	modelHandle_ = MV1DuplicateModel(orgModel);
 
-	// アニメーション情報のクリア
-	ClearAnimData(animPrev_);
-	ClearAnimData(animNext_);
+	// アニメーション情報の初期化
+	InitAnimData(animPrev_);
+	InitAnimData(animNext_);
 }
 
 /// <summary>
@@ -53,12 +54,14 @@ Model::Model(int orgModel) :
 /// </summary>
 Model::~Model()
 {
-	if (m_isUpdateColision)
+	// 当たり判定情報を使用していたら削除
+	if (isUpdateColision_)
 	{
-		// 当たり判定情報を使用していたら破棄する
 		MV1TerminateCollInfo(modelHandle_, -1);
-		m_isUseCollision = false;
+		isUseCollision_ = false;
 	}
+
+	// モデルの削除
 	MV1DeleteModel(modelHandle_);
 }
 
@@ -73,19 +76,22 @@ void Model::SetUseCollision(bool isUse, bool isNeedUpdate)
 	assert(isUse || !isNeedUpdate);
 
 	// 当たり判定使用情報に変化があった場合のみ更新する
-	if (m_isUpdateColision != isUse)
+	if (isUpdateColision_ != isUse)
 	{
 		if (isUse)
 		{
 			// 使わない→使う
 			// 当たり判定用フレームを検索
-			m_colFrameIndex = MV1SearchFrame(modelHandle_, collision_frame_name);
+			colFrameIndex_ = MV1SearchFrame(modelHandle_, collision_frame_name.c_str());
 
-			if (m_colFrameIndex < 0)	// 見つからなかった or エラー
+			// 見つからなかった or エラー
+			if (colFrameIndex_ < 0)	
 			{
-				m_colFrameIndex = -1;
+				colFrameIndex_ = -1;
 			}
-			MV1SetupCollInfo(modelHandle_, m_colFrameIndex, 8, 8, 8);
+
+			// 当たり判定情報を構築する
+			MV1SetupCollInfo(modelHandle_, colFrameIndex_, 8, 8, 8);
 		}
 		else
 		{
@@ -95,8 +101,8 @@ void Model::SetUseCollision(bool isUse, bool isNeedUpdate)
 	}
 
 	// 保存
-	m_isUseCollision = isUse;
-	m_isUpdateColision = isNeedUpdate;
+	isUseCollision_ = isUse;
+	isUpdateColision_ = isNeedUpdate;
 }
 
 /// <summary>
@@ -118,9 +124,9 @@ void Model::Update()
 	UpdateAnimBlendRate();
 
 	// 当たり判定データの更新
-	if (m_isUseCollision && m_isUpdateColision)
+	if (isUseCollision_ && isUpdateColision_)
 	{
-		MV1RefreshCollInfo(modelHandle_, m_colFrameIndex);
+		MV1RefreshCollInfo(modelHandle_, colFrameIndex_);
 	}
 }
 
@@ -132,16 +138,28 @@ void Model::Draw()
 	MV1DrawModel(modelHandle_);
 }
 
+/// <summary>
+/// モデルの表示位置の設定
+/// </summary>
+/// <param name="pos">位置情報</param>
 void Model::SetPos(VECTOR pos)
 {
 	MV1SetPosition(modelHandle_, pos);
 }
 
+/// <summary>
+/// モデルの回転状態の設定
+/// </summary>
+/// <param name="rot">回転情報</param>
 void Model::SetRot(VECTOR rot)
 {
 	MV1SetRotationXYZ(modelHandle_, rot);
 }
 
+/// <summary>
+/// モデルの拡大率の設定
+/// </summary>
+/// <param name="scale">拡大情報</param>
 void Model::SetScale(VECTOR scale)
 {
 	MV1SetScale(modelHandle_, scale);
@@ -165,13 +183,14 @@ void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange)
 	if (animPrev_.attachNo != -1)
 	{
 		MV1DetachAnim(modelHandle_, animPrev_.attachNo);
-		ClearAnimData(animPrev_);
+		InitAnimData(animPrev_);
 	}
 	if (animNext_.attachNo != -1)
 	{
 		MV1DetachAnim(modelHandle_, animNext_.attachNo);
-		ClearAnimData(animNext_);
+		InitAnimData(animNext_);
 	}
+
 	// 新しくアニメーションを設定
 	animNext_.animNo = animNo;
 	animNext_.attachNo = MV1AttachAnim(modelHandle_, animNo, -1, false);
@@ -201,7 +220,7 @@ void Model::ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int cha
 	if (animPrev_.attachNo != -1)
 	{
 		MV1DetachAnim(modelHandle_, animPrev_.attachNo);
-		ClearAnimData(animPrev_);
+		InitAnimData(animPrev_);
 	}
 
 	// 現在再生しているアニメーションを古いアニメとする
@@ -222,26 +241,52 @@ void Model::ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int cha
 }
 
 /// <summary>
-/// // 現在のアニメーションが終了しているかどうかを取得する(Loopアニメの場合は取得できません falseを返す)
+/// // 現在のアニメーションが終了しているかどうかを取得する(Loopアニメの場合は取得できない(falseを返す))
 /// </summary>
 /// <returns>true : 終了 、 false : 再生中</returns>
 bool Model::IsAnimEnd()
 {
-	// Looppアニメの場合は常にfalseを返す
-	if (animNext_.isLoop) return false;
+	// Looppアニメの場合はfalseを返す
+	if (animNext_.isLoop)
+	{
+		return false;
+	}
 
+	// アタッチしているアニメーションの再生時間を取得する
 	float time = MV1GetAttachAnimTime(modelHandle_, animNext_.attachNo);
 
-	if (time >= animNext_.totalTime) return true;
-
+	// アニメーションを再生した時間がアニメーションの総時間を超えていたら
+	// アニメーションが終了しているのでtrueを返す
+	if (time >= animNext_.totalTime)
+	{
+		return true;
+	}
 	return false;
 }
 
 /// <summary>
-/// アニメーションデータのクリア
+/// モデルのハンドルの取得
+/// </summary>
+/// <returns>モデルのハンドル</returns>
+int Model::GetModelHandle() const
+{
+	return modelHandle_;		
+}
+
+/// <summary>
+/// 当たり判定に使用するフレームインデックスを取得する
+/// </summary>
+/// <returns>当たり判定に使用するフレームインデックス</returns>
+int Model::GetColFrameIndex() const
+{
+	return colFrameIndex_;
+}
+
+/// <summary>
+/// アニメーションデータの初期化
 /// </summary>
 /// <param name="anim">アニメーションのアタッチ番号</param>
-void Model::ClearAnimData(AnimData& anim)
+void Model::InitAnimData(AnimData& anim)
 {
 	anim.animNo = -1;
 	anim.attachNo = -1;
@@ -286,7 +331,10 @@ void Model::UpdateAnimBlendRate()
 {
 	// アニメーション変化のフレーム数に応じたブレンド率を設定する
 	float rate = static_cast<float> (animChangeFrame_) / static_cast<float>(animChangeFrameTotal_);
-	if (rate > 1.0f)	rate = 1.0f;
+	if (rate > 1.0f)
+	{
+		rate = 1.0f;
+	}
 	MV1SetAttachAnimBlendRate(modelHandle_, animPrev_.attachNo, 1.0f - rate);
 	MV1SetAttachAnimBlendRate(modelHandle_, animNext_.attachNo, rate);
 }

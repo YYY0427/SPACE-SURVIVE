@@ -57,8 +57,10 @@ using Position2 = Vector2;
 
 // サイズをまとめる構造体
 struct Size
-{	// 幅
+{	
+	// 幅
 	int w;
+
 	// 高さ
 	int h;
 };
@@ -79,10 +81,13 @@ struct Rect
 
 	// 左
 	int Left()const;
+
 	// 上
 	int Top()const;
+
 	// 右
 	int Right()const;
+
 	// 下
 	int Bottom()const;
 

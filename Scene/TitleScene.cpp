@@ -25,6 +25,7 @@ void TitleScene::FadeInUpdate(const InputState& input)
 
 void TitleScene::NormalUpdate(const InputState& input)
 {
+//	UpdateFade();
 	//次へのボタンが押されたら次のシーンへ行く
 	if (input.IsTriggered(InputType::next))
 	{
@@ -62,7 +63,9 @@ void TitleScene::Draw()
 {
 	DrawString(0, 0, "TitleScene", 0xffffff, true);
 
+//	DrawFade();
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue_);
-	DrawBox(0, 0, Game::screen_width, Game::screen_height, 0x000000, true);
+	DrawBox(0, 0, Game::screen_width, Game::screen_height, 0xffffff, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

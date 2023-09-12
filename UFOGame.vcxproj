@@ -157,7 +157,7 @@
     <ClCompile Include="Util\DrawFunctions.cpp" />
     <ClCompile Include="Util\Geometry.cpp" />
     <ClCompile Include="InputState.cpp" />
-    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Util\Model.cpp" />
     <ClCompile Include="Scene\KeyConfigScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\PauseScene.cpp" />
@@ -167,7 +167,6 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Util\SoundManager.cpp" />
     <ClCompile Include="Scene\SoundSettingScene.cpp" />
-    <ClCompile Include="PlatinumDataLoder.cpp" />
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,7 +175,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Util\Geometry.h" />
     <ClInclude Include="InputState.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="Util\Model.h" />
     <ClInclude Include="Scene\KeyConfigScene.h" />
     <ClInclude Include="Scene\PauseScene.h" />
     <ClInclude Include="Scene\MainScene.h" />
@@ -185,7 +184,6 @@
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Util\SoundManager.h" />
     <ClInclude Include="Scene\SoundSettingScene.h" />
-    <ClInclude Include="PlatinumDataLoder.h" />
     <ClInclude Include="Util\Effekseer3DEffectManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

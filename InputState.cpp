@@ -50,9 +50,9 @@ InputState::InputState()
 	tempMapTable_ = inputMapTable_;
 
 	//入力タイプの名前のテーブルを作る
-	inputNameTable_[InputType::next] = "next";
-	inputNameTable_[InputType::prev] = "prev";
-	inputNameTable_[InputType::pause] = "pause";
+	inputNameTable_[InputType::next] = "決定";
+	inputNameTable_[InputType::prev] = "戻る";
+	inputNameTable_[InputType::pause] = "ポーズ";
 	inputNameTable_[InputType::keyconf] = "keyconf";
 	inputNameTable_[InputType::change] = "change";
 	inputNameTable_[InputType::shot] = "shot";

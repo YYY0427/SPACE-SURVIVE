@@ -65,7 +65,6 @@ SoundManager& SoundManager::GetInstance()
 /// <param name="extension">ロードしたサウンドの拡張子</param>
 void SoundManager::LoadSoundFile2D(string fileName, string extension)
 {
-	// TODO:なんかロードがうまくいかない(-1が返ってくる)から先生に見てもらう
 	string path = data_file_path;
 	path += fileName;
 	path += extension;
@@ -148,7 +147,7 @@ void SoundManager::LoadAndSaveSoundFileData()
 void SoundManager::Play(string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
-	assert(soundNameAndHandleTable_[fileName].type == SoundType::SE2D);				// 2DSE以外の場合は止める
+	assert(soundNameAndHandleTable_[fileName].type == SoundType::SE2D);					// 2DSE以外の場合は止める
 	PlaySoundMem(soundNameAndHandleTable_[fileName].handle, DX_PLAYTYPE_BACK);
 	SetVolume(fileName, 255);
 }
@@ -162,7 +161,7 @@ void SoundManager::Play(string fileName)
 void SoundManager::Play3D(string fileName, VECTOR soundPos, float soundRadius)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
-	assert(soundNameAndHandleTable_[fileName].type == SoundType::SE3D);				// 3DSE以外の場合は止める
+	assert(soundNameAndHandleTable_[fileName].type == SoundType::SE3D);					// 3DSE以外の場合は止める
 	Set3DPositionSoundMem(soundPos, soundNameAndHandleTable_[fileName].handle);
 	Set3DRadiusSoundMem(soundRadius, soundNameAndHandleTable_[fileName].handle);
 	PlaySoundMem(soundNameAndHandleTable_[fileName].handle, DX_PLAYTYPE_BACK);
@@ -222,6 +221,7 @@ void SoundManager::SetVolume(string fileName, int volume)
 
 	// コンフィグで設定した音量調節
 	int configVolume = Game::config_volume_num;
+
 	// BGM
 	if (soundNameAndHandleTable_[fileName].type == SoundType::BGM)
 	{
@@ -243,7 +243,7 @@ void SoundManager::SetVolume(string fileName, int volume)
 /// 3Dサウンドのリスナーの位置とリスナーの前方位置を設定する
 /// </summary>
 /// <param name="pos">リスナーの座標</param>
-/// <param name="angle">1リスナーの向いている角度(ラジアン)</param>
+/// <param name="angle">リスナーの向いている角度(ラジアン)</param>
 void SoundManager::Set3DSoundListenerPosAndFrontPos_UpVecY(VECTOR pos, VECTOR angle)
 {
 	DxLib::Set3DSoundListenerPosAndFrontPos_UpVecY(pos, VAdd(pos, angle));

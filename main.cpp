@@ -5,6 +5,7 @@
 #include "Util/SoundManager.h"
 #include "Scene/SceneManager.h"
 #include "Scene/TitleScene.h"
+#include "Scene/DebugScene.h"
 #include "Util/Effekseer3DEffectManager.h"
 #include "Util/SaveData.h"
 
@@ -81,7 +82,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	
 	InputState input;
 	SceneManager sceneManager;
+
+#ifdef _DEBUG
+	sceneManager.ChangeScene(new DebugScene(sceneManager));
+#else 
 	sceneManager.ChangeScene(new TitleScene(sceneManager));
+#endif
 
 	// ˆÙí‚ª‹N‚«‚½‚ÉI—¹
 	while (ProcessMessage() == 0)

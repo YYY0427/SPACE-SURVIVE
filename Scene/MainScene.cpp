@@ -8,46 +8,63 @@
 #include "../Util/SoundManager.h"
 #include <DxLib.h>
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="manager">シーンマネージャーへの参照</param>
 MainScene::MainScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&MainScene::NormalUpdate)
 {
-	auto& effect = Effekseer3DEffectManager::GetInstance();
-	SetFadeConfig(8, VGet(255, 255, 255), GetFadeBright());
-	SoundManager::GetInstance().PlayBGM("test");
+	
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 MainScene::~MainScene()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void MainScene::Update(const InputState& input)
 {
 	(this->*updateFunc_)(input);
 }
 
+/// <summary>
+/// 通常の更新
+/// </summary>
 void MainScene::NormalUpdate(const InputState& input)
 {
+	// フェードが終わり次第シーン遷移
 	if (isFadeOut_ && !IsFadingOut())
 	{
 		manager_.ChangeScene(new TitleScene(manager_));
 		return;
 	}
 
-
+	// 決定ボタンが押されたらフェードアウト開始
 	if (input.IsTriggered(InputType::next) && !IsFadingIn())
 	{
 		StartFadeOut();
-		SetFadeConfig(1, VGet(255, 255, 255), GetFadeBright());
 		isFadeOut_ = true;
 	}
+	// ポーズ画面に遷移
 	if (input.IsTriggered(InputType::pause))
 	{
 		manager_.PushScene(new PauseScene(manager_));
 	}
+
+	// フェードの更新
 	UpdateFade();
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void MainScene::Draw()
 {
 	DrawString(0, 0, "MainScene", 0xffffff, true);
@@ -74,5 +91,7 @@ void MainScene::Draw()
 		pos1.z += lineAreaSize / lineNum;
 		pos2.z += lineAreaSize / lineNum;
 	}
+
+	// フェードの描画
 	DrawFade();
 }

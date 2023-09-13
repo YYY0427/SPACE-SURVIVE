@@ -15,7 +15,7 @@ Scene::Scene(SceneManager& manager) :
 	manager_(manager)
 {
 	isFadeOut_ = false;
-	fadeColor_ = GetColor(255, 0, 0);
+	fadeColor_ = GetColor(0, 0, 0);
 	fadeBright_ = 255;
 	fadeSpeed_ = -fade_normal_speed;
 }
@@ -111,11 +111,11 @@ void Scene::SetFadeConfig(int fadeSpeed, VECTOR fadeColor, int fadeBright)
 	// フェード中しか設定をおこなわない
 	if (!IsFadeing()) return;
 
-	// フェードインかフェードアウトかで値を変更する
+	// フェードインかフェードアウトかでフェード速度の値を変更する
 	int absoluteFadeSpeed = abs(fadeSpeed);
 	if (IsFadingIn())	absoluteFadeSpeed *= -1;
 
-	// ありえない値がはいらないように制限
+	// ありえない値が入らないように制限
 	if (fadeBright > 255)	fadeBright = 255;
 	if (fadeBright < 0)		fadeBright = 0;
 	if (fadeColor.x > 255)	fadeColor.x = 255;

@@ -10,34 +10,19 @@ class InputState;
 class SceneManager
 {
 public:
-	/// <summary>
-	/// シーンの切り替えを行う
-	/// </summary>
-	/// <param name="scene">切り替えたい次シーンのアドレス</param>
+	// シーンの切り替え
 	void ChangeScene(Scene* scene);
 
-	/// <summary>
-	/// シーンを上に積む
-	/// Updateで実行されるのは上につまれたシーンのみ
-	/// </summary>
-	/// <param name="scene"></param>
+	// シーンを上に積む(ポーズ)
 	void PushScene(Scene* scene);
 
-	/// <summary>
-	/// 一番上のシーンを削除する
-	/// ただし、その結果スタックが空になることのないように
-	/// </summary>
+	/// 一番上のシーンを削除
 	void PopScene();
 
-	/// <summary>
-	/// かっくシーンのUpdateを行う
-	/// </summary>
-	/// <param name="input">入力ステート</param>
+	// 各シーンの更新
 	void Update(const InputState& input);
 
-	/// <summary>
-	/// 各シーンの描画を行う
-	/// </summary>
+	// 各シーンの描画
 	void Draw();
 
 private:

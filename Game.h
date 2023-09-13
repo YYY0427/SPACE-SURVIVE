@@ -11,7 +11,7 @@ namespace Game
 #endif
 
 	// Windowñº
-	const char* const title_text = "SPACE_SURVIVOR";
+	const char* const title_text = "SPACE_SURVIVE";
 
 	// WindowÉTÉCÉY
 	constexpr int screen_width = 1280;

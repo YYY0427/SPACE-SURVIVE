@@ -8,18 +8,12 @@
 #include "../Util/SoundManager.h"
 #include <DxLib.h>
 
-namespace
-{
-	constexpr int fade_interval = 60;
-}
-
 MainScene::MainScene(SceneManager& manager) :
 	Scene(manager),
-	updateFunc_(&MainScene::FadeInUpdate),
-	fadeTimer_(fade_interval)
+	updateFunc_(&MainScene::NormalUpdate)
 {
 	auto& effect = Effekseer3DEffectManager::GetInstance();
-	
+	SetFadeConfig(8, VGet(255, 255, 255), GetFadeBright());
 	SoundManager::GetInstance().PlayBGM("test");
 }
 
@@ -32,69 +26,53 @@ void MainScene::Update(const InputState& input)
 	(this->*updateFunc_)(input);
 }
 
-void MainScene::Draw()
-{
-	DrawString(0, 0, "MainScene", 0xffffff, true);
-
-	VECTOR Pos1;
-	VECTOR Pos2;
-	float LINE_AREA_SIZE = 10000.0f;
-	int LINE_NUM = 50;
-
-	SetUseZBufferFlag(TRUE);
-
-	Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-	Pos2 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, LINE_AREA_SIZE / 2.0f);
-	for (int i = 0; i <= LINE_NUM; i++)
-	{
-		DrawLine3D(Pos1, Pos2, GetColor(0, 0, 0));
-		Pos1.x += LINE_AREA_SIZE / LINE_NUM;
-		Pos2.x += LINE_AREA_SIZE / LINE_NUM;
-	}
-
-	Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-	Pos2 = VGet(LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-	for (int i = 0; i < LINE_NUM; i++)
-	{
-		DrawLine3D(Pos1, Pos2, GetColor(0, 0, 0));
-		Pos1.z += LINE_AREA_SIZE / LINE_NUM;
-		Pos2.z += LINE_AREA_SIZE / LINE_NUM;
-	}
-
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue_);
-	DrawBox(0, 0, Game::screen_width, Game::screen_height, 0xffffff, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-}
-
-void MainScene::FadeInUpdate(const InputState& input)
-{
-	fadeValue_ = static_cast<int>(255 * static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval));
-	if (--fadeTimer_ == 0)
-	{
-		updateFunc_ = &MainScene::NormalUpdate;
-	}
-}
-
 void MainScene::NormalUpdate(const InputState& input)
 {
-	
-
-	if (input.IsTriggered(InputType::next))
+	if (isFadeOut_ && !IsFadingOut())
 	{
-		updateFunc_ = &MainScene::FadeOutUpdate;
+		manager_.ChangeScene(new TitleScene(manager_));
+		return;
+	}
+
+
+	if (input.IsTriggered(InputType::next) && !IsFadingIn())
+	{
+		StartFadeOut();
+		SetFadeConfig(1, VGet(255, 255, 255), GetFadeBright());
+		isFadeOut_ = true;
 	}
 	if (input.IsTriggered(InputType::pause))
 	{
 		manager_.PushScene(new PauseScene(manager_));
 	}
+	UpdateFade();
 }
 
-void MainScene::FadeOutUpdate(const InputState& input)
+void MainScene::Draw()
 {
-	fadeValue_ = static_cast<int>(255 * static_cast<float>(fadeTimer_) / static_cast<float>(fade_interval));
-	if (++fadeTimer_ == fade_interval)
+	DrawString(0, 0, "MainScene", 0xffffff, true);
+
+	VECTOR pos1;
+	VECTOR pos2;
+	float lineAreaSize = 10000.0f;
+	int lineNum = 50;
+
+	pos1 = VGet(-lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
+	pos2 = VGet(-lineAreaSize / 2.0f, 0.0f, lineAreaSize / 2.0f);
+	for (int i = 0; i <= lineNum; i++)
 	{
-		manager_.ChangeScene(new TitleScene(manager_));
-		return;
+		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
+		pos1.x += lineAreaSize / lineNum;
+		pos2.x += lineAreaSize / lineNum;
 	}
+
+	pos1 = VGet(-lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
+	pos2 = VGet(lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
+	for (int i = 0; i < lineNum; i++)
+	{
+		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
+		pos1.z += lineAreaSize / lineNum;
+		pos2.z += lineAreaSize / lineNum;
+	}
+	DrawFade();
 }

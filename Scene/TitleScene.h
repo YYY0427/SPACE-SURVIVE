@@ -16,17 +16,8 @@ public:
 	void Draw();
 
 private:
-	int fadeTimer_;			// フェードタイマー
-	int fadeValue_ = 255;	// 黒矩形とのブレンド具合
-
-	// フェードインの時のUpdate関数
-	void FadeInUpdate(const InputState& input);
-
 	// 通常状態のUpdate関数
 	void NormalUpdate(const InputState& input);
-
-	// フェードアウトの時のUpdate関数
-	void FadeOutUpdate(const InputState& input);
 
 	// Update用メンバ関数ポインタ
 	void (TitleScene::* updateFunc_)(const InputState& input);

@@ -14,15 +14,10 @@ public:
 	void Draw();
 
 private:
-	int fadeTimer_ = 0;
-	int fadeValue_ = 255;
-
 	using UpdateFunc_t = void (MainScene::*) (const InputState& input);
 	UpdateFunc_t updateFunc_ = nullptr;
 
-	void FadeInUpdate(const InputState& input);
 	void NormalUpdate(const InputState& input);
-	void FadeOutUpdate(const InputState& input);
 
 	int test = -1;
 };

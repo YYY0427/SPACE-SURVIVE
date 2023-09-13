@@ -1,4 +1,5 @@
 #pragma once
+#include <DxLib.h>
 
 // プロトタイプ宣言
 class SceneManager;	// シーンマネージャー
@@ -23,15 +24,22 @@ public:
 	virtual void Draw() = 0;
 
 	// フェード
-	void UpdateFade();
-	void DrawFade();
+	void UpdateFade();		// フェードの更新
+	void DrawFade();		// フェードの描画
+	void StartFadeOut();	// フェードアウトの開始
+	bool IsFadingIn() const;	// フェードイン中かどうか
+	bool IsFadingOut() const;	// フェードアウト中かどうか
+	bool IsFadeing() const;		// フェード中かどうか
+	int GetFadeBright() const;	// フェードの明るさの取得
+	void SetFadeConfig(int fadeSpeed, VECTOR fadeColor, int fadeBright);	// フェードの設定
 protected:
 	// シーンマネーシャーへの参照
 	SceneManager& manager_; 
 
 	// フェード
 	int fadeColor_;		// フェードする色
-	int fadeBright_;	//	
+	int fadeBright_;	// フェードの明るさ
 	int fadeSpeed_;		// フェードする速度
+	bool isFadeOut_;	// フェードアウトをおこなったかどうか
 };
 

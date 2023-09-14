@@ -2,6 +2,7 @@
 #include "TitleScene.h"
 #include "PauseScene.h"
 #include "SceneManager.h"
+#include "DebugScene.h"
 #include "../Game.h"
 #include "../InputState.h"
 #include "../Util/Effekseer3DEffectManager.h"
@@ -42,20 +43,21 @@ void MainScene::NormalUpdate(const InputState& input)
 	// フェードが終わり次第シーン遷移
 	if (isFadeOut_ && !IsFadingOut())
 	{
-		manager_.ChangeScene(new TitleScene(manager_));
+		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
 
-	// 決定ボタンが押されたらフェードアウト開始
-	if (input.IsTriggered(InputType::next) && !IsFadingIn())
+	// 戻るボタンが押されたらフェードアウト開始
+	if (input.IsTriggered(InputType::BACK) && !IsFadingIn())
 	{
 		StartFadeOut();
 		isFadeOut_ = true;
 	}
 	// ポーズ画面に遷移
-	if (input.IsTriggered(InputType::pause))
+	if (input.IsTriggered(InputType::PAUSE))
 	{
 		manager_.PushScene(new PauseScene(manager_));
+		return;
 	}
 
 	// フェードの更新

@@ -64,25 +64,41 @@ void DebugScene::Update(const InputState& input)
 			manager_.ChangeScene(new SoundSettingScene(manager_));
 			return;
 		}
+		else if (currentSelectIndex_ == PAUSE_SCENE)
+		{
+			// ポーズの場合シーンが残っているので初期化
+			isFadeOut_ = false;
+
+			manager_.PushScene(new PauseScene(manager_));
+			return;
+		}
+		else if (currentSelectIndex_ == KEYCONFIG_SCENE)
+		{
+			manager_.ChangeScene(new KeyConfigScene(manager_, input));
+			return;
+		}
 	}
 
 	// 選択肢を回す処理
-	if (input.IsTriggered(InputType::up) && !isFadeOut_)
+	if (input.IsTriggered(InputType::UP) && !isFadeOut_)
 	{
 		currentSelectIndex_ = ((currentSelectIndex_ - 1) + NUM) % NUM;
 	}
-	else if (input.IsTriggered(InputType::down) && !isFadeOut_)
+	else if (input.IsTriggered(InputType::DOWN) && !isFadeOut_)
 	{
 		currentSelectIndex_ = (currentSelectIndex_ + 1) % NUM;
 	}
 
 	// 決定ボタンを押したらフェードアウト開始
-	if (input.IsTriggered(InputType::next) && !IsFadingIn())
+	if (input.IsTriggered(InputType::DECISION) && !IsFadingIn())
 	{
-		StartFadeOut();
+		// ポーズの場合はフェードを行わない
+		if (currentSelectIndex_ != PAUSE_SCENE)
+		{
+			StartFadeOut();
+		}
 		isFadeOut_ = true;
 	}
-
 	// フェードの更新
 	UpdateFade();
 }
@@ -98,6 +114,8 @@ void DebugScene::Draw()
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * TITLE_SCENE, "TitleScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * MAIN_SCENE, "MainScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * SOUNDSETTING_SCENE, "SoundSettingScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * PAUSE_SCENE, "PauseScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * KEYCONFIG_SCENE, "KeyConfigScene", 0xffffff, true);
 
 	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectIndex_, "→", 0xff0000);
 

@@ -43,7 +43,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// ただし、DirectX11を使用する場合は実行する必要はない
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
-	// XAudio を有効化
+	// XAudioを有効化
 	SetEnableXAudioFlag(TRUE);
 
 	// １メートルに相当する値を設定する

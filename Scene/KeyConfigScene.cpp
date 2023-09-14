@@ -1,38 +1,52 @@
 ﻿#include "KeyConfigScene.h"
 #include "SceneManager.h"
+#include "DebugScene.h"
 #include "../InputState.h"
 #include "../Game.h"
 #include <DxLib.h>
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="manager">シーンマネージャーの参照</param>
 KeyConfigScene::KeyConfigScene(SceneManager& manager, const InputState& input) :
 	Scene(manager),
-	inputState_(input)
+	inputState_(input),
+	isEditing_(false),
+	currentSelectIndex_(0)
 {
 
 }
 
 KeyConfigScene::~KeyConfigScene()
 {
+	// キ情報をファイルに保存する
 	inputState_.SaveKeyInfo();
 }
 
+/// <summary>
+///  更新
+/// </summary>
 void KeyConfigScene::Update(const InputState& input)
 {
 	// constはがし
 	auto& configInput = const_cast<InputState&>(input);
+
+	// キーを編集していないとき
 	if (!isEditing_)
 	{
-		if (input.IsTriggered(InputType::prev))
+		if (input.IsTriggered(InputType::BACK))
 		{
+			// 現在編集中のキーコンフィグの変更をなかったことにする
 			configInput.RollbackChangedInputInfo();
-			manager_.PopScene();
+			manager_.ChangeScene(new DebugScene(manager_));
 			return;
 		}
 		if (input.IsTriggered(InputType::change))
 		{
-			configInput.RewriteInputInfo(InputType::prev, InputCategory::keybd, KEY_INPUT_ESCAPE);
-			configInput.RewriteInputInfo(InputType::prev, InputCategory::pad, PAD_INPUT_A);
-			configInput.RewriteInputInfo(InputType::prev, InputCategory::mouse, MOUSE_INPUT_RIGHT);
+			configInput.RewriteInputInfo(InputType::BACK, InputCategory::keybd, KEY_INPUT_ESCAPE);
+			configInput.RewriteInputInfo(InputType::BACK, InputCategory::pad, PAD_INPUT_A);
+			configInput.RewriteInputInfo(InputType::BACK, InputCategory::mouse, MOUSE_INPUT_RIGHT);
 
 			// 何回キーを書き換えられたか
 			static int count = 0;
@@ -47,29 +61,29 @@ void KeyConfigScene::Update(const InputState& input)
 		const int nameCount = static_cast<int>(input.inputNameTable_.size()) + 2;
 
 		// 上下で回る処理
-		if (input.IsTriggered(InputType::up))
+		if (input.IsTriggered(InputType::UP))
 		{
-			currentInputIndex_ = ((currentInputIndex_ - 1) + nameCount) % nameCount;
+			currentSelectIndex_ = ((currentSelectIndex_ - 1) + nameCount) % nameCount;
 		}
-		else if (input.IsTriggered(InputType::down))
+		else if (input.IsTriggered(InputType::DOWN))
 		{
-			currentInputIndex_ = (currentInputIndex_ + 1) % nameCount;
+			currentSelectIndex_ = (currentSelectIndex_ + 1) % nameCount;
 		}
 	}
 
 	// この時はもう、確定しますを選択している
-	if (currentInputIndex_ == input.inputNameTable_.size())
+	if (currentSelectIndex_ == input.inputNameTable_.size())
 	{
-		if (input.IsTriggered(InputType::next))
+		if (input.IsTriggered(InputType::DECISION))
 		{
 			configInput.CommitChangedInputInfo();
 			manager_.PopScene();
 			return;
 		}
 	}
-	if (currentInputIndex_ == input.inputNameTable_.size() + 1)
+	if (currentSelectIndex_ == input.inputNameTable_.size() + 1)
 	{
-		if (input.IsTriggered(InputType::next))
+		if (input.IsTriggered(InputType::DECISION))
 		{
 			configInput.ResetInputInfo();
 			return;
@@ -77,7 +91,7 @@ void KeyConfigScene::Update(const InputState& input)
 	}
 
 	// nextボタンでエディット中かそうじゃなかを決定する
-	if (input.IsTriggered(InputType::next))
+	if (input.IsTriggered(InputType::DECISION))
 	{
 		isEditing_ = !isEditing_;
 		return;
@@ -91,10 +105,10 @@ void KeyConfigScene::Update(const InputState& input)
 		auto mouseState = GetMouseInput();
 
 		int idx = 0;
-		InputType currentType = InputType::max;
+		InputType currentType = InputType::NUM;
 		for (const auto& name : inputState_.inputNameTable_)
 		{
-			if (currentInputIndex_ == idx)
+			if (currentSelectIndex_ == idx)
 			{
 				currentType = name.first;
 				break;
@@ -144,7 +158,7 @@ void KeyConfigScene::Draw()
 		int offset = 0;
 		unsigned int color = 0xffffff;
 
-		if (currentInputIndex_ == idx)
+		if (currentSelectIndex_ == idx)
 		{
 			offset = 10;
 			isInputTypeSelected = true;
@@ -190,7 +204,7 @@ void KeyConfigScene::Draw()
 	if (!isInputTypeSelected)
 	{
 		int yoffset = 0;
-		if (currentInputIndex_ == inputState_.inputNameTable_.size() + 1)
+		if (currentSelectIndex_ == inputState_.inputNameTable_.size() + 1)
 		{
 			yoffset = 20;
 		}

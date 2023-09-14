@@ -59,7 +59,7 @@ SoundManager& SoundManager::GetInstance()
 }
 
 /// <summary>
-/// 2DSEサウンドのロード
+/// 2Dサウンドのロード
 /// </summary>
 /// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
 /// <param name="extension">ロードしたサウンドの拡張子</param>
@@ -74,7 +74,7 @@ void SoundManager::LoadSoundFile2D(string fileName, string extension)
 }
 
 /// <summary>
-/// 3DSEサウンドのロード
+/// 3Dサウンドのロード
 /// </summary>
 /// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
 /// <param name="extension">ロードしたサウンドの拡張子</param>

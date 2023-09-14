@@ -2,6 +2,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "MainScene.h"
+#include "DebugScene.h"
 #include "../InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/DrawFunctions.h"
@@ -39,12 +40,12 @@ void TitleScene::NormalUpdate(const InputState& input)
 {
 	if (isFadeOut_ && !IsFadingOut())
 	{
-		manager_.ChangeScene(new MainScene(manager_));
+		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
 
 	//次へのボタンが押されたら次のシーンへ行く
-	if (input.IsTriggered(InputType::next) && !isFadeOut_)
+	if (input.IsTriggered(InputType::BACK) && !isFadeOut_)
 	{
 		isFadeOut_ = true;
 		StartFadeOut();

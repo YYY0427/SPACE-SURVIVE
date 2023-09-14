@@ -41,17 +41,17 @@ SoundSettingScene::~SoundSettingScene()
 void SoundSettingScene::Update(const InputState& input)
 {
 	//選択肢を回す処理
-	if (input.IsTriggered(InputType::up))
+	if (input.IsTriggered(InputType::UP))
 	{
 		currentSelectIndex_ = ((currentSelectIndex_ - 1) + NUM) % NUM;
 	}
-	else if (input.IsTriggered(InputType::down))
+	else if (input.IsTriggered(InputType::DOWN))
 	{
 		currentSelectIndex_ = (currentSelectIndex_ + 1) % NUM;
 	}
 
 	// 選択されているタイプの音量の調節
-	if (input.IsTriggered(InputType::right))
+	if (input.IsTriggered(InputType::RIGHT))
 	{
 		if (currentSelectIndex_ == BGM)
 		{
@@ -66,7 +66,7 @@ void SoundSettingScene::Update(const InputState& input)
 	}
 
 	// 前の画面に戻る
-	if (input.IsTriggered(InputType::prev))
+	if (input.IsTriggered(InputType::BACK))
 	{
 		// シーン遷移するのでサウンドを止める
 		SoundManager::GetInstance().StopAllSound();

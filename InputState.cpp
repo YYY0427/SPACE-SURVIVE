@@ -3,43 +3,43 @@
 
 InputState::InputState()
 {
-	defaultMapTable_[InputType::next] = { {InputCategory::keybd, KEY_INPUT_RETURN},
-										{InputCategory::pad, PAD_INPUT_R },			//スタートボタン
-										{InputCategory::mouse, MOUSE_INPUT_LEFT } };
+	defaultMapTable_[InputType::DECISION] = { {InputCategory::keybd, /*KEY_INPUT_RETURN*/0},
+										{InputCategory::pad, PAD_INPUT_A },			//スタートボタン
+										{InputCategory::mouse, /*MOUSE_INPUT_LEFT*/0 } };
 
-	defaultMapTable_[InputType::prev] = { {InputCategory::keybd, KEY_INPUT_SPACE},
-										{InputCategory::pad, PAD_INPUT_7} };		//バックボタン
+	defaultMapTable_[InputType::BACK] = { {InputCategory::keybd, /*KEY_INPUT_SPACE*/0},
+										{InputCategory::pad, PAD_INPUT_B} };		//バックボタン
 
-	defaultMapTable_[InputType::pause] = { {InputCategory::keybd, KEY_INPUT_P},
-										{InputCategory::pad, PAD_INPUT_L } };		//セレクトボタン
+	defaultMapTable_[InputType::PAUSE] = { {InputCategory::keybd, /*KEY_INPUT_P*/0},
+										{InputCategory::pad, PAD_INPUT_START } };		//セレクトボタン
 
 
-	defaultMapTable_[InputType::keyconf] = { {InputCategory::keybd, KEY_INPUT_K},
-										{InputCategory::pad, PAD_INPUT_Y } };		//左ショルダー
+	//defaultMapTable_[InputType::keyconf] = { {InputCategory::keybd, /*KEY_INPUT_K*/0},
+	//									{InputCategory::pad, PAD_INPUT_Y } };		//左ショルダー
 
-	defaultMapTable_[InputType::change] = { {InputCategory::keybd, KEY_INPUT_C},
+	defaultMapTable_[InputType::change] = { {InputCategory::keybd, /*KEY_INPUT_C*/0},
 										{InputCategory::pad, PAD_INPUT_Z } };		//右ショルダー
 
-	defaultMapTable_[InputType::up] = { {InputCategory::keybd, KEY_INPUT_UP},
+	defaultMapTable_[InputType::UP] = { {InputCategory::keybd, /*KEY_INPUT_UP*/0},
 										{InputCategory::pad, PAD_INPUT_UP } };		//↑
 
-	defaultMapTable_[InputType::down] = { {InputCategory::keybd, KEY_INPUT_DOWN},
+	defaultMapTable_[InputType::DOWN] = { {InputCategory::keybd, /*KEY_INPUT_DOWN*/0},
 										{InputCategory::pad, PAD_INPUT_DOWN } };	//↓
 
-	defaultMapTable_[InputType::right] = { {InputCategory::keybd, KEY_INPUT_RIGHT},
+	defaultMapTable_[InputType::RIGHT] = { {InputCategory::keybd, /*KEY_INPUT_RIGHT*/0},
 										{InputCategory::pad, PAD_INPUT_RIGHT } };	//→
 
-	defaultMapTable_[InputType::left] = { {InputCategory::keybd, KEY_INPUT_LEFT},
+	defaultMapTable_[InputType::LEFT] = { {InputCategory::keybd, /*KEY_INPUT_LEFT*/0},
 										{InputCategory::pad, PAD_INPUT_LEFT } };	//←
 
-	defaultMapTable_[InputType::shot] = { {InputCategory::keybd, KEY_INPUT_Z},
-										{InputCategory::pad, PAD_INPUT_C } };		//ショット
+	//defaultMapTable_[InputType::shot] = { {InputCategory::keybd, /*KEY_INPUT_Z*/0},
+	//									{InputCategory::pad, PAD_INPUT_C } };		//ショット
 
-	defaultMapTable_[InputType::rapid] = { {InputCategory::keybd, KEY_INPUT_A},
-									{InputCategory::pad, PAD_INPUT_A } };			//連射
+	//defaultMapTable_[InputType::rapid] = { {InputCategory::keybd, /*KEY_INPUT_A*/0},
+	//								{InputCategory::pad, PAD_INPUT_A } };			//連射
 
-	defaultMapTable_[InputType::switcing] = { {InputCategory::keybd, KEY_INPUT_X},
-									{InputCategory::pad, PAD_INPUT_X } };			//
+	//defaultMapTable_[InputType::switcing] = { {InputCategory::keybd, /*KEY_INPUT_X*/0},
+	//								{InputCategory::pad, PAD_INPUT_X } };			//
 
 
 	inputMapTable_ = defaultMapTable_;
@@ -50,27 +50,29 @@ InputState::InputState()
 	tempMapTable_ = inputMapTable_;
 
 	//入力タイプの名前のテーブルを作る
-	inputNameTable_[InputType::next] = "決定";
-	inputNameTable_[InputType::prev] = "戻る";
-	inputNameTable_[InputType::pause] = "ポーズ";
-	inputNameTable_[InputType::keyconf] = "keyconf";
+	inputNameTable_[InputType::DECISION] = "決定";
+	inputNameTable_[InputType::BACK] = "戻る";
+	inputNameTable_[InputType::PAUSE] = "ポーズ";
+//	inputNameTable_[InputType::keyconf] = "keyconf";
 	inputNameTable_[InputType::change] = "change";
-	inputNameTable_[InputType::shot] = "shot";
-	inputNameTable_[InputType::rapid] = "rapid";
-	inputNameTable_[InputType::switcing] = "switcihg";
+//	inputNameTable_[InputType::shot] = "shot";
+//	inputNameTable_[InputType::rapid] = "rapid";
+//	inputNameTable_[InputType::switcing] = "switcihg";
 
-	currentInput_.resize(static_cast<int>(InputType::max));
-	lastInput_.resize(static_cast<int>(InputType::max));
+	currentInput_.resize(static_cast<int>(InputType::NUM));
+	lastInput_.resize(static_cast<int>(InputType::NUM));
 }
 
 void InputState::Update()
 {
+	DINPUT_JOYSTATE input;
+	int padState = GetJoypadDirectInputState(DX_INPUT_PAD1, &input);
 	lastInput_ = currentInput_;	//直前の入力情報を記憶しておく
 
 	char keystate[256];
 	GetHitKeyStateAll(keystate); //全キー情報取得
 
-	int padState = GetJoypadInputState(DX_INPUT_PAD1);	//パッド1コンの情報を取得する
+//	int padState = GetJoypadInputState(DX_INPUT_PAD1);	//パッド1コンの情報を取得する
 	int mouseState = GetMouseInput();
 
 	//マップの全情報をループする

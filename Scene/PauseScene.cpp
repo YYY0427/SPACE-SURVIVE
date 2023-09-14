@@ -13,58 +13,39 @@ namespace
 	constexpr int window_height = 500;	//ポーズ枠の高さ
 	constexpr int window_start_x = (Game::screen_width - window_width) / 2;		//ポーズ枠の左
 	constexpr int window_start_y = (Game::screen_height - window_height) / 2;	//ポーズ枠上
-
-	constexpr int name_count = 2;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="manager">シーンマネージャーの参照</param>
 PauseScene::PauseScene(SceneManager& manager) :
 	Scene(manager)
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 PauseScene::~PauseScene()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void PauseScene::Update(const InputState& input)
 {
-	//上下で回る処理
-	if (input.IsTriggered(InputType::up))
-	{
-		//	SoundManager::GetInstance().Play("cursor");
-		currentInputIndex_ = ((currentInputIndex_ - 1) + name_count) % name_count;
-	}
-	else if (input.IsTriggered(InputType::down))
-	{
-		//	SoundManager::GetInstance().Play("cursor");
-		currentInputIndex_ = (currentInputIndex_ + 1) % name_count;
-	}
-	if (currentInputIndex_ == 0)
-	{
-		keyConfigCategoryColor_ = 0xff0000;
-		soundSettingCategoryColor_ = 0x000000;
-	}
-	else
-	{
-		keyConfigCategoryColor_ = 0x000000;
-		soundSettingCategoryColor_ = 0xff0000;
-	}
-
-	if (input.IsTriggered(InputType::next) && currentInputIndex_ == 0)
-	{
-		manager_.PushScene(new KeyConfigScene(manager_, input));
-	}
-	if (input.IsTriggered(InputType::next) && currentInputIndex_ == 1)
-	{
-		manager_.PushScene(new SoundSettingScene(manager_));
-	}
-	if (input.IsTriggered(InputType::pause))
+	if (input.IsTriggered(InputType::BACK))
 	{
 		manager_.PopScene();
 		return;
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void PauseScene::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 196);
@@ -77,7 +58,4 @@ void PauseScene::Draw()
 
 	//ポーズ中メッセージ
 	DrawString(window_start_x + 10, window_start_y + 10, "Pausing...", 0xffff88);
-
-	DrawString(window_start_x + 50, window_start_y + 50, "KeyConfig", keyConfigCategoryColor_);
-	DrawString(window_start_x + 50, window_start_y + 70, "SoundSetting", soundSettingCategoryColor_);
 }

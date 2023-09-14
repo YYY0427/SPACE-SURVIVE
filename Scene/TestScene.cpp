@@ -12,7 +12,6 @@ TestScene::TestScene(SceneManager& manager) :
 	Scene(manager)
 {
 	auto& effect = Effekseer3DEffectManager::GetInstance();
-	SoundManager::GetInstance().PlayBGM("bgmTest");
 }
 
 /// <summary>
@@ -27,18 +26,24 @@ TestScene::~TestScene()
 /// </summary>
 void TestScene::Update(const InputState& input)
 {
+	// フェードアウトが終わり次第シーン遷移
 	if (isFadeOut_ && !IsFadingOut())
 	{
 		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
 
-	if (input.IsTriggered(InputType::next) && !IsFadingIn())
+	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
+	if (input.IsTriggered(InputType::BACK) && !IsFadingIn())
 	{
 		StartFadeOut();
-		SetFadeConfig(1, VGet(255, 255, 255), GetFadeBright());
+
+		// フェードの設定の変更
+		SetFadeConfig(3, VGet(255, 255, 255), GetFadeBright());
+
 		isFadeOut_ = true;
 	}
+	// フェードの更新
 	UpdateFade();
 }
 
@@ -48,5 +53,7 @@ void TestScene::Update(const InputState& input)
 void TestScene::Draw()
 {
 	DrawString(0, 0, "TestScene", 0xffffff, true);
+
+	// フェードの描画
 	DrawFade();
 }

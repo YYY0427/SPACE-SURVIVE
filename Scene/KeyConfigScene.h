@@ -2,7 +2,6 @@
 #include "Scene.h"
 
 class InputState;
-class SceneManager;
 
 /// <summary>
 /// キーコンフィグシーン
@@ -10,19 +9,25 @@ class SceneManager;
 class KeyConfigScene : public Scene
 {
 public:
+	// コンストラクタ
 	KeyConfigScene(SceneManager& manager, const InputState& input);
+
+	// デストラクタ
 	virtual ~KeyConfigScene();
 
+	// 更新
 	void Update(const InputState& input);
+
+	// 描画
 	void Draw();
 
 private:
 	const InputState& inputState_;
 
-	//現在選択中のインデックス
-	int currentInputIndex_ = 0;
+	// 現在選択中のインデックス
+	int currentSelectIndex_;
 
-	//現在特定の入力は編集中です
-	bool isEditing_ = false;
+	// 現在特定の入力は編集中かどうか
+	bool isEditing_;
 };
 

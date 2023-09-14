@@ -2,7 +2,6 @@
 #include "Scene.h"
 
 class InputState;
-class SceneManager;
 
 /// <summary>
 /// ポーズシーン
@@ -10,16 +9,17 @@ class SceneManager;
 class PauseScene : public Scene
 {
 public:
+	// コンストラクタ
 	PauseScene(SceneManager& manager);
+
+	// デストラクタ
 	virtual ~PauseScene();
 
-	virtual void Update(const InputState& input)override;
+	// 更新
+	virtual void Update(const InputState& input) override;
+
+	// 描画
 	void Draw();
-
 private:
-	unsigned int keyConfigCategoryColor_ = 0x000000;
-	unsigned int soundSettingCategoryColor_ = 0x000000;
-
-	int currentInputIndex_ = 0;
 };
 

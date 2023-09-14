@@ -28,6 +28,8 @@ private:
 		TITLE_SCENE,
 		MAIN_SCENE,
 		SOUNDSETTING_SCENE,
+		PAUSE_SCENE,
+		KEYCONFIG_SCENE,
 		NUM
 	};
 private:

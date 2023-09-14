@@ -5,19 +5,19 @@
 
 enum class InputType
 {
-	next,	//次へ行くボタン
-	prev,	//前に戻るボタン
-	pause,	//ポーズボタン
-	keyconf, //キーコンフィグ
+	DECISION,	// 次へ行くボタン
+	BACK,		// 前に戻るボタン
+	PAUSE,		// ポーズボタン
+//	keyconf,	// キーコンフィグ
 	change,	//変更
-	up,		//上
-	down,	//下
-	right,	//→
-	left,	//←
-	shot,	//弾発射
-	rapid,	//弾連射
-	switcing,	// フォースの切り離し、吸い込みの切り替え
-	max		//最大入力インデックス
+	UP,			// 上
+	DOWN,		// 下
+	RIGHT,		// →
+	LEFT,		// ←
+//	shot,	//弾発射
+//	rapid,	//弾連射
+//	switcing,	// フォースの切り離し、吸い込みの切り替え
+	NUM			// 最大入力インデックス
 };
 
 /// <summary>

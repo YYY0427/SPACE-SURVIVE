@@ -7,21 +7,34 @@
 #include "../Util/DrawFunctions.h"
 #include "../Game.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="manager">シーンマネージャーの参照</param>
 TitleScene::TitleScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&TitleScene::NormalUpdate)
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 TitleScene::~TitleScene()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void TitleScene::Update(const InputState& input)
 {
 	(this->*updateFunc_)(input);
 }
 
+/// <summary>
+/// 通常の更新
+/// </summary>
 void TitleScene::NormalUpdate(const InputState& input)
 {
 	if (isFadeOut_ && !IsFadingOut())
@@ -39,6 +52,9 @@ void TitleScene::NormalUpdate(const InputState& input)
 	UpdateFade();
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void TitleScene::Draw()
 {
 	DrawString(0, 0, "TitleScene", 0xffffff, true);

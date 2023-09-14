@@ -1,4 +1,5 @@
 #include "SaveData.h"
+#include "../Game.h"
 #include <string>
 #include <cassert>
 #include <fstream>
@@ -126,4 +127,34 @@ int SaveData::GetBgmVolume() const
 int SaveData::GetSeVolume() const
 {
 	return data_.volumeSe;
+}
+
+/// <summary>
+/// BGMの音量の設定(最大値を超えると0に戻る)
+/// </summary>
+void SaveData::SetBgmVolume()
+{
+	data_.volumeBgm++;
+	if (data_.volumeBgm > Game::config_volume_num)
+	{
+		data_.volumeBgm = 0;
+	}
+
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
+}
+
+/// <summary>
+/// SEの音量の設定(最大値を超えると0に戻る)
+/// </summary>
+void SaveData::SetSeVolume()
+{
+	data_.volumeSe++;
+	if (data_.volumeSe > Game::config_volume_num)
+	{
+		data_.volumeSe = 0;
+	}
+
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
 }

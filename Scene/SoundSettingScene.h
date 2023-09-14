@@ -7,14 +7,26 @@
 class SoundSettingScene : public Scene
 {
 public:
+	// コンストラクタ
 	SoundSettingScene(SceneManager& manager);
+
+	// デストラクタ
 	virtual ~SoundSettingScene();
 
+	// 更新
 	void Update(const InputState& input);
-	void Draw();
 
+	// 描画
+	void Draw();
 private:
-	int currentInputIndex_ = 0;
-	unsigned int bgmCategoryColor = 0x000000;
-	unsigned int seCategoryColor = 0x000000;
+	// サウンドの種類
+	enum SoundType
+	{
+		BGM,	
+		SE,
+		NUM,	// 選択肢が何個合計であるか
+	};
+private:
+	// 現在選択中のインデックス
+	int currentSelectIndex_;
 };

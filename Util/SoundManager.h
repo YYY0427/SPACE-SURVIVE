@@ -38,6 +38,7 @@ public:
 	// すべてのサウンドを止める
 	void StopAllSound();
 
+	// 音量調節
 	void SetVolume(string fileName, int volume);
 
 	// 3Dサウンドのリスナーの位置とリスナーの前方位置を設定する

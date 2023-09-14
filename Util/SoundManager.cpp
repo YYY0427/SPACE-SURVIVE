@@ -213,6 +213,11 @@ void SoundManager::StopAllSound()
 	}
 }
 
+/// <summary>
+/// 音量調節
+/// </summary>
+/// <param name="fileName">音量調節をしたサウンドのファイル名(拡張子は含まない)</param>
+/// <param name="volume">設定したい音量(0~255)</param>
 void SoundManager::SetVolume(string fileName, int volume)
 {
 	// サウンドに設定された音量調節

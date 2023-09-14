@@ -12,7 +12,7 @@ TestScene::TestScene(SceneManager& manager) :
 	Scene(manager)
 {
 	auto& effect = Effekseer3DEffectManager::GetInstance();
-	SoundManager::GetInstance().PlayBGM("test");
+	SoundManager::GetInstance().PlayBGM("bgmTest");
 }
 
 /// <summary>

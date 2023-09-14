@@ -11,8 +11,11 @@
 
 namespace
 {
+	// 表示するテキストの全体の位置
 	constexpr int draw_text_pos_x = Game::screen_width / 2 - 100;
 	constexpr int draw_text_pos_y = Game::screen_height / 2 - 100;
+
+	// テキストの文字間
 	constexpr int text_space = 32;
 }
 
@@ -56,6 +59,11 @@ void DebugScene::Update(const InputState& input)
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
 		}
+		else if (currentSelectIndex_ == SOUNDSETTING_SCENE)
+		{
+			manager_.ChangeScene(new SoundSettingScene(manager_));
+			return;
+		}
 	}
 
 	// 選択肢を回す処理
@@ -89,6 +97,8 @@ void DebugScene::Draw()
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * TEST_SCENE, "TestScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * TITLE_SCENE, "TitleScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * MAIN_SCENE, "MainScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * SOUNDSETTING_SCENE, "SoundSettingScene", 0xffffff, true);
+
 	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectIndex_, "→", 0xff0000);
 
 	// フェードの描画

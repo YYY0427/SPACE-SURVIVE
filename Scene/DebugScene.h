@@ -27,6 +27,7 @@ private:
 		TEST_SCENE,
 		TITLE_SCENE,
 		MAIN_SCENE,
+		SOUNDSETTING_SCENE,
 		NUM
 	};
 private:

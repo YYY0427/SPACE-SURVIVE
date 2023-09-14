@@ -9,16 +9,21 @@ class InputState;
 class TitleScene : public Scene
 {
 public:
+	// コンストラクタ
 	TitleScene(SceneManager& manager);
-	~TitleScene();
 
+	// デストラクタ
+	virtual ~TitleScene();
+
+	// 更新
 	void Update(const InputState& input);
-	void Draw();
 
+	// 描画
+	void Draw();
 private:
-	// 通常状態のUpdate関数
+	// 通常状態の更新
 	void NormalUpdate(const InputState& input);
 
-	// Update用メンバ関数ポインタ
+	// メンバ関数ポインタ
 	void (TitleScene::* updateFunc_)(const InputState& input);
 };

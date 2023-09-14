@@ -25,6 +25,9 @@ public:
 	int GetBgmVolume() const;	// BGM音量	0~5
 	int GetSeVolume() const;	// SE音量	0~5
 
+	// 音量設定
+	void SetBgmVolume(); // BGM
+	void SetSeVolume();	 // SE
 private:
 	// セーブデータ
 	struct Data

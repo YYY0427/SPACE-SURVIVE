@@ -3,12 +3,9 @@
 
 InputState::InputState()
 {
-	defaultMapTable_[InputType::DECISION] = { {InputCategory::keybd, /*KEY_INPUT_RETURN*/0},
-										{InputCategory::pad, PAD_INPUT_A },			//スタートボタン
-										{InputCategory::mouse, /*MOUSE_INPUT_LEFT*/0 } };
+	defaultMapTable_[InputType::DECISION] = { {InputCategory::pad,  XINPUT_BUTTON_A }};
 
-	defaultMapTable_[InputType::BACK] = { {InputCategory::keybd, /*KEY_INPUT_SPACE*/0},
-										{InputCategory::pad, PAD_INPUT_B} };		//バックボタン
+	defaultMapTable_[InputType::BACK] = { {InputCategory::pad, XINPUT_BUTTON_B} };		//バックボタン
 
 	defaultMapTable_[InputType::PAUSE] = { {InputCategory::keybd, /*KEY_INPUT_P*/0},
 										{InputCategory::pad, PAD_INPUT_START } };		//セレクトボタン
@@ -53,11 +50,7 @@ InputState::InputState()
 	inputNameTable_[InputType::DECISION] = "決定";
 	inputNameTable_[InputType::BACK] = "戻る";
 	inputNameTable_[InputType::PAUSE] = "ポーズ";
-//	inputNameTable_[InputType::keyconf] = "keyconf";
 	inputNameTable_[InputType::change] = "change";
-//	inputNameTable_[InputType::shot] = "shot";
-//	inputNameTable_[InputType::rapid] = "rapid";
-//	inputNameTable_[InputType::switcing] = "switcihg";
 
 	currentInput_.resize(static_cast<int>(InputType::NUM));
 	lastInput_.resize(static_cast<int>(InputType::NUM));
@@ -65,14 +58,14 @@ InputState::InputState()
 
 void InputState::Update()
 {
-	DINPUT_JOYSTATE input;
-	int padState = GetJoypadDirectInputState(DX_INPUT_PAD1, &input);
 	lastInput_ = currentInput_;	//直前の入力情報を記憶しておく
+
+	XINPUT_STATE  padState;
+	GetJoypadXInputState(DX_INPUT_PAD1, &padState);
 
 	char keystate[256];
 	GetHitKeyStateAll(keystate); //全キー情報取得
 
-//	int padState = GetJoypadInputState(DX_INPUT_PAD1);	//パッド1コンの情報を取得する
 	int mouseState = GetMouseInput();
 
 	//マップの全情報をループする
@@ -90,7 +83,11 @@ void InputState::Update()
 			}
 			else if (input.cat == InputCategory::pad)
 			{
-				currentInput_[static_cast<int>(keymap.first)] = padState & input.id;
+			//	currentInput_[static_cast<int>(keymap.first)] = padState.Buttons[input.id];
+				for (int i = 0; i < 16; i++)
+				{
+					currentInput_[static_cast<int>(keymap.first)] = padState.Buttons[i] & input.id;
+				}
 			}
 			else if (input.cat == InputCategory::mouse)
 			{

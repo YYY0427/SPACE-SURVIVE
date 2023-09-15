@@ -3,7 +3,6 @@
 
 // プロトタイプ宣言
 class SceneManager;	// シーンマネージャー
-class InputState;	// 入力ステート
 
 //この時点ではSceneManagerとInputStateは
 //ポインタもしくは参照としてしか扱えない。
@@ -18,7 +17,7 @@ public:
 	virtual ~Scene() {};
 
 	// 更新
-	virtual void Update(const InputState& input) = 0;
+	virtual void Update() = 0;
 
 	// 描画
 	virtual void Draw() = 0;

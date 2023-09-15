@@ -38,7 +38,7 @@ DebugScene::~DebugScene()
 /// <summary>
 /// 更新
 /// </summary>
-void DebugScene::Update(const InputState& input)
+void DebugScene::Update()
 {
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
 	if (isFadeOut_ && !IsFadingOut())
@@ -74,17 +74,17 @@ void DebugScene::Update(const InputState& input)
 	}
 
 	// 選択肢を回す処理
-	if (input.IsTriggered(InputType::UP) && !isFadeOut_)
+	if (InputState::IsTriggered(InputType::UP) && !isFadeOut_)
 	{
 		currentSelectIndex_ = ((currentSelectIndex_ - 1) + NUM) % NUM;
 	}
-	else if (input.IsTriggered(InputType::DOWN) && !isFadeOut_)
+	else if (InputState::IsTriggered(InputType::DOWN) && !isFadeOut_)
 	{
 		currentSelectIndex_ = (currentSelectIndex_ + 1) % NUM;
 	}
 
 	// 決定ボタンを押したらフェードアウト開始
-	if (input.IsTriggered(InputType::DECISION) && !IsFadingIn())
+	if (InputState::IsTriggered(InputType::DECISION) && !IsFadingIn())
 	{
 		// ポーズの場合はフェードを行わない
 		if (currentSelectIndex_ != PAUSE_SCENE)

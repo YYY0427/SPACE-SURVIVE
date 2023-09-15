@@ -24,7 +24,7 @@ TestScene::~TestScene()
 /// <summary>
 /// 更新
 /// </summary>
-void TestScene::Update(const InputState& input)
+void TestScene::Update()
 {
 	// フェードアウトが終わり次第シーン遷移
 	if (isFadeOut_ && !IsFadingOut())
@@ -34,11 +34,11 @@ void TestScene::Update(const InputState& input)
 	}
 
 	static int j = 0;
-	if (input.IsXInputStick(XInputType::LEFT) == XInputTypeStick::LITTLE_LEFT)
+	if (InputState::IsXInputStick(XInputType::LEFT) == XInputTypeStick::LITTLE_LEFT)
 	{
 		j = 1;
 	}
-	else if (input.IsXInputStick(XInputType::LEFT) == XInputTypeStick::LEFT)
+	else if (InputState::IsXInputStick(XInputType::LEFT) == XInputTypeStick::LEFT)
 	{
 		j = 10;
 	}
@@ -49,7 +49,7 @@ void TestScene::Update(const InputState& input)
 	DrawFormatString(200, 200, 0xffffff, "%d", j);
 
 	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
-	if (input.IsTriggered(InputType::BACK) && !IsFadingIn())
+	if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
 	{
 		StartFadeOut();
 

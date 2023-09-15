@@ -1,8 +1,6 @@
 #pragma once
 #include "Scene.h"
 
-class InputState;
-
 /// <summary>
 /// ポーズシーン
 /// </summary>
@@ -16,7 +14,7 @@ public:
 	virtual ~PauseScene();
 
 	// 更新
-	virtual void Update(const InputState& input) override;
+	virtual void Update() override;
 
 	// 描画
 	void Draw();

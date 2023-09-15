@@ -14,18 +14,18 @@ public:
 	virtual ~MainScene();
 
 	// 更新
-	void Update(const InputState& input);
+	void Update();
 
 	// 描画
 	void Draw();
 
 private:
 	// メンバ関数ポインタ
-	using UpdateFunc_t = void (MainScene::*) (const InputState& input);
+	using UpdateFunc_t = void (MainScene::*) ();
 	UpdateFunc_t updateFunc_;
 
 	// 通常の更新
-	void NormalUpdate(const InputState& input);
+	void NormalUpdate();
 
 private:
 };

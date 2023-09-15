@@ -2,7 +2,6 @@
 #include <deque>
 
 class Scene;
-class InputState;
 
 /// <summary>
 /// シーン監視クラス
@@ -20,7 +19,7 @@ public:
 	void PopScene();
 
 	// 各シーンの更新
-	void Update(const InputState& input);
+	void Update();
 
 	// 各シーンの描画
 	void Draw();

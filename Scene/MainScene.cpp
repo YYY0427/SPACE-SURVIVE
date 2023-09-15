@@ -30,15 +30,15 @@ MainScene::~MainScene()
 /// <summary>
 /// 更新
 /// </summary>
-void MainScene::Update(const InputState& input)
+void MainScene::Update()
 {
-	(this->*updateFunc_)(input);
+	(this->*updateFunc_)();
 }
 
 /// <summary>
 /// 通常の更新
 /// </summary>
-void MainScene::NormalUpdate(const InputState& input)
+void MainScene::NormalUpdate()
 {
 	// フェードが終わり次第シーン遷移
 	if (isFadeOut_ && !IsFadingOut())
@@ -47,14 +47,15 @@ void MainScene::NormalUpdate(const InputState& input)
 		return;
 	}
 
+
 	// 戻るボタンが押されたらフェードアウト開始
-	if (input.IsTriggered(InputType::BACK) && !IsFadingIn())
+	if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
 	{
 		StartFadeOut();
 		isFadeOut_ = true;
 	}
 	// ポーズ画面に遷移
-	if (input.IsTriggered(InputType::PAUSE))
+	if (InputState::IsTriggered(InputType::PAUSE))
 	{
 		manager_.PushScene(new PauseScene(manager_));
 		return;

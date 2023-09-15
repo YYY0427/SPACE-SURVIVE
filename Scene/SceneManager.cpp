@@ -46,9 +46,9 @@ void SceneManager::PopScene()
 /// <summary>
 /// 各シーンのUpdateを行う
 /// </summary>
-void SceneManager::Update(const InputState& input)
+void SceneManager::Update()
 {
-	scene_.front()->Update(input);
+	scene_.front()->Update();
 }
 
 /// <summary>

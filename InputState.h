@@ -8,16 +8,32 @@ enum class InputType
 	DECISION,	// 次へ行くボタン
 	BACK,		// 前に戻るボタン
 	PAUSE,		// ポーズボタン
-//	keyconf,	// キーコンフィグ
-	change,	//変更
+	change,		// 変更
 	UP,			// 上
 	DOWN,		// 下
 	RIGHT,		// →
 	LEFT,		// ←
-//	shot,	//弾発射
-//	rapid,	//弾連射
-//	switcing,	// フォースの切り離し、吸い込みの切り替え
 	NUM			// 最大入力インデックス
+};
+
+enum class XInputType
+{
+	LEFT,
+	RIGHT,
+};
+
+enum class XInputTypeStic
+{
+	NONE,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	LITTLE_UP,
+	LITTLE_DOWN, 
+	LITTLE_LEFT, 
+	LITTLE_RIGHT,
+	NUM
 };
 
 /// <summary>
@@ -64,6 +80,10 @@ public:
 	/// <param name="type">InputType</param>
 	/// <returns>押されてたらtrue,押されてないならfalse</returns>
 	bool IsPressed(InputType type) const;
+
+	bool IsXInputTrigger(XInputType type) const;
+
+	XInputTypeStic IsXInputStic(XInputType stic) const;
 
 	/// <summary>
 	/// 入力情報を更新する
@@ -121,4 +141,3 @@ private:
 	std::vector<bool> currentInput_;	//現在の入力情報(押してるか押してないか)
 	std::vector<bool> lastInput_;		//直前の入力情報(直前押してるか押してないか)
 };
-

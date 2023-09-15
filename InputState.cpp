@@ -3,41 +3,21 @@
 
 InputState::InputState()
 {
-	defaultMapTable_[InputType::DECISION] = { {InputCategory::pad,  XINPUT_BUTTON_A }};
+	defaultMapTable_[InputType::DECISION] = { {InputCategory::pad,  XINPUT_BUTTON_A }};			// Aボタン
 
-	defaultMapTable_[InputType::BACK] = { {InputCategory::pad, XINPUT_BUTTON_B} };		//バックボタン
+	defaultMapTable_[InputType::BACK] = { {InputCategory::pad, XINPUT_BUTTON_B} };				// Bボタン
 
-	defaultMapTable_[InputType::PAUSE] = { {InputCategory::keybd, /*KEY_INPUT_P*/0},
-										{InputCategory::pad, PAD_INPUT_START } };		//セレクトボタン
+	defaultMapTable_[InputType::PAUSE] = {{InputCategory::pad, XINPUT_BUTTON_START } };			// スタートボタン
 
+	defaultMapTable_[InputType::change] = { {InputCategory::pad, XINPUT_BUTTON_X } };			// Xショルダー
 
-	//defaultMapTable_[InputType::keyconf] = { {InputCategory::keybd, /*KEY_INPUT_K*/0},
-	//									{InputCategory::pad, PAD_INPUT_Y } };		//左ショルダー
+	defaultMapTable_[InputType::UP] = { {InputCategory::pad, XINPUT_BUTTON_DPAD_UP } };			// ↑
 
-	defaultMapTable_[InputType::change] = { {InputCategory::keybd, /*KEY_INPUT_C*/0},
-										{InputCategory::pad, PAD_INPUT_Z } };		//右ショルダー
+	defaultMapTable_[InputType::DOWN] = { {InputCategory::pad, XINPUT_BUTTON_DPAD_DOWN } };		// ↓
 
-	defaultMapTable_[InputType::UP] = { {InputCategory::keybd, /*KEY_INPUT_UP*/0},
-										{InputCategory::pad, PAD_INPUT_UP } };		//↑
-
-	defaultMapTable_[InputType::DOWN] = { {InputCategory::keybd, /*KEY_INPUT_DOWN*/0},
-										{InputCategory::pad, PAD_INPUT_DOWN } };	//↓
-
-	defaultMapTable_[InputType::RIGHT] = { {InputCategory::keybd, /*KEY_INPUT_RIGHT*/0},
-										{InputCategory::pad, PAD_INPUT_RIGHT } };	//→
-
-	defaultMapTable_[InputType::LEFT] = { {InputCategory::keybd, /*KEY_INPUT_LEFT*/0},
-										{InputCategory::pad, PAD_INPUT_LEFT } };	//←
-
-	//defaultMapTable_[InputType::shot] = { {InputCategory::keybd, /*KEY_INPUT_Z*/0},
-	//									{InputCategory::pad, PAD_INPUT_C } };		//ショット
-
-	//defaultMapTable_[InputType::rapid] = { {InputCategory::keybd, /*KEY_INPUT_A*/0},
-	//								{InputCategory::pad, PAD_INPUT_A } };			//連射
-
-	//defaultMapTable_[InputType::switcing] = { {InputCategory::keybd, /*KEY_INPUT_X*/0},
-	//								{InputCategory::pad, PAD_INPUT_X } };			//
-
+	defaultMapTable_[InputType::RIGHT] = {{InputCategory::pad, XINPUT_BUTTON_DPAD_RIGHT } };	// →
+	 
+	defaultMapTable_[InputType::LEFT] = { {InputCategory::pad, XINPUT_BUTTON_DPAD_LEFT } };		// ←
 
 	inputMapTable_ = defaultMapTable_;
 
@@ -83,11 +63,7 @@ void InputState::Update()
 			}
 			else if (input.cat == InputCategory::pad)
 			{
-			//	currentInput_[static_cast<int>(keymap.first)] = padState.Buttons[input.id];
-				for (int i = 0; i < 16; i++)
-				{
-					currentInput_[static_cast<int>(keymap.first)] = padState.Buttons[i] & input.id;
-				}
+				currentInput_[static_cast<int>(keymap.first)] = padState.Buttons[input.id];
 			}
 			else if (input.cat == InputCategory::mouse)
 			{
@@ -215,4 +191,81 @@ bool InputState::IsPressed(InputType type) const
 bool InputState::IsTriggered(InputType type) const
 {
 	return IsPressed(type) && !lastInput_[static_cast<int>(type)];
+}
+
+XInputTypeStic InputState::IsXInputStic(XInputType stic) const
+{
+	XINPUT_STATE  padState;
+	GetJoypadXInputState(DX_INPUT_PAD1, &padState);
+	float x, y;
+	if (stic == XInputType::LEFT)
+	{
+		x = static_cast<float>(padState.ThumbLX / 32767.0f);
+		y = static_cast<float>(padState.ThumbLY / 32767.0f);
+	}
+	else
+	{
+		x = static_cast<float>(padState.ThumbRX / 32767.0f);
+		y = static_cast<float>(padState.ThumbRY / 32767.0f);
+	}
+	DrawFormatString(300, 300, 0xffffff, "%.2f", x);
+
+	if (x < 0.8f && x > 0.3f)
+	{
+		// 右にちょっと動く
+		return XInputTypeStic::LITTLE_RIGHT;
+	}
+	else if (x > 0.9f)
+	{
+		// 右に大きく動く
+		return XInputTypeStic::RIGHT;
+	}
+	else if (x < -0.3f && x > -0.8f)
+	{
+		// 左に少し動く
+		return XInputTypeStic::LITTLE_LEFT;
+	}
+	else if (x < -0.9f)
+	{
+		// 左に大きく動く
+		return XInputTypeStic::LEFT;
+	}
+
+	if (y < 0.8f && y > 0.3f)
+	{
+		// 上にちょっと動く
+		return XInputTypeStic::LITTLE_UP;
+	}
+	else if (y > 0.9f)
+	{
+		// 上に大きく動く
+		return XInputTypeStic::UP;
+	}
+	else if (y < -0.3f && y > -0.8f)
+	{
+		// 下に少し動く
+		return XInputTypeStic::LITTLE_DOWN;
+	}
+	else if (y < -0.9f)
+	{
+		// 下に大きく動く
+		return XInputTypeStic::DOWN;
+	}
+	// 動いてない
+	return XInputTypeStic::NONE;
+
+}
+
+bool InputState::IsXInputTrigger(XInputType type) const
+{
+	XINPUT_STATE  padState;
+	GetJoypadXInputState(DX_INPUT_PAD1, &padState);
+	if (type == XInputType::LEFT)
+	{
+		return 	padState.LeftTrigger > padState.LeftTrigger / 2;
+	}
+	else
+	{
+		return 	padState.RightTrigger > padState.RightTrigger / 2;
+	}
 }

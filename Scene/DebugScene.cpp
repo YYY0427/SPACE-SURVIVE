@@ -99,6 +99,7 @@ void DebugScene::Update(const InputState& input)
 		}
 		isFadeOut_ = true;
 	}
+
 	// フェードの更新
 	UpdateFade();
 }

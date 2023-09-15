@@ -33,6 +33,17 @@ void TestScene::Update(const InputState& input)
 		return;
 	}
 
+	static int j = 0;
+	if (input.IsXInputStic(XInputType::LEFT) == XInputTypeStic::LITTLE_LEFT)
+	{
+		j--;
+	}
+	else if (input.IsXInputStic(XInputType::LEFT) == XInputTypeStic::LEFT)
+	{
+		j++;
+	}
+	DrawFormatString(200, 200, 0xffffff, "%d", j);
+
 	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
 	if (input.IsTriggered(InputType::BACK) && !IsFadingIn())
 	{

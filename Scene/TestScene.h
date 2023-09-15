@@ -5,6 +5,7 @@
 using namespace std;
 
 class Camera;
+class Player;
 
 /// <summary>
 /// テストシーン(色々試すようのシーン)
@@ -25,5 +26,6 @@ public:
 	void Draw();
 private:
 	shared_ptr<Camera> pCamera_;
+	shared_ptr<Player> pPlayer_;
 };
 

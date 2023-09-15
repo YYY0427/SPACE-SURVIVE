@@ -5,6 +5,7 @@
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
 #include "../Camera.h"
+#include "../Player.h"
 
 /// <summary>
 /// コンストラクタ
@@ -14,6 +15,7 @@ TestScene::TestScene(SceneManager& manager) :
 {
 	auto& effect = Effekseer3DEffectManager::GetInstance();
 	pCamera_ = make_shared<Camera>();
+	pPlayer_ = make_shared<Player>();
 }
 
 /// <summary>
@@ -36,21 +38,7 @@ void TestScene::Update()
 	}
 
 	pCamera_->Update();
-
-	static int j = 0;
-	if (InputState::IsXInputStick(XInputType::LEFT) == XInputTypeStick::LITTLE_LEFT)
-	{
-		j = 1;
-	}
-	else if (InputState::IsXInputStick(XInputType::LEFT) == XInputTypeStick::LEFT)
-	{
-		j = 10;
-	}
-	else
-	{
-		j = 0;
-	}
-	DrawFormatString(200, 200, 0xffffff, "%d", j);
+	pPlayer_->Update();
 
 	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
 	if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
@@ -95,6 +83,7 @@ void TestScene::Draw()
 		pos1.z += lineAreaSize / lineNum;
 		pos2.z += lineAreaSize / lineNum;
 	}
+	pPlayer_->Draw();
 
 	// フェードの描画
 	DrawFade();

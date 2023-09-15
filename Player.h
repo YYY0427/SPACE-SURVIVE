@@ -1,4 +1,10 @@
 #pragma once
+#include <DxLib.h>
+#include <memory>
+
+using namespace std;
+
+class Model;
 
 /// <summary>
 /// プレイヤークラス
@@ -17,6 +23,9 @@ public:
 
 	// 描画
 	void Draw();
-
 private:
+	shared_ptr<Model> pModel_;
+
+	// 位置情報
+	VECTOR pos_;
 };

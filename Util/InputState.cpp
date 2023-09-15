@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <cmath>
 
 namespace
 {
@@ -108,9 +109,10 @@ namespace InputState
 	/// <summary>
 	/// パッドのスティックの入力情報を取得
 	/// </summary>
-	/// <param name="stickType">スティックの右か左か</param>
-	/// <returns>スティックのどの入力タイプか</returns>
-	XInputTypeStick IsXInputStick(XInputType stickType)
+	/// <param name="stick">スティックの右か左か</param>
+	/// <param name="input">スティックのどの入力タイプか</param>
+	/// <returns>スティックの傾きぐわい(0のときは入力なし)　傾いている角度が大きいほど大きい数字が返ってくる</returns>
+	int IsXInputStick(XInputType stick, XInputTypeStick input)
 	{
 		// パッドの情報の取得
 		XINPUT_STATE  padState;
@@ -118,63 +120,36 @@ namespace InputState
 
 		// 右スティックか左スティックか
 		float x, y;
-		if (stickType == XInputType::LEFT)
+		if (stick == XInputType::LEFT)
 		{
 			// padStateから取得した値を-1.0~1.0に変換
-			x = static_cast<float>(padState.ThumbLX / 32767.0f);
-			y = static_cast<float>(padState.ThumbLY / 32767.0f);
+			x = static_cast<float>(padState.ThumbLX / 32767.0f * 10);
+			y = static_cast<float>(padState.ThumbLY / 32767.0f * 10);
 		}
 		else
 		{
 			// padStateから取得した値を-1.0~1.0に変換
-			x = static_cast<float>(padState.ThumbRX / 32767.0f);
-			y = static_cast<float>(padState.ThumbRY / 32767.0f);
+			x = static_cast<float>(padState.ThumbRX / 32767.0f * 10);
+			y = static_cast<float>(padState.ThumbRY / 32767.0f * 10);
 		}
-
-		// 変換した値の割合によってreturnする
-		if (x < 0.8f && x > 0.3f)
+		if (input == XInputTypeStick::LEFT && x < -0.1f)
 		{
-			// 右にちょっと動く
-			return XInputTypeStick::LITTLE_RIGHT;
+			return abs(static_cast<int>(x));
 		}
-		else if (x > 0.9f)
+		if (input == XInputTypeStick::RIGHT && x > 0.1f)
 		{
-			// 右に大きく動く
-			return XInputTypeStick::RIGHT;
+			return abs(static_cast<int>(x));
 		}
-		else if (x < -0.3f && x > -0.8f)
+		if (input == XInputTypeStick::UP && y < -0.1f)
 		{
-			// 左に少し動く
-			return XInputTypeStick::LITTLE_LEFT;
+			return abs(static_cast<int>(y));
 		}
-		else if (x < -0.9f)
+		if (input == XInputTypeStick::DOWN && y > 0.1f)
 		{
-			// 左に大きく動く
-			return XInputTypeStick::LEFT;
+			return abs(static_cast<int>(y));
 		}
-
-		if (y < 0.8f && y > 0.3f)
-		{
-			// 上にちょっと動く
-			return XInputTypeStick::LITTLE_UP;
-		}
-		else if (y > 0.9f)
-		{
-			// 上に大きく動く
-			return XInputTypeStick::UP;
-		}
-		else if (y < -0.3f && y > -0.8f)
-		{
-			// 下に少し動く
-			return XInputTypeStick::LITTLE_DOWN;
-		}
-		else if (y < -0.9f)
-		{
-			// 下に大きく動く
-			return XInputTypeStick::DOWN;
-		}
-		// 動いてない
-		return XInputTypeStick::NONE;
+		// 入力なし
+		return 0;
 	}
 
 	/// <summary>

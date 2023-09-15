@@ -82,5 +82,5 @@ namespace InputState
 	bool IsXInputTrigger(XInputType type);
 
 	// パッドのスティックの入力情報を取得
-	XInputTypeStick IsXInputStick(XInputType stic);
+	int IsXInputStick(XInputType stic, XInputTypeStick input);
 };

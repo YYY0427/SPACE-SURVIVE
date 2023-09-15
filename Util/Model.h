@@ -42,9 +42,10 @@ public:
 	int GetColFrameIndex() const;	// 当たり判定に使用するフレームインデックスを取得する
 
 	// セッター
-	void SetPos(VECTOR pos);		// 表示位置の設定
-	void SetRot(VECTOR rot);		// 回転状態の設定
-	void SetScale(VECTOR scale);	// 拡大率の設定
+	void SetPos(VECTOR pos);			// 表示位置の設定
+	void SetRot(VECTOR rot);			// 回転状態の設定
+	void SetScale(VECTOR scale);		// 拡大率の設定
+	void SetGravity(VECTOR gravity);	// 重力の設定
 
 private:
 	// アニメーション情報

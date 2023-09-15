@@ -22,17 +22,40 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetGraphMode(Game::screen_width, Game::screen_height, Game::color_depth);
 
 	// ゲーム中にウィンドウモードを切り替えてもグラフィックハンドルをリセットしない
-	SetChangeScreenModeGraphicsSystemResetFlag(false);
+	SetChangeScreenModeGraphicsSystemResetFlag(TRUE);
 
 	// ほかのウィンドウを選択していても動くようにする
-	SetAlwaysRunFlag(false);
+	SetAlwaysRunFlag(TRUE);
 
 	// ウィンドウのサイズを変更可能にする
-	SetWindowSizeChangeEnableFlag(true);
+	SetWindowSizeChangeEnableFlag(TRUE);
 
 	// DirectX11を使用するようにする。(DirectX9も可)
 	// Effekseerを使用するには必ず設定する。
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
+	
+	// １メートルに相当する値を設定する
+	Set3DSoundOneMetre(Game::one_meter);
+
+	// XAudioを有効化
+	SetEnableXAudioFlag(TRUE);
+
+	// 垂直同期を有効化
+	SetWaitVSyncFlag(TRUE);
+
+	// ＤＸライブラリ初期化処理
+	if (DxLib_Init() == -1)
+	{
+		// エラーが起きたら止める
+		assert(0);
+	}
+	// Effekseerの初期化
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	if (effectManager.Init() == -1)
+	{
+		// エラーが起きたら止める
+		assert(0);
+	}
 
 	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ
 	// Effekseerを使用する場合は必ず設定する
@@ -42,49 +65,36 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する
 	// ただし、DirectX11を使用する場合は実行する必要はない
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
-
-	// XAudioを有効化
-	SetEnableXAudioFlag(TRUE);
-
-	// １メートルに相当する値を設定する
-	Set3DSoundOneMetre(Game::one_meter);
-
+	
 	// Zバッファを有効化
 	SetUseZBufferFlag(TRUE);
 
-	// シングルトンクラスのインスタンスの取得
-	auto& soundManager = SoundManager::GetInstance();
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	auto& saveData = SaveData::GetInstance();
+	// Zバッファへの書き込みを行う
+	SetWriteZBuffer3D(TRUE);
 
-	// ＤＸライブラリ初期化処理
-	if (DxLib_Init() == -1)
-	{
-		// エラーが起きたら止める
-		assert(0);
-	}
-	// Effekseerの初期化
-	if (effectManager.Init() == -1)
-	{
-		// エラーが起きたら止める
-		assert(0);
-	}
+	// ポリゴンの裏面を描画しない
+	SetUseBackCulling(TRUE);
+
+	// 重力の設定
+	MV1SetLoadModelPhysicsWorldGravity(-9.8f);
 	
 	// セーブデータの読み込み
+	auto& saveData = SaveData::GetInstance();
 	saveData.Load();
 
 	// csvファイルに沿ってサウンドをロード
+	auto& soundManager = SoundManager::GetInstance();
 	soundManager.LoadAndSaveSoundFileData();
+
+	// 入力タイプの初期化
+	InputState::Init();
 
 	// ダブルバッファモード
 	// 裏画面に描画
 	SetDrawScreen(DX_SCREEN_BACK);
 	
+	// 初期シーンの設定
 	SceneManager sceneManager;
-
-	// 入力タイプの初期化
-	InputState::Init();
-
 #ifdef _DEBUG
 	sceneManager.ChangeScene(new DebugScene(sceneManager));
 #else 

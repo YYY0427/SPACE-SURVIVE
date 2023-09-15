@@ -4,6 +4,7 @@
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
+#include "../Camera.h"
 
 /// <summary>
 /// コンストラクタ
@@ -12,6 +13,7 @@ TestScene::TestScene(SceneManager& manager) :
 	Scene(manager)
 {
 	auto& effect = Effekseer3DEffectManager::GetInstance();
+	pCamera_ = make_shared<Camera>();
 }
 
 /// <summary>
@@ -32,6 +34,8 @@ void TestScene::Update()
 		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
+
+	pCamera_->Update();
 
 	static int j = 0;
 	if (InputState::IsXInputStick(XInputType::LEFT) == XInputTypeStick::LITTLE_LEFT)
@@ -78,7 +82,7 @@ void TestScene::Draw()
 	pos2 = VGet(-lineAreaSize / 2.0f, 0.0f, lineAreaSize / 2.0f);
 	for (int i = 0; i <= lineNum; i++)
 	{
-		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
+		DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
 		pos1.x += lineAreaSize / lineNum;
 		pos2.x += lineAreaSize / lineNum;
 	}
@@ -87,7 +91,7 @@ void TestScene::Draw()
 	pos2 = VGet(lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
 	for (int i = 0; i < lineNum; i++)
 	{
-		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
+		DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
 		pos1.z += lineAreaSize / lineNum;
 		pos2.z += lineAreaSize / lineNum;
 	}

@@ -18,6 +18,9 @@ namespace
 
 namespace InputState
 {
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Init()
 	{
 		// ボタンの入力タイプをどのボタンにするかの設定

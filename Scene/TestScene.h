@@ -1,5 +1,10 @@
 #pragma once
 #include "Scene.h"
+#include <memory>
+
+using namespace std;
+
+class Camera;
 
 /// <summary>
 /// テストシーン(色々試すようのシーン)
@@ -19,5 +24,6 @@ public:
 	// 描画
 	void Draw();
 private:
+	shared_ptr<Camera> pCamera_;
 };
 

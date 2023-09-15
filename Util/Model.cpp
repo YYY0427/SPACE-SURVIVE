@@ -166,6 +166,15 @@ void Model::SetScale(VECTOR scale)
 }
 
 /// <summary>
+/// 重力の設定
+/// </summary>
+/// <param name="gravity">重力の情報</param>
+void Model::SetGravity(VECTOR gravity)
+{
+	MV1SetPhysicsWorldGravity(modelHandle_, gravity);
+}
+
+/// <summary>
 /// アニメーションを設定する(ぱっと切り替える)
 /// </summary>
 /// <param name="animNo">変更先アニメーション番号</param>

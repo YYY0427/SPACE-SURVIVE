@@ -30,8 +30,6 @@ Camera::~Camera()
 /// </summary>
 void Camera::Update()
 {
-
-
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
 
@@ -39,7 +37,7 @@ void Camera::Update()
 	SetupCamera_Perspective(perspective * DX_PI_F / 180.0f);
 
 	// カメラの位置、どこを見ているかを設定する
-//	SetCameraPositionAndTarget_UpVecY(cameraPos, cameraTarget);
+	SetCameraPositionAndTarget_UpVecY(VGet(0, 300, -800), VGet(0, 0, 0));
 }
 
 /// <summary>

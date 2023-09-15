@@ -1,13 +1,13 @@
 #include <DxLib.h>
 #include "EffekseerForDXLib.h"
 #include "Game.h"
-#include "InputState.h"
 #include "Util/SoundManager.h"
 #include "Scene/SceneManager.h"
 #include "Scene/TitleScene.h"
 #include "Scene/DebugScene.h"
 #include "Util/Effekseer3DEffectManager.h"
 #include "Util/SaveData.h"
+#include "Util/InputState.h"
 
 // ƒvƒƒOƒ‰ƒ€‚Í WinMain ‚©‚çn‚Ü‚è‚Ü‚·
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)

@@ -1,8 +1,7 @@
 #include "PauseScene.h"
 #include "SceneManager.h"
-#include "KeyConfigScene.h"
 #include "SoundSettingScene.h"
-#include "../InputState.h"
+#include "../Util/InputState.h"
 #include "../Game.h"
 #include <DxLib.h>
 
@@ -36,7 +35,7 @@ PauseScene::~PauseScene()
 /// </summary>
 void PauseScene::Update(const InputState& input)
 {
-	if (input.IsTriggered(InputType::BACK))
+	if (input.IsTriggered(InputType::BACK) || input.IsTriggered(InputType::PAUSE))
 	{
 		manager_.PopScene();
 		return;

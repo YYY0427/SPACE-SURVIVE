@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 #include "MainScene.h"
 #include "DebugScene.h"
-#include "../InputState.h"
+#include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/DrawFunctions.h"
 #include "../Game.h"

@@ -3,7 +3,7 @@
 #include "DebugScene.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
-#include "../InputState.h"
+#include "../Util/InputState.h"
 
 /// <summary>
 /// コンストラクタ
@@ -34,11 +34,11 @@ void TestScene::Update(const InputState& input)
 	}
 
 	static int j = 0;
-	if (input.IsXInputStic(XInputType::LEFT) == XInputTypeStic::LITTLE_LEFT)
+	if (input.IsXInputStick(XInputType::LEFT) == XInputTypeStick::LITTLE_LEFT)
 	{
 		j--;
 	}
-	else if (input.IsXInputStic(XInputType::LEFT) == XInputTypeStic::LEFT)
+	else if (input.IsXInputStick(XInputType::LEFT) == XInputTypeStick::LEFT)
 	{
 		j++;
 	}

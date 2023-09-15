@@ -1,7 +1,7 @@
 #include "SoundSettingScene.h"
 #include "SceneManager.h"
 #include "DebugScene.h"
-#include "../InputState.h"
+#include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/SaveData.h"
 #include "../Game.h"

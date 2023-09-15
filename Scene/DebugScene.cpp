@@ -3,10 +3,9 @@
 #include "TitleScene.h"
 #include "MainScene.h"
 #include "PauseScene.h"
-#include "KeyConfigScene.h"
 #include "SoundSettingScene.h"
 #include "TestScene.h"
-#include "../InputState.h"
+#include "../Util/InputState.h"
 #include "../Game.h"
 
 namespace
@@ -72,11 +71,6 @@ void DebugScene::Update(const InputState& input)
 			manager_.PushScene(new PauseScene(manager_));
 			return;
 		}
-		else if (currentSelectIndex_ == KEYCONFIG_SCENE)
-		{
-			manager_.ChangeScene(new KeyConfigScene(manager_, input));
-			return;
-		}
 	}
 
 	// ëIëéàÇâÒÇ∑èàóù
@@ -116,7 +110,6 @@ void DebugScene::Draw()
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * MAIN_SCENE, "MainScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * SOUNDSETTING_SCENE, "SoundSettingScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * PAUSE_SCENE, "PauseScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * KEYCONFIG_SCENE, "KeyConfigScene", 0xffffff, true);
 
 	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectIndex_, "Å®", 0xff0000);
 

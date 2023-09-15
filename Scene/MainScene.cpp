@@ -4,7 +4,7 @@
 #include "SceneManager.h"
 #include "DebugScene.h"
 #include "../Game.h"
-#include "../InputState.h"
+#include "../Util/InputState.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
 #include <DxLib.h>

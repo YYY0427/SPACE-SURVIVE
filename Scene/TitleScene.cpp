@@ -28,15 +28,15 @@ TitleScene::~TitleScene()
 /// <summary>
 /// 更新
 /// </summary>
-void TitleScene::Update(const InputState& input)
+void TitleScene::Update()
 {
-	(this->*updateFunc_)(input);
+	(this->*updateFunc_)();
 }
 
 /// <summary>
 /// 通常の更新
 /// </summary>
-void TitleScene::NormalUpdate(const InputState& input)
+void TitleScene::NormalUpdate()
 {
 	if (isFadeOut_ && !IsFadingOut())
 	{
@@ -45,7 +45,7 @@ void TitleScene::NormalUpdate(const InputState& input)
 	}
 
 	//次へのボタンが押されたら次のシーンへ行く
-	if (input.IsTriggered(InputType::BACK) && !isFadeOut_)
+	if (InputState::IsTriggered(InputType::BACK) && !isFadeOut_)
 	{
 		isFadeOut_ = true;
 		StartFadeOut();

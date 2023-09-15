@@ -1,7 +1,5 @@
 #pragma once
-#include <map>
-#include <vector>
-#include <string>
+
 
 /// <summary>
 /// ボタンの入力タイプ
@@ -66,34 +64,23 @@ struct InputInfo
 /// <summary>
 /// 入力状態を管理する
 /// </summary>
-class InputState
+namespace InputState
 {
-public:
-	// コンストラクタ
-	InputState();
+	// 初期化
+	void Init();
 
 	// 入力情報の更新
 	void Update();
 
 	// ボタンが押された瞬間の入力情報の取得
-	bool IsTriggered(InputType type) const;
+	bool IsTriggered(InputType type);
 
 	// ボタンが押されている間の入力情報の取得
-	bool IsPressed(InputType type) const;
+	bool IsPressed(InputType type);
 
 	// パッドのトリガーの入力情報の取得
-	bool IsXInputTrigger(XInputType type) const;
+	bool IsXInputTrigger(XInputType type);
 
 	// パッドのスティックの入力情報を取得
-	XInputTypeStick IsXInputStick(XInputType stic) const;
-
-private:
-	// 仮想入力情報と実際の入力のテーブル
-	std::map<InputType, std::vector<InputInfo>> inputMapTable_;
-
-	// 現在の入力情報(押してるか押してないか)
-	std::vector<bool> currentInput_;	
-
-	// 直前の入力情報(直前押してるか押してないか)
-	std::vector<bool> lastInput_;		
+	XInputTypeStick IsXInputStick(XInputType stic);
 };

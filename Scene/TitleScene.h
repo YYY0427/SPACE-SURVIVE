@@ -1,8 +1,6 @@
 #pragma once
 #include "Scene.h"
 
-class InputState;
-
 /// <summary>
 /// タイトルシーン
 /// </summary>
@@ -16,14 +14,14 @@ public:
 	virtual ~TitleScene();
 
 	// 更新
-	void Update(const InputState& input);
+	void Update();
 
 	// 描画
 	void Draw();
 private:
 	// 通常状態の更新
-	void NormalUpdate(const InputState& input);
+	void NormalUpdate();
 
 	// メンバ関数ポインタ
-	void (TitleScene::* updateFunc_)(const InputState& input);
+	void (TitleScene::* updateFunc_)();
 };

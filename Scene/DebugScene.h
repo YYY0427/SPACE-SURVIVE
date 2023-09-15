@@ -16,7 +16,7 @@ public:
 	virtual ~DebugScene();
 
 	// XV
-	void Update(const InputState& input);
+	void Update();
 
 	// •`‰æ
 	void Draw();

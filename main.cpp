@@ -80,8 +80,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// 裏画面に描画
 	SetDrawScreen(DX_SCREEN_BACK);
 	
-	InputState input;
 	SceneManager sceneManager;
+
+	// 入力タイプの初期化
+	InputState::Init();
 
 #ifdef _DEBUG
 	sceneManager.ChangeScene(new DebugScene(sceneManager));
@@ -97,8 +99,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// 画面のクリア
 		ClearDrawScreen();
 
-		input.Update();
-		sceneManager.Update(input);
+		InputState::Update();
+		sceneManager.Update();
 		effectManager.Update();
 
 		sceneManager.Draw();

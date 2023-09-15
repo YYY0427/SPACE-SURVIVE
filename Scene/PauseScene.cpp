@@ -33,9 +33,9 @@ PauseScene::~PauseScene()
 /// <summary>
 /// çXêV
 /// </summary>
-void PauseScene::Update(const InputState& input)
+void PauseScene::Update()
 {
-	if (input.IsTriggered(InputType::BACK) || input.IsTriggered(InputType::PAUSE))
+	if (InputState::IsTriggered(InputType::BACK) || InputState::IsTriggered(InputType::PAUSE))
 	{
 		manager_.PopScene();
 		return;

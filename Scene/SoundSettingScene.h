@@ -14,7 +14,7 @@ public:
 	virtual ~SoundSettingScene();
 
 	// XV
-	void Update(const InputState& input);
+	void Update();
 
 	// •`‰æ
 	void Draw();

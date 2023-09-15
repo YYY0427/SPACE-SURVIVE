@@ -59,7 +59,6 @@ void MainScene::NormalUpdate(const InputState& input)
 		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}
-
 	// フェードの更新
 	UpdateFade();
 }
@@ -70,29 +69,6 @@ void MainScene::NormalUpdate(const InputState& input)
 void MainScene::Draw()
 {
 	DrawString(0, 0, "MainScene", 0xffffff, true);
-
-	VECTOR pos1;
-	VECTOR pos2;
-	float lineAreaSize = 10000.0f;
-	int lineNum = 50;
-
-	pos1 = VGet(-lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
-	pos2 = VGet(-lineAreaSize / 2.0f, 0.0f, lineAreaSize / 2.0f);
-	for (int i = 0; i <= lineNum; i++)
-	{
-		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
-		pos1.x += lineAreaSize / lineNum;
-		pos2.x += lineAreaSize / lineNum;
-	}
-
-	pos1 = VGet(-lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
-	pos2 = VGet(lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
-	for (int i = 0; i < lineNum; i++)
-	{
-		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
-		pos1.z += lineAreaSize / lineNum;
-		pos2.z += lineAreaSize / lineNum;
-	}
 
 	// フェードの描画
 	DrawFade();

@@ -7,23 +7,26 @@
 /// <param name="scene">切り替えたい次シーンのアドレス</param>
 void SceneManager::ChangeScene(Scene* scene)
 {
-	//シーンスタックが空ではなかったら...
+	// シーンスタックが空ではなかったら
 	if (!scene_.empty())
 	{
-		delete scene_.front();		// topはてっぺんの要素を返してる
-		scene_.pop_front();			// 1個減る -> ふつうは0になる
+		// 現在のシーンの削除
+		delete scene_.front();		
+		scene_.pop_front();			
 	}
-	scene_.push_front(scene);		// 1個増える
+	// 次のシーンの追加
+	scene_.push_front(scene);		
 }
 
 /// <summary>
 /// シーンを上に積む(ポーズ)
-/// Updateで実行されるのは上につまれたシーンのみ
+/// Updateで実行されるのは上につまれたシーン
 /// </summary>
 /// <param name="scene"></param>
 void SceneManager::PushScene(Scene* scene)
 {
-	scene_.push_front(scene);		// 1個増える
+	// シーンの追加
+	scene_.push_front(scene);		
 }
 
 /// <summary>
@@ -31,9 +34,10 @@ void SceneManager::PushScene(Scene* scene)
 /// </summary>
 void SceneManager::PopScene()
 {
-	//ポップの結果、シーンが0にならないようにする
+	// シーンが0にならないようにする
 	if (scene_.size() > 1)
 	{
+		// シーンの削除
 		delete scene_.front();
 		scene_.pop_front();
 	}

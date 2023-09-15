@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\DebugScene.cpp" />
     <ClCompile Include="Scene\TestScene.cpp" />
     <ClCompile Include="Util\SaveData.cpp" />
@@ -173,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\DebugScene.h" />
     <ClInclude Include="Scene\TestScene.h" />
     <ClInclude Include="Util\SaveData.h" />

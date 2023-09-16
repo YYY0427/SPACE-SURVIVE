@@ -90,7 +90,8 @@ void MainScene::Draw()
 		else if (input.Ry < -1.0f)
 		{
 			// 0‚©‚ç1000‚Ì”ÍˆÍ‚ð0‚©‚ç10‚É
-			vol = ((input.Ry - 0) * (10 - 0)) / (-1000 - 0);
+		//	vol = ((input.Ry - 0) * (10 - 0)) / (-1000 - 0);
+			vol = input.Ry;
 		}
 		else if (input.Ry > 1.0f)
 		{

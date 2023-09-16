@@ -14,8 +14,9 @@ TestScene::TestScene(SceneManager& manager) :
 	Scene(manager)
 {
 	auto& effect = Effekseer3DEffectManager::GetInstance();
-	pCamera_ = make_shared<Camera>();
 	pPlayer_ = make_shared<Player>();
+	pCamera_ = make_shared<Camera>(*pPlayer_);
+	pPlayer_->SetCamera(pCamera_);
 }
 
 /// <summary>

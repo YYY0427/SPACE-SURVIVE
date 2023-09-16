@@ -1,10 +1,20 @@
 #include "Camera.h"
-#include <DxLib.h>
+#include "Player.h"
+#include "Util/InputState.h"
 
 namespace
 {
+	// カメラの初期位置
+	constexpr VECTOR camera_init_pos = { 0, 150, -300 };
+
+	// カメラの初期注視点
+	constexpr VECTOR camera_init_target = { 0, 0, 0 };
+
+	// カメラの回転速度
+	constexpr float rot_speed = 1.0f;
+
 	// 視野角
-	constexpr float perspective = 60.0f;
+	constexpr float perspective = 90.0f;
 
 	// 描画距離(near, far)
 	constexpr float near_distance = 5.0f;
@@ -14,7 +24,12 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Camera::Camera()
+Camera::Camera(Player& pPlayer) :
+	cameraPos_(camera_init_pos),
+	cameraTarget_(camera_init_target),
+	pPlayer_(pPlayer),
+	cameraYaw_(0.0f), 
+	cameraPitch_(0.0f)
 {
 }
 
@@ -30,6 +45,44 @@ Camera::~Camera()
 /// </summary>
 void Camera::Update()
 {
+	// 右スティックの入力情報の取得
+	int up = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::UP);
+	int down = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::DOWN);
+	int left = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::LEFT);
+	int right = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::RIGHT);
+
+	// 入力情報からカメラを回転
+	cameraYaw_ += (-left + right) * (rot_speed * 0.01f);
+	cameraPitch_ += (-up + down) * (rot_speed * 0.01f);
+
+	// 縦回転の回転角度の制限
+	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f) cameraPitch_ = 60.0f * DX_PI_F / 180.0f;
+	if (cameraPitch_ <= -80 * DX_PI_F / 180.0f) cameraPitch_ = -80.0f * DX_PI_F / 180.0f;
+
+	// 平行行列の作成
+	MATRIX playerTransMtx = MGetTranslate(pPlayer_.GetPos());
+
+	// カメラの横回転行列の作成
+	MATRIX cameraRotMtxSide = MGetRotY(cameraYaw_);
+
+	// カメラの縦回転行列の作成
+	MATRIX cameraRotMtxVertical = MGetRotX(cameraPitch_);
+
+	// カメラの回転行列の作成
+	MATRIX cameraRotMtx = MMult(cameraRotMtxVertical, cameraRotMtxSide);
+
+	// カメラの回転行列とプレイヤーの平行行列からカメラの位置行列の作成
+	MATRIX cameraMtxPos = MMult(cameraRotMtx, playerTransMtx);
+
+	// カメラの回転行列とプレイヤーの平行行列からカメラの注視点行列の作成
+	MATRIX cameraMtxTarget = MMult(cameraRotMtx, playerTransMtx);
+
+	// カメラの位置行列とカメラの初期位置からカメラの位置の作成
+	cameraPos_ = VTransform(camera_init_pos, cameraMtxPos);
+
+	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
+	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
+
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
 
@@ -37,7 +90,7 @@ void Camera::Update()
 	SetupCamera_Perspective(perspective * DX_PI_F / 180.0f);
 
 	// カメラの位置、どこを見ているかを設定する
-	SetCameraPositionAndTarget_UpVecY(VGet(0, 300, -800), VGet(0, 0, 0));
+	SetCameraPositionAndTargetAndUpVec(cameraPos_, cameraTarget_, VGet(0, 1, 0));
 }
 
 /// <summary>
@@ -45,4 +98,13 @@ void Camera::Update()
 /// </summary>
 void Camera::Draw()
 {
+}
+
+/// <summary>
+/// カメラのY軸回転情報の取得
+/// </summary>
+/// <returns>カメラのY軸回転情報</returns>
+float Camera::GetCameraYaw()
+{
+	return cameraYaw_;
 }

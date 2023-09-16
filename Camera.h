@@ -1,4 +1,9 @@
 #pragma once
+#include <DxLib.h>
+
+using namespace std;
+
+class Player;
 
 /// <summary>
 /// カメラの管理クラス
@@ -7,7 +12,7 @@ class Camera
 {
 public:
 	// コンストラクタ
-	Camera();
+	Camera(Player& pPlayer_);
 
 	// デストラクタ
 	virtual ~Camera();
@@ -17,5 +22,17 @@ public:
 
 	// 描画
 	void Draw();
+
+	// カメラのY軸回転情報の取得
+	float GetCameraYaw();
+
 private:
+	Player& pPlayer_;
+
+	VECTOR cameraPos_;
+	VECTOR cameraTarget_;
+
+	// 回転角度
+	float cameraYaw_;
+	float cameraPitch_;
 };

@@ -27,6 +27,7 @@ public:
 
 	// ゲッター
 	VECTOR GetPos();	// 位置情報
+	bool GetIsBoost();	// ブースト状態か
 
 	// セッター
 	void SetCamera(shared_ptr<Camera> pCamera);
@@ -38,5 +39,12 @@ private:
 	// 位置情報
 	VECTOR pos_;
 
-	bool isMove_;
+	// プレイヤーの移動速度
+	float moveSpeed_;
+
+	// エネルギーゲージ
+	float energyGauge_;
+
+	// 左スティックが入力されたか
+	bool isInput_;
 };

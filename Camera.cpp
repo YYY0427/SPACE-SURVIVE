@@ -14,7 +14,8 @@ namespace
 	constexpr float rot_speed = 1.0f;
 
 	// 視野角
-	constexpr float perspective = 90.0f;
+	constexpr float normal_perspective = 90.0f;	
+	constexpr float boosting_perspective = 100.0f;
 
 	// 描画距離(near, far)
 	constexpr float near_distance = 5.0f;
@@ -29,7 +30,8 @@ Camera::Camera(Player& pPlayer) :
 	cameraTarget_(camera_init_target),
 	pPlayer_(pPlayer),
 	cameraYaw_(0.0f), 
-	cameraPitch_(0.0f)
+	cameraPitch_(0.0f),
+	perspective_(normal_perspective)
 {
 }
 
@@ -59,8 +61,29 @@ void Camera::Update()
 	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f) cameraPitch_ = 60.0f * DX_PI_F / 180.0f;
 	if (cameraPitch_ <= -80 * DX_PI_F / 180.0f) cameraPitch_ = -80.0f * DX_PI_F / 180.0f;
 
+	// プレイヤーブースト状態の場合視野角を徐々に大きく
+	// ブースト状態の視野角より大きくしない
+	if (pPlayer_.GetIsBoost())
+	{
+		perspective_++;
+		if (perspective_ > boosting_perspective)
+		{
+			perspective_ = boosting_perspective;
+		}
+	}
+	// プレイヤー通常状態の場合視野角を徐々に小さく
+	// 通常状態の視野角より小さくはしない
+	else
+	{
+		perspective_--;
+		if (perspective_ < normal_perspective)
+		{
+			perspective_ = normal_perspective;
+		}
+	}
+
 	// 平行行列の作成
-	MATRIX playerTransMtx = MGetTranslate(pPlayer_.GetPos());
+	MATRIX playerTransMtx = MGetTranslate(VScale(pPlayer_.GetPos(), 1.0f));
 
 	// カメラの横回転行列の作成
 	MATRIX cameraRotMtxSide = MGetRotY(cameraYaw_);
@@ -87,7 +110,7 @@ void Camera::Update()
 	SetCameraNearFar(near_distance, far_distance);
 
 	// カメラの視野角を設定(ラジアン)
-	SetupCamera_Perspective(perspective * DX_PI_F / 180.0f);
+	SetupCamera_Perspective(perspective_ * DX_PI_F / 180.0f);
 
 	// カメラの位置、どこを見ているかを設定する
 	SetCameraPositionAndTargetAndUpVec(cameraPos_, cameraTarget_, VGet(0, 1, 0));

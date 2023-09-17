@@ -32,6 +32,9 @@ private:
 	VECTOR cameraPos_;
 	VECTOR cameraTarget_;
 
+	// Ž‹–ìŠp
+	float perspective_;
+
 	// ‰ñ“]Šp“x
 	float cameraYaw_;
 	float cameraPitch_;

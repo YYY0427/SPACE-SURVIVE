@@ -6,7 +6,7 @@
 
 namespace
 {
-	// モデルのファイルのパス
+	// プレイヤーモデルのファイルのパス
 	string model_file_path = "Data/Model/UFO.mv1";
 
 	// プレイヤーの移動量
@@ -15,16 +15,30 @@ namespace
 	constexpr VECTOR player_vec_right{ 1, 0, 0 };
 	constexpr VECTOR player_vec_left{ -1, 0, 0 };
 
-	// プレイヤーの移動速度
-	constexpr float player_move_speed = 1.0f;
+	// プレイヤーの通常移動速度
+	constexpr float move_normal_speed = 1.0f;
+
+	// プレイヤーのブースト時移動速度
+	constexpr float move_boost_speed = 3.0f;
+
+	// ブースト時のエネルギー消費量
+	constexpr float boost_energy_cost = 10.0f;
+
+	// エネルギーゲージ
+	constexpr float energy_gauge_total_amount = 1000.0f;
+
+	// エネルギーの回復量
+	constexpr float energy_recovery_amount = 10.0f;
 }
 
 /// <summary>
 ///  コンストラクタ
 /// </summary>
-Player::Player() : 
+Player::Player() :
 	pos_(VGet(0.0f, 0.0f, 0.0f)),
-	isMove_(false)
+	isInput_(false),
+	moveSpeed_(move_normal_speed),
+	energyGauge_(energy_gauge_total_amount)
 {
 	pModel_ = make_shared<Model>(model_file_path.c_str());
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
@@ -57,8 +71,41 @@ void Player::Update()
 	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
 	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
 
+	// ブースト切り替え
+	if (InputState::IsTriggered(InputType::BOOST))
+	{
+		// 非ブースト時かつエネルギーゲージの残量があった場合ブーストに移行
+		if (moveSpeed_ == move_normal_speed && energyGauge_ > 0)
+		{
+			moveSpeed_ = move_boost_speed;
+		}
+		// ブースト時の場合は通常速度に移行
+		else
+		{
+			moveSpeed_ = move_normal_speed;
+		}
+	}
+	// ブースト時はエネルギーが減り続ける
+	// エネルギーがなくなったら通常速度に移行
+	if (moveSpeed_ == move_boost_speed)
+	{
+		energyGauge_ -= boost_energy_cost;
+		if (energyGauge_ <= 0)
+		{
+			moveSpeed_ = move_normal_speed;
+		}
+	}
+	// 非ブースト時ならエネルギーは回復
+	else
+	{
+		if (energyGauge_ < energy_gauge_total_amount)
+		{
+			energyGauge_ += energy_recovery_amount;
+		}
+	}
+
 	// 移動情報の初期化
-	isMove_ = false;
+	isInput_ = false;
 	VECTOR moveVec = VGet(0, 0, 0);
 	VECTOR moveVecX = VGet(0, 0, 0);
 	VECTOR moveVecZ = VGet(0, 0, 0);
@@ -89,26 +136,26 @@ void Player::Update()
 	if (up > 0)
 	{
 		moveVecZ = VScale(moveUp, up);
-		isMove_ = true;
+		isInput_ = true;
 	}
 	if (left > 0)
 	{
 		moveVecX = VScale(moveLeft, left);
-		isMove_ = true;
+		isInput_ = true;
 	}
 	if (down > 0)
 	{
 		moveVecZ = VScale(moveDown, down);
-		isMove_ = true;
+		isInput_ = true;
 	}
 	if (right > 0)
 	{
 		moveVecX = VScale(moveRight, right);
-		isMove_ = true;
+		isInput_ = true;
 	}
 #endif
 	// スティックが入力されている場合のみ移動
-	if (isMove_)
+	if (isInput_)
 	{
 		// x方向とz方向のベクトルを足して移動ベクトルを作成する
 		moveVec = VAdd(moveVecZ, moveVecX);
@@ -117,7 +164,7 @@ void Player::Update()
 	//	moveVec = VNorm(moveVec);
 
 		// 正規化したベクトルにプレイヤーの速度をかける
-		moveVec = VScale(moveVec, player_move_speed);
+		moveVec = VScale(moveVec, moveSpeed_);
 
 		// 作成した移動ベクトルで座標の移動
 		pos_ = VAdd(pos_, moveVec);
@@ -143,8 +190,10 @@ void Player::Update()
 /// </summary>
 void Player::Draw()
 {
+	// プレイヤーモデルの描画
 	pModel_->Draw();
 	DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
+	DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
 }
 
 /// <summary>
@@ -154,6 +203,19 @@ void Player::Draw()
 VECTOR Player::GetPos()
 {
 	return pos_;
+}
+
+/// <summary>
+/// ブースト状態かの取得
+/// </summary>
+/// <returns>true : ブースト状態、false : 通常状態</returns>
+bool Player::GetIsBoost()
+{
+	if (moveSpeed_ == move_boost_speed)
+	{
+		return true;
+	}
+	return false;
 }
 
 /// <summary>

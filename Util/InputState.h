@@ -10,6 +10,8 @@ enum class InputType
 	BACK,		// 戻る
 	PAUSE,		// ポーズボタン
 	RIZE,		// 上昇
+	FALL,		// 下降
+	BOOST,		// ブースト
 	UP,			// 上
 	DOWN,		// 下
 	RIGHT,		// 右

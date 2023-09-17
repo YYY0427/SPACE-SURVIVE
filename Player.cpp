@@ -14,6 +14,9 @@ namespace
 	constexpr VECTOR player_vec_down{ 0, 0, 1 };
 	constexpr VECTOR player_vec_right{ 1, 0, 0 };
 	constexpr VECTOR player_vec_left{ -1, 0, 0 };
+
+	// プレイヤーの移動速度
+	constexpr float player_move_speed = 1.0f;
 }
 
 /// <summary>
@@ -39,6 +42,7 @@ Player::~Player()
 /// </summary>
 void Player::Update()
 {
+	// 左スティックの入力情報の取得
 	int up = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::UP);
 	int down = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::DOWN);
 	int left = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::LEFT);
@@ -53,54 +57,82 @@ void Player::Update()
 	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
 	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
 
+	// 移動情報の初期化
 	isMove_ = false;
-	VECTOR moveVec_ = VGet(0, 0, 0);
+	VECTOR moveVec = VGet(0, 0, 0);
 	VECTOR moveVecX = VGet(0, 0, 0);
 	VECTOR moveVecZ = VGet(0, 0, 0);
-	if (up > 5)
+#if false
+	if (up > 0)
 	{
 		moveVecZ = moveUp;
 		isMove_ = true;
 	}
-	if (left > 5)
+	if (left > 0)
 	{
 		moveVecX = moveLeft;
 		isMove_ = true;
 	}
-	if (down > 5)
+	if (down > 0)
 	{
-		moveVecZ = moveDown;
+    	moveVecZ = moveDown;
 		isMove_ = true;
 	}
-	if (right > 5)
+	if (right > 0)
 	{
 		moveVecX = moveRight;
 		isMove_ = true;
 	}
-
+#else 
+	// スティックが入力されていたら移動ベクトルにスティックが傾いている方向のベクトルを代入
+	// スティックの傾きぐわいによってベクトルが大きくなる
+	if (up > 0)
+	{
+		moveVecZ = VScale(moveUp, up);
+		isMove_ = true;
+	}
+	if (left > 0)
+	{
+		moveVecX = VScale(moveLeft, left);
+		isMove_ = true;
+	}
+	if (down > 0)
+	{
+		moveVecZ = VScale(moveDown, down);
+		isMove_ = true;
+	}
+	if (right > 0)
+	{
+		moveVecX = VScale(moveRight, right);
+		isMove_ = true;
+	}
+#endif
+	// スティックが入力されている場合のみ移動
 	if (isMove_)
 	{
 		// x方向とz方向のベクトルを足して移動ベクトルを作成する
-		moveVec_ = VAdd(moveVecZ, moveVecX);
+		moveVec = VAdd(moveVecZ, moveVecX);
 
 		// 正規化
-		moveVec_ = VNorm(moveVec_);
+	//	moveVec = VNorm(moveVec);
 
 		// 正規化したベクトルにプレイヤーの速度をかける
-		moveVec_ = VScale(moveVec_, 2.0f);
+		moveVec = VScale(moveVec, player_move_speed);
 
-		pos_ = VAdd(pos_, moveVec_);
+		// 作成した移動ベクトルで座標の移動
+		pos_ = VAdd(pos_, moveVec);
 	}
+	// Y軸の移動
 	if (InputState::IsPressed(InputType::RIZE))
 	{
-		pos_.y++;
+		pos_.y += 3.0f;
 	}
 
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
 
 	// 向いている方向の設定
-	pModel_->SetRot(VGet(0.0f, pCamera_->GetCameraYaw(), 0.0f));
+	pModel_->SetRot(VGet(moveVec.z * DX_PI_F / 180.0f, 0.0f, -moveVec.x * DX_PI_F / 180.0f));
 
 	// アニメーションを進める
 	pModel_->Update();
@@ -124,6 +156,10 @@ VECTOR Player::GetPos()
 	return pos_;
 }
 
+/// <summary>
+/// カメラクラスのポインタのセッター
+/// </summary>
+/// <param name="pCamera">カメラクラスのポインタ</param>
 void Player::SetCamera(shared_ptr<Camera> pCamera)
 {
 	pCamera_ = pCamera;

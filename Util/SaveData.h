@@ -40,7 +40,7 @@ private:
 	// コンストラクタ(シングルトンパターンなのでprivateに置く)
 	SaveData();
 
-	// コピーも代入も禁止する
+	// コピーも代入も禁止
 	SaveData(const SaveData&) = delete;			// コピーコンストラクタ
 	void operator = (const SaveData&) = delete;	// 代入も禁止
 

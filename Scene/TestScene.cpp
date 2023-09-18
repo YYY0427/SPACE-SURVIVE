@@ -32,25 +32,25 @@ TestScene::~TestScene()
 void TestScene::Update()
 {
 	// フェードアウトが終わり次第シーン遷移
-	if (isFadeOut_ && !IsFadingOut())
+	/*if (isFadeOut_ && !IsFadingOut())
 	{
 		manager_.ChangeScene(new DebugScene(manager_));
 		return;
-	}
+	}*/
 
 	pCamera_->Update();
 	pPlayer_->Update();
 
 	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
-	if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
-	{
-		StartFadeOut();
+	//if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
+	//{
+	//	StartFadeOut();
 
-		// フェードの設定の変更
-		SetFadeConfig(3, VGet(255, 255, 255), GetFadeBright());
+	//	// フェードの設定の変更
+	//	SetFadeConfig(3, VGet(255, 255, 255), GetFadeBright());
 
-		isFadeOut_ = true;
-	}
+	//	isFadeOut_ = true;
+	//}
 	// フェードの更新
 	UpdateFade();
 }

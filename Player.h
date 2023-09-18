@@ -26,8 +26,9 @@ public:
 	void Draw();
 
 	// ゲッター
-	VECTOR GetPos();	// 位置情報
-	bool GetIsBoost();	// ブースト状態か
+	VECTOR GetPos();		// 位置情報
+	bool GetIsBoost();		// ブースト状態か
+	float GetSlowRate();	// スロモーションのレート
 
 	// セッター
 	void SetCamera(shared_ptr<Camera> pCamera);
@@ -44,6 +45,9 @@ private:
 
 	// エネルギーゲージ
 	float energyGauge_;
+
+	// スローモーションのレート
+	float slowRate_;
 
 	// 左スティックが入力されたか
 	bool isInput_;

@@ -9,7 +9,9 @@ namespace
 }
 
 Enemy::Enemy(VECTOR pos, VECTOR vec, float scale, Player& pPlayer) :
-	pPlayer_(pPlayer)
+	pPlayer_(pPlayer),
+	isEnabled_(true),
+	timer_(0)
 {
 	pModel_ = std::make_shared<Model>(model_file_path);
 	pModel_->SetUseCollision(true);
@@ -24,6 +26,12 @@ Enemy::~Enemy()
 
 void Enemy::Update()
 {
+	// ­‚µŽžŠÔ‚ªŒo‚Á‚½‚çÁ‚·
+	if (timer_++ > 60 * 30)
+	{
+		isEnabled_ = false;
+	}
+
 	VECTOR tempVec = VScale(vec_, pPlayer_.GetSlowRate());
 
 	pos_ = VAdd(pos_, tempVec);
@@ -41,4 +49,9 @@ void Enemy::Draw()
 int Enemy::GetModelHandle()
 {
 	return pModel_->GetModelHandle();
+}
+
+bool Enemy::GetIsEnabled()
+{
+	return isEnabled_;
 }

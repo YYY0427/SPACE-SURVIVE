@@ -141,3 +141,13 @@ float Camera::GetCameraPitch()
 {
 	return cameraPitch_;
 }
+
+VECTOR Camera::GetPos()
+{
+	return cameraPos_;
+}
+
+VECTOR Camera::GetTarget()
+{
+	return cameraTarget_;
+}

@@ -2,8 +2,6 @@
 #include <DxLib.h>
 #include <memory>
 
-
-
 class Model;
 class Camera;
 
@@ -30,12 +28,13 @@ public:
 	VECTOR GetPos();		// 位置情報
 	bool GetIsBoost();		// ブースト状態か
 	float GetSlowRate();	// スロモーションのレート
+	float GetCollsionRadius();
 
 	// セッター
 	void SetCamera(std::shared_ptr<Camera> pCamera);
 private:
+	// ポインタ
 	std::shared_ptr<Model> pModel_;
-
 	std::shared_ptr<Camera> pCamera_;
 
 	// 位置情報

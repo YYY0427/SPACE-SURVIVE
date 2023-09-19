@@ -18,7 +18,6 @@ TestScene::TestScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&TestScene::NormalUpdate)
 {
-	auto& effect = Effekseer3DEffectManager::GetInstance();
 	pPlayer_ = std::make_shared<Player>();
 	pCamera_ = std::make_shared<Camera>(*pPlayer_);
 	pSkyDome_ = std::make_shared<SkyDome>();
@@ -79,6 +78,9 @@ void TestScene::Draw()
 	DrawFade();
 }
 
+/// <summary>
+/// 通常の更新
+/// </summary>
 void TestScene::NormalUpdate()
 {
 	// フェードアウトが終わり次第シーン遷移
@@ -90,12 +92,13 @@ void TestScene::NormalUpdate()
 
 	pCamera_->Update();
 	pPlayer_->Update();
-	//	pSkyDome_->Update();
+//	pSkyDome_->Update();
 	pEnemyManager_->Update();
 
+	// 敵とぶつかったらゲームオーバー
 	for (auto& enemies : pEnemyManager_->GetEnemies())
 	{
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(enemies->GetModelHandle(), -1, pPlayer_->GetPos(), 30.0f);
+		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(enemies->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
 		if (result.HitNum > 0)
 		{
 			updateFunc_ = &TestScene::GameOverUpdate;
@@ -116,6 +119,9 @@ void TestScene::NormalUpdate()
 	UpdateFade();
 }
 
+/// <summary>
+/// ゲームオーバー時の更新
+/// </summary>
 void TestScene::GameOverUpdate()
 {
 	// フェードアウトが終わり次第シーン遷移
@@ -124,12 +130,13 @@ void TestScene::GameOverUpdate()
 		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
-	pCamera_->Update();
-	bool a = pPlayer_->GameOverUpdate();
 
-	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
-	if (a && !IsFadingIn())
+	pCamera_->Update();
+
+	// プレイヤーのゲームオーバー時の更新が終了かつフェードインしてなかったらフェードアウト開始
+	if (pPlayer_->GameOverUpdate() && !IsFadingIn())
 	{
+		// フェードアウトの開始
 		StartFadeOut();
 
 		// フェードの設定の変更

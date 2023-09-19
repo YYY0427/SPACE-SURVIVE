@@ -39,6 +39,9 @@ namespace
 
 	// エネルギーの回復量
 	constexpr float energy_recovery_amount = 10.0f;
+
+	// プレイヤーの当たり判定の半径
+	constexpr float model_collision_radius = 60.0f;
 }
 
 /// <summary>
@@ -73,14 +76,16 @@ void Player::Update()
 	int left = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::LEFT);
 	int right = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::RIGHT);
 
-	// プレイヤーの回転値を取得する
-	VECTOR vect = MV1GetRotationXYZ(pModel_->GetModelHandle());
-
 	// カメラが向いている方向からベクトル変換して移動情報作成
-	VECTOR moveUp = VTransform(player_vec_up, MGetRotY(pCamera_->GetCameraYaw()));
-	VECTOR moveDown = VTransform(player_vec_down, MGetRotY(pCamera_->GetCameraYaw()));
-	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
-	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
+#if true
+	VECTOR moveForward = VScale(VNorm(VSub(pCamera_->GetTarget(), pCamera_->GetPos())), -1);
+	VECTOR moveBack = VScale(moveForward, -1);
+#else 
+	VECTOR moveForward = VTransform(player_vec_up, MGetRotY(pCamera_->GetCameraYaw()));
+	VECTOR moveBack = VTransform(player_vec_down, MGetRotY(pCamera_->GetCameraYaw()));
+#endif
+	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw()));
+	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw()));
 
 	// スローモーション切り替え
 	if (InputState::IsTriggered(InputType::SLOW))
@@ -148,33 +153,12 @@ void Player::Update()
 	VECTOR moveVec = VGet(0, 0, 0);
 	VECTOR moveVecX = VGet(0, 0, 0);
 	VECTOR moveVecZ = VGet(0, 0, 0);
-#if false
-	if (up > 0)
-	{
-		moveVecZ = moveUp;
-		isMove_ = true;
-	}
-	if (left > 0)
-	{
-		moveVecX = moveLeft;
-		isMove_ = true;
-	}
-	if (down > 0)
-	{
-    	moveVecZ = moveDown;
-		isMove_ = true;
-	}
-	if (right > 0)
-	{
-		moveVecX = moveRight;
-		isMove_ = true;
-	}
-#else 
+
 	// スティックが入力されていたら移動ベクトルにスティックが傾いている方向のベクトルを代入
 	// スティックの傾きぐわいによってベクトルが大きくなる
 	if (up > 0)
 	{
-		moveVecZ = VScale(moveUp, up);
+		moveVecZ = VScale(moveForward, up);
 		isInput_ = true;
 	}
 	if (left > 0)
@@ -184,7 +168,7 @@ void Player::Update()
 	}
 	if (down > 0)
 	{
-		moveVecZ = VScale(moveDown, down);
+		moveVecZ = VScale(moveBack, down);
 		isInput_ = true;
 	}
 	if (right > 0)
@@ -192,7 +176,7 @@ void Player::Update()
 		moveVecX = VScale(moveRight, right);
 		isInput_ = true;
 	}
-#endif
+
 	// スティックが入力されている場合のみ移動
 	if (isInput_)
 	{
@@ -210,15 +194,15 @@ void Player::Update()
 		// 作成した移動ベクトルで座標の移動
 		pos_ = VAdd(pos_, moveVec);
 	}
-	// Y軸の移動
-	if (InputState::IsXInputTrigger(XInputType::RIGHT))
-	{
-		pos_.y += move_y_speed * moveSpeed_ * slowRate_;
-	}
-	if (InputState::IsXInputTrigger(XInputType::LEFT))
-	{
-		pos_.y -= move_y_speed * moveSpeed_ * slowRate_;
-	}
+	//// Y軸の移動
+	//if (InputState::IsXInputTrigger(XInputType::RIGHT))
+	//{
+	//	pos_.y += move_y_speed * moveSpeed_ * slowRate_;
+	//}
+	//if (InputState::IsXInputTrigger(XInputType::LEFT))
+	//{
+	//	pos_.y -= move_y_speed * moveSpeed_ * slowRate_;
+	//}
 
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
@@ -230,8 +214,13 @@ void Player::Update()
 	pModel_->Update();
 }
 
+/// <summary>
+/// ゲームオーバー時のプレイヤーの更新
+/// </summary>
+/// <returns>エフェクトを再生し終えたか</returns>
 bool Player::GameOverUpdate()
 {
+	// 一回だけエフェクトを再生
 	static bool isPass = false;
 	if (!isPass)
 	{
@@ -239,17 +228,18 @@ bool Player::GameOverUpdate()
 		Effekseer3DEffectManager::GetInstance().PlayEffect("explosion", pos_, VGet(20.0f, 20.0f, 20.0f), 1.0f);
 	}
 
-	// 位置座標の設定
-	pModel_->SetPos(pos_);
-
-	// アニメーションを進める
-	pModel_->Update();
-
+	// エフェクトを再生し終えたらtrueを返す
 	if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion"))
 	{
 		return true;
 	}
 	return false;
+
+	// 位置座標の設定
+	pModel_->SetPos(pos_);
+
+	// アニメーションを進める
+	pModel_->Update();
 }
 
 /// <summary>
@@ -260,8 +250,9 @@ void Player::Draw()
 	// プレイヤーモデルの描画
 	pModel_->Draw();
 #ifdef _DEBUG
-	DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
-	DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
+	DrawSphere3D(pos_, model_collision_radius, 8, 0xff0000, 0xff0000, false);
+	DrawFormatString(10, 80, 0x000000, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
+	DrawFormatString(10, 105, 0x000000, "energyGauge = %.2f", energyGauge_);
 #endif
 }
 
@@ -294,6 +285,11 @@ bool Player::GetIsBoost()
 float Player::GetSlowRate()
 {
 	return slowRate_;
+}
+
+float Player::GetCollsionRadius()
+{
+	return model_collision_radius;
 }
 
 /// <summary>

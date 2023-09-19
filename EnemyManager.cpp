@@ -3,9 +3,6 @@
 
 namespace
 {
-	constexpr float model_scale = 50.0f;
-	constexpr float model_scale_2 = 80.0f;
-
 	constexpr VECTOR model_pos = {3897, 1415, 60};
 	constexpr VECTOR model_pos_2 = { -3926, 1415, 110 };
 }
@@ -24,15 +21,7 @@ void EnemyManager::Update()
 	float vecZ = GetRand(10) - 5;
 	float vecY = GetRand(10) - 5;
 
-	float scale;
-	if (GetRand(1) == 0)
-	{
-		scale = model_scale;
-	}
-	else
-	{
-		scale = model_scale_2;
-	}
+	float scale = (GetRand(10) + 10) * 5;
 
 	static int timer = 0;
 	static bool isWitch = false;
@@ -55,6 +44,7 @@ void EnemyManager::Update()
 	{
 		enemies->Update();
 	}
+	CheckEnabled();
 }
 
 void EnemyManager::Draw()
@@ -63,6 +53,15 @@ void EnemyManager::Draw()
 	{
 		enemies->Draw();
 	}
+}
+
+void EnemyManager::CheckEnabled()
+{
+	auto enemies = std::remove_if(pEnemies_.begin(), pEnemies_.end(), [](const std::shared_ptr<Enemy>& enemies)
+		{
+			return !enemies->GetIsEnabled();
+		});
+	pEnemies_.erase(enemies, pEnemies_.end());
 }
 
 std::vector<std::shared_ptr<Enemy>> EnemyManager::GetEnemies()

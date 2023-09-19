@@ -14,12 +14,25 @@ public:
 	void Update();
 	void Draw();
 
-
+	// モデルハンドルの取得
 	int GetModelHandle();
+
+	// 存在するか
+	bool GetIsEnabled();
 private:
+	// 参照
 	Player& pPlayer_;
+
+	// ポインタ
 	std::shared_ptr<Model> pModel_;
 
+	// 座標
 	VECTOR pos_;
+
+	// ベクトル
 	VECTOR vec_;
+
+	int timer_;
+
+	bool isEnabled_;
 };

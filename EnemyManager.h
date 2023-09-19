@@ -14,6 +14,10 @@ public:
 	void Update();
 	void Draw();
 
+	// ‘¶İ‚µ‚Ä‚¢‚é‚©‚ÌŠm”F
+	void CheckEnabled();
+
+
 	std::vector<std::shared_ptr<Enemy>> GetEnemies();
 private:
 	Player& pPlayer_;

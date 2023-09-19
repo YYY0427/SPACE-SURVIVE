@@ -1,8 +1,6 @@
 #pragma once
 #include <DxLib.h>
 
-
-
 class Player;
 
 /// <summary>
@@ -23,9 +21,12 @@ public:
 	// •`‰æ
 	void Draw();
 
-	// ƒJƒƒ‰‚ÌY²‰ñ“]î•ñ‚Ìæ“¾
-	float GetCameraYaw();
-	float GetCameraPitch();
+	// ƒJƒƒ‰‚Ì‰ñ“]î•ñ‚Ìæ“¾
+	float GetCameraYaw();	// Y²
+	float GetCameraPitch();	// X²
+
+	VECTOR GetPos();
+	VECTOR GetTarget();
 private:
 	Player& pPlayer_;
 

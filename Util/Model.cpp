@@ -4,14 +4,14 @@
 namespace
 {
 	// 当たり判定として使用するフレームの名前
-	const string collision_frame_name = "Collision";
+	const std::string collision_frame_name = "Collision";
 }
 
 /// <summary>
 /// ファイル名を指定してロードを行う
 /// </summary>
 /// <param name="fileName">モデルハンドルのファイル名</param>
-Model::Model(string fileName) :
+Model::Model(std::string fileName) :
 	isUseCollision_(false),
 	isUpdateColision_(false),
 	colFrameIndex_(-1),

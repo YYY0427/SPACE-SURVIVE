@@ -3,7 +3,7 @@
 #include <string>
 #include <DxLib.h>
 
-using namespace std;
+
 
 /// <summary>
 /// サウンドの管理を行うシングルトンクラス
@@ -21,25 +21,25 @@ public:
 	void LoadAndSaveSoundFileData();
 
 	// 指定の2DSEを鳴らす
-	void Play(string fileName);
+	void Play(std::string fileName);
 
 	// 指定の3DSEを鳴らす
-	void Play3D(string fileName, VECTOR soundPos, float soundRadius);
+	void Play3D(std::string fileName, VECTOR soundPos, float soundRadius);
 
 	// 指定のBGMを鳴らす
-	void PlayBGM(string fileName);
+	void PlayBGM(std::string fileName);
 
 	// 指定のサウンドが再生中かチェック
-	bool PlayingCheckSound(string fileName);
+	bool PlayingCheckSound(std::string fileName);
 
 	// 特定のサウンドを止める
-	void StopSound(string fileName);
+	void StopSound(std::string fileName);
 
 	// すべてのサウンドを止める
 	void StopAllSound();
 
 	// 音量調節
-	void SetVolume(string fileName, int volume);
+	void SetVolume(std::string fileName, int volume);
 
 	// 3Dサウンドのリスナーの位置とリスナーの前方位置を設定する
 	void Set3DSoundListenerPosAndFrontPos_UpVecY(VECTOR pos, VECTOR angle);
@@ -64,7 +64,7 @@ private:
 	struct SoundData
 	{
 		SoundType type;		// BGMか3DのSEか2DのSEか
-		string extension;	// サウンドファイルの拡張子
+		std::string extension;	// サウンドファイルの拡張子
 		float volumeRate;	// ボリューム調整
 		int handle;			// ハンドル
 	};
@@ -77,11 +77,11 @@ private:
 	void operator = (const SoundManager&) = delete;		// 代入も禁止
 
 	// 2DSEサウンドのロード
-	void LoadSoundFile2D(string fileName, string ext);
+	void LoadSoundFile2D(std::string fileName, std::string ext);
 
 	// 3DSEサウンドのロード
-	void LoadSoundFile3D(string fileName, string ext);
+	void LoadSoundFile3D(std::string fileName, std::string ext);
 private:
 	// ロードしたサウンドのファイル名とハンドル
-	unordered_map<string, SoundData> soundNameAndHandleTable_;
+	std::unordered_map<std::string, SoundData> soundNameAndHandleTable_;
 };

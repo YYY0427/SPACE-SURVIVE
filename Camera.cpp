@@ -11,7 +11,8 @@ namespace
 	constexpr VECTOR camera_init_target = { 0, 0, 0 };
 
 	// ƒJƒƒ‰‚Ì‰ñ“]‘¬“x
-	constexpr float rot_speed = 1.0f;
+	constexpr float rot_speed_x = 1.0f;
+	constexpr float rot_speed_y = 0.3f;
 
 	// Ž‹–ìŠp
 	constexpr float normal_perspective = 90.0f;	
@@ -54,8 +55,8 @@ void Camera::Update()
 	int right = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::RIGHT);
 
 	// “ü—Íî•ñ‚©‚çƒJƒƒ‰‚ð‰ñ“]
-	cameraYaw_ += (-left + right) * (rot_speed * 0.01f);
-	cameraPitch_ += (-up + down) * (rot_speed * 0.01f);
+	cameraYaw_ += (-left + right) * (rot_speed_x * 0.01f);
+	cameraPitch_ += (up + -down) * (rot_speed_y * 0.01f);
 
 	// c‰ñ“]‚Ì‰ñ“]Šp“x‚Ì§ŒÀ
 	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f) cameraPitch_ = 60.0f * DX_PI_F / 180.0f;
@@ -130,4 +131,13 @@ void Camera::Draw()
 float Camera::GetCameraYaw()
 {
 	return cameraYaw_;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+float Camera::GetCameraPitch()
+{
+	return cameraPitch_;
 }

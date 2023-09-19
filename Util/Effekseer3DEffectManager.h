@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-using namespace std;
+
 
 /// <summary>
 /// Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス
@@ -30,10 +30,10 @@ public:
 	void End();
 
 	// 指定のエフェクトの再生
-	void PlayEffect(string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot = VGet(0, 0, 0));
+	void PlayEffect(std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot = VGet(0, 0, 0));
 
 	// 特定のエフェクトが再生中か
-	bool IsPlayingEffect(string fileName);
+	bool IsPlayingEffect(std::string fileName);
 
 	// エフェクト全ての再生をストップ
 	void StopAllEffect();
@@ -47,14 +47,14 @@ private:
 	void operator = (const Effekseer3DEffectManager&) = delete;			// 代入の禁止
 
 	// エフェクトのロード
-	void LoadEffectFile(string fileName);
+	void LoadEffectFile(std::string fileName);
 
 private:
 	// ロードしたエフェクトのファイル名とハンドル
-	unordered_map<string, int> effectResourceNameAndHandleTable_;
+	std::unordered_map<std::string, int> effectResourceNameAndHandleTable_;
 
 	// 再生中のエフェクトのファイル名とハンドル
-	unordered_map<string, int> playingEffectNameAndHandleTable_;
+	std::unordered_map<std::string, int> playingEffectNameAndHandleTable_;
 
 	// 画像ハンドル
 	int imgHandle_;

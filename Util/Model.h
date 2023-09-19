@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include <string>
 
-using namespace std;
+
 
 // TODO : 当たり判定関係の関数の追加
 
@@ -13,7 +13,7 @@ class Model
 {
 public:
 	// コンストラクタ
-	Model(string fileName);		// ファイル名を指定してロードを行う
+	Model(std::string fileName);		// ファイル名を指定してロードを行う
 	Model(int orgModel);		// 指定されたハンドルのモデルをDuplicateして生成する
 
 	// デストラクタ

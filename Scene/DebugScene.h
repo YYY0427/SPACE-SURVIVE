@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 
-using namespace std;
+
 
 /// <summary>
 /// デバッグ用シーン

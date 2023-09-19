@@ -43,6 +43,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// ‚’¼“¯Šú‚ğ—LŒø‰»
 	SetWaitVSyncFlag(TRUE);
 
+
 	// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
 	if (DxLib_Init() == -1)
 	{

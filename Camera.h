@@ -1,7 +1,7 @@
 #pragma once
 #include <DxLib.h>
 
-using namespace std;
+
 
 class Player;
 
@@ -25,7 +25,7 @@ public:
 
 	// ƒJƒƒ‰‚ÌY²‰ñ“]î•ñ‚Ìæ“¾
 	float GetCameraYaw();
-
+	float GetCameraPitch();
 private:
 	Player& pPlayer_;
 

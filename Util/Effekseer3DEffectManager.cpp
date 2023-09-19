@@ -6,10 +6,10 @@
 namespace
 {
 	// エフェクトのファイルパス
-	const string data_file_path = "Data/Effect/";
+	const std::string data_file_path = "Data/Effect/";
 
 	// エフェクトの拡張子
-	const string data_extension = ".efk";
+	const std::string data_extension = ".efkefc";
 }
 
 /// <summary>
@@ -59,7 +59,7 @@ int Effekseer3DEffectManager::Init()
 	imgHandle_ = my::MyLoadGraph("Data/Effect/background.png");
 
 	// ここから↓でEffectをロードする
-
+	LoadEffectFile("explosion");
 
 	// 初期化の成功
 	return 0;
@@ -112,9 +112,9 @@ void Effekseer3DEffectManager::End()
 /// エフェクトのロード
 /// </summary>
 /// <param name="fileName">ロードしたいエフェクトのファイル名(拡張子は含まない)</param>
-void Effekseer3DEffectManager::LoadEffectFile(string fileName)
+void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 {
-	string path = data_file_path;
+	std::string path = data_file_path;
 	path += fileName;
 	path += data_extension;
 
@@ -134,7 +134,7 @@ void Effekseer3DEffectManager::LoadEffectFile(string fileName)
 /// <param name="scale">拡大率</param>
 /// <param name="speed">再生速度</param>
 /// <param name="rot">回転</param>
-void Effekseer3DEffectManager::PlayEffect(string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffect(std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceNameAndHandleTable_.find(fileName) != effectResourceNameAndHandleTable_.end());
@@ -161,7 +161,7 @@ void Effekseer3DEffectManager::PlayEffect(string fileName, VECTOR pos, VECTOR sc
 /// </summary>
 /// <param name="fileName">再生したいエフェクトのファイル名(拡張子は含まない)</param>
 /// <returns>true : 再生中、false : 再生していない</returns>
-bool Effekseer3DEffectManager::IsPlayingEffect(string fileName)
+bool Effekseer3DEffectManager::IsPlayingEffect(std::string fileName)
 {
 	if (IsEffekseer3DEffectPlaying(playingEffectNameAndHandleTable_[fileName]) == 0)
 	{

@@ -2,8 +2,8 @@
 #include "Scene.h"
 #include <memory>
 
-using namespace std;
-
+class EnemyManager;
+class SkyDome;
 class Camera;
 class Player;
 
@@ -25,7 +25,19 @@ public:
 	// 描画
 	void Draw();
 private:
-	shared_ptr<Camera> pCamera_;
-	shared_ptr<Player> pPlayer_;
+	// メンバ関数ポインタ
+	using UpdateFunc_t = void (TestScene::*) ();
+	UpdateFunc_t updateFunc_;
+
+	// 通常の更新
+	void NormalUpdate();
+
+	// 
+	void GameOverUpdate();
+
+	std::shared_ptr<Camera> pCamera_;
+	std::shared_ptr<Player> pPlayer_;
+	std::shared_ptr<EnemyManager> pEnemyManager_;
+	std::shared_ptr<SkyDome> pSkyDome_;
 };
 

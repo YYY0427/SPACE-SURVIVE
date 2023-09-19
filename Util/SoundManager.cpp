@@ -9,7 +9,7 @@
 namespace
 {
 	// サウンドのファイルパス
-	const string data_file_path = "Data/Sound/";
+	const std::string data_file_path = "Data/Sound/";
 
 	// TODO:多分この関数別のところでも使うからファイル作って移す
 	/// <summary>
@@ -18,11 +18,11 @@ namespace
 	/// <param name="input">区切りたい文字列</param>
 	/// <param name="delimiter">文字列を区切る文字</param>
 	/// <returns>区切った文字列</returns>
-	vector<string> Split(string& input, char delimiter)
+	std::vector<std::string> Split(std::string& input, char delimiter)
 	{
-		istringstream stream(input);	// stringをgetlineで使えるデータに変換
-		string field;					// 分割した文字列1つ分を格納する
-		vector<string> result;			// 分割後の文字列の配列
+		std::istringstream stream(input);	// stringをgetlineで使えるデータに変換
+		std::string field;					// 分割した文字列1つ分を格納する
+		std::vector<std::string> result;			// 分割後の文字列の配列
 		while (getline(stream, field, delimiter)) 
 		{
 			result.push_back(field);
@@ -63,9 +63,9 @@ SoundManager& SoundManager::GetInstance()
 /// </summary>
 /// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
 /// <param name="extension">ロードしたサウンドの拡張子</param>
-void SoundManager::LoadSoundFile2D(string fileName, string extension)
+void SoundManager::LoadSoundFile2D(std::string fileName, std::string extension)
 {
-	string path = data_file_path;
+	std::string path = data_file_path;
 	path += fileName;
 	path += extension;
 	int handle = LoadSoundMem(path.c_str());
@@ -78,9 +78,9 @@ void SoundManager::LoadSoundFile2D(string fileName, string extension)
 /// </summary>
 /// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
 /// <param name="extension">ロードしたサウンドの拡張子</param>
-void SoundManager::LoadSoundFile3D(string fileName, string extension)
+void SoundManager::LoadSoundFile3D(std::string fileName, std::string extension)
 {
-	string path = data_file_path;
+	std::string path = data_file_path;
 	path += fileName;
 	path += extension;
 	SetCreate3DSoundFlag(TRUE);
@@ -96,26 +96,26 @@ void SoundManager::LoadSoundFile3D(string fileName, string extension)
 void SoundManager::LoadAndSaveSoundFileData()
 {
 	// ファイル情報の読み込み(読み込みに失敗したら止める)
-	ifstream ifs("Data/Csv/Sound.csv");
+	std::ifstream ifs("Data/Csv/Sound.csv");
 	assert(ifs);
 
 	// csvデータを1行ずつ読み取る
-	string line;
+	std::string line;
 	while (getline(ifs, line))
 	{
 		// csvデータ１行を','で複数の文字列に変換
-		vector<string>	strvec = Split(line, ',');
+		std::vector<std::string>	strvec = Split(line, ',');
 
 		// 文字列を適切なデータ型に変換して格納
 		SoundData data;
 		data.handle = -1;	// 初期化
-		data.volumeRate = stof(strvec[SoundDataType::VOLUM_RATE]);	// string型からfloat型に変換し格納
+		data.volumeRate = std::stof(strvec[SoundDataType::VOLUM_RATE]);	// string型からfloat型に変換し格納
 		data.extension = strvec[SoundDataType::EXTENSION];			// string型で格納
 		
 		// サウンドタイプの保存
 		// 変換したデータをファイル名をキーとして格納
 		// サウンドのタイプによってそれぞれロード
-		switch (stoi(strvec[SoundDataType::SOUND_TYPE]))
+		switch (std::stoi(strvec[SoundDataType::SOUND_TYPE]))
 		{
 		case SoundType::BGM:
 			data.type = SoundType::BGM;
@@ -144,7 +144,7 @@ void SoundManager::LoadAndSaveSoundFileData()
 /// 指定の2DSEを鳴らす(サウンドをロードされていない場合、2DSE以外の場合は止まる)
 /// </summary>
 /// <param name="name">再生したいサウンドのファイル名(拡張子は含まない)</param>
-void SoundManager::Play(string fileName)
+void SoundManager::Play(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
 	assert(soundNameAndHandleTable_[fileName].type == SoundType::SE2D);					// 2DSE以外の場合は止める
@@ -158,7 +158,7 @@ void SoundManager::Play(string fileName)
 /// <param name="fileName">再生したいサウンドのファイル名</param>
 /// <param name="soundPos">再生位置</param>
 /// <param name="soundRadius">聞こえる距離</param>
-void SoundManager::Play3D(string fileName, VECTOR soundPos, float soundRadius)
+void SoundManager::Play3D(std::string fileName, VECTOR soundPos, float soundRadius)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
 	assert(soundNameAndHandleTable_[fileName].type == SoundType::SE3D);					// 3DSE以外の場合は止める
@@ -172,7 +172,7 @@ void SoundManager::Play3D(string fileName, VECTOR soundPos, float soundRadius)
 /// 指定のBGMを鳴らす(サウンドをロードされていない場合、BGM以外の場合は止まる)
 /// </summary>
 /// <param name="fileName">再生したいサウンドのファイル名</param>
-void SoundManager::PlayBGM(string fileName)
+void SoundManager::PlayBGM(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
 	assert(soundNameAndHandleTable_[fileName].type == SoundType::BGM);					// BGM以外の場合は止める
@@ -185,7 +185,7 @@ void SoundManager::PlayBGM(string fileName)
 /// </summary>
 /// <param name="fileName">再生しているかチェックしたいサウンドのファイル名</param>
 /// <returns>true : 再生中、false : 再生していない</returns>
-bool SoundManager::PlayingCheckSound(string fileName)
+bool SoundManager::PlayingCheckSound(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
 	bool sound = CheckSoundMem(soundNameAndHandleTable_[fileName].handle);
@@ -196,7 +196,7 @@ bool SoundManager::PlayingCheckSound(string fileName)
 /// 特定のサウンドを止める(サウンドがロードされていなかったら止める)
 /// </summary>
 /// <param name="fileName">止めたいサウンドのファイル名(拡張子は含まない)</param>
-void SoundManager::StopSound(string fileName)
+void SoundManager::StopSound(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
 	StopSoundMem(soundNameAndHandleTable_[fileName].handle);
@@ -218,7 +218,7 @@ void SoundManager::StopAllSound()
 /// </summary>
 /// <param name="fileName">音量調節をしたサウンドのファイル名(拡張子は含まない)</param>
 /// <param name="volume">設定したい音量(0~255)</param>
-void SoundManager::SetVolume(string fileName, int volume)
+void SoundManager::SetVolume(std::string fileName, int volume)
 {
 	// サウンドに設定された音量調節
 	int setVolume = volume;

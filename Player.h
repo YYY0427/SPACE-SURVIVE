@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include <memory>
 
-using namespace std;
+
 
 class Model;
 class Camera;
@@ -21,6 +21,7 @@ public:
 
 	// 更新
 	void Update();
+	bool GameOverUpdate();
 
 	// 描画
 	void Draw();
@@ -31,11 +32,11 @@ public:
 	float GetSlowRate();	// スロモーションのレート
 
 	// セッター
-	void SetCamera(shared_ptr<Camera> pCamera);
+	void SetCamera(std::shared_ptr<Camera> pCamera);
 private:
-	shared_ptr<Model> pModel_;
+	std::shared_ptr<Model> pModel_;
 
-	shared_ptr<Camera> pCamera_;
+	std::shared_ptr<Camera> pCamera_;
 
 	// 位置情報
 	VECTOR pos_;

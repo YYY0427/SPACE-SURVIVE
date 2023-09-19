@@ -5,12 +5,12 @@
 #include <fstream>
 #include <DxLib.h>
 
-using namespace std;
+
 
 namespace
 {
 	// セーブデータファイル名
-	const string data_file_path = "Data/Save/Data.dat";
+	const std::string data_file_path = "Data/Save/Data.dat";
 
 	// セーブデータバージョン　
 	constexpr int current_save_version = 0;

@@ -2,12 +2,13 @@
 #include "Camera.h"
 #include "Util/InputState.h"
 #include "Util/Model.h"
+#include "Util//Effekseer3DEffectManager.h"
 #include <string>
 
 namespace
 {
 	// プレイヤーモデルのファイルのパス
-	string model_file_path = "Data/Model/UFO.mv1";
+	std::string model_file_path = "Data/Model/UFO.mv1";
 
 	// プレイヤーの移動量
 	constexpr VECTOR player_vec_up{ 0, 0, -1 };
@@ -27,8 +28,11 @@ namespace
 	// スローモーションのレート
 	constexpr float slow_rate = 0.1f;
 
+	// スローモーション時のエネルギー消費量
+	constexpr float slow_energy_cost = 3.0f;
+
 	// ブースト時のエネルギー消費量
-	constexpr float boost_energy_cost = 10.0f;
+	constexpr float boost_energy_cost = 1.0f;
 
 	// エネルギーゲージ
 	constexpr float energy_gauge_total_amount = 1000.0f;
@@ -41,13 +45,13 @@ namespace
 ///  コンストラクタ
 /// </summary>
 Player::Player() :
-	pos_(VGet(0.0f, 0.0f, 0.0f)),
+	pos_(VGet(0.0f, 2000.0f, 0.0f)),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
 	energyGauge_(energy_gauge_total_amount),
 	slowRate_(1.0f)
 {
-	pModel_ = make_shared<Model>(model_file_path.c_str());
+	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
 }
 
@@ -78,23 +82,25 @@ void Player::Update()
 	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
 	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw() + vect.x));
 
+	// スローモーション切り替え
 	if (InputState::IsTriggered(InputType::SLOW))
 	{
-		if (slowRate_ == slow_rate)
-		{
-			slowRate_ = 1.0f;
-		}
-		else
+		// スローモーションじゃないかつエネルギーゲージの残量があったらスローモーションに移行
+		if (slowRate_ == 1.0f && energyGauge_ >0)
 		{
 			slowRate_ = slow_rate;
 		}
+		// スローモーション時は通常に移行
+		else
+		{
+			slowRate_ = 1.0f;
+		}
 	}
-
 	// ブースト切り替え
 	if (InputState::IsTriggered(InputType::BOOST))
 	{
-		// 非ブースト時かつエネルギーゲージの残量があった場合ブーストに移行
-		if (moveSpeed_ == move_normal_speed && energyGauge_ > 0)
+		// 非ブースト時かつスローモーションじゃないかつエネルギーゲージの残量があった場合ブーストに移行
+		if (moveSpeed_ == move_normal_speed && energyGauge_ > 0 && slowRate_ != slow_rate)
 		{
 			moveSpeed_ = move_boost_speed;
 		}
@@ -105,16 +111,29 @@ void Player::Update()
 		}
 	}
 	// ブースト時はエネルギーが減り続ける
-	// エネルギーがなくなったら通常速度に移行
-	if (moveSpeed_ == move_boost_speed)
+	// スローモーション時はブースト時のエネルギーは減らない
+	if (moveSpeed_ == move_boost_speed && slowRate_ != slow_rate)
 	{
-		energyGauge_ -= (boost_energy_cost * slowRate_);
+		energyGauge_ -= (boost_energy_cost);
+
+		// エネルギーがなくなったら通常速度に移行
 		if (energyGauge_ <= 0)
 		{
 			moveSpeed_ = move_normal_speed;
 		}
 	}
-	// 非ブースト時ならエネルギーは回復
+	// スローモーション時はエネルギーが減り続ける
+	else if (slowRate_ == slow_rate)
+	{
+		energyGauge_ -= (slow_energy_cost);
+
+		// エネルギーがなくなったら通常に移行
+		if (energyGauge_ <= 0)
+		{
+			slowRate_ = 1.0f;
+		}
+	}
+	// 非ブースト時かつ非スローモーション時はエネルギーは回復
 	else
 	{
 		energyGauge_ += (energy_recovery_amount * slowRate_);
@@ -192,17 +211,13 @@ void Player::Update()
 		pos_ = VAdd(pos_, moveVec);
 	}
 	// Y軸の移動
-	/*if (InputState::IsPressed(InputType::RIZE))
-	{
-		pos_.y += 3.0f;
-	}*/
 	if (InputState::IsXInputTrigger(XInputType::RIGHT))
 	{
-		pos_.y += move_y_speed * slowRate_;
+		pos_.y += move_y_speed * moveSpeed_ * slowRate_;
 	}
 	if (InputState::IsXInputTrigger(XInputType::LEFT))
 	{
-		pos_.y -= move_y_speed * slowRate_;
+		pos_.y -= move_y_speed * moveSpeed_ * slowRate_;
 	}
 
 	// 位置座標の設定
@@ -213,6 +228,28 @@ void Player::Update()
 
 	// アニメーションを進める
 	pModel_->Update();
+}
+
+bool Player::GameOverUpdate()
+{
+	static bool isPass = false;
+	if (!isPass)
+	{
+		isPass = true;
+		Effekseer3DEffectManager::GetInstance().PlayEffect("explosion", pos_, VGet(20.0f, 20.0f, 20.0f), 1.0f);
+	}
+
+	// 位置座標の設定
+	pModel_->SetPos(pos_);
+
+	// アニメーションを進める
+	pModel_->Update();
+
+	if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion"))
+	{
+		return true;
+	}
+	return false;
 }
 
 /// <summary>
@@ -263,7 +300,7 @@ float Player::GetSlowRate()
 /// カメラクラスのポインタのセッター
 /// </summary>
 /// <param name="pCamera">カメラクラスのポインタ</param>
-void Player::SetCamera(shared_ptr<Camera> pCamera)
+void Player::SetCamera(std::shared_ptr<Camera> pCamera)
 {
 	pCamera_ = pCamera;
 }

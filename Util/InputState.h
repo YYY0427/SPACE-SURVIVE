@@ -9,8 +9,7 @@ enum class InputType
 	DECISION,	// 決定
 	BACK,		// 戻る
 	PAUSE,		// ポーズボタン
-	SLOW,		// 上昇
-	FALL,		// 下降
+	SLOW,		// スローモーション
 	BOOST,		// ブースト
 	UP,			// 上
 	DOWN,		// 下

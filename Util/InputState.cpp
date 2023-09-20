@@ -29,7 +29,7 @@ namespace InputState
 		inputMapTable_[InputType::BACK] = { {InputCategory::PAD, XINPUT_BUTTON_B} };				// Bボタン
 		inputMapTable_[InputType::PAUSE] = { {InputCategory::PAD, XINPUT_BUTTON_START } };			// スタートボタン
 		inputMapTable_[InputType::SLOW] = { {InputCategory::PAD, XINPUT_BUTTON_A } };				// Aボタン
-		inputMapTable_[InputType::BOOST] = { {InputCategory::PAD, XINPUT_BUTTON_B } };	// 右スティック押し込み
+		inputMapTable_[InputType::BOOST] = { {InputCategory::PAD, XINPUT_BUTTON_B } };				// 右スティック押し込み
 		inputMapTable_[InputType::UP] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_UP } };			// ↑
 		inputMapTable_[InputType::DOWN] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_DOWN } };		// ↓
 		inputMapTable_[InputType::RIGHT] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_RIGHT } };		// →

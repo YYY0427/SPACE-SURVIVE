@@ -17,10 +17,10 @@ namespace
 	constexpr VECTOR player_vec_left{ -1, 0, 0 };
 
 	// プレイヤーの通常移動速度
-	constexpr float move_normal_speed = 30.0f;
+	constexpr float move_normal_speed = 3.0f;
 
 	// プレイヤーのブースト時移動速度
-	constexpr float move_boost_speed = 60.0f;
+	constexpr float move_boost_speed = 6.0f;
 
 	// プレイヤーの上昇、下降スピード
 	constexpr float move_y_speed = 5.0f;
@@ -54,7 +54,8 @@ Player::Player() :
 	energyGauge_(energy_gauge_total_amount),
 	slowRate_(1.0f),
 	isEffectFirst_(false),
-	isBoost_(0)
+	isBoost_(false),
+	isSlow_(false)
 {
 	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
@@ -93,56 +94,79 @@ void Player::Update()
 	if (InputState::IsTriggered(InputType::SLOW))
 	{
 		// スローモーションじゃないかつエネルギーゲージの残量があったらスローモーションに移行
-		if (slowRate_ == 1.0f && energyGauge_ >0)
+		if (!isSlow_ && energyGauge_ > 0)
 		{
-			slowRate_ = slow_rate;
+			isSlow_ = true;
 		}
 		// スローモーション時は通常に移行
 		else
 		{
-			slowRate_ = 1.0f;
+			isSlow_ = false;
 		}
 	}
+	// フラグが立っていたらスローモーションに切り替え
+	if (isSlow_)
+	{
+		slowRate_ = slow_rate;
+	}
+	else
+	{
+		slowRate_ = 1.0f;
+	}
+
 	// ブースト切り替え
 	if (InputState::IsTriggered(InputType::BOOST))
 	{
 		// 非ブースト時かつスローモーションじゃないかつエネルギーゲージの残量があった場合ブーストに移行
-		if (moveSpeed_ == move_normal_speed && energyGauge_ > 0 && slowRate_ != slow_rate)
+		if (!isBoost_ && energyGauge_ > 0 && !isSlow_)
 		{
-			/*moveSpeed_++;
-			if (moveSpeed_ > move_boost_speed)
-			{
-				moveSpeed_ = move_boost_speed;
-			}*/
-			moveSpeed_ = move_boost_speed;
+			isBoost_ = true;
 		}
 		// ブースト時の場合は通常速度に移行
 		else
+		{
+			isBoost_ = false;
+		}
+	}
+	// ブースト時は徐々に加速
+	if (isBoost_)
+	{
+		moveSpeed_ += 1;
+		if (moveSpeed_ > move_boost_speed)
+		{
+			moveSpeed_ = move_boost_speed;
+		}
+	}
+	// 非ブースト時は徐々に減速
+	else
+	{
+		moveSpeed_ -= 1;
+		if (moveSpeed_ < move_normal_speed)
 		{
 			moveSpeed_ = move_normal_speed;
 		}
 	}
 	// ブースト時はエネルギーが減り続ける
 	// スローモーション時はブースト時のエネルギーは減らない
-	if (moveSpeed_ == move_boost_speed && slowRate_ != slow_rate)
+	if (isBoost_ && !isSlow_)
 	{
-		energyGauge_ -= (boost_energy_cost);
+		energyGauge_ -= boost_energy_cost;
 
 		// エネルギーがなくなったら通常速度に移行
 		if (energyGauge_ <= 0)
 		{
-			moveSpeed_ = move_normal_speed;
+			isBoost_ = false;
 		}
 	}
 	// スローモーション時はエネルギーが減り続ける
-	else if (slowRate_ == slow_rate)
+	else if (isSlow_)
 	{
-		energyGauge_ -= (slow_energy_cost);
+		energyGauge_ -= slow_energy_cost;
 
 		// エネルギーがなくなったら通常に移行
 		if (energyGauge_ <= 0)
 		{
-			slowRate_ = 1.0f;
+			isSlow_ = false;
 		}
 	}
 	// 非ブースト時かつ非スローモーション時はエネルギーは回復
@@ -191,7 +215,7 @@ void Player::Update()
 		moveVec = VAdd(moveVecZ, moveVecX);
 
 		// 移動ベクトルの正規化
-		moveVec = VNorm(moveVec);
+	//	moveVec = VNorm(moveVec);
 
 		// プレイヤーのスピードを掛ける
 		moveVec = VScale(moveVec, moveSpeed_);
@@ -205,15 +229,24 @@ void Player::Update()
 	else
 	{
 		// 動いてない場合通常スピードに切り替える
-		moveSpeed_ = move_normal_speed;
+	//	moveSpeed_ = move_normal_speed;
+		isBoost_ = false;
 	}
 
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
 
-	// 向いている方向の設定
-	pModel_->SetRot(VGet(moveVec.z * DX_PI_F / 180.0f, 0.0f, -moveVec.x * DX_PI_F / 180.0f));
-
+	if (isSlow_)
+	{
+		// 向いている方向の設定
+		pModel_->SetRot(VGet(moveVec.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec.x * DX_PI_F / 180.0f / slowRate_));
+	}
+	else
+	{
+		// 向いている方向の設定
+		pModel_->SetRot(VGet(moveVec.z* DX_PI_F / 180.0f, 0.0f, -moveVec.x * DX_PI_F / 180.0f));
+	}
+	
 	// アニメーションを進める
 	pModel_->Update();
 }

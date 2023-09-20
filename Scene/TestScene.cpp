@@ -148,7 +148,9 @@ void TestScene::GameOverUpdate()
 		StartFadeOut();
 
 		// フェードの設定の変更
-		SetFadeConfig(3, VGet(255, 255, 255), GetFadeBright());
+		fadeColor_ = 0x000000;
+		fadeSpeed_ = 3;
+	//	SetFadeConfig(3, VGet(255, 255, 255), GetFadeBright());
 
 		isFadeOut_ = true;
 	}

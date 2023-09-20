@@ -1,8 +1,6 @@
 #pragma once
 #include "Scene.h"
 
-
-
 /// <summary>
 /// デバッグ用シーン
 /// </summary>

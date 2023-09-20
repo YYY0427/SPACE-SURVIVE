@@ -66,7 +66,7 @@ void Camera::Update()
 	// ブースト状態の視野角より大きくしない
 	if (pPlayer_.GetIsBoost())
 	{
-		perspective_++;
+		perspective_ += 2;
 		if (perspective_ > boosting_perspective)
 		{
 			perspective_ = boosting_perspective;
@@ -76,7 +76,7 @@ void Camera::Update()
 	// 通常状態の視野角より小さくはしない
 	else
 	{
-		perspective_--;
+		perspective_ -= 2;
 		if (perspective_ < normal_perspective)
 		{
 			perspective_ = normal_perspective;

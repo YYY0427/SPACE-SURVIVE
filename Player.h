@@ -49,6 +49,9 @@ private:
 	// スローモーションのレート
 	float slowRate_;
 
+	// スローモーション状態かどうか
+	bool isSlow_;
+
 	// ブースト状態かどうか
 	bool isBoost_;
 

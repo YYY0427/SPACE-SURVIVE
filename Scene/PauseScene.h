@@ -19,5 +19,14 @@ public:
 	// •`‰æ
 	void Draw();
 private:
+	// €–Ú
+	enum class Item
+	{
+		DEBUG_SCENE,
+		NUM
+	};
+private:
+	// Œ»İ‘I‘ğ’†‚Ì€–Ú
+	int currentSelectItem_;
 };
 

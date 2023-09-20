@@ -70,41 +70,6 @@ void MainScene::Draw()
 {
 	DrawString(0, 0, "MainScene", 0xffffff, true);
 
-	{
-		DINPUT_JOYSTATE input;
-		// 入力状態を取得
-		GetJoypadDirectInputState(DX_INPUT_PAD1, &input);
-
-
-		static int vol = 0;
-		if (input.Rx < -1.0f)
-		{
-			// 0から1000の範囲を0から10に
-			vol = ((input.Rx - 0) * (10 - 0)) / (-1000 - 0);
-		}
-		else if (input.Rx > 1.0f)
-		{
-			// 0から1000の範囲を0から10に
-			vol = ((input.Rx - 0) * (10 - 0)) / (1000 - 0);
-		}
-		else if (input.Ry < -1.0f)
-		{
-			// 0から1000の範囲を0から10に
-		//	vol = ((input.Ry - 0) * (10 - 0)) / (-1000 - 0);
-			vol = input.Ry;
-		}
-		else if (input.Ry > 1.0f)
-		{
-			// 0から1000の範囲を0から10に
-			vol = ((input.Ry - 0) * (10 - 0)) / (1000 - 0);
-		}
-		else
-		{
-			vol = 0;
-		}
-		DrawFormatString(300, 300, 0xff0000, "スティック%d", vol);
-	}
-
 	// フェードの描画
 	DrawFade();
 }

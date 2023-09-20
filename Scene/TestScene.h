@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include <memory>
 
+// プロトタイプ宣言
 class EnemyManager;
 class SkyDome;
 class Camera;
@@ -32,9 +33,10 @@ private:
 	// 通常の更新
 	void NormalUpdate();
 
-	// 
+	// ゲームオーバー時の更新
 	void GameOverUpdate();
 
+	// ポインタ
 	std::shared_ptr<Camera> pCamera_;
 	std::shared_ptr<Player> pPlayer_;
 	std::shared_ptr<EnemyManager> pEnemyManager_;

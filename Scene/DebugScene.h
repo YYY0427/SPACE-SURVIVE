@@ -21,8 +21,8 @@ public:
 	// 描画
 	void Draw();
 private:
-	// デバッグシーンから飛べるシーン達
-	enum SceneName
+	// デバッグシーンから飛べるシーンの項目
+	enum class SceneItem
 	{
 		TEST_SCENE,
 		TITLE_SCENE,
@@ -32,6 +32,6 @@ private:
 		NUM
 	};
 private:
-	// 現在選択中のインデックス
-	int currentSelectIndex_;
+	// 現在選択中の項目
+	int currentSelectItem_;
 };

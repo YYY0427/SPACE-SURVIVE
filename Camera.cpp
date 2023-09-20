@@ -16,7 +16,7 @@ namespace
 
 	// Ž‹–ìŠp
 	constexpr float normal_perspective = 90.0f;	
-	constexpr float boosting_perspective = 100.0f;
+	constexpr float boosting_perspective = 120.0f;
 
 	// •`‰æ‹——£(near, far)
 	constexpr float near_distance = 5.0f;

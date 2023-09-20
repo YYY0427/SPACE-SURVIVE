@@ -9,6 +9,8 @@ class Scene;
 class SceneManager
 {
 public:
+	void PopAllSceneAndChangeScene(Scene* scene);
+
 	// ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
 	void ChangeScene(Scene* scene);
 

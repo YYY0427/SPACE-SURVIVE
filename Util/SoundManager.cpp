@@ -109,28 +109,28 @@ void SoundManager::LoadAndSaveSoundFileData()
 		// •¶š—ñ‚ğ“KØ‚Èƒf[ƒ^Œ^‚É•ÏŠ·‚µ‚ÄŠi”[
 		SoundData data;
 		data.handle = -1;	// ‰Šú‰»
-		data.volumeRate = std::stof(strvec[SoundDataType::VOLUM_RATE]);	// stringŒ^‚©‚çfloatŒ^‚É•ÏŠ·‚µŠi”[
-		data.extension = strvec[SoundDataType::EXTENSION];			// stringŒ^‚ÅŠi”[
+		data.volumeRate = std::stof(strvec[static_cast<int>(SoundDataType::VOLUM_RATE)]);	// stringŒ^‚©‚çfloatŒ^‚É•ÏŠ·‚µŠi”[
+		data.extension = strvec[static_cast<int>(SoundDataType::EXTENSION)];			// stringŒ^‚ÅŠi”[
 		
 		// ƒTƒEƒ“ƒhƒ^ƒCƒv‚Ì•Û‘¶
 		// •ÏŠ·‚µ‚½ƒf[ƒ^‚ğƒtƒ@ƒCƒ‹–¼‚ğƒL[‚Æ‚µ‚ÄŠi”[
 		// ƒTƒEƒ“ƒh‚Ìƒ^ƒCƒv‚É‚æ‚Á‚Ä‚»‚ê‚¼‚êƒ[ƒh
-		switch (std::stoi(strvec[SoundDataType::SOUND_TYPE]))
+		switch (static_cast<SoundType>(std::stoi(strvec[static_cast<int>(SoundDataType::SOUND_TYPE)])))
 		{
 		case SoundType::BGM:
 			data.type = SoundType::BGM;
-			soundNameAndHandleTable_[strvec[SoundDataType::FILE_NAME]] = data;
-			LoadSoundFile2D(strvec[SoundDataType::FILE_NAME], data.extension);
+			soundNameAndHandleTable_[strvec[static_cast<int>(SoundDataType::FILE_NAME)]] = data;
+			LoadSoundFile2D(strvec[static_cast<int>(SoundDataType::FILE_NAME)], data.extension);
 			break;
 		case SoundType::SE2D:
 			data.type = SoundType::SE2D;
-			soundNameAndHandleTable_[strvec[SoundDataType::FILE_NAME]] = data;
-			LoadSoundFile2D(strvec[SoundDataType::FILE_NAME], data.extension);
+			soundNameAndHandleTable_[strvec[static_cast<int>(SoundDataType::FILE_NAME)]] = data;
+			LoadSoundFile2D(strvec[static_cast<int>(SoundDataType::FILE_NAME)], data.extension);
 			break;
 		case SoundType::SE3D:
 			data.type = SoundType::SE3D;
-			soundNameAndHandleTable_[strvec[SoundDataType::FILE_NAME]] = data;
-			LoadSoundFile3D(strvec[SoundDataType::FILE_NAME], data.extension);
+			soundNameAndHandleTable_[strvec[static_cast<int>(SoundDataType::FILE_NAME)]] = data;
+			LoadSoundFile3D(strvec[static_cast<int>(SoundDataType::FILE_NAME)], data.extension);
 			break;
 		default:
 			// ‚ ‚è“¾‚È‚¢’l‚È‚Ì‚Å~‚ß‚é

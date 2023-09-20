@@ -1,6 +1,7 @@
 #include "TestScene.h"
 #include "SceneManager.h"
 #include "DebugScene.h"
+#include "PauseScene.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
@@ -105,6 +106,11 @@ void TestScene::NormalUpdate()
 		}
 	}
 
+	if (InputState::IsTriggered(InputType::PAUSE))
+	{
+		manager_.PushScene(new PauseScene(manager_));
+	}
+
 	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
 	//if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
 	//{
@@ -115,6 +121,7 @@ void TestScene::NormalUpdate()
 
 	//	isFadeOut_ = true;
 	//}
+	
 	// フェードの更新
 	UpdateFade();
 }
@@ -131,6 +138,7 @@ void TestScene::GameOverUpdate()
 		return;
 	}
 
+	// カメラの更新
 	pCamera_->Update();
 
 	// プレイヤーのゲームオーバー時の更新が終了かつフェードインしてなかったらフェードアウト開始

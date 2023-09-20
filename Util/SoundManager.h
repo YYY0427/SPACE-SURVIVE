@@ -45,14 +45,14 @@ public:
 	void Set3DSoundListenerPosAndFrontPos_UpVecY(VECTOR pos, VECTOR angle);
 private:
 	// サウンドの種類
-	enum SoundType : int
+	enum class SoundType
 	{
 		BGM,
 		SE2D,
 		SE3D,
 	};
 	// サウンドのデータの種類
-	enum SoundDataType : int
+	enum class SoundDataType
 	{
 		FILE_NAME,
 		EXTENSION,

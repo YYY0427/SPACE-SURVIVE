@@ -2,6 +2,24 @@
 #include "Scene.h"
 
 /// <summary>
+/// 全てのシーンの削除とシーンの切り替え
+/// 主にポーズからのシーンの切り替えを行うときに使う
+/// </summary>
+/// <param name="scene"></param>
+void SceneManager::PopAllSceneAndChangeScene(Scene* scene)
+{
+	// すべてのシーンの削除
+	for (auto& scene : scene_)
+	{
+		delete scene_.front();
+		scene_.pop_front(); 
+	}
+
+	// 次のシーンの追加
+	scene_.push_front(scene);
+}
+
+/// <summary>
 /// シーンの切り替えを行う
 /// </summary>
 /// <param name="scene">切り替えたい次シーンのアドレス</param>

@@ -24,7 +24,7 @@ namespace
 /// <param name="manager">シーンマネーシャーへの参照</param>
 DebugScene::DebugScene(SceneManager& manager):
 	Scene(manager),
-	currentSelectIndex_(0)
+	currentSelectItem_(0)
 {
 }
 
@@ -43,27 +43,27 @@ void DebugScene::Update()
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
 	if (isFadeOut_ && !IsFadingOut())
 	{
-		if (currentSelectIndex_ == TEST_SCENE)
+		if (currentSelectItem_ == static_cast<int>(SceneItem::TEST_SCENE))
 		{
 			manager_.ChangeScene(new TestScene(manager_));
 			return;
 		}
-		else if (currentSelectIndex_ == TITLE_SCENE)
+		else if (currentSelectItem_ == static_cast<int>(SceneItem::TITLE_SCENE))
 		{
 			manager_.ChangeScene(new TitleScene(manager_));
 			return;
 		}
-		else if (currentSelectIndex_ == MAIN_SCENE)
+		else if (currentSelectItem_ == static_cast<int>(SceneItem::MAIN_SCENE))
 		{
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
 		}
-		else if (currentSelectIndex_ == SOUNDSETTING_SCENE)
+		else if (currentSelectItem_ == static_cast<int>(SceneItem::SOUNDSETTING_SCENE))
 		{
 			manager_.ChangeScene(new SoundSettingScene(manager_));
 			return;
 		}
-		else if (currentSelectIndex_ == PAUSE_SCENE)
+		else if (currentSelectItem_ == static_cast<int>(SceneItem::PAUSE_SCENE))
 		{
 			// ポーズの場合シーンが残っているので初期化
 			isFadeOut_ = false;
@@ -76,18 +76,18 @@ void DebugScene::Update()
 	// 選択肢を回す処理
 	if (InputState::IsTriggered(InputType::UP) && !isFadeOut_)
 	{
-		currentSelectIndex_ = ((currentSelectIndex_ - 1) + NUM) % NUM;
+		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(SceneItem::NUM)) % static_cast<int>(SceneItem::NUM);
 	}
 	else if (InputState::IsTriggered(InputType::DOWN) && !isFadeOut_)
 	{
-		currentSelectIndex_ = (currentSelectIndex_ + 1) % NUM;
+		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(SceneItem::NUM);
 	}
 
 	// 決定ボタンを押したらフェードアウト開始
 	if (InputState::IsTriggered(InputType::DECISION) && !IsFadingIn())
 	{
 		// ポーズの場合はフェードを行わない
-		if (currentSelectIndex_ != PAUSE_SCENE)
+		if (currentSelectItem_ != static_cast<int>(SceneItem::PAUSE_SCENE))
 		{
 			StartFadeOut();
 		}
@@ -105,13 +105,13 @@ void DebugScene::Draw()
 {
 	// テキストの表示
 	DrawString(0, 0, "DebugScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * TEST_SCENE, "TestScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * TITLE_SCENE, "TitleScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * MAIN_SCENE, "MainScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * SOUNDSETTING_SCENE, "SoundSettingScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * PAUSE_SCENE, "PauseScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TEST_SCENE), "TestScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TITLE_SCENE), "TitleScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::MAIN_SCENE), "MainScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::SOUNDSETTING_SCENE), "SoundSettingScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::PAUSE_SCENE), "PauseScene", 0xffffff, true);
 
-	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectIndex_, "→", 0xff0000);
+	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
 
 	// フェードの描画
 	DrawFade();

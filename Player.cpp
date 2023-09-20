@@ -17,10 +17,10 @@ namespace
 	constexpr VECTOR player_vec_left{ -1, 0, 0 };
 
 	// プレイヤーの通常移動速度
-	constexpr float move_normal_speed = 1.0f;
+	constexpr float move_normal_speed = 30.0f;
 
 	// プレイヤーのブースト時移動速度
-	constexpr float move_boost_speed = 3.0f;
+	constexpr float move_boost_speed = 60.0f;
 
 	// プレイヤーの上昇、下降スピード
 	constexpr float move_y_speed = 5.0f;
@@ -52,7 +52,9 @@ Player::Player() :
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
 	energyGauge_(energy_gauge_total_amount),
-	slowRate_(1.0f)
+	slowRate_(1.0f),
+	isEffectFirst_(false),
+	isBoost_(0)
 {
 	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
@@ -107,6 +109,11 @@ void Player::Update()
 		// 非ブースト時かつスローモーションじゃないかつエネルギーゲージの残量があった場合ブーストに移行
 		if (moveSpeed_ == move_normal_speed && energyGauge_ > 0 && slowRate_ != slow_rate)
 		{
+			/*moveSpeed_++;
+			if (moveSpeed_ > move_boost_speed)
+			{
+				moveSpeed_ = move_boost_speed;
+			}*/
 			moveSpeed_ = move_boost_speed;
 		}
 		// ブースト時の場合は通常速度に移行
@@ -180,29 +187,26 @@ void Player::Update()
 	// スティックが入力されている場合のみ移動
 	if (isInput_)
 	{
-		// x方向とz方向のベクトルを足して移動ベクトルを作成する
+		// プレイヤーから見てx方向とz方向のベクトルを足して移動ベクトルを作成する
 		moveVec = VAdd(moveVecZ, moveVecX);
 
-		// 正規化
-	//	moveVec = VNorm(moveVec);
+		// 移動ベクトルの正規化
+		moveVec = VNorm(moveVec);
 
-		// 正規化したベクトルにプレイヤーの速度をかける
+		// プレイヤーのスピードを掛ける
 		moveVec = VScale(moveVec, moveSpeed_);
 
+		// スローモーションのレートを掛ける
 		moveVec = VScale(moveVec, slowRate_);
 
 		// 作成した移動ベクトルで座標の移動
 		pos_ = VAdd(pos_, moveVec);
 	}
-	//// Y軸の移動
-	//if (InputState::IsXInputTrigger(XInputType::RIGHT))
-	//{
-	//	pos_.y += move_y_speed * moveSpeed_ * slowRate_;
-	//}
-	//if (InputState::IsXInputTrigger(XInputType::LEFT))
-	//{
-	//	pos_.y -= move_y_speed * moveSpeed_ * slowRate_;
-	//}
+	else
+	{
+		// 動いてない場合通常スピードに切り替える
+		moveSpeed_ = move_normal_speed;
+	}
 
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
@@ -221,13 +225,11 @@ void Player::Update()
 bool Player::GameOverUpdate()
 {
 	// 一回だけエフェクトを再生
-	static bool isPass = false;
-	if (!isPass)
+	if (!isEffectFirst_)
 	{
-		isPass = true;
-		Effekseer3DEffectManager::GetInstance().PlayEffect("explosion", pos_, VGet(20.0f, 20.0f, 20.0f), 1.0f);
+		isEffectFirst_ = true;
+		Effekseer3DEffectManager::GetInstance().PlayEffect("explosion", pos_, VGet(50.0f, 50.0f, 50.0f), 1.0f);
 	}
-
 	// エフェクトを再生し終えたらtrueを返す
 	if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion"))
 	{
@@ -287,6 +289,10 @@ float Player::GetSlowRate()
 	return slowRate_;
 }
 
+/// <summary>
+/// プレイヤーの当たり判定の半径の取得
+/// </summary>
+/// <returns>当たり判定の半径</returns>
 float Player::GetCollsionRadius()
 {
 	return model_collision_radius;

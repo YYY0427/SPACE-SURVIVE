@@ -49,6 +49,12 @@ private:
 	// スローモーションのレート
 	float slowRate_;
 
+	// ブースト状態かどうか
+	bool isBoost_;
+
 	// 左スティックが入力されたか
 	bool isInput_;
+
+	// エフェクトを一回だけ再生
+	bool isEffectFirst_;
 };

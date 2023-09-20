@@ -9,11 +9,15 @@
 
 namespace
 {
-	// ポーズウィンドウ
-	constexpr int window_width = Game::screen_width;	//ポーズ枠の幅
-	constexpr int window_height = Game::screen_height;	//ポーズ枠の高さ
-	constexpr int window_start_x = (Game::screen_width - window_width) / 2;		//ポーズ枠の左
-	constexpr int window_start_y = (Game::screen_height - window_height) / 2;	//ポーズ枠上
+	// ポーズウィンドウ枠の幅
+	constexpr int window_width = Game::screen_width;
+
+	// ポーズウィンドウ枠の高さ
+	constexpr int window_height = Game::screen_height;	
+
+	// ポーズウィンドウの左上の位置(ウィンドウの開始位置)
+	constexpr int window_start_x = 0;		
+	constexpr int window_start_y = 0;	
 
 	// 表示するテキストの全体の位置
 	constexpr int draw_text_pos_x = Game::screen_width / 2 - 100;
@@ -23,27 +27,21 @@ namespace
 	constexpr int text_space = 32;
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="manager">シーンマネージャーの参照</param>
+// コンストラクタ
 PauseScene::PauseScene(SceneManager& manager) :
 	Scene(manager),
 	currentSelectItem_(0)
 {
+	// フェードを行わないようフェードしてない状態で開始
 	fadeBright_ = 0;
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 PauseScene::~PauseScene()
 {
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// 更新
 void PauseScene::Update()
 {
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
@@ -59,11 +57,11 @@ void PauseScene::Update()
 	// 選択肢を回す処理
 	if (InputState::IsTriggered(InputType::UP) && !isFadeOut_)
 	{
-		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(Item::NUM)) % static_cast<int>(Item::NUM);
+		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(Item::TOTAL_VALUE)) % static_cast<int>(Item::TOTAL_VALUE);
 	}
 	else if (InputState::IsTriggered(InputType::DOWN) && !isFadeOut_)
 	{
-		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(Item::NUM);
+		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(Item::TOTAL_VALUE);
 	}
 
 	// 決定ボタンを押したらフェードアウト開始
@@ -84,16 +82,14 @@ void PauseScene::Update()
 	UpdateFade();
 }
 
-/// <summary>
-/// 描画
-/// </summary>
+// 描画
 void PauseScene::Draw()
 {
-	//ポーズウィンドウ
+	// ポーズウィンドウ
 	DrawBox(window_start_x, window_start_y, window_start_x + window_width, window_start_y + window_height, 0xd0d0d0, true);
 	DrawBox(window_start_x, window_start_y, window_start_x + window_width, window_start_y + window_height, 0xffffff, false);
 
-	//ポーズ中メッセージ
+	// ポーズ中メッセージ
 	DrawString(window_start_x + 10, window_start_y + 10, "Pausing...", 0xffff88);
 
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(Item::DEBUG_SCENE), "DebugScene", 0x000000, true);

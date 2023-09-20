@@ -23,7 +23,7 @@ TestScene::TestScene(SceneManager& manager) :
 	pCamera_ = std::make_shared<Camera>(*pPlayer_);
 	pSkyDome_ = std::make_shared<SkyDome>();
 	pEnemyManager_ = std::make_shared<EnemyManager>(*pPlayer_);
-	pPlayer_->SetCamera(pCamera_);
+	pPlayer_->SetCameraPointer(pCamera_);
 }
 
 /// <summary>

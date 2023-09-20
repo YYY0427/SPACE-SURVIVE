@@ -18,26 +18,19 @@ namespace
 	constexpr int text_space = 32;
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="manager">シーンマネーシャーへの参照</param>
+// コンストラクタ
 DebugScene::DebugScene(SceneManager& manager):
 	Scene(manager),
 	currentSelectItem_(0)
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 DebugScene::~DebugScene()
 {
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// 更新
 void DebugScene::Update()
 {
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
@@ -74,44 +67,47 @@ void DebugScene::Update()
 	}
 
 	// 選択肢を回す処理
-	if (InputState::IsTriggered(InputType::UP) && !isFadeOut_)
+	// フェード中の場合は処理を行わない
+	if (InputState::IsTriggered(InputType::UP) && !IsFadeing)
 	{
-		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(SceneItem::NUM)) % static_cast<int>(SceneItem::NUM);
+		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(SceneItem::TOTAL_VALUE)) % static_cast<int>(SceneItem::TOTAL_VALUE);
 	}
-	else if (InputState::IsTriggered(InputType::DOWN) && !isFadeOut_)
+	else if (InputState::IsTriggered(InputType::DOWN) && !IsFadeing)
 	{
-		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(SceneItem::NUM);
+		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(SceneItem::TOTAL_VALUE);
 	}
 
-	// 決定ボタンを押したらフェードアウト開始
+	// 決定ボタンを押されて、フェードイン中ではなかったらフェードアウト開始
 	if (InputState::IsTriggered(InputType::DECISION) && !IsFadingIn())
 	{
-		// ポーズの場合はフェードを行わない
+		// ポーズの場合はフェードアウトを行わない
 		if (currentSelectItem_ != static_cast<int>(SceneItem::PAUSE_SCENE))
 		{
 			StartFadeOut();
 		}
+		// フェードアウトが行われたかどうかのフラグを立てる
+		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
 		isFadeOut_ = true;
 	}
-
 	// フェードの更新
 	UpdateFade();
 }
 
-/// <summary>
-///  描画
-/// </summary>
+//  描画
 void DebugScene::Draw()
 {
-	// テキストの表示
+	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "DebugScene", 0xffffff, true);
+
+	// デバッグシーンから飛べるシーンの項目のテキスト表示
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TEST_SCENE), "TestScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TITLE_SCENE), "TitleScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::MAIN_SCENE), "MainScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::SOUNDSETTING_SCENE), "SoundSettingScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::PAUSE_SCENE), "PauseScene", 0xffffff, true);
 
-	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
+	// 現在選択中の項目の横に→を表示
+	DrawString(draw_text_pos_x - text_space, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
 
 	// フェードの描画
 	DrawFade();

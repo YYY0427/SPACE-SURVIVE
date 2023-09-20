@@ -1,13 +1,14 @@
 #pragma once
 #include "Scene.h"
 
-/// <summary>
-/// ポーズシーン
-/// </summary>
+// ポーズシーン
 class PauseScene : public Scene
 {
 public:
-	// コンストラクタ
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="manager">シーンマネージャーの参照</param>
 	PauseScene(SceneManager& manager);
 
 	// デストラクタ
@@ -19,11 +20,11 @@ public:
 	// 描画
 	void Draw();
 private:
-	// 項目
+	// ポーズシーンから選択できる項目
 	enum class Item
 	{
-		DEBUG_SCENE,
-		NUM
+		DEBUG_SCENE,	// デバッグシーン
+		TOTAL_VALUE		// 項目の合計値
 	};
 private:
 	// 現在選択中の項目

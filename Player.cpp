@@ -214,9 +214,6 @@ void Player::Update()
 		// プレイヤーから見てx方向とz方向のベクトルを足して移動ベクトルを作成する
 		moveVec = VAdd(moveVecZ, moveVecX);
 
-		// 移動ベクトルの正規化
-	//	moveVec = VNorm(moveVec);
-
 		// プレイヤーのスピードを掛ける
 		moveVec = VScale(moveVec, moveSpeed_);
 
@@ -229,7 +226,6 @@ void Player::Update()
 	else
 	{
 		// 動いてない場合通常スピードに切り替える
-	//	moveSpeed_ = move_normal_speed;
 		isBoost_ = false;
 	}
 
@@ -273,7 +269,7 @@ bool Player::GameOverUpdate()
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
 
-	// アニメーションを進める
+	// アニメーションと当たり判定の更新
 	pModel_->Update();
 }
 
@@ -294,7 +290,6 @@ void Player::Draw()
 /// <summary>
 /// 位置情報の取得
 /// </summary>
-/// <returns>位置情報</returns>
 VECTOR Player::GetPos()
 {
 	return pos_;
@@ -306,17 +301,12 @@ VECTOR Player::GetPos()
 /// <returns>true : ブースト状態、false : 通常状態</returns>
 bool Player::GetIsBoost()
 {
-	if (moveSpeed_ == move_boost_speed)
-	{
-		return true;
-	}
-	return false;
+	return isBoost_;
 }
 
 /// <summary>
 /// スローモーションのレートの取得
 /// </summary>
-/// <returns>スローモーションのレート</returns>
 float Player::GetSlowRate()
 {
 	return slowRate_;
@@ -325,17 +315,15 @@ float Player::GetSlowRate()
 /// <summary>
 /// プレイヤーの当たり判定の半径の取得
 /// </summary>
-/// <returns>当たり判定の半径</returns>
 float Player::GetCollsionRadius()
 {
 	return model_collision_radius;
 }
 
 /// <summary>
-/// カメラクラスのポインタのセッター
+/// カメラクラスのポインタの
 /// </summary>
-/// <param name="pCamera">カメラクラスのポインタ</param>
-void Player::SetCamera(std::shared_ptr<Camera> pCamera)
+void Player::SetCameraPointer(std::shared_ptr<Camera> pCamera)
 {
 	pCamera_ = pCamera;
 }

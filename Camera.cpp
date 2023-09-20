@@ -59,8 +59,16 @@ void Camera::Update()
 	cameraPitch_ += (up + -down) * (rot_speed_y * 0.01f);
 
 	// 縦回転の回転角度の制限
-	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f) cameraPitch_ = 60.0f * DX_PI_F / 180.0f;
-	if (cameraPitch_ <= -80 * DX_PI_F / 180.0f) cameraPitch_ = -80.0f * DX_PI_F / 180.0f;
+	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f)
+	{
+		// 上方向の回転角度の制限
+		cameraPitch_ = 60.0f * DX_PI_F / 180.0f;
+	}
+	if (cameraPitch_ <= -80 * DX_PI_F / 180.0f)
+	{
+		// 下方向の回転角度の制限
+		cameraPitch_ = -80.0f * DX_PI_F / 180.0f;
+	}
 
 	// プレイヤーブースト状態の場合視野角を徐々に大きく
 	// ブースト状態の視野角より大きくしない

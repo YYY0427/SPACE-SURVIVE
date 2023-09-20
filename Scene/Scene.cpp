@@ -97,7 +97,16 @@ bool Scene::IsFadingOut() const
 /// <returns>true : フェード中、false : フェードしてない</returns>
 bool Scene::IsFadeing() const
 {
-	return IsFadingIn() || IsFadingOut();
+	if (IsFadingIn())
+	{
+		return true;
+	}
+	if (IsFadingOut())
+	{
+		return true;
+	}
+	return false;
+//	return IsFadingIn() || IsFadingOut();
 }
 
 /// <summary>

@@ -31,7 +31,7 @@ public:
 	float GetCollsionRadius();
 
 	// セッター
-	void SetCamera(std::shared_ptr<Camera> pCamera);
+	void SetCameraPointer(std::shared_ptr<Camera> pCamera);
 private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;

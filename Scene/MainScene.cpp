@@ -9,10 +9,7 @@
 #include "../Util/SoundManager.h"
 #include <DxLib.h>
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="manager">シーンマネージャーへの参照</param>
+// コンストラクタ
 MainScene::MainScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&MainScene::NormalUpdate)
@@ -20,37 +17,35 @@ MainScene::MainScene(SceneManager& manager) :
 	
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 MainScene::~MainScene()
 {
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// メンバ関数ポインタの更新
 void MainScene::Update()
 {
 	(this->*updateFunc_)();
 }
 
-/// <summary>
-/// 通常の更新
-/// </summary>
+// 通常の更新
 void MainScene::NormalUpdate()
 {
-	// フェードが終わり次第シーン遷移
+	// フェードアウトが終わり次第シーン遷移
 	if (isFadeOut_ && !IsFadingOut())
 	{
 		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
 
-	// 戻るボタンが押されたらフェードアウト開始
+	// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
 	if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
 	{
+		// フェードアウト開始
 		StartFadeOut();
+
+		// フェードアウトが行われたかどうかのフラグを立てる
+		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
 		isFadeOut_ = true;
 	}
 	// ポーズ画面に遷移
@@ -63,9 +58,7 @@ void MainScene::NormalUpdate()
 	UpdateFade();
 }
 
-/// <summary>
-/// 描画
-/// </summary>
+// 描画
 void MainScene::Draw()
 {
 	DrawString(0, 0, "MainScene", 0xffffff, true);

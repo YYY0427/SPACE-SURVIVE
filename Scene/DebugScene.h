@@ -1,13 +1,16 @@
 #pragma once
 #include "Scene.h"
 
-/// <summary>
-/// デバッグ用シーン
-/// </summary>
+// デバッグ用シーン
+// デバッグをしやすくするために作成
+// 各シーンに飛べる
 class DebugScene : public Scene
 {
 public:
-	//コンストラクタ
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="manager">シーンマネーシャーの参照</param>
 	DebugScene(SceneManager& manager);
 
 	// デストラクタ
@@ -22,12 +25,12 @@ private:
 	// デバッグシーンから飛べるシーンの項目
 	enum class SceneItem
 	{
-		TEST_SCENE,
-		TITLE_SCENE,
-		MAIN_SCENE,
-		SOUNDSETTING_SCENE,
-		PAUSE_SCENE,
-		NUM
+		TEST_SCENE,			// テストシーン
+		TITLE_SCENE,		// タイトルシーン
+		MAIN_SCENE,			// メインシーン
+		SOUNDSETTING_SCENE,	// サウンド設定シーン
+		PAUSE_SCENE,		// ポーズシーン
+		TOTAL_VALUE	// 項目の合計値
 	};
 private:
 	// 現在選択中の項目

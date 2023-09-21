@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Util/InputState.h"
+#include "Util/SaveData.h"
 
 namespace
 {
@@ -9,10 +10,6 @@ namespace
 
 	// ƒJƒƒ‰‚Ì‰Šú’Ž‹“_
 	constexpr VECTOR camera_init_target = { 0, 0, 0 };
-
-	// ƒJƒƒ‰‚Ì‰ñ“]‘¬“x
-	constexpr float rot_speed_x = 1.0f;
-	constexpr float rot_speed_y = 0.3f;
 
 	// Ž‹–ìŠp
 	constexpr float normal_perspective = 90.0f;		// ’ÊíŽž
@@ -48,9 +45,13 @@ void Camera::Update()
 	int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
 	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
 
+	// ƒZ[ƒuƒf[ƒ^‚ÌŠ´“xî•ñ‚ÌŽæ“¾
+	int padStickSensX = SaveData::GetInstance().GetPadStickSensitivityX();
+	int padStickSensY = SaveData::GetInstance().GetPadStickSensitivityY();
+
 	// “ü—Íî•ñ‚©‚çƒJƒƒ‰‚ð‰ñ“]
-	cameraYaw_ += (-left + right) * (rot_speed_x * 0.01f);
-	cameraPitch_ += (up + -down) * (rot_speed_y * 0.01f);
+	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f);
+	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f);
 
 	// c‰ñ“]‚Ì‰ñ“]Šp“x‚Ì§ŒÀ
 	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f)

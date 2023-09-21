@@ -14,7 +14,7 @@ namespace
 	constexpr int draw_text_pos_y = common::screen_height / 2 - 100;
 
 	// テキストの文字間
-	constexpr int text_space = 32;
+	constexpr int text_space = 64;
 }
 
 // コンストラクタ
@@ -72,6 +72,16 @@ void ConfigScene::Update()
 			// 設定したコンフィグから音量調節
 			SoundManager::GetInstance().Play("cursorTest");
 		}
+		else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_SENS_X))
+		{
+			// 感度の最大値より大きくなったら最小値にする
+			SaveData::GetInstance().SetPadStickSensitivityX();
+		}
+		else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_SENS_Y))
+		{
+			// 感度の最大値より大きくなったら最小値にする
+			SaveData::GetInstance().SetPadStickSensitivityY();
+		}
 	}
 
 	// 前の画面に戻る
@@ -102,15 +112,26 @@ void ConfigScene::Draw()
 	// BGMの項目と音量の表示
 	int bgm = static_cast<int>(Item::BGM);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * bgm, "BGM", 0x000000, true);
-	DrawFormatString(draw_text_pos_x + 32, draw_text_pos_y + text_space * bgm, 0x000000, "%d", SaveData::GetInstance().GetBgmVolume());
+	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * bgm, 0x000000, "%d", SaveData::GetInstance().GetBgmVolume());
 
 	// SEの項目と音量の表示
 	int se = static_cast<int>(Item::SE);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * se, "SE", 0x000000, true);
-	DrawFormatString(draw_text_pos_x + 32, draw_text_pos_y + text_space * se, 0x000000, "%d", SaveData::GetInstance().GetSeVolume());
+	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * se, 0x000000, "%d", SaveData::GetInstance().GetSeVolume());
+
+	// スティックの感度Xの項目と音量の表示
+	int padStickX = static_cast<int>(Item::PAD_STICK_SENS_X);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickX, "パッドの横感度", 0x000000, true);
+	DrawFormatString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickX, 0x000000, "%d", SaveData::GetInstance().GetPadStickSensitivityX());
+
+	// スティックの感度Yの項目と音量の表示
+	int padStickY = static_cast<int>(Item::PAD_STICK_SENS_Y);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickY, "パッドの縦感度", 0x000000, true);
+	DrawFormatString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickY, 0x000000, "%d", SaveData::GetInstance().GetPadStickSensitivityY());
+
 
 	// 現在選択中の項目の横に→を表示
-	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
+	DrawString(draw_text_pos_x - text_space, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
 
 	// フェードの描画
 	DrawFade();

@@ -95,6 +95,8 @@ void SaveData::InitData()
 	data_.version = current_save_version;
 	data_.volumeBgm = 3;
 	data_.volumeSe = 3;
+	data_.padStickSensitivityX = 5;
+	data_.padStickSensitivityY = 3;
 }
 
 // BGMの音量の取得
@@ -109,7 +111,20 @@ int SaveData::GetSeVolume() const
 	return data_.volumeSe;
 }
 
-// BGMの音量の設定(最大値を超えると0に戻る)
+// パッドのスティックの感度の取得
+int SaveData::GetPadStickSensitivityX() const
+{
+	return data_.padStickSensitivityX;
+}
+
+// パッドのスティックの感度の取得
+int SaveData::GetPadStickSensitivityY() const
+{
+	return data_.padStickSensitivityY;
+}
+
+// BGMの音量の設定
+// 最大値を超えると0に戻る
 void SaveData::SetBgmVolume()
 {
 	data_.volumeBgm++;
@@ -122,7 +137,8 @@ void SaveData::SetBgmVolume()
 	SaveData::GetInstance().Write();
 }
 
-// SEの音量の設定(最大値を超えると0に戻る)
+// SEの音量の設定
+// 最大値を超えると0に戻る
 void SaveData::SetSeVolume()
 {
 	data_.volumeSe++;
@@ -131,6 +147,32 @@ void SaveData::SetSeVolume()
 		data_.volumeSe = 0;
 	}
 
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
+}
+
+// パッドのスティックの横感度の設定
+// 最大値を超えると0に戻る
+void SaveData::SetPadStickSensitivityX()
+{
+	data_.padStickSensitivityX++;
+	if (data_.padStickSensitivityX > 10)
+	{
+		data_.padStickSensitivityX = 0;
+	}
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
+}
+
+// パッドのスティックの縦感度の設定
+// 最大値を超えると0に戻る
+void SaveData::SetPadStickSensitivityY()
+{
+	data_.padStickSensitivityY++;
+	if (data_.padStickSensitivityY > 10)
+	{
+		data_.padStickSensitivityY = 0;
+	}
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();
 }

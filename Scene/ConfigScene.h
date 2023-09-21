@@ -25,6 +25,8 @@ private:
 	{
 		BGM,	
 		SE,
+		PAD_STICK_SENS_X,
+		PAD_STICK_SENS_Y,
 		TOTAL_VALUE			// çÄñ⁄ÇÃçáåvíl
 	};
 private:

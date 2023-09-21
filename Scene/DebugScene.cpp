@@ -3,16 +3,16 @@
 #include "TitleScene.h"
 #include "MainScene.h"
 #include "PauseScene.h"
-#include "SoundSettingScene.h"
+#include "ConfigScene.h"
 #include "TestScene.h"
 #include "../Util/InputState.h"
-#include "../Game.h"
+#include "../common.h"
 
 namespace
 {
 	// 表示するテキストの全体の位置
-	constexpr int draw_text_pos_x = Game::screen_width / 2 - 100;
-	constexpr int draw_text_pos_y = Game::screen_height / 2 - 100;
+	constexpr int draw_text_pos_x = common::screen_width / 2 - 100;
+	constexpr int draw_text_pos_y = common::screen_height / 2 - 100;
 
 	// テキストの文字間
 	constexpr int text_space = 32;
@@ -28,11 +28,33 @@ DebugScene::DebugScene(SceneManager& manager):
 // デストラクタ
 DebugScene::~DebugScene()
 {
+	// 処理なし
 }
 
 // 更新
 void DebugScene::Update()
 {
+	
+
+	// 選択肢を回す処理
+	// フェード中の場合は処理を行わない
+	int sceneItemTotalValue = static_cast<int>(SceneItem::TOTAL_VALUE);
+	if (InputState::IsTriggered(InputType::UP) && !IsFadeing())
+	{
+		currentSelectItem_ = ((currentSelectItem_ - 1) + sceneItemTotalValue) % sceneItemTotalValue;
+	}
+	else if (InputState::IsTriggered(InputType::DOWN) && !IsFadeing())
+	{
+		currentSelectItem_ = (currentSelectItem_ + 1) % sceneItemTotalValue;
+	}
+
+	// 決定ボタンを押されて、フェード中ではなかったらフェードアウト開始
+	if (InputState::IsTriggered(InputType::DECISION) && !IsFadeing())
+	{
+		// フェードアウトが行われたかどうかのフラグを立てる
+		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
+		isFadeOut_ = true;
+	}
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
 	if (isFadeOut_ && !IsFadingOut())
 	{
@@ -51,9 +73,12 @@ void DebugScene::Update()
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
 		}
-		else if (currentSelectItem_ == static_cast<int>(SceneItem::SOUNDSETTING_SCENE))
+		else if (currentSelectItem_ == static_cast<int>(SceneItem::CONFIG_SCENE))
 		{
-			manager_.ChangeScene(new SoundSettingScene(manager_));
+			// ポーズの場合シーンが残っているので初期化
+			isFadeOut_ = false;
+
+			manager_.PushScene(new ConfigScene(manager_));
 			return;
 		}
 		else if (currentSelectItem_ == static_cast<int>(SceneItem::PAUSE_SCENE))
@@ -64,30 +89,6 @@ void DebugScene::Update()
 			manager_.PushScene(new PauseScene(manager_));
 			return;
 		}
-	}
-
-	// 選択肢を回す処理
-	// フェード中の場合は処理を行わない
-	if (InputState::IsTriggered(InputType::UP) && !IsFadeing)
-	{
-		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(SceneItem::TOTAL_VALUE)) % static_cast<int>(SceneItem::TOTAL_VALUE);
-	}
-	else if (InputState::IsTriggered(InputType::DOWN) && !IsFadeing)
-	{
-		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(SceneItem::TOTAL_VALUE);
-	}
-
-	// 決定ボタンを押されて、フェードイン中ではなかったらフェードアウト開始
-	if (InputState::IsTriggered(InputType::DECISION) && !IsFadingIn())
-	{
-		// ポーズの場合はフェードアウトを行わない
-		if (currentSelectItem_ != static_cast<int>(SceneItem::PAUSE_SCENE))
-		{
-			StartFadeOut();
-		}
-		// フェードアウトが行われたかどうかのフラグを立てる
-		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-		isFadeOut_ = true;
 	}
 	// フェードの更新
 	UpdateFade();
@@ -103,7 +104,7 @@ void DebugScene::Draw()
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TEST_SCENE), "TestScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TITLE_SCENE), "TitleScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::MAIN_SCENE), "MainScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::SOUNDSETTING_SCENE), "SoundSettingScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::CONFIG_SCENE), "ConfigScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::PAUSE_SCENE), "PauseScene", 0xffffff, true);
 
 	// 現在選択中の項目の横に→を表示

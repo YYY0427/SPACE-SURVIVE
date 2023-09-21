@@ -8,7 +8,7 @@ class Player;
 class Enemy
 {
 public:
-	Enemy(VECTOR pos, VECTOR vec, float scale, Player& pPlayer);
+	Enemy(VECTOR pos, VECTOR vec, float scale, std::shared_ptr<Player> pPlayer);
 	virtual ~Enemy();
 
 	void Update();
@@ -21,7 +21,7 @@ public:
 	bool GetIsEnabled();
 private:
 	// 参照
-	Player& pPlayer_;
+	std::shared_ptr<Player> pPlayer_;
 
 	// ポインタ
 	std::shared_ptr<Model> pModel_;

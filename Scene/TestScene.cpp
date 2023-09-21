@@ -10,52 +10,124 @@
 #include "../SkyDome.h"
 #include "../EnemyManager.h"
 #include "../Enemy.h"
-#include "../Game.h"
+#include "../common.h"
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
+// コンストラクタ
 TestScene::TestScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&TestScene::NormalUpdate)
 {
+	// インスタンス作成
 	pPlayer_ = std::make_shared<Player>();
-	pCamera_ = std::make_shared<Camera>(*pPlayer_);
+	pCamera_ = std::make_shared<Camera>(pPlayer_);
 	pSkyDome_ = std::make_shared<SkyDome>();
-	pEnemyManager_ = std::make_shared<EnemyManager>(*pPlayer_);
+	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_);
+
+	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
 }
 
-/// <summary>
-///  デストラクタ
-/// </summary>
+//  デストラクタ
 TestScene::~TestScene()
 {
+	// 処理なし
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// メンバ関数ポインタの更新
 void TestScene::Update()
 {
 	(this->*updateFunc_)();
 }
 
-/// <summary>
-/// 描画
-/// </summary>
+// 描画
 void TestScene::Draw()
 {
-	DrawBox(0, 0, Game::screen_width, Game::screen_height, 0xffffff, true);
+	// 背景を白に変更
+	DrawBox(0, 0, common::screen_width, common::screen_height, 0xffffff, true);
+
+	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "TestScene", 0xffffff, true);
 
-	VECTOR pos1;
-	VECTOR pos2;
+	// 各クラスの描画
+//	pSkyDome_->Draw();
+	GroundLineDraw();
+	pEnemyManager_->Draw();
+	pPlayer_->Draw();
+
+	// フェードの描画
+	DrawFade();
+}
+
+// 通常の更新
+void TestScene::NormalUpdate()
+{
+	// 各クラスの更新
+//	pSkyDome_->Update();
+	pCamera_->Update();
+	pPlayer_->Update();
+	pEnemyManager_->Update();
+
+	// 敵とぶつかったらゲームオーバー
+	for (auto& enemies : pEnemyManager_->GetEnemies())
+	{
+		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(enemies->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
+		if (result.HitNum > 0)
+		{
+			// Updateをゲームオーバー時のUpdateに変更
+			updateFunc_ = &TestScene::GameOverUpdate;
+		}
+	}
+
+	// ポーズ画面に遷移
+	if (InputState::IsTriggered(InputType::PAUSE))
+	{
+		manager_.PushScene(new PauseScene(manager_));
+		return;
+	}
+
+	// フェードの更新
+	UpdateFade();
+}
+
+// ゲームオーバー時の更新
+void TestScene::GameOverUpdate()
+{
+	// フェードアウトが終わり次第シーン遷移
+	if (isFadeOut_ && !IsFadingOut())
+	{
+		manager_.ChangeScene(new DebugScene(manager_));
+		return;
+	}
+
+	// カメラの更新
+	pCamera_->Update();
+
+	// プレイヤーのゲームオーバー時の更新が終了かつフェードしてなかったらフェードアウト開始
+	if (pPlayer_->GameOverUpdate() && !IsFadeing())
+	{
+		// フェードアウトの開始
+		StartFadeOut();
+
+		// フェードの設定の変更
+		fadeColor_ = 0x000000;
+		fadeSpeed_ = 3;
+
+		// フェードアウトが行われたかどうかのフラグを立てる
+		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
+		isFadeOut_ = true;
+	}
+	// フェードの更新
+	UpdateFade();
+}
+
+// 地面の線の描画
+void TestScene::GroundLineDraw()
+{
 	float lineAreaSize = 10000.0f;
 	int lineNum = 50;
 
-	pos1 = VGet(-lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
-	pos2 = VGet(-lineAreaSize / 2.0f, 0.0f, lineAreaSize / 2.0f);
+	VECTOR pos1 = VGet(-lineAreaSize / 2.0f, 0.0f, -lineAreaSize / 2.0f);
+	VECTOR pos2 = VGet(-lineAreaSize / 2.0f, 0.0f, lineAreaSize / 2.0f);
 	for (int i = 0; i <= lineNum; i++)
 	{
 		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
@@ -71,89 +143,4 @@ void TestScene::Draw()
 		pos1.z += lineAreaSize / lineNum;
 		pos2.z += lineAreaSize / lineNum;
 	}
-//	pSkyDome_->Draw();
-	pEnemyManager_->Draw();
-	pPlayer_->Draw();
-
-	// フェードの描画
-	DrawFade();
-}
-
-/// <summary>
-/// 通常の更新
-/// </summary>
-void TestScene::NormalUpdate()
-{
-	// フェードアウトが終わり次第シーン遷移
-	/*if (isFadeOut_ && !IsFadingOut())
-	{
-		manager_.ChangeScene(new DebugScene(manager_));
-		return;
-	}*/
-
-	pCamera_->Update();
-	pPlayer_->Update();
-//	pSkyDome_->Update();
-	pEnemyManager_->Update();
-
-	// 敵とぶつかったらゲームオーバー
-	for (auto& enemies : pEnemyManager_->GetEnemies())
-	{
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(enemies->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
-		if (result.HitNum > 0)
-		{
-			updateFunc_ = &TestScene::GameOverUpdate;
-		}
-	}
-
-	if (InputState::IsTriggered(InputType::PAUSE))
-	{
-		manager_.PushScene(new PauseScene(manager_));
-	}
-
-	// 戻るボタンが押されてフェードインしてなかったらフェードアウト開始
-	//if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
-	//{
-	//	StartFadeOut();
-
-	//	// フェードの設定の変更
-	//	SetFadeConfig(3, VGet(255, 255, 255), GetFadeBright());
-
-	//	isFadeOut_ = true;
-	//}
-	
-	// フェードの更新
-	UpdateFade();
-}
-
-/// <summary>
-/// ゲームオーバー時の更新
-/// </summary>
-void TestScene::GameOverUpdate()
-{
-	// フェードアウトが終わり次第シーン遷移
-	if (isFadeOut_ && !IsFadingOut())
-	{
-		manager_.ChangeScene(new DebugScene(manager_));
-		return;
-	}
-
-	// カメラの更新
-	pCamera_->Update();
-
-	// プレイヤーのゲームオーバー時の更新が終了かつフェードインしてなかったらフェードアウト開始
-	if (pPlayer_->GameOverUpdate() && !IsFadingIn())
-	{
-		// フェードアウトの開始
-		StartFadeOut();
-
-		// フェードの設定の変更
-		fadeColor_ = 0x000000;
-		fadeSpeed_ = 3;
-	//	SetFadeConfig(3, VGet(255, 255, 255), GetFadeBright());
-
-		isFadeOut_ = true;
-	}
-	// フェードの更新
-	UpdateFade();
 }

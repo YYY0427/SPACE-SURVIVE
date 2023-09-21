@@ -172,7 +172,7 @@
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Util\SoundManager.cpp" />
-    <ClCompile Include="Scene\SoundSettingScene.cpp" />
+    <ClCompile Include="Scene\ConfigScene.cpp" />
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -185,7 +185,7 @@
     <ClInclude Include="SkyDome.h" />
     <ClInclude Include="Util\SaveData.h" />
     <ClInclude Include="Util\DrawFunctions.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="Util\Geometry.h" />
     <ClInclude Include="Util\InputState.h" />
     <ClInclude Include="Util\Model.h" />
@@ -195,7 +195,7 @@
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Util\SoundManager.h" />
-    <ClInclude Include="Scene\SoundSettingScene.h" />
+    <ClInclude Include="Scene\ConfigScene.h" />
     <ClInclude Include="Util\Effekseer3DEffectManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

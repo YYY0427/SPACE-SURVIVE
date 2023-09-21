@@ -44,9 +44,7 @@ namespace
 	constexpr float model_collision_radius = 60.0f;
 }
 
-/// <summary>
-///  コンストラクタ
-/// </summary>
+//  コンストラクタ
 Player::Player() :
 	pos_(VGet(0.0f, 2000.0f, 0.0f)),
 	isInput_(false),
@@ -61,23 +59,20 @@ Player::Player() :
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
 }
 
-/// <summary>
-///  デストラクタ
-/// </summary>
+//  デストラクタ
 Player::~Player()
 {
+	// 処理なし
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// 更新
 void Player::Update()
 {
 	// 左スティックの入力情報の取得
-	int up = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::UP);
-	int down = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::DOWN);
-	int left = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::LEFT);
-	int right = InputState::IsXInputStick(XInputType::LEFT, XInputTypeStick::RIGHT);
+	int up = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP);
+	int down = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::DOWN);
+	int left = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::LEFT);
+	int right = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::RIGHT);
 
 	// カメラが向いている方向からベクトル変換して移動情報作成
 #if true
@@ -247,10 +242,7 @@ void Player::Update()
 	pModel_->Update();
 }
 
-/// <summary>
-/// ゲームオーバー時のプレイヤーの更新
-/// </summary>
-/// <returns>エフェクトを再生し終えたか</returns>
+// ゲームオーバー時の更新
 bool Player::GameOverUpdate()
 {
 	// 一回だけエフェクトを再生
@@ -273,9 +265,7 @@ bool Player::GameOverUpdate()
 	pModel_->Update();
 }
 
-/// <summary>
-/// 描画
-/// </summary>
+// 描画
 void Player::Draw()
 {
 	// プレイヤーモデルの描画
@@ -287,42 +277,31 @@ void Player::Draw()
 #endif
 }
 
-/// <summary>
-/// 位置情報の取得
-/// </summary>
+// 位置情報の取得
 VECTOR Player::GetPos()
 {
 	return pos_;
 }
 
-/// <summary>
-/// ブースト状態かの取得
-/// </summary>
-/// <returns>true : ブースト状態、false : 通常状態</returns>
+// ブースト状態かの取得
 bool Player::GetIsBoost()
 {
 	return isBoost_;
 }
 
-/// <summary>
-/// スローモーションのレートの取得
-/// </summary>
+// スローモーションのレートの取得
 float Player::GetSlowRate()
 {
 	return slowRate_;
 }
 
-/// <summary>
-/// プレイヤーの当たり判定の半径の取得
-/// </summary>
+// プレイヤーの当たり判定の半径の取得
 float Player::GetCollsionRadius()
 {
 	return model_collision_radius;
 }
 
-/// <summary>
-/// カメラクラスのポインタの
-/// </summary>
+// カメラクラスのポインタの設定
 void Player::SetCameraPointer(std::shared_ptr<Camera> pCamera)
 {
 	pCamera_ = pCamera;

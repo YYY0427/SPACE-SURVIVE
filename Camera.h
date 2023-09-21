@@ -1,5 +1,6 @@
 #pragma once
 #include <DxLib.h>
+#include <memory>
 
 class Player;
 
@@ -9,8 +10,11 @@ class Player;
 class Camera
 {
 public:
-	// コンストラクタ
-	Camera(Player& pPlayer_);
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="pPlayer">プレイヤーのポインタ</param>
+	Camera(std::shared_ptr<Player> pPlayer);
 
 	// デストラクタ
 	virtual ~Camera();
@@ -23,20 +27,26 @@ public:
 
 	// カメラの回転情報の取得
 	float GetCameraYaw();	// Y軸
-	float GetCameraPitch();	// X軸
 
+	// カメラの位置の取得
 	VECTOR GetPos();
+
+	// カメラの注視点の取得
 	VECTOR GetTarget();
 private:
-	Player& pPlayer_;
+	// ポインタ
+	std::shared_ptr<Player> pPlayer_;
 
+	// カメラの位置
 	VECTOR cameraPos_;
+
+	// カメラの注視点
 	VECTOR cameraTarget_;
 
 	// 視野角
 	float perspective_;
 
 	// 回転角度
-	float cameraYaw_;
-	float cameraPitch_;
+	float cameraYaw_;	// Y軸
+	float cameraPitch_;	// X軸
 };

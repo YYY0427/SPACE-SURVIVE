@@ -45,7 +45,7 @@
     <ClCompile Include="Scene\PauseScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SoundSettingScene.cpp">
+    <ClCompile Include="Scene\ConfigScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp">
@@ -92,7 +92,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="common.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneManager.h">
@@ -110,7 +110,7 @@
     <ClInclude Include="Scene\PauseScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SoundSettingScene.h">
+    <ClInclude Include="Scene\ConfigScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Util\Effekseer3DEffectManager.h">

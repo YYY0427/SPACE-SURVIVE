@@ -2,24 +2,34 @@
 #include <DxLib.h>
 #include <string>
 
-
-
 // TODO : 当たり判定関係の関数の追加
 
-/// <summary>
-/// モデルの管理クラス
-/// </summary>
+// モデルの管理クラス
 class Model
 {
 public:
-	// コンストラクタ
-	Model(std::string fileName);		// ファイル名を指定してロードを行う
-	Model(int orgModel);		// 指定されたハンドルのモデルをDuplicateして生成する
+	/// <summary>
+	/// コンストラクタ
+	/// ファイル名を指定してロードを行う
+	/// </summary>
+	/// <param name="fileName">モデルハンドルのファイル名</param>
+	Model(std::string fileName);		
+
+	/// <summary>
+	/// コンストラクタ
+	/// 指定されたハンドルのモデルをコピーして生成する
+	/// </summary>
+	/// <param name="orgModel">モデルハンドル</param>
+	Model(int modelHandle);		
 
 	// デストラクタ
 	virtual ~Model();
 
-	// 当たり判定設定
+	/// <summary>
+	/// 当たり判定設定
+	/// </summary>
+	/// <param name="isUse">当たり判定をしようするか</param>
+	/// <param name="isNeedUpdate">更新が必要かどうか</param>
 	void SetUseCollision(bool isUse, bool isNeedUpdate = true);
 
 	// 更新
@@ -28,13 +38,28 @@ public:
 	// 描画
 	void Draw();
 
-	// アニメーションを設定する(ぱっと切り替える)
+	/// <summary>
+	/// アニメーションを設定する(ぱっと切り替える)
+	/// </summary>
+	/// <param name="animNo">変更先アニメーション番号</param>
+	/// <param name="isLoop">アニメーションをループさせるか</param>
+	///	<param name="isForceChange">すでに指定されたアニメが再生されている場合も変更するか</param>
 	void SetAnimation(int animNo, bool isLoop, bool isForceChange);
 
-	// アニメーションを変化させる(数フレームかけて切り替える)
+	/// <summary>
+	/// アニメーションを変化させる(数フレームかけて切り替える)
+	/// </summary>
+	/// <param name="animNo">アニメーション番号</param>
+	/// <param name="isLoop">アニメーションをループさせるか</param>
+	/// <param name="isForceChange">すでに指定されたアニメが再生されている場合も変更するか</param>
+	/// <param name="changeFrame">何フレームかけてアニメーションを変更させるか</param>
 	void ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int changeFrame);
 
-	// 現在のアニメーションが終了しているかどうかを取得する(Loopアニメの場合は取得できません falseを返す)
+	/// <summary>
+	/// 現在のアニメーションが終了しているかどうかを取得する
+	/// Loopアニメの場合は取得できない(falseを返す)
+	/// </summary>
+	/// <returns>true : 終了、false : 再生中</returns>
 	bool IsAnimEnd();
 
 	// ゲッター
@@ -45,7 +70,6 @@ public:
 	void SetPos(VECTOR pos);			// 表示位置の設定
 	void SetRot(VECTOR rot);			// 回転状態の設定
 	void SetScale(VECTOR scale);		// 拡大率の設定
-	void SetGravity(VECTOR gravity);	// 重力の設定
 
 private:
 	// アニメーション情報
@@ -58,10 +82,17 @@ private:
 	};
 
 private:
-	// アニメーション情報のクリア
+	/// <summary>
+	/// アニメーションデータの初期化
+	/// </summary>
+	/// <param name="anim">アニメーションのアタッチ番号</param>
 	void InitAnimData(AnimData& anim);
 
-	// アニメーションの更新
+	/// <summary>
+	/// アニメーションの更新
+	/// </summary>
+	/// <param name="anim">アニメーションのアタッチ番号</param>
+	/// <param name="dt"></param>
 	void UpdateAnim(AnimData anim, float dt = 1.0f);
 
 	// 現在のアニメーション切り替わり情報からアニメーションのブレンド率を設定する

@@ -1,6 +1,6 @@
 #include <DxLib.h>
 #include "EffekseerForDXLib.h"
-#include "Game.h"
+#include "common.h"
 #include "Util/SoundManager.h"
 #include "Scene/SceneManager.h"
 #include "Scene/TitleScene.h"
@@ -13,13 +13,13 @@
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
 	// Windowモード設定
-	ChangeWindowMode(Game::window_mode);
+	ChangeWindowMode(common::window_mode);
 
 	// Window名設定
-	SetMainWindowText(Game::title_text);
+	SetMainWindowText(common::title_text);
 
 	// 画面サイズの設定
-	SetGraphMode(Game::screen_width, Game::screen_height, Game::color_depth);
+	SetGraphMode(common::screen_width, common::screen_height, common::color_depth);
 
 	// ゲーム中にウィンドウモードを切り替えてもグラフィックハンドルをリセットしない
 	SetChangeScreenModeGraphicsSystemResetFlag(TRUE);
@@ -30,19 +30,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// ウィンドウのサイズを変更可能にする
 	SetWindowSizeChangeEnableFlag(TRUE);
 
-	// DirectX11を使用するようにする。(DirectX9も可)
-	// Effekseerを使用するには必ず設定する。
+	// DirectX11を使用
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 	
 	// １メートルに相当する値を設定する
-	Set3DSoundOneMetre(Game::one_meter);
+	Set3DSoundOneMetre(common::one_meter);
 
 	// XAudioを有効化
 	SetEnableXAudioFlag(TRUE);
 
 	// 垂直同期を有効化
 	SetWaitVSyncFlag(TRUE);
-
 
 	// ＤＸライブラリ初期化処理
 	if (DxLib_Init() == -1)
@@ -52,11 +50,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	}
 	// Effekseerの初期化
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	if (effectManager.Init() == -1)
-	{
-		// エラーが起きたら止める
-		assert(0);
-	}
+	effectManager.Init();
 
 	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ
 	// Effekseerを使用する場合は必ず設定する

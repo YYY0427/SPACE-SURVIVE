@@ -6,59 +6,57 @@
 #include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/DrawFunctions.h"
-#include "../Game.h"
+#include "../common.h"
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="manager">シーンマネージャーの参照</param>
+// コンストラクタ
 TitleScene::TitleScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&TitleScene::NormalUpdate)
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 TitleScene::~TitleScene()
 {
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// メンバ関数ポインタの更新
 void TitleScene::Update()
 {
 	(this->*updateFunc_)();
 }
 
-/// <summary>
-/// 通常の更新
-/// </summary>
+// 通常の更新
 void TitleScene::NormalUpdate()
 {
+
+
+	// 次へのボタンが押されて、フェード中でなかったらフェードアウトの開始
+	if (InputState::IsTriggered(InputType::DECISION) && !IsFadeing())
+	{
+		// フェードアウトの開始
+		StartFadeOut();
+
+		// フェードアウトが行われたかどうかのフラグを立てる
+		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
+		isFadeOut_ = true;
+	}
+	// フェードアウトが終わり次第シーン遷移
 	if (isFadeOut_ && !IsFadingOut())
 	{
 		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
-
-	//次へのボタンが押されたら次のシーンへ行く
-	if (InputState::IsTriggered(InputType::BACK) && !isFadeOut_)
-	{
-		isFadeOut_ = true;
-		StartFadeOut();
-	}
+	// フェードの更新
 	UpdateFade();
 }
 
-/// <summary>
-/// 描画
-/// </summary>
+// 描画
 void TitleScene::Draw()
 {
+	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "TitleScene", 0xffffff, true);
 
+	// フェードの描画
 	DrawFade();
 }

@@ -7,7 +7,7 @@ namespace
 	constexpr VECTOR model_pos_2 = { -3926, 1415, 110 };
 }
 
-EnemyManager::EnemyManager(Player& pPlayer) :
+EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer) :
 	pPlayer_(pPlayer)
 {
 }

@@ -15,18 +15,16 @@ namespace
 	constexpr float rot_speed_y = 0.3f;
 
 	// 視野角
-	constexpr float normal_perspective = 90.0f;	
-	constexpr float boosting_perspective = 120.0f;
+	constexpr float normal_perspective = 90.0f;		// 通常時
+	constexpr float boosting_perspective = 120.0f;	// ブースト時
 
 	// 描画距離(near, far)
 	constexpr float near_distance = 5.0f;
 	constexpr float far_distance = 18400.0f;
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-Camera::Camera(Player& pPlayer) :
+// コンストラクタ
+Camera::Camera(std::shared_ptr<Player> pPlayer) :
 	cameraPos_(camera_init_pos),
 	cameraTarget_(camera_init_target),
 	pPlayer_(pPlayer),
@@ -36,23 +34,19 @@ Camera::Camera(Player& pPlayer) :
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 Camera::~Camera()
 {
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// 更新
 void Camera::Update()
 {
 	// 右スティックの入力情報の取得
-	int up = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::UP);
-	int down = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::DOWN);
-	int left = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::LEFT);
-	int right = InputState::IsXInputStick(XInputType::RIGHT, XInputTypeStick::RIGHT);
+	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
+	int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
+	int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
+	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
 
 	// 入力情報からカメラを回転
 	cameraYaw_ += (-left + right) * (rot_speed_x * 0.01f);
@@ -72,7 +66,7 @@ void Camera::Update()
 
 	// プレイヤーブースト状態の場合視野角を徐々に大きく
 	// ブースト状態の視野角より大きくしない
-	if (pPlayer_.GetIsBoost())
+	if (pPlayer_->GetIsBoost())
 	{
 		perspective_ += 2;
 		if (perspective_ > boosting_perspective)
@@ -92,7 +86,7 @@ void Camera::Update()
 	}
 
 	// 平行行列の作成
-	MATRIX playerTransMtx = MGetTranslate(VScale(pPlayer_.GetPos(), 1.0f));
+	MATRIX playerTransMtx = MGetTranslate(VScale(pPlayer_->GetPos(), 1.0f));
 
 	// カメラの横回転行列の作成
 	MATRIX cameraRotMtxSide = MGetRotY(cameraYaw_);
@@ -125,36 +119,24 @@ void Camera::Update()
 	SetCameraPositionAndTargetAndUpVec(cameraPos_, cameraTarget_, VGet(0, 1, 0));
 }
 
-/// <summary>
-/// 描画
-/// </summary>
+// 描画
 void Camera::Draw()
 {
 }
 
-/// <summary>
-/// カメラのY軸回転情報の取得
-/// </summary>
-/// <returns>カメラのY軸回転情報</returns>
+// カメラのY軸回転情報の取得
 float Camera::GetCameraYaw()
 {
 	return cameraYaw_;
 }
 
-/// <summary>
-/// 
-/// </summary>
-/// <returns></returns>
-float Camera::GetCameraPitch()
-{
-	return cameraPitch_;
-}
-
+// カメラの位置の取得
 VECTOR Camera::GetPos()
 {
 	return cameraPos_;
 }
 
+// カメラの注視点の取得
 VECTOR Camera::GetTarget()
 {
 	return cameraTarget_;

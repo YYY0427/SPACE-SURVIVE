@@ -19,9 +19,7 @@ namespace
 
 namespace InputState
 {
-	/// <summary>
-	/// 初期化
-	/// </summary>
+	// 初期化
 	void Init()
 	{
 		// ボタンの入力タイプをどのボタンにするかの設定
@@ -36,14 +34,11 @@ namespace InputState
 		inputMapTable_[InputType::LEFT] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_LEFT } };		// ←
 
 		// 設定したボタンの数によって配列の数を変更
-		currentInput_.resize(static_cast<int>(InputType::NUM));
-		lastInput_.resize(static_cast<int>(InputType::NUM));
+		currentInput_.resize(static_cast<int>(InputType::TOTAL_VALUE));
+		lastInput_.resize(static_cast<int>(InputType::TOTAL_VALUE));
 	}
 
-	/// <summary>
-	/// 入力情報の更新
-	/// (注意)毎フレームUpdateを呼ばないと入力状態は更新されない
-	/// </summary>
+	// 入力情報の更新
 	void Update()
 	{
 		// 直前の入力情報を記憶しておく
@@ -88,33 +83,20 @@ namespace InputState
 		}
 	}
 
-	/// <summary>
-	/// ボタンが押された瞬間の入力情報の取得
-	/// </summary>
-	/// <param name="type">取得したい入力タイプ</param>
-	/// <returns>true : 入力、false : 非入力</returns>
+	// ボタンが押されている間の入力情報の取得
 	bool IsPressed(InputType type)
 	{
 		return currentInput_[static_cast<int>(type)];
 	}
 
-	/// <summary>
-	/// ボタンが押されている間の入力情報の取得
-	/// </summary>
-	/// <param name="type">取得したい入力タイプ</param>
-	/// <returns>true : 入力中、false : 非入力</returns>
+	// ボタンが押された瞬間の入力情報の取得
 	bool IsTriggered(InputType type)
 	{
 		return IsPressed(type) && !lastInput_[static_cast<int>(type)];
 	}
 
-	/// <summary>
-	/// パッドのスティックの入力情報を取得
-	/// </summary>
-	/// <param name="stick">スティックの右か左か</param>
-	/// <param name="input">スティックのどの入力タイプか</param>
-	/// <returns>スティックの傾きぐわい(0のときは入力なし)　傾いている角度が大きいほど大きい数字が返ってくる</returns>
-	int IsXInputStick(XInputType stick, XInputTypeStick input)
+	// パッドのスティックの入力情報を取得
+	int IsPadStick(PadLR stick, PadStickInputType type)
 	{
 		// パッドの情報の取得
 		XINPUT_STATE  padState;
@@ -122,7 +104,7 @@ namespace InputState
 
 		// 右スティックか左スティックか
 		float x, y;
-		if (stick == XInputType::LEFT)
+		if (stick == PadLR::LEFT)
 		{
 			// padStateから取得した値を-1.0~1.0に変換
 			x = static_cast<float>(padState.ThumbLX / 32767.0f * 10);
@@ -134,19 +116,19 @@ namespace InputState
 			x = static_cast<float>(padState.ThumbRX / 32767.0f * 10);
 			y = static_cast<float>(padState.ThumbRY / 32767.0f * 10);
 		}
-		if (input == XInputTypeStick::LEFT && x < -0.1f)
+		if (type == PadStickInputType::LEFT && x < -0.1f)
 		{
 			return abs(static_cast<int>(x));
 		}
-		if (input == XInputTypeStick::RIGHT && x > 0.1f)
+		if (type == PadStickInputType::RIGHT && x > 0.1f)
 		{
 			return abs(static_cast<int>(x));
 		}
-		if (input == XInputTypeStick::UP && y < -0.1f)
+		if (type == PadStickInputType::UP && y < -0.1f)
 		{
 			return abs(static_cast<int>(y));
 		}
-		if (input == XInputTypeStick::DOWN && y > 0.1f)
+		if (type == PadStickInputType::DOWN && y > 0.1f)
 		{
 			return abs(static_cast<int>(y));
 		}
@@ -154,19 +136,15 @@ namespace InputState
 		return 0;
 	}
 
-	/// <summary>
-	/// パッドのトリガーの入力情報の取得
-	/// </summary>
-	/// <param name="type">取得したい入力タイプ</param>
-	/// <returns>true : 入力中、false : 非入力</returns>
-	bool IsXInputTrigger(XInputType type)
+	// パッドのトリガーの入力情報の取得
+	bool IsPadTrigger(PadLR type)
 	{
 		// パッドの情報の取得
 		XINPUT_STATE  padState;
 		GetJoypadXInputState(DX_INPUT_PAD1, &padState);
 
 		// トリガーの左か右か
-		if (type == XInputType::LEFT)
+		if (type == PadLR::LEFT)
 		{
 			// トリガーが半分以上押されていたらtrue
 			return 	padState.LeftTrigger > padState.LeftTrigger / 2;

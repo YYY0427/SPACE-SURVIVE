@@ -8,33 +8,38 @@ class SkyDome;
 class Camera;
 class Player;
 
-/// <summary>
-/// テストシーン(色々試すようのシーン)
-/// </summary>
+// テストシーン
+// 色々試すようのシーン
 class TestScene : public Scene
 {
 public:
-	// コンストラクタ
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="manager">シーンマネージャーの参照</param>
 	TestScene(SceneManager& manager);
 
 	// デストラクタ
 	virtual ~TestScene();
 
-	// 更新
+	// メンバ関数ポインタの更新
 	void Update();
 
 	// 描画
 	void Draw();
 private:
-	// メンバ関数ポインタ
-	using UpdateFunc_t = void (TestScene::*) ();
-	UpdateFunc_t updateFunc_;
-
 	// 通常の更新
 	void NormalUpdate();
 
 	// ゲームオーバー時の更新
 	void GameOverUpdate();
+
+	// 地面の線の描画
+	void GroundLineDraw();
+private:
+	// メンバ関数ポインタ
+	// Updateを切り替えるために作成
+	void (TestScene::* updateFunc_) ();
 
 	// ポインタ
 	std::shared_ptr<Camera> pCamera_;

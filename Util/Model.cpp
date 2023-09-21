@@ -7,10 +7,7 @@ namespace
 	const std::string collision_frame_name = "Collision";
 }
 
-/// <summary>
-/// ファイル名を指定してロードを行う
-/// </summary>
-/// <param name="fileName">モデルハンドルのファイル名</param>
+// ファイル名を指定してロードを行う
 Model::Model(std::string fileName) :
 	isUseCollision_(false),
 	isUpdateColision_(false),
@@ -29,29 +26,26 @@ Model::Model(std::string fileName) :
 	InitAnimData(animNext_);
 }
 
-/// <summary>
-/// 指定されたハンドルのモデルをDuplicateして生成する
-/// </summary>
-/// <param name="orgModel">モデルハンドル</param>
-Model::Model(int orgModel) :
+// 指定されたハンドルのモデルをコピーして生成する
+Model::Model(int modelHandle) :
 	isUseCollision_(false),
 	isUpdateColision_(false),
 	colFrameIndex_(-1),
 	animChangeFrame_(0),
 	animChangeFrameTotal_(0)
 {
-	// ロードに失敗したモデルがコピー元として指定されている
+	// モデルのコピー
+	modelHandle_ = MV1DuplicateModel(modelHandle);
+
+	// モデルのコピーに失敗したら止める
 	assert(modelHandle_ != -1);
-	modelHandle_ = MV1DuplicateModel(orgModel);
 
 	// アニメーション情報の初期化
 	InitAnimData(animPrev_);
 	InitAnimData(animNext_);
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 Model::~Model()
 {
 	// 当たり判定情報を使用していたら削除
@@ -65,11 +59,7 @@ Model::~Model()
 	MV1DeleteModel(modelHandle_);
 }
 
-/// <summary>
-/// 当たり判定設定
-/// </summary>
-/// <param name="isUse">当たり判定をしようするか</param>
-/// <param name="isNeedUpdate">更新が必要かどうか</param>
+// 当たり判定の設定
 void Model::SetUseCollision(bool isUse, bool isNeedUpdate)
 {
 	// 当たり判定を使わないのに当たり判定の更新を毎フレームおこないたい場合をはじく
@@ -105,9 +95,7 @@ void Model::SetUseCollision(bool isUse, bool isNeedUpdate)
 	isUpdateColision_ = isNeedUpdate;
 }
 
-/// <summary>
-/// 更新
-/// </summary>
+// 更新
 void Model::Update()
 {
 	UpdateAnim(animPrev_);
@@ -130,56 +118,31 @@ void Model::Update()
 	}
 }
 
-/// <summary>
-///  描画
-/// </summary>
+//  描画
 void Model::Draw()
 {
 	MV1DrawModel(modelHandle_);
 }
 
-/// <summary>
-/// モデルの表示位置の設定
-/// </summary>
-/// <param name="pos">位置情報</param>
+// モデルの表示位置の設定
 void Model::SetPos(VECTOR pos)
 {
 	MV1SetPosition(modelHandle_, pos);
 }
 
-/// <summary>
-/// モデルの回転状態の設定
-/// </summary>
-/// <param name="rot">回転情報</param>
+// モデルの回転状態の設定
 void Model::SetRot(VECTOR rot)
 {
 	MV1SetRotationXYZ(modelHandle_, rot);
 }
 
-/// <summary>
-/// モデルの拡大率の設定
-/// </summary>
-/// <param name="scale">拡大情報</param>
+// モデルの拡大率の設定
 void Model::SetScale(VECTOR scale)
 {
 	MV1SetScale(modelHandle_, scale);
 }
 
-/// <summary>
-/// 重力の設定
-/// </summary>
-/// <param name="gravity">重力の情報</param>
-void Model::SetGravity(VECTOR gravity)
-{
-	MV1SetPhysicsWorldGravity(modelHandle_, gravity);
-}
-
-/// <summary>
-/// アニメーションを設定する(ぱっと切り替える)
-/// </summary>
-/// <param name="animNo">変更先アニメーション番号</param>
-/// <param name="isLoop">アニメーションをループさせるか</param>
-/// <param name="isForceChange">すでに指定されたアニメが再生されている場合も変更するか</param>
+// アニメーションを設定する(ぱっと切り替える)
 void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange)
 {
 	if (!isForceChange)
@@ -210,13 +173,7 @@ void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange)
 	animChangeFrame_ = 1;
 }
 
-/// <summary>
-/// アニメーションを変化させる(数フレームかけて切り替える)
-/// </summary>
-/// <param name="animNo">アニメーション番号</param>
-/// <param name="isLoop">アニメーションをループさせるか</param>
-/// <param name="isForceChange">すでに指定されたアニメが再生されている場合も変更するか</param>
-/// <param name="changeFrame">何フレームかけてアニメーションを変更させるか</param>
+// アニメーションを変化させる(数フレームかけて切り替える)
 void Model::ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int changeFrame)
 {
 	if (!isForceChange)
@@ -249,10 +206,7 @@ void Model::ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int cha
 	UpdateAnimBlendRate();
 }
 
-/// <summary>
-/// // 現在のアニメーションが終了しているかどうかを取得する(Loopアニメの場合は取得できない(falseを返す))
-/// </summary>
-/// <returns>true : 終了 、 false : 再生中</returns>
+// 現在のアニメーションが終了しているかどうかを取得する
 bool Model::IsAnimEnd()
 {
 	// Looppアニメの場合はfalseを返す
@@ -273,28 +227,19 @@ bool Model::IsAnimEnd()
 	return false;
 }
 
-/// <summary>
-/// モデルのハンドルの取得
-/// </summary>
-/// <returns>モデルのハンドル</returns>
+// モデルのハンドルの取得
 int Model::GetModelHandle() const
 {
 	return modelHandle_;		
 }
 
-/// <summary>
-/// 当たり判定に使用するフレームインデックスを取得する
-/// </summary>
-/// <returns>当たり判定に使用するフレームインデックス</returns>
+// 当たり判定に使用するフレームインデックスを取得する
 int Model::GetColFrameIndex() const
 {
 	return colFrameIndex_;
 }
 
-/// <summary>
-/// アニメーションデータの初期化
-/// </summary>
-/// <param name="anim">アニメーションのアタッチ番号</param>
+// アニメーションデータの初期化
 void Model::InitAnimData(AnimData& anim)
 {
 	anim.animNo = -1;
@@ -303,11 +248,7 @@ void Model::InitAnimData(AnimData& anim)
 	anim.isLoop = false;
 }
 
-/// <summary>
-/// アニメーションの更新
-/// </summary>
-/// <param name="anim"></param>
-/// <param name="dt"></param>
+// アニメーションの更新
 void Model::UpdateAnim(AnimData anim, float dt)
 {
 	// アニメーションが設定されていない場合は何もしない
@@ -333,9 +274,7 @@ void Model::UpdateAnim(AnimData anim, float dt)
 	MV1SetAttachAnimTime(modelHandle_, anim.attachNo, time);
 }
 
-/// <summary>
-//  現在のアニメーション切り替わり情報からアニメーションのブレンド率を設定する
-/// </summary>
+// 現在のアニメーション切り替わり情報からアニメーションのブレンド率を設定する
 void Model::UpdateAnimBlendRate()
 {
 	// アニメーション変化のフレーム数に応じたブレンド率を設定する

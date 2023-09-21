@@ -19,18 +19,32 @@ public:
 
 	// 更新
 	void Update();
+
+	/// <summary>
+	/// ゲームオーバー時のプレイヤーの更新
+	/// </summary>
+	/// <returns>エフェクトを再生し終えたか</returns>
 	bool GameOverUpdate();
 
 	// 描画
 	void Draw();
 
-	// ゲッター
-	VECTOR GetPos();		// 位置情報
-	bool GetIsBoost();		// ブースト状態か
-	float GetSlowRate();	// スロモーションのレート
-	float GetCollsionRadius();
+	// 位置情報の取得
+	VECTOR GetPos();			
 
-	// セッター
+	/// <summary>
+	/// ブースト状態かの取得
+	/// </summary>
+	/// <returns>true : ブースト状態、false : 通常状態</returns>
+	bool GetIsBoost();			
+
+	// スローモーションのレートの取得
+	float GetSlowRate();		
+
+	// プレイヤーの当たり判定の半径の取得
+	float GetCollsionRadius();	
+
+	// カメラクラスのポインタの設定
 	void SetCameraPointer(std::shared_ptr<Camera> pCamera);
 private:
 	// ポインタ

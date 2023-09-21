@@ -1,11 +1,9 @@
 #include "SaveData.h"
-#include "../Game.h"
+#include "../common.h"
 #include <string>
 #include <cassert>
 #include <fstream>
 #include <DxLib.h>
-
-
 
 namespace
 {
@@ -16,25 +14,18 @@ namespace
 	constexpr int current_save_version = 0;
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
+// コンストラクタ
 SaveData::SaveData()
 {
 
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 SaveData::~SaveData()
 {
 }
 
-/// <summary>
-/// SaveDataの唯一のインスタンスを返す
-/// </summary>
-/// <returns>唯一の実態の参照</returns>
+// 唯一のインスタンスを返す
 SaveData& SaveData::GetInstance()
 {
 	// 唯一の実態
@@ -44,9 +35,7 @@ SaveData& SaveData::GetInstance()
 	return instance;
 }
 
-/// <summary>
-/// セーブデータの読み込み
-/// </summary>
+// セーブデータの読み込み
 void SaveData::Load()
 {
 	// セーブデータの初期化
@@ -54,14 +43,17 @@ void SaveData::Load()
 
 	std::ifstream ifs;
 	ifs.open(data_file_path, std::ios_base::binary);
+
+	// ファイル読み込み失敗
 	if (ifs.fail())
 	{
-		// ファイル読み込み失敗 セーブデータを作る
+		// セーブデータを作る
 		CreateNewData();
 		return;
 	}
 	else
 	{
+		// セーブデータの読み込み
 		Data data;
 		ifs.read((char*)&data, sizeof(Data));
 		ifs.close();
@@ -79,9 +71,7 @@ void SaveData::Load()
 	}
 }
 
-/// <summary>
-/// セーブデータの書き込み
-/// </summary>
+// セーブデータの書き込み
 void SaveData::Write()
 {
 	assert(data_.version == current_save_version);
@@ -89,9 +79,7 @@ void SaveData::Write()
 	ofs.write((char*)&data_, sizeof(Data));
 }
 
-/// <summary>
-/// セーブデータを新規作成して上書き
-/// </summary>
+// セーブデータを新規作成して上書き
 void SaveData::CreateNewData()
 {
 	// セーブデータの初期化
@@ -101,9 +89,7 @@ void SaveData::CreateNewData()
 	ofs.write((char*)&data_, sizeof(SaveData));
 }
 
-/// <summary>
-/// セーブデータの初期化
-/// </summary>
+// セーブデータの初期化
 void SaveData::InitData()
 {
 	data_.version = current_save_version;
@@ -111,31 +97,23 @@ void SaveData::InitData()
 	data_.volumeSe = 3;
 }
 
-/// <summary>
-/// BGMの音量の取得(0~5)
-/// </summary>
-/// <returns>BGMの音量(0~5)</returns>
+// BGMの音量の取得
 int SaveData::GetBgmVolume() const
 {
 	return data_.volumeBgm;
 }
 
-/// <summary>
-/// SEの音量の取得(0~5)
-/// </summary>
-/// <returns>SEの音量(0~5)</returns>
+// SEの音量の取得
 int SaveData::GetSeVolume() const
 {
 	return data_.volumeSe;
 }
 
-/// <summary>
-/// BGMの音量の設定(最大値を超えると0に戻る)
-/// </summary>
+// BGMの音量の設定(最大値を超えると0に戻る)
 void SaveData::SetBgmVolume()
 {
 	data_.volumeBgm++;
-	if (data_.volumeBgm > Game::config_volume_num)
+	if (data_.volumeBgm > common::config_volume_num)
 	{
 		data_.volumeBgm = 0;
 	}
@@ -144,13 +122,11 @@ void SaveData::SetBgmVolume()
 	SaveData::GetInstance().Write();
 }
 
-/// <summary>
-/// SEの音量の設定(最大値を超えると0に戻る)
-/// </summary>
+// SEの音量の設定(最大値を超えると0に戻る)
 void SaveData::SetSeVolume()
 {
 	data_.volumeSe++;
-	if (data_.volumeSe > Game::config_volume_num)
+	if (data_.volumeSe > common::config_volume_num)
 	{
 		data_.volumeSe = 0;
 	}

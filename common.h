@@ -1,7 +1,7 @@
 #pragma once
 
 // TODO:定数をまとめずにファイル分けする、それと外部ファイル化
-namespace Game
+namespace common
 {
 	// Windowモード設定
 #ifdef _DEBUG

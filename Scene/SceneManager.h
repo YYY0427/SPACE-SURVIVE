@@ -1,32 +1,46 @@
 #pragma once
 #include <deque>
 
+// プロトタイプ宣言
 class Scene;
 
-/// <summary>
-/// シーン監視クラス
-/// </summary>
+// シーンの管理クラス
 class SceneManager
 {
 public:
+	/// <summary>
+	/// 全てのシーンの削除とシーンの切り替え
+	/// 主にポーズからのシーンの切り替えを行うときに使う
+	/// </summary>
+	/// <param name="scene">切り替えたいシーンのアドレス</param>
 	void PopAllSceneAndChangeScene(Scene* scene);
 
-	// シーンの切り替え
+	/// <summary>
+	/// シーンの切り替え
+	/// </summary>
+	/// <param name="scene">切り替えたいシーンのアドレス</param>
 	void ChangeScene(Scene* scene);
 
-	// シーンを上に積む(ポーズ)
+	/// <summary>
+	/// 現在のシーンの上にシーンを積む(ポーズ)
+	/// Updateで実行されるのは上につまれたシーン
+	/// </summary>
+	/// <param name="scene">上に積みたいシーンのアドレス</param>
 	void PushScene(Scene* scene);
 
-	/// 一番上のシーンを削除
+	// 一番上のシーンを削除
+	// ポーズ画面を消すときに使う
 	void PopScene();
 
-	// 各シーンの更新
+	// シーンの更新
+	// 一番上のシーンだけ更新
 	void Update();
 
 	// 各シーンの描画
 	void Draw();
 
 private:
+	// シーン
 	// 今実行中のシーンを切り替えていきたいので	
 	// 参照ではなくポインタとして宣言
 	std::deque<Scene*> scene_;

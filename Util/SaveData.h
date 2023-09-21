@@ -1,33 +1,36 @@
 #pragma once
 
-/// <summary>
-/// セーブデータの管理を行うシングルトンクラス
-/// </summary>
+// セーブデータの管理を行うシングルトンクラス
 class SaveData
 {
 public:
 	// デストラクタ
 	~SaveData();
 
-	// SaveDataの唯一のインスタンスを返す
+	/// <summary>
+	/// 唯一のインスタンスを返す
+	/// </summary>
+	/// <returns>唯一の実態の参照</returns>
 	static SaveData& GetInstance();
 
 	// セーブデータの読み込み
 	void Load();
 
 	// セーブデータの書き込み
+	// セーブデータのバージョンが一致しない場合は止める
 	void Write();
 
 	// セーブデータを新規作成して上書き
 	void CreateNewData();
 
-	// ゲッター
-	int GetBgmVolume() const;	// BGM音量	0~5
-	int GetSeVolume() const;	// SE音量	0~5
+	// 音量の取得
+	int GetBgmVolume() const;	// BGM
+	int GetSeVolume() const;	// SE
 
 	// 音量設定
-	void SetBgmVolume(); // BGM
-	void SetSeVolume();	 // SE
+	// 音量の設定(最大値を超えると0に戻る)
+	void SetBgmVolume();	// BGM
+	void SetSeVolume();		// SE
 private:
 	// セーブデータ
 	struct Data
@@ -48,5 +51,6 @@ private:
 	void InitData();
 
 private:
+	// セーブデータ
 	Data data_;
 };

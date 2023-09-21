@@ -54,10 +54,7 @@ float Vector2::Length() const
 	return hypotf(x, y);
 }
 
-/// <summary>
-/// ベクトルの大きさの2乗を返す
-/// </summary>
-/// <returns>ベクトルの大きさの2乗</returns>
+// ベクトルの大きさの2乗を返す
 float Vector2::SQLength() const
 {
 	return x * x + y * y;
@@ -71,10 +68,7 @@ void Vector2::Normalize()
 	y /= len;
 }
 
-/// <summary>
-/// 正規化したベクトルを返す
-/// </summary>
-/// <returns>正規化したベクトル</returns>
+// 正規化したベクトルを返す
 Vector2 Vector2::Normalized() const
 {
 	auto len = Length();
@@ -92,77 +86,50 @@ Rect::Rect(const Position2& c, const Size& sz) :
 {
 }
 
-/// <summary>
-/// 左上上右下を指定することで矩形を構築
-/// </summary>
-/// <param name="left">左</param>
-/// <param name="top">上</param>
-/// <param name="right">右</param>
-/// <param name="bottom">下</param>
+// 左上上右下を指定することで矩形を構築
 void Rect::SetLTRB(int left, int top, int right, int bottom)
 {
 	center.x = static_cast<float>(left + right) / 2.0f;
 	center.y = static_cast<float>(top + bottom) * 0.5f;
 }
 
-/// <summary>
-/// 矩形の左側
-/// </summary>
-/// <returns>矩形の左側の座標</returns>
+// 矩形の左側
 int Rect::Left() const
 {
 	return static_cast<int>(center.x) - size.w / 2;
 }
 
-/// <summary>
-///  矩形の上側
-/// </summary>
-/// <returns>矩形の上側の座標</returns>
+//  矩形の上側
 int Rect::Top() const
 {
 	return static_cast<int>(center.y) - size.h / 2;
 }
 
-/// <summary>
-/// 矩形の右側
-/// </summary>
-/// <returns>矩形の右側の座標</returns>
+// 矩形の右側
 int Rect::Right() const
 {
 	return static_cast<int>(center.x) + size.w / 2;
 }
 
-/// <summary>
-/// 矩形の下側
-/// </summary>
-/// <returns>矩形の下側の座標</returns>
+// 矩形の下側
 int Rect::Bottom() const
 {
 	return static_cast<int>(center.y) + size.h / 2;
 }
 
-/// <summary>
-/// 矩形の座標のゲッター
-/// </summary>
-/// <returns>矩形の座標</returns>
+// 矩形の座標の取得
 const Position2& Rect::GetCenter() const
 {
 	return center;
 }
 
-/// <summary>
-/// 矩形の大きさのゲッター
-/// </summary>
-/// <returns>矩形の大きさ</returns>
+// 矩形の大きさの取得
 const Size& Rect::GetSize() const
 {
 	return size;
 }
 
-/// <summary>
-/// デバッグ用の矩形表示
-/// </summary>
-/// <param name="Color">表示する矩形の色</param>
+// デバッグ用の矩形表示
 void Rect::Draw(unsigned int Color)
 {
 	// 矩形の表示
@@ -173,11 +140,7 @@ void Rect::Draw(unsigned int Color)
 		Color, false);
 }
 
-/// <summary>
-/// もう一つの矩形と当たったかどうか
-/// </summary>
-/// <param name="rc">矩形</param>
-// <returns>true 当たった false 外れた</returns>
+// 別の矩形と当たったかどうか
 bool Rect::IsHit(const Rect& rc) const
 {
 	// 当たってない条件(横)

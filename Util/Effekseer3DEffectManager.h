@@ -3,36 +3,47 @@
 #include <string>
 #include <unordered_map>
 
-
-
-/// <summary>
-/// Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス
-/// </summary>
+// Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス
 class Effekseer3DEffectManager
 {
 public:
 	// デストラクタ
 	~Effekseer3DEffectManager();
 
-	// Effekseer3DEffectManagerの唯一のインスタンスを返す
+	/// <summary>
+	/// Effekseer3DEffectManagerの唯一のインスタンスを返す
+	/// </summary>
+	/// <returns>唯一の実態の参照</returns>
 	static Effekseer3DEffectManager& GetInstance();
 
 	// Effekseerの初期化とエフェクトのロード
-	int Init();
+	// 初期化に失敗したら止める
+	void Init();
 
-	// 毎フレーム更新処理
+	// 更新
 	void Update();
 
-	// 毎フレームの描画処理
+	// 描画
 	void Draw();
 
 	// 終了処理
 	void End();
 
-	// 指定のエフェクトの再生
+	/// <summary>
+	/// 指定のエフェクトの再生
+	/// </summary>
+	/// <param name="fileName">再生したいエフェクトのファイル名(拡張子は含まない)</param>
+	/// <param name="pos">位置</param>
+	/// <param name="scale">拡大率</param>
+	/// <param name="speed">再生速度</param>
+	/// <param name="rot">回転</param>
 	void PlayEffect(std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot = VGet(0, 0, 0));
 
-	// 特定のエフェクトが再生中か
+	/// <summary>
+	/// 特定のエフェクトが再生中か
+	/// </summary>
+	/// <param name="fileName">再生したいエフェクトのファイル名(拡張子は含まない)</param>
+	/// <returns>true : 再生中、false : 再生していない</returns>
 	bool IsPlayingEffect(std::string fileName);
 
 	// エフェクト全ての再生をストップ
@@ -46,7 +57,10 @@ private:
 	Effekseer3DEffectManager(const Effekseer3DEffectManager&) = delete;	// コピーコンストラクタの禁止
 	void operator = (const Effekseer3DEffectManager&) = delete;			// 代入の禁止
 
-	// エフェクトのロード
+	/// <summary>
+	/// エフェクトのロード
+	/// </summary>
+	/// <param name="fileName">ロードしたいエフェクトのファイル名(拡張子は含まない)</param>
 	void LoadEffectFile(std::string fileName);
 
 private:

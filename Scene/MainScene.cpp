@@ -3,7 +3,7 @@
 #include "PauseScene.h"
 #include "SceneManager.h"
 #include "DebugScene.h"
-#include "../Game.h"
+#include "../common.h"
 #include "../Util/InputState.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
@@ -20,6 +20,7 @@ MainScene::MainScene(SceneManager& manager) :
 // デストラクタ
 MainScene::~MainScene()
 {
+	// 処理なし
 }
 
 // メンバ関数ポインタの更新
@@ -31,15 +32,15 @@ void MainScene::Update()
 // 通常の更新
 void MainScene::NormalUpdate()
 {
-	// フェードアウトが終わり次第シーン遷移
-	if (isFadeOut_ && !IsFadingOut())
+	
+	// ポーズ画面に遷移
+	if (InputState::IsTriggered(InputType::PAUSE))
 	{
-		manager_.ChangeScene(new DebugScene(manager_));
+		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}
-
 	// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
-	if (InputState::IsTriggered(InputType::BACK) && !IsFadingIn())
+	if (InputState::IsTriggered(InputType::BACK) && !IsFadeing())
 	{
 		// フェードアウト開始
 		StartFadeOut();
@@ -48,10 +49,10 @@ void MainScene::NormalUpdate()
 		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
 		isFadeOut_ = true;
 	}
-	// ポーズ画面に遷移
-	if (InputState::IsTriggered(InputType::PAUSE))
+	// フェードアウトが終わり次第シーン遷移
+	if (isFadeOut_ && !IsFadingOut())
 	{
-		manager_.PushScene(new PauseScene(manager_));
+		manager_.ChangeScene(new DebugScene(manager_));
 		return;
 	}
 	// フェードの更新
@@ -61,6 +62,7 @@ void MainScene::NormalUpdate()
 // 描画
 void MainScene::Draw()
 {
+	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "MainScene", 0xffffff, true);
 
 	// フェードの描画

@@ -4,15 +4,14 @@
 
 namespace my
 {
-	/// <summary>
-	/// 画像をロードする
-	/// </summary>
-	/// <param name="path">パス文字列</param>
-	/// <returns>画像のハンドル</returns>
+	// 画像をロードする
 	int MyLoadGraph(const TCHAR* path)
 	{
 		int handle = LoadGraph(path);
-		assert(handle != -1);	// -1以外じゃなかったら止める
+
+		// -1以外じゃなかったら止める
+		assert(handle != -1);	
+
 		return handle;
 	}
 }

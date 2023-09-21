@@ -8,7 +8,7 @@ namespace
 	const std::string model_file_path = "Data/Model/Cube.mv1";
 }
 
-Enemy::Enemy(VECTOR pos, VECTOR vec, float scale, Player& pPlayer) :
+Enemy::Enemy(VECTOR pos, VECTOR vec, float scale, std::shared_ptr<Player> pPlayer) :
 	pPlayer_(pPlayer),
 	isEnabled_(true),
 	timer_(0)
@@ -32,7 +32,7 @@ void Enemy::Update()
 		isEnabled_ = false;
 	}
 
-	VECTOR tempVec = VScale(vec_, pPlayer_.GetSlowRate());
+	VECTOR tempVec = VScale(vec_, pPlayer_->GetSlowRate());
 
 	pos_ = VAdd(pos_, tempVec);
 

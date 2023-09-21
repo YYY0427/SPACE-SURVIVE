@@ -1,5 +1,5 @@
 #include "SoundManager.h"
-#include "../Game.h"
+#include "../common.h"
 #include "SaveData.h"
 #include <cassert>
 #include <fstream>
@@ -18,11 +18,11 @@ namespace
 	/// <param name="input">区切りたい文字列</param>
 	/// <param name="delimiter">文字列を区切る文字</param>
 	/// <returns>区切った文字列</returns>
-	std::vector<std::string> Split(std::string& input, char delimiter)
+	std::vector<std::string> SplitString(std::string& input, char delimiter)
 	{
 		std::istringstream stream(input);	// stringをgetlineで使えるデータに変換
 		std::string field;					// 分割した文字列1つ分を格納する
-		std::vector<std::string> result;			// 分割後の文字列の配列
+		std::vector<std::string> result;	// 分割後の文字列の配列
 		while (getline(stream, field, delimiter)) 
 		{
 			result.push_back(field);
@@ -31,24 +31,17 @@ namespace
 	}
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
+// コンストラクタ
 SoundManager::SoundManager()
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 SoundManager::~SoundManager()
 {
 }
 
-/// <summary>
-/// SoundManagerの唯一のインスタンスを返す
-/// </summary>
-/// <returns>唯一の実態の参照</returns>
+// 唯一のインスタンスを返す
 SoundManager& SoundManager::GetInstance()
 {
 	// 唯一の実態
@@ -58,11 +51,7 @@ SoundManager& SoundManager::GetInstance()
 	return instance;
 }
 
-/// <summary>
-/// 2Dサウンドのロード
-/// </summary>
-/// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
-/// <param name="extension">ロードしたサウンドの拡張子</param>
+// 2Dサウンドのロード
 void SoundManager::LoadSoundFile2D(std::string fileName, std::string extension)
 {
 	std::string path = data_file_path;
@@ -73,11 +62,7 @@ void SoundManager::LoadSoundFile2D(std::string fileName, std::string extension)
 	soundNameAndHandleTable_[fileName].handle = handle;
 }
 
-/// <summary>
-/// 3Dサウンドのロード
-/// </summary>
-/// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
-/// <param name="extension">ロードしたサウンドの拡張子</param>
+// 3Dサウンドのロード
 void SoundManager::LoadSoundFile3D(std::string fileName, std::string extension)
 {
 	std::string path = data_file_path;
@@ -90,9 +75,7 @@ void SoundManager::LoadSoundFile3D(std::string fileName, std::string extension)
 	soundNameAndHandleTable_[fileName].handle = handle;
 }
 
-/// <summary>
-/// ファイルからサウンドのデータを読み取ってデータテーブルに格納
-/// </summary>
+// ファイルからサウンドのデータを読み取ってデータテーブルに格納
 void SoundManager::LoadAndSaveSoundFileData()
 {
 	// ファイル情報の読み込み(読み込みに失敗したら止める)
@@ -104,18 +87,20 @@ void SoundManager::LoadAndSaveSoundFileData()
 	while (getline(ifs, line))
 	{
 		// csvデータ１行を','で複数の文字列に変換
-		std::vector<std::string>	strvec = Split(line, ',');
+		std::vector<std::string> strvec = SplitString(line, ',');
 
 		// 文字列を適切なデータ型に変換して格納
 		SoundData data;
 		data.handle = -1;	// 初期化
 		data.volumeRate = std::stof(strvec[static_cast<int>(SoundDataType::VOLUM_RATE)]);	// string型からfloat型に変換し格納
-		data.extension = strvec[static_cast<int>(SoundDataType::EXTENSION)];			// string型で格納
+		data.extension = strvec[static_cast<int>(SoundDataType::EXTENSION)];				// string型で格納
 		
 		// サウンドタイプの保存
 		// 変換したデータをファイル名をキーとして格納
 		// サウンドのタイプによってそれぞれロード
-		switch (static_cast<SoundType>(std::stoi(strvec[static_cast<int>(SoundDataType::SOUND_TYPE)])))
+		int iSoundType = std::stoi(strvec[static_cast<int>(SoundDataType::SOUND_TYPE)]);	// string型からint型に変換
+		SoundType soundType = static_cast<SoundType>(iSoundType);							// int型からSoundType型に変換
+		switch (soundType)
 		{
 		case SoundType::BGM:
 			data.type = SoundType::BGM;
@@ -140,10 +125,7 @@ void SoundManager::LoadAndSaveSoundFileData()
 	}
 }
 
-/// <summary>
-/// 指定の2DSEを鳴らす(サウンドをロードされていない場合、2DSE以外の場合は止まる)
-/// </summary>
-/// <param name="name">再生したいサウンドのファイル名(拡張子は含まない)</param>
+// 指定の2DSEを鳴らす
 void SoundManager::Play(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
@@ -152,12 +134,7 @@ void SoundManager::Play(std::string fileName)
 	SetVolume(fileName, 255);
 }
 
-/// <summary>
-/// 指定の3DSEを鳴らす(サウンドをロードされていない場合、3DSE以外の場合は止まる)
-/// </summary>
-/// <param name="fileName">再生したいサウンドのファイル名</param>
-/// <param name="soundPos">再生位置</param>
-/// <param name="soundRadius">聞こえる距離</param>
+// 指定の3DSEを鳴らす
 void SoundManager::Play3D(std::string fileName, VECTOR soundPos, float soundRadius)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
@@ -168,10 +145,7 @@ void SoundManager::Play3D(std::string fileName, VECTOR soundPos, float soundRadi
 	SetVolume(fileName, 255);
 }
 
-/// <summary>
-/// 指定のBGMを鳴らす(サウンドをロードされていない場合、BGM以外の場合は止まる)
-/// </summary>
-/// <param name="fileName">再生したいサウンドのファイル名</param>
+// 指定のBGMを鳴らす
 void SoundManager::PlayBGM(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
@@ -180,11 +154,7 @@ void SoundManager::PlayBGM(std::string fileName)
 	SetVolume(fileName, 255);
 }
 
-/// <summary>
-/// 特定のサウンドが再生中かチェック(サウンドがロードされていなかったら止める)
-/// </summary>
-/// <param name="fileName">再生しているかチェックしたいサウンドのファイル名</param>
-/// <returns>true : 再生中、false : 再生していない</returns>
+// 特定のサウンドが再生中かチェック
 bool SoundManager::PlayingCheckSound(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
@@ -192,19 +162,14 @@ bool SoundManager::PlayingCheckSound(std::string fileName)
 	return sound;
 }
 
-/// <summary>
-/// 特定のサウンドを止める(サウンドがロードされていなかったら止める)
-/// </summary>
-/// <param name="fileName">止めたいサウンドのファイル名(拡張子は含まない)</param>
+// 特定のサウンドを止める
 void SoundManager::StopSound(std::string fileName)
 {
 	assert(soundNameAndHandleTable_.find(fileName) != soundNameAndHandleTable_.end());	// ロードしていない場合は止める
 	StopSoundMem(soundNameAndHandleTable_[fileName].handle);
 }
 
-/// <summary>
-/// すべてのサウンドを止める
-/// </summary>
+// すべてのサウンドを止める
 void SoundManager::StopAllSound()
 {
 	for (auto& sound : soundNameAndHandleTable_)
@@ -213,11 +178,7 @@ void SoundManager::StopAllSound()
 	}
 }
 
-/// <summary>
-/// 音量調節
-/// </summary>
-/// <param name="fileName">音量調節をしたサウンドのファイル名(拡張子は含まない)</param>
-/// <param name="volume">設定したい音量(0~255)</param>
+// 音量調節
 void SoundManager::SetVolume(std::string fileName, int volume)
 {
 	// サウンドに設定された音量調節
@@ -225,7 +186,7 @@ void SoundManager::SetVolume(std::string fileName, int volume)
 	setVolume = static_cast<int>(volume * soundNameAndHandleTable_[fileName].volumeRate);
 
 	// コンフィグで設定した音量調節
-	int configVolume = Game::config_volume_num;
+	int configVolume = common::config_volume_num;
 
 	// BGM
 	if (soundNameAndHandleTable_[fileName].type == SoundType::BGM)
@@ -239,16 +200,12 @@ void SoundManager::SetVolume(std::string fileName, int volume)
 	}
 
 	// 設定したい音量とサウンドに設定された音量とコンフィグで設定された音量から求めた最終的な音量に設定
-	float configRate = static_cast<float>(configVolume) / Game::config_volume_num;
+	float configRate = static_cast<float>(configVolume) / common::config_volume_num;
 	setVolume = static_cast<int>(setVolume * configRate);
 	ChangeVolumeSoundMem(setVolume, soundNameAndHandleTable_[fileName].handle);
 }
 
-/// <summary>
-/// 3Dサウンドのリスナーの位置とリスナーの前方位置を設定する
-/// </summary>
-/// <param name="pos">リスナーの座標</param>
-/// <param name="angle">リスナーの向いている角度(ラジアン)</param>
+// 3Dサウンドのリスナーの位置とリスナーの前方位置を設定する
 void SoundManager::Set3DSoundListenerPosAndFrontPos_UpVecY(VECTOR pos, VECTOR angle)
 {
 	DxLib::Set3DSoundListenerPosAndFrontPos_UpVecY(pos, VAdd(pos, angle));

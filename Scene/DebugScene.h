@@ -28,9 +28,9 @@ private:
 		TEST_SCENE,			// テストシーン
 		TITLE_SCENE,		// タイトルシーン
 		MAIN_SCENE,			// メインシーン
-		SOUNDSETTING_SCENE,	// サウンド設定シーン
+		CONFIG_SCENE,		// 設定シーン
 		PAUSE_SCENE,		// ポーズシーン
-		TOTAL_VALUE	// 項目の合計値
+		TOTAL_VALUE			// 項目の合計値
 	};
 private:
 	// 現在選択中の項目

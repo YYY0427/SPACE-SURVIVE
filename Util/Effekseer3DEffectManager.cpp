@@ -12,26 +12,19 @@ namespace
 	const std::string data_extension = ".efkefc";
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
+// コンストラクタ
 Effekseer3DEffectManager::Effekseer3DEffectManager():
 	imgHandle_(-1)
 {
 	
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
+// デストラクタ
 Effekseer3DEffectManager::~Effekseer3DEffectManager()
 {
 }
 
-/// <summary>
-/// Effekseer3DEffectManagerの唯一のインスタンスを返す
-/// </summary>
-/// <returns>唯一の実態の参照</returns>
+// Effekseer3DEffectManagerの唯一のインスタンスを返す
 Effekseer3DEffectManager& Effekseer3DEffectManager::GetInstance()
 {
 	// 唯一の実態
@@ -41,18 +34,15 @@ Effekseer3DEffectManager& Effekseer3DEffectManager::GetInstance()
 	return instance;
 }
 
-/// <summary>
-/// Effekseerの初期化とエフェクトのロード
-/// </summary>
-/// <returns> 0 : 初期化の成功、-1 : 初期化の失敗  </returns>
-int Effekseer3DEffectManager::Init()
+// Effekseerの初期化とエフェクトのロード
+void Effekseer3DEffectManager::Init()
 {
 	// Effekseerを初期化する
 	// 引数には画面に表示する最大パーティクル数を設定する
 	if (Effkseer_Init(8000) == -1)
 	{
 		// 初期化の失敗
-		return -1;
+		assert(0);
 	}
 
 	// 画像のロード
@@ -60,14 +50,9 @@ int Effekseer3DEffectManager::Init()
 
 	// ここから↓でEffectをロードする
 	LoadEffectFile("explosion");
-
-	// 初期化の成功
-	return 0;
 }
 
-/// <summary>
-/// 毎フレーム更新処理
-/// </summary>
+// 更新
 void Effekseer3DEffectManager::Update()
 {
 	// DXライブラリのカメラとEffekseerのカメラを同期する
@@ -77,9 +62,7 @@ void Effekseer3DEffectManager::Update()
 	UpdateEffekseer3D();
 }
 
-/// <summary>
-/// 毎フレームの描画処理
-/// </summary>
+// 描画
 void Effekseer3DEffectManager::Draw()
 {
 	// 何でもいいので画像を描画する
@@ -90,9 +73,7 @@ void Effekseer3DEffectManager::Draw()
 	DrawEffekseer3D();
 }
 
-/// <summary>
-/// 終了処理
-/// </summary>
+// 終了処理
 void Effekseer3DEffectManager::End()
 {
 	// 画像の削除
@@ -108,10 +89,7 @@ void Effekseer3DEffectManager::End()
 	Effkseer_End();
 }
 
-/// <summary>
-/// エフェクトのロード
-/// </summary>
-/// <param name="fileName">ロードしたいエフェクトのファイル名(拡張子は含まない)</param>
+// エフェクトのロード
 void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 {
 	std::string path = data_file_path;
@@ -126,14 +104,7 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 	effectResourceNameAndHandleTable_[fileName] = handle;
 }
 
-/// <summary>
-/// 指定のエフェクトの再生
-/// </summary>
-/// <param name="fileName">再生したいエフェクトのファイル名(拡張子は含まない)</param>
-/// <param name="pos">位置</param>
-/// <param name="scale">拡大率</param>
-/// <param name="speed">再生速度</param>
-/// <param name="rot">回転</param>
+// 指定のエフェクトの再生
 void Effekseer3DEffectManager::PlayEffect(std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
@@ -156,11 +127,7 @@ void Effekseer3DEffectManager::PlayEffect(std::string fileName, VECTOR pos, VECT
 	SetPosPlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], pos.x, pos.y, pos.z);
 }
 
-/// <summary>
-/// 特定のエフェクトが再生中か
-/// </summary>
-/// <param name="fileName">再生したいエフェクトのファイル名(拡張子は含まない)</param>
-/// <returns>true : 再生中、false : 再生していない</returns>
+// 特定のエフェクトが再生中か
 bool Effekseer3DEffectManager::IsPlayingEffect(std::string fileName)
 {
 	if (IsEffekseer3DEffectPlaying(playingEffectNameAndHandleTable_[fileName]) == 0)
@@ -170,9 +137,7 @@ bool Effekseer3DEffectManager::IsPlayingEffect(std::string fileName)
 	return false;
 }
 
-/// <summary>
-/// エフェクト全ての再生をストップ
-/// </summary>
+// エフェクト全ての再生をストップ
 void Effekseer3DEffectManager::StopAllEffect()
 {
 	for (auto& effect : playingEffectNameAndHandleTable_)

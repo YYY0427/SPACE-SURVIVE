@@ -8,7 +8,7 @@ class Player;
 class EnemyManager
 {
 public:
-	EnemyManager(Player& pPlayer);
+	EnemyManager(std::shared_ptr<Player> pPlayer);
 	virtual ~EnemyManager();
 
 	void Update();
@@ -20,6 +20,6 @@ public:
 
 	std::vector<std::shared_ptr<Enemy>> GetEnemies();
 private:
-	Player& pPlayer_;
+	std::shared_ptr<Player> pPlayer_;
 	std::vector<std::shared_ptr<Enemy>> pEnemies_;
 };

@@ -24,6 +24,7 @@ private:
 	enum class Item
 	{
 		DEBUG_SCENE,	// デバッグシーン
+		CONFIG_SCENE,	// 設定シーン
 		TOTAL_VALUE		// 項目の合計値
 	};
 private:

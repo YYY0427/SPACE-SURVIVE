@@ -61,7 +61,7 @@ void PauseScene::Update()
 	if (InputState::IsTriggered(InputType::DECISION) && !IsFadeing())
 	{
 		// フェードアウト開始
-		StartFadeOut();
+	//	StartFadeOut();
 
 		// フェードアウトが行われたかどうかのフラグを立てる
 		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
@@ -73,6 +73,12 @@ void PauseScene::Update()
 		if (currentSelectItem_ == static_cast<int>(Item::DEBUG_SCENE))
 		{
 			manager_.PopAllSceneAndChangeScene(new DebugScene(manager_));
+			return;
+		}
+		if (currentSelectItem_ == static_cast<int>(Item::CONFIG_SCENE))
+		{
+			isFadeOut_ = false;
+			manager_.PushScene(new ConfigScene(manager_));
 			return;
 		}
 	}
@@ -98,6 +104,7 @@ void PauseScene::Draw()
 
 	// デバッグシーンから飛べる項目のテキスト表示
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(Item::DEBUG_SCENE), "DebugScene", 0x000000, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(Item::CONFIG_SCENE), "ConfigScene", 0x000000, true);
 
 	// 現在選択中の項目の横に→を表示
 	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);

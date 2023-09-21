@@ -49,9 +49,17 @@ void Camera::Update()
 	int padStickSensX = SaveData::GetInstance().GetPadStickSensitivityX();
 	int padStickSensY = SaveData::GetInstance().GetPadStickSensitivityY();
 
+	// セーブデータのリバース情報の取得
+	bool padStickReversX = SaveData::GetInstance().GetPadStickReverseX();
+	bool padStickReversY = SaveData::GetInstance().GetPadStickReverseY();
+
+	int x = 1, y = 1;
+	if (padStickReversX)	x *= -1;
+	if (padStickReversY)	y *= -1;
+
 	// 入力情報からカメラを回転
-	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f);
-	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f);
+	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f) * x;
+	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f) * y;
 
 	// 縦回転の回転角度の制限
 	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f)

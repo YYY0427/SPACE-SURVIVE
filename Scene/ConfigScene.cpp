@@ -82,6 +82,14 @@ void ConfigScene::Update()
 			// 感度の最大値より大きくなったら最小値にする
 			SaveData::GetInstance().SetPadStickSensitivityY();
 		}
+		else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_REVERSE_X))
+		{
+			SaveData::GetInstance().SetPadStickReverseX();
+		}
+		else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_REVERSE_Y))
+		{
+			SaveData::GetInstance().SetPadStickReverseY();
+		}
 	}
 
 	// 前の画面に戻る
@@ -129,6 +137,27 @@ void ConfigScene::Draw()
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickY, "パッドの縦感度", 0x000000, true);
 	DrawFormatString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickY, 0x000000, "%d", SaveData::GetInstance().GetPadStickSensitivityY());
 
+	int padStickReverseX = static_cast<int>(Item::PAD_STICK_REVERSE_X);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickReverseX, "パッドの横リバース", 0x000000, true);
+	if (!SaveData::GetInstance().GetPadStickReverseX())
+	{
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseX, "NORMAL", 0x000000);
+	}
+	else
+	{
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseX, "REVERSE", 0x000000);
+	}
+
+	int padStickReverseY = static_cast<int>(Item::PAD_STICK_REVERSE_Y);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickReverseY, "パッドの縦リバース", 0x000000, true);
+	if (!SaveData::GetInstance().GetPadStickReverseY())
+	{
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseY, "NORMAL", 0x000000);
+	}
+	else
+	{
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseY, "REVERSE", 0x000000);
+	}
 
 	// 現在選択中の項目の横に→を表示
 	DrawString(draw_text_pos_x - text_space, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);

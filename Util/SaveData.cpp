@@ -55,7 +55,7 @@ void SaveData::Load()
 	{
 		// セーブデータの読み込み
 		Data data;
-		ifs.read((char*)&data, sizeof(Data));
+		ifs.read(reinterpret_cast<char*>(&data), sizeof(Data));
 		ifs.close();
 
 		if (data.version == current_save_version)
@@ -76,7 +76,7 @@ void SaveData::Write()
 {
 	assert(data_.version == current_save_version);
 	std::ofstream ofs(data_file_path, std::ios_base::binary);
-	ofs.write((char*)&data_, sizeof(Data));
+	ofs.write(reinterpret_cast<char*>(&data_), sizeof(Data));
 }
 
 // セーブデータを新規作成して上書き
@@ -86,7 +86,7 @@ void SaveData::CreateNewData()
 	InitData();
 
 	std::ofstream ofs(data_file_path, std::ios_base::binary);
-	ofs.write((char*)&data_, sizeof(SaveData));
+	ofs.write(reinterpret_cast<char*>(&data_), sizeof(SaveData));
 }
 
 // セーブデータの初期化
@@ -97,6 +97,8 @@ void SaveData::InitData()
 	data_.volumeSe = 3;
 	data_.padStickSensitivityX = 5;
 	data_.padStickSensitivityY = 3;
+	data_.padStickReverseX = false;	
+	data_.padStickReverseY = false;	
 }
 
 // BGMの音量の取得
@@ -111,16 +113,28 @@ int SaveData::GetSeVolume() const
 	return data_.volumeSe;
 }
 
-// パッドのスティックの感度の取得
+// パッドのスティックのX軸感度の取得
 int SaveData::GetPadStickSensitivityX() const
 {
 	return data_.padStickSensitivityX;
 }
 
-// パッドのスティックの感度の取得
+// パッドのスティックのY軸感度の取得
 int SaveData::GetPadStickSensitivityY() const
 {
 	return data_.padStickSensitivityY;
+}
+
+// パッドのスティックのX軸リバースの取得
+bool SaveData::GetPadStickReverseX() const
+{
+	return data_.padStickReverseX;
+}
+
+// パッドのスティックのY軸リバースの取得
+bool SaveData::GetPadStickReverseY() const
+{
+	return data_.padStickReverseY;
 }
 
 // BGMの音量の設定
@@ -151,7 +165,7 @@ void SaveData::SetSeVolume()
 	SaveData::GetInstance().Write();
 }
 
-// パッドのスティックの横感度の設定
+// パッドのスティックのX軸感度の設定
 // 最大値を超えると0に戻る
 void SaveData::SetPadStickSensitivityX()
 {
@@ -164,7 +178,7 @@ void SaveData::SetPadStickSensitivityX()
 	SaveData::GetInstance().Write();
 }
 
-// パッドのスティックの縦感度の設定
+// パッドのスティックのY軸感度の設定
 // 最大値を超えると0に戻る
 void SaveData::SetPadStickSensitivityY()
 {
@@ -172,6 +186,36 @@ void SaveData::SetPadStickSensitivityY()
 	if (data_.padStickSensitivityY > 10)
 	{
 		data_.padStickSensitivityY = 0;
+	}
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
+}
+
+// パッドのスティックのX軸リバースの設定
+void SaveData::SetPadStickReverseX()
+{
+	if (data_.padStickReverseX)
+	{
+		data_.padStickReverseX = false;
+	}
+	else
+	{
+		data_.padStickReverseX = true;
+	}
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
+}
+
+// パッドのスティックのY軸リバースの設定
+void SaveData::SetPadStickReverseY()
+{
+	if (data_.padStickReverseY)
+	{
+		data_.padStickReverseY = false;
+	}
+	else
+	{
+		data_.padStickReverseY = true;
 	}
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();

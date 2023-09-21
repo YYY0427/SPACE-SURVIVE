@@ -27,6 +27,8 @@ private:
 		SE,
 		PAD_STICK_SENS_X,
 		PAD_STICK_SENS_Y,
+		PAD_STICK_REVERSE_X,
+		PAD_STICK_REVERSE_Y,
 		TOTAL_VALUE			// çÄñ⁄ÇÃçáåvíl
 	};
 private:

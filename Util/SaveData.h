@@ -26,15 +26,27 @@ public:
 	// 音量の取得
 	int GetBgmVolume() const;	// BGM
 	int GetSeVolume() const;	// SE
-	int GetPadStickSensitivityX() const;
-	int GetPadStickSensitivityY() const;
+
+	// パッドのスティックの感度の取得
+	int GetPadStickSensitivityX() const;	
+	int GetPadStickSensitivityY() const;	
+
+	// パッドのスティックのリバースかどうかの取得
+	bool GetPadStickReverseX() const;		
+	bool GetPadStickReverseY() const;		
 
 	// 音量設定
 	// 音量の設定(最大値を超えると0に戻る)
 	void SetBgmVolume();	// BGM
 	void SetSeVolume();		// SE
-	void SetPadStickSensitivityX();	// パッドスティックの感度X
-	void SetPadStickSensitivityY();	// パッドスティックの感度Y
+
+	// パッドのスティックの感度の設定
+	void SetPadStickSensitivityX();		 
+	void SetPadStickSensitivityY();		 
+
+	// パッドのスティックのリバースの設定
+	void SetPadStickReverseX();			
+	void SetPadStickReverseY();			
 private:
 	// セーブデータ
 	struct Data
@@ -42,8 +54,10 @@ private:
 		int version = 0;		// データのバージョン
 		int volumeBgm = 3;		// BGM音量	
 		int volumeSe = 3;		// SE音量	
-		int padStickSensitivityX = 5;	// パッドのスティックの感度X
+		int padStickSensitivityX = 6;	// パッドのスティックの感度X
 		int padStickSensitivityY = 3;	// パッドのスティックの感度Y
+		bool padStickReverseX = false;	// パッドのスティックの横のリバース
+		bool padStickReverseY = false;	// パッドのスティックの縦のリバース
 	};
 private:
 	// コンストラクタ(シングルトンパターンなのでprivateに置く)

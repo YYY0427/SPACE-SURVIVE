@@ -53,6 +53,9 @@ private:
 
 	// 位置情報
 	VECTOR pos_;
+	
+	// ゲームオーバー時のエフェクト待ち用のタイマー
+	int gameOverEffectWaitTimer_;
 
 	// プレイヤーの移動速度
 	float moveSpeed_;

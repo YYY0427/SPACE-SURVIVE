@@ -9,7 +9,7 @@ namespace
 	const std::string data_file_path = "Data/Effect/";
 
 	// エフェクトの拡張子
-	const std::string data_extension = ".efkefc";
+	const std::string data_extension = ".efk";
 }
 
 // コンストラクタ
@@ -49,7 +49,7 @@ void Effekseer3DEffectManager::Init()
 	imgHandle_ = my::MyLoadGraph("Data/Effect/background.png");
 
 	// ここから↓でEffectをロードする
-	LoadEffectFile("explosion");
+	LoadEffectFile("explosion2");
 }
 
 // 更新

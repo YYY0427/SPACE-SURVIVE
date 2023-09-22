@@ -53,7 +53,8 @@ Player::Player() :
 	slowRate_(1.0f),
 	isEffectFirst_(false),
 	isBoost_(false),
-	isSlow_(false)
+	isSlow_(false),
+	gameOverEffectWaitTimer_(0)
 {
 	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
@@ -235,7 +236,7 @@ void Player::Update()
 	else
 	{
 		// 向いている方向の設定
-		pModel_->SetRot(VGet(moveVec.z* DX_PI_F / 180.0f, 0.0f, -moveVec.x * DX_PI_F / 180.0f));
+		pModel_->SetRot(VGet(moveVec.z * DX_PI_F / 180.0f, 0.0f, -moveVec.x * DX_PI_F / 180.0f));
 	}
 	
 	// アニメーションを進める
@@ -245,19 +246,24 @@ void Player::Update()
 // ゲームオーバー時の更新
 bool Player::GameOverUpdate()
 {
-	// 一回だけエフェクトを再生
-	if (!isEffectFirst_)
+	// 指定したフレーム経ったらエフェクトを再生
+	if (gameOverEffectWaitTimer_++ > 60)
 	{
-		isEffectFirst_ = true;
-		Effekseer3DEffectManager::GetInstance().PlayEffect("explosion", pos_, VGet(50.0f, 50.0f, 50.0f), 1.0f);
+		// 一回だけエフェクトを再生
+		if (!isEffectFirst_)
+		{
+			isEffectFirst_ = true;
+			Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", pos_, VGet(50.0f, 50.0f, 50.0f), 0.5f);
+		}
+		// エフェクトを再生し終えたらtrueを返す
+		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2"))
+		{
+			gameOverEffectWaitTimer_ = 0;
+			return true;
+		}
+		return false;
 	}
-	// エフェクトを再生し終えたらtrueを返す
-	if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion"))
-	{
-		return true;
-	}
-	return false;
-
+	
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
 
@@ -269,9 +275,14 @@ bool Player::GameOverUpdate()
 void Player::Draw()
 {
 	// プレイヤーモデルの描画
-	pModel_->Draw();
+	if (!isEffectFirst_)
+	{
+		pModel_->Draw();
 #ifdef _DEBUG
-	DrawSphere3D(pos_, model_collision_radius, 8, 0xff0000, 0xff0000, false);
+		DrawSphere3D(pos_, model_collision_radius, 8, 0xff0000, 0xff0000, false);
+#endif 
+	}
+#ifdef _DEBUG
 	DrawFormatString(10, 80, 0x000000, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
 	DrawFormatString(10, 105, 0x000000, "energyGauge = %.2f", energyGauge_);
 #endif

@@ -50,6 +50,7 @@ void Effekseer3DEffectManager::Init()
 
 	// ここから↓でEffectをロードする
 	LoadEffectFile("explosion2");
+	LoadEffectFile("starFire");
 }
 
 // 更新
@@ -105,10 +106,13 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 }
 
 // 指定のエフェクトの再生
-void Effekseer3DEffectManager::PlayEffect(std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffect(std::string fileName, VECTOR pos, float scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceNameAndHandleTable_.find(fileName) != effectResourceNameAndHandleTable_.end());
+
+	// 再生中の場合再生しない
+	if (IsPlayingEffect(fileName))	return;
 
 	// エフェクトの再生(失敗したら止める)
 	playingEffectNameAndHandleTable_[fileName] = PlayEffekseer3DEffect(effectResourceNameAndHandleTable_[fileName]);
@@ -118,13 +122,49 @@ void Effekseer3DEffectManager::PlayEffect(std::string fileName, VECTOR pos, VECT
 	SetSpeedPlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], speed);
 
 	// エフェクトの拡大率の設定
-	SetScalePlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], scale.x, scale.y, scale.z);
+	SetScalePlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], scale, scale, scale);
 
 	// エフェクトの回転率の設定
 	SetRotationPlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], rot.x, rot.y, rot.z);
 
 	// エフェクトの位置の設定
 	SetPosPlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], pos.x, pos.y, pos.z);
+}
+
+void Effekseer3DEffectManager::SetPosPlayingEffect(std::string fileName, VECTOR pos)
+{
+	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
+	assert(playingEffectNameAndHandleTable_.find(fileName) != playingEffectNameAndHandleTable_.end());
+
+	// エフェクトの位置の設定
+	SetPosPlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], pos.x, pos.y, pos.z);
+}
+
+void Effekseer3DEffectManager::SetScalePlayingEffect(std::string fileName, float scale)
+{
+	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
+	assert(playingEffectNameAndHandleTable_.find(fileName) != playingEffectNameAndHandleTable_.end());
+
+	// エフェクトの拡大率の設定
+	SetScalePlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], scale, scale, scale);
+}
+
+void Effekseer3DEffectManager::SetSpeedPlayingEffect(std::string fileName, float speed)
+{
+	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
+	assert(playingEffectNameAndHandleTable_.find(fileName) != playingEffectNameAndHandleTable_.end());
+
+	// エフェクトの再生速度を設定
+	SetSpeedPlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], speed);
+}
+
+void Effekseer3DEffectManager::SetRotPlayingEffect(std::string fileName, VECTOR rot)
+{
+	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
+	assert(playingEffectNameAndHandleTable_.find(fileName) != playingEffectNameAndHandleTable_.end());
+
+	// エフェクトの回転率の設定
+	SetRotationPlayingEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName], rot.x, rot.y, rot.z);
 }
 
 // 特定のエフェクトが再生中か
@@ -135,6 +175,12 @@ bool Effekseer3DEffectManager::IsPlayingEffect(std::string fileName)
 		return true;
 	}
 	return false;
+}
+
+// 特定のエフェクトの再生をストップ
+void Effekseer3DEffectManager::StopEffect(std::string fileName)
+{
+	StopEffekseer3DEffect(playingEffectNameAndHandleTable_[fileName]);
 }
 
 // エフェクト全ての再生をストップ

@@ -37,7 +37,12 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転</param>
-	void PlayEffect(std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot = VGet(0, 0, 0));
+	void PlayEffect(std::string fileName, VECTOR pos, float scale, float speed, VECTOR rot = VGet(0, 0, 0));
+
+	void SetPosPlayingEffect(std::string fileName, VECTOR pos);
+	void SetScalePlayingEffect(std::string fileName, float  scale);
+	void SetSpeedPlayingEffect(std::string fileName, float speed);
+	void SetRotPlayingEffect(std::string fileName, VECTOR rot);
 
 	/// <summary>
 	/// 特定のエフェクトが再生中か
@@ -45,6 +50,12 @@ public:
 	/// <param name="fileName">再生したいエフェクトのファイル名(拡張子は含まない)</param>
 	/// <returns>true : 再生中、false : 再生していない</returns>
 	bool IsPlayingEffect(std::string fileName);
+
+	/// <summary>
+	/// 特定のエフェクトの再生をストップ
+	/// </summary>
+	/// <param name="fileName">ストップしたいエフェクトのファイル名(拡張子は含まない)</param>
+	void StopEffect(std::string fileName);
 
 	// エフェクト全ての再生をストップ
 	void StopAllEffect();

@@ -81,6 +81,7 @@ void TestScene::NormalUpdate()
 	// ƒ|[ƒY‰æ–Ê‚É‘JˆÚ
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{
+		Effekseer3DEffectManager::GetInstance().StopAllEffect();
 		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}

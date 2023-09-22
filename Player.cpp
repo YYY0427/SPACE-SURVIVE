@@ -47,14 +47,15 @@ namespace
 //  コンストラクタ
 Player::Player() :
 	pos_(VGet(0.0f, 2000.0f, 0.0f)),
+	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
 	energyGauge_(energy_gauge_total_amount),
 	slowRate_(1.0f),
-	isEffectFirst_(false),
+	isPlayGameOverEffect_(false),
 	isBoost_(false),
 	isSlow_(false),
-	gameOverEffectWaitTimer_(0)
+	isReverseMoveVec_(false)
 {
 	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
@@ -86,98 +87,18 @@ void Player::Update()
 	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw()));
 	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw()));
 
-	// スローモーション切り替え
-	if (InputState::IsTriggered(InputType::SLOW))
-	{
-		// スローモーションじゃないかつエネルギーゲージの残量があったらスローモーションに移行
-		if (!isSlow_ && energyGauge_ > 0)
-		{
-			isSlow_ = true;
-		}
-		// スローモーション時は通常に移行
-		else
-		{
-			isSlow_ = false;
-		}
-	}
-	// フラグが立っていたらスローモーションに切り替え
-	if (isSlow_)
-	{
-		slowRate_ = slow_rate;
-	}
-	else
-	{
-		slowRate_ = 1.0f;
-	}
+	// スローモーションの処理
+	SlowProcess();
 
-	// ブースト切り替え
-	if (InputState::IsTriggered(InputType::BOOST))
-	{
-		// 非ブースト時かつスローモーションじゃないかつエネルギーゲージの残量があった場合ブーストに移行
-		if (!isBoost_ && energyGauge_ > 0 && !isSlow_)
-		{
-			isBoost_ = true;
-		}
-		// ブースト時の場合は通常速度に移行
-		else
-		{
-			isBoost_ = false;
-		}
-	}
-	// ブースト時は徐々に加速
-	if (isBoost_)
-	{
-		moveSpeed_ += 1;
-		if (moveSpeed_ > move_boost_speed)
-		{
-			moveSpeed_ = move_boost_speed;
-		}
-	}
-	// 非ブースト時は徐々に減速
-	else
-	{
-		moveSpeed_ -= 1;
-		if (moveSpeed_ < move_normal_speed)
-		{
-			moveSpeed_ = move_normal_speed;
-		}
-	}
-	// ブースト時はエネルギーが減り続ける
-	// スローモーション時はブースト時のエネルギーは減らない
-	if (isBoost_ && !isSlow_)
-	{
-		energyGauge_ -= boost_energy_cost;
-
-		// エネルギーがなくなったら通常速度に移行
-		if (energyGauge_ <= 0)
-		{
-			isBoost_ = false;
-		}
-	}
-	// スローモーション時はエネルギーが減り続ける
-	else if (isSlow_)
-	{
-		energyGauge_ -= slow_energy_cost;
-
-		// エネルギーがなくなったら通常に移行
-		if (energyGauge_ <= 0)
-		{
-			isSlow_ = false;
-		}
-	}
-	// 非ブースト時かつ非スローモーション時はエネルギーは回復
-	else
-	{
-		energyGauge_ += (energy_recovery_amount * slowRate_);
-		if (energyGauge_ > energy_gauge_total_amount)
-		{
-			energyGauge_ = energy_gauge_total_amount;
-		}
-	}
+	// ブーストの処理
+	BoostProcess();
+	
+	// エネルギーの処理
+	EnergyProcess();
 
 	// 移動情報の初期化
 	isInput_ = false;
-	VECTOR moveVec = VGet(0, 0, 0);
+	moveVec_ = VGet(0, 0, 0);
 	VECTOR moveVecX = VGet(0, 0, 0);
 	VECTOR moveVecZ = VGet(0, 0, 0);
 
@@ -208,21 +129,24 @@ void Player::Update()
 	if (isInput_)
 	{
 		// プレイヤーから見てx方向とz方向のベクトルを足して移動ベクトルを作成する
-		moveVec = VAdd(moveVecZ, moveVecX);
+		moveVec_ = VAdd(moveVecZ, moveVecX);
 
 		// プレイヤーのスピードを掛ける
-		moveVec = VScale(moveVec, moveSpeed_);
+		moveVec_ = VScale(moveVec_, moveSpeed_);
 
 		// スローモーションのレートを掛ける
-		moveVec = VScale(moveVec, slowRate_);
+		moveVec_ = VScale(moveVec_, slowRate_);
 
 		// 作成した移動ベクトルで座標の移動
-		pos_ = VAdd(pos_, moveVec);
+		pos_ = VAdd(pos_, moveVec_);
 	}
 	else
 	{
-		// 動いてない場合通常スピードに切り替える
-		isBoost_ = false;
+		// 動いてない場合かつスローモーションじゃない場合は通常スピードに切り替える
+		if (!isSlow_)
+		{
+			isBoost_ = false;
+		}
 	}
 
 	// 位置座標の設定
@@ -231,12 +155,12 @@ void Player::Update()
 	if (isSlow_)
 	{
 		// 向いている方向の設定
-		pModel_->SetRot(VGet(moveVec.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec.x * DX_PI_F / 180.0f / slowRate_));
+		pModel_->SetRot(VGet(moveVec_.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec_.x * DX_PI_F / 180.0f / slowRate_));
 	}
 	else
 	{
 		// 向いている方向の設定
-		pModel_->SetRot(VGet(moveVec.z * DX_PI_F / 180.0f, 0.0f, -moveVec.x * DX_PI_F / 180.0f));
+		pModel_->SetRot(VGet(moveVec_.z * DX_PI_F / 180.0f, 0.0f, -moveVec_.x * DX_PI_F / 180.0f));
 	}
 	
 	// アニメーションを進める
@@ -246,19 +170,35 @@ void Player::Update()
 // ゲームオーバー時の更新
 bool Player::GameOverUpdate()
 {
-	// 指定したフレーム経ったらエフェクトを再生
-	if (gameOverEffectWaitTimer_++ > 60)
+	// ブースト時のエフェクトの再生のストップ
+	Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
+	
+	// 移動ベクトルを反転していなかったら反転
+	// 既に反転していたら反転しない
+	if (!isReverseMoveVec_)
 	{
-		// 一回だけエフェクトを再生
-		if (!isEffectFirst_)
+		isReverseMoveVec_ = true;
+		moveVec_ = VScale(moveVec_, -1.0f);
+	}
+	// ベクトルを徐々に小さくする
+	moveVec_ = VScale(moveVec_, 0.96f);
+
+	// 作成した移動ベクトルで座標の移動
+	pos_ = VAdd(pos_, moveVec_);
+
+	// ベクトルが特定の大きさよりも小さくなったらゲームオーバーエフェクト再生
+	if(VSize(moveVec_) <= 1.0f)
+	{
+		// ゲームオーバーエフェクトを再生してなかったら再生
+		// 既に再生していたら再生しない
+		if (!isPlayGameOverEffect_)
 		{
-			isEffectFirst_ = true;
-			Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", pos_, VGet(50.0f, 50.0f, 50.0f), 0.5f);
+			isPlayGameOverEffect_ = true;
+			Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", pos_, 50.0f, 0.5f);
 		}
 		// エフェクトを再生し終えたらtrueを返す
-		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2"))
+		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2") && isPlayGameOverEffect_)
 		{
-			gameOverEffectWaitTimer_ = 0;
 			return true;
 		}
 		return false;
@@ -267,15 +207,152 @@ bool Player::GameOverUpdate()
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
 
+	// 向いている方向の設定
+	pModel_->SetRot(VGet(VSize(moveVec_) / 5.0f, 0.0f, VSize(moveVec_) / 10.0f));
+
 	// アニメーションと当たり判定の更新
 	pModel_->Update();
+}
+
+// ブーストの処理
+void Player::BoostProcess()
+{
+	// ブースト切り替え
+	if (InputState::IsTriggered(InputType::BOOST))
+	{
+		// 非ブースト時かつスローモーションじゃないかつエネルギーゲージの残量があった場合ブーストに移行
+		if (!isBoost_ && energyGauge_ > 0 && !isSlow_)
+		{
+			isBoost_ = true;
+		}
+		// ブースト時の場合は通常速度に移行
+		else
+		{
+			isBoost_ = false;
+		}
+	}
+	// ブースト時
+	if (isBoost_)
+	{
+		// ブースト時のエフェクトを再生
+		Effekseer3DEffectManager::GetInstance().PlayEffect("starFire", pos_, 50.0f, 1.0f);
+
+		// エフェクトの再生位置の更新
+		Effekseer3DEffectManager::GetInstance().SetPosPlayingEffect("starFire", pos_);
+
+		// スローモーション時はブーストのエフェクトの大きさを小さくする
+		if (isSlow_)
+		{
+			Effekseer3DEffectManager::GetInstance().SetScalePlayingEffect("starFire", 25.0f);
+		}
+		// 通常時は通常のエフェクトの大きさ
+		else
+		{
+			Effekseer3DEffectManager::GetInstance().SetScalePlayingEffect("starFire", 50.0f);
+		}
+		// スローモーションのレートに合わせてエフェクト再生速度の設定
+		// スローモーション時はエフェクトの再生速度を遅くなる
+		Effekseer3DEffectManager::GetInstance().SetSpeedPlayingEffect("starFire", slowRate_);
+
+		// 徐々に加速
+		moveSpeed_ += 1;
+
+		// 特定のスピードより大きくならない
+		if (moveSpeed_ > move_boost_speed)
+		{
+			moveSpeed_ = move_boost_speed;
+		}
+	}
+	// 非ブースト時
+	else
+	{
+		// ブースト時のエフェクトの再生をストップ
+		Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
+
+		// 徐々に減速
+		moveSpeed_ -= 1;
+
+		// 特定のスピードより小さくならない
+		if (moveSpeed_ < move_normal_speed)
+		{
+			moveSpeed_ = move_normal_speed;
+		}
+	}
+}
+
+// スローモーションの処理
+void Player::SlowProcess()
+{
+	// スローモーション切り替え
+	if (InputState::IsTriggered(InputType::SLOW))
+	{
+		// スローモーションじゃないかつエネルギーゲージの残量があったらスローモーションに移行
+		if (!isSlow_ && energyGauge_ > 0)
+		{
+			isSlow_ = true;
+		}
+		// スローモーション時は通常に移行
+		else
+		{
+			isSlow_ = false;
+		}
+	}
+	// フラグが立っていたらスローモーションに切り替え
+	if (isSlow_)
+	{
+		slowRate_ = slow_rate;
+		
+	}
+	else
+	{
+		slowRate_ = 1.0f;
+	}
+}
+
+// エネルギー処理
+void Player::EnergyProcess()
+{
+	// ブースト時はエネルギーが減り続ける
+	// スローモーション時はブースト時のエネルギーは減らない
+	if (isBoost_ && !isSlow_)
+	{
+		energyGauge_ -= boost_energy_cost;
+
+		// エネルギーがなくなったら通常速度に移行
+		if (energyGauge_ <= 0)
+		{
+			isBoost_ = false;
+		}
+	}
+	// スローモーション時はエネルギーが減り続ける
+	else if (isSlow_)
+	{
+		energyGauge_ -= slow_energy_cost;
+
+		// エネルギーがなくなったら通常に移行
+		if (energyGauge_ <= 0)
+		{
+			isSlow_ = false;
+		}
+	}
+	// 非ブースト時かつ非スローモーション時はエネルギーは回復
+	else
+	{
+		energyGauge_ += energy_recovery_amount;
+
+		// エネルギー上限に達したら回復を止める
+		if (energyGauge_ > energy_gauge_total_amount)
+		{
+			energyGauge_ = energy_gauge_total_amount;
+		}
+	}
 }
 
 // 描画
 void Player::Draw()
 {
 	// プレイヤーモデルの描画
-	if (!isEffectFirst_)
+	if (!isPlayGameOverEffect_)
 	{
 		pModel_->Draw();
 #ifdef _DEBUG
@@ -289,25 +366,25 @@ void Player::Draw()
 }
 
 // 位置情報の取得
-VECTOR Player::GetPos()
+VECTOR Player::GetPos() const
 {
 	return pos_;
 }
 
 // ブースト状態かの取得
-bool Player::GetIsBoost()
+bool Player::GetIsBoost() const
 {
 	return isBoost_;
 }
 
 // スローモーションのレートの取得
-float Player::GetSlowRate()
+float Player::GetSlowRate() const
 {
 	return slowRate_;
 }
 
 // プレイヤーの当たり判定の半径の取得
-float Player::GetCollsionRadius()
+float Player::GetCollsionRadius() const
 {
 	return model_collision_radius;
 }

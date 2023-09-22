@@ -17,32 +17,41 @@ public:
 	// デストラクタ
 	virtual ~Player();
 
-	// 更新
+	// 通常の更新
 	void Update();
 
 	/// <summary>
-	/// ゲームオーバー時のプレイヤーの更新
+	/// ゲームオーバー時の更新
 	/// </summary>
 	/// <returns>エフェクトを再生し終えたか</returns>
 	bool GameOverUpdate();
+
+	// ブーストの処理
+	void BoostProcess();
+
+	// スローモーションの処理
+	void SlowProcess();
+
+	// エネルギーの処理
+	void EnergyProcess();
 
 	// 描画
 	void Draw();
 
 	// 位置情報の取得
-	VECTOR GetPos();			
+	VECTOR GetPos() const;			
 
 	/// <summary>
 	/// ブースト状態かの取得
 	/// </summary>
 	/// <returns>true : ブースト状態、false : 通常状態</returns>
-	bool GetIsBoost();			
+	bool GetIsBoost() const;			
 
 	// スローモーションのレートの取得
-	float GetSlowRate();		
+	float GetSlowRate() const;		
 
 	// プレイヤーの当たり判定の半径の取得
-	float GetCollsionRadius();	
+	float GetCollsionRadius() const;	
 
 	// カメラクラスのポインタの設定
 	void SetCameraPointer(std::shared_ptr<Camera> pCamera);
@@ -54,8 +63,8 @@ private:
 	// 位置情報
 	VECTOR pos_;
 	
-	// ゲームオーバー時のエフェクト待ち用のタイマー
-	int gameOverEffectWaitTimer_;
+	// 移動ベクトル
+	VECTOR moveVec_;
 
 	// プレイヤーの移動速度
 	float moveSpeed_;
@@ -66,6 +75,9 @@ private:
 	// スローモーションのレート
 	float slowRate_;
 
+	// 移動ベクトルを反転したか
+	bool isReverseMoveVec_;
+
 	// スローモーション状態かどうか
 	bool isSlow_;
 
@@ -75,6 +87,6 @@ private:
 	// 左スティックが入力されたか
 	bool isInput_;
 
-	// エフェクトを一回だけ再生
-	bool isEffectFirst_;
+	// ゲームオーバーエフェクトを再生したか
+	bool isPlayGameOverEffect_;
 };

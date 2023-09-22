@@ -57,7 +57,10 @@ Player::Player() :
 	isSlow_(false),
 	isReverseMoveVec_(false)
 {
+	// プレイヤーモデルのインスタンスの作成
 	pModel_ = std::make_shared<Model>(model_file_path.c_str());
+
+	// プレイヤーモデルの拡大率の設定
 	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
 }
 
@@ -152,17 +155,9 @@ void Player::Update()
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
 
-	if (isSlow_)
-	{
-		// 向いている方向の設定
-		pModel_->SetRot(VGet(moveVec_.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec_.x * DX_PI_F / 180.0f / slowRate_));
-	}
-	else
-	{
-		// 向いている方向の設定
-		pModel_->SetRot(VGet(moveVec_.z * DX_PI_F / 180.0f, 0.0f, -moveVec_.x * DX_PI_F / 180.0f));
-	}
-	
+	// 向いている方向の設定
+	pModel_->SetRot(VGet(moveVec_.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec_.x * DX_PI_F / 180.0f / slowRate_));
+
 	// アニメーションを進める
 	pModel_->Update();
 }
@@ -220,8 +215,8 @@ void Player::BoostProcess()
 	// ブースト切り替え
 	if (InputState::IsTriggered(InputType::BOOST))
 	{
-		// 非ブースト時かつスローモーションじゃないかつエネルギーゲージの残量があった場合ブーストに移行
-		if (!isBoost_ && energyGauge_ > 0 && !isSlow_)
+		// 非ブースト時かつエネルギーゲージの残量があった場合ブーストに移行
+		if (!isBoost_ && energyGauge_ > 0)
 		{
 			isBoost_ = true;
 		}
@@ -255,7 +250,7 @@ void Player::BoostProcess()
 		Effekseer3DEffectManager::GetInstance().SetSpeedPlayingEffect("starFire", slowRate_);
 
 		// 徐々に加速
-		moveSpeed_ += 1;
+		moveSpeed_ += 1.0f;
 
 		// 特定のスピードより大きくならない
 		if (moveSpeed_ > move_boost_speed)
@@ -270,7 +265,7 @@ void Player::BoostProcess()
 		Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
 
 		// 徐々に減速
-		moveSpeed_ -= 1;
+		moveSpeed_ -= 1.0f;
 
 		// 特定のスピードより小さくならない
 		if (moveSpeed_ < move_normal_speed)
@@ -300,12 +295,25 @@ void Player::SlowProcess()
 	// フラグが立っていたらスローモーションに切り替え
 	if (isSlow_)
 	{
-		slowRate_ = slow_rate;
-		
+		// 徐々にスローにしていく
+		slowRate_ -= 0.1f;
+
+		// 特定の値よりは小さくならない
+		if (slowRate_ < slow_rate)
+		{
+			slowRate_ = slow_rate;
+		}
 	}
 	else
 	{
-		slowRate_ = 1.0f;
+		// 徐々に速くしていく
+		slowRate_ += 0.1f;
+
+		// 特定の値よりは大きくならない
+		if (slowRate_ >= 1.0f)
+		{
+			slowRate_ = 1.0f;
+		}
 	}
 }
 

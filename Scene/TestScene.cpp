@@ -43,7 +43,7 @@ void TestScene::Update()
 void TestScene::Draw()
 {
 	// 背景を白に変更
-	DrawBox(0, 0, common::screen_width, common::screen_height, 0xffffff, true);
+	DrawBox(0, 0, common::screen_width, common::screen_height, 0xcccccc, true);
 
 	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "TestScene", 0xffffff, true);

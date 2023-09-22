@@ -1,169 +1,183 @@
 ﻿0:ChangeWindowMode実行 
-0:ウインドウモードフラグが立てられました
-2:ＤＸライブラリの初期化処理開始
-3:	システムの情報を出力します
-3:		ＤＸライブラリ Ver3.24b
-3:		論理プロセッサの数 : 16
-3:		ＯＳ  Windows11 ( Build 22621  )
-103:		現時点のＣＰＵ動作速度：大体3.77GHz
-103:		ＭＭＸ命令を使用します
-103:		ＳＳＥ命令が使用可能です
-103:		ＳＳＥ２命令が使用可能です
-103:		ＣＰＵベンダ：GenuineIntel
-104:		ＣＰＵ名：Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz
-104:	ＣＯＭの初期化... 成功
+1:ウインドウモードフラグが立てられました
+3:ＤＸライブラリの初期化処理開始
+4:	システムの情報を出力します
+4:		ＤＸライブラリ Ver3.24b
+4:		論理プロセッサの数 : 16
+5:		ＯＳ  Windows11 ( Build 22621  )
+105:		現時点のＣＰＵ動作速度：大体3.76GHz
+105:		ＭＭＸ命令を使用します
+105:		ＳＳＥ命令が使用可能です
+105:		ＳＳＥ２命令が使用可能です
+105:		ＣＰＵベンダ：GenuineIntel
+105:		ＣＰＵ名：Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz
+106:	ＣＯＭの初期化... 成功
 107:	非同期読み込み処理の初期化...成功
-107:	ファイルアクセス処理の初期化...成功
-107:	メモリ総量:32601.56MB  空きメモリ領域:19627.59MB 
+109:	ファイルアクセス処理の初期化...成功
+109:	メモリ総量:32601.56MB  空きメモリ領域:18915.53MB 
 109:	タイマーの精度を検査します
 109:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
 109:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
-109:	 
-109:	ソフトの二重起動検査... 二重起動はされていませんでした
-109:	ウインドウクラスを登録します... 登録に成功しました
-110:	ウインドウモード起動用のウインドウを作成します
-110:	ディスプレイ情報のセットアップ開始
-111:		モニターの数：2  ディスプレイデバイスの数：7
-111:		No.0  モニター名：\\.\DISPLAY1　2560x1080　32bit　144Hz  96x96dpi
-111:		No.1  モニター名：\\.\DISPLAY2　2560x1080　32bit　144Hz  96x96dpi
-175:	ディスプレイ情報のセットアップ完了
-175:	ウインドウ矩形 ( 624, 129 )-( 1920, 888 )
-178:	ウインドウの作成に成功しました
-178:	ウインドウを表示します
-196:	ＩＭＥを無効にしました
-197:	ウインドウスタイルをウインドウモード用に変更します... 完了
-223:	XInput DLL の読み込み中... 成功
-226:	DirectInput関係初期化処理
-226:		DirectInput8 の取得を試みます...成功
-299:			引き続き初期化処理... 初期化成功
-302:		ジョイパッドの初期化... 
-302:			XInput 対応コントローラーのチェックを開始します
-303:				XInput 対応コントローラー No.0 をチェック
-305:				XInput 対応コントローラー No.0 の接続を確認しました
-305:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
-305:				XInput 対応コントローラー No.1 をチェック
-306:				XInput 対応コントローラー No.1 の接続は確認できませんでした
-306:				XInput 対応コントローラー No.2 をチェック
-307:				XInput 対応コントローラー No.2 の接続は確認できませんでした
-307:				XInput 対応コントローラー No.3 をチェック
-307:				XInput 対応コントローラー No.3 の接続は確認できませんでした
-307:			XInput 対応コントローラーのチェック完了
-307:			DirectInput 対応ジョイパッドの列挙を開始します
-321:				DirectInput 対応入力装置を検出しました
-321:						Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
-321:						Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
-321:					DirectInputDevice8 の作成... 成功
-322:					DirectInputDevice の情報を取得します... 成功
-323:						Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
-323:						Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
-323:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-323:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-324:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
-536:				検出した DirectInput 対応入力装置の初期化を中断します
-536:			DirectInput 対応ジョイパッドの列挙終了
-536:		ジョイパッドの初期化は正常に終了しました
-536:		マウスデバイスの初期化... 初期化成功
-537:		キーボードデバイスの初期化... 初期化成功
-544:	DirectInput 関連の初期化は正常に終了しました
-547:	XAudio2 の初期化を行います
-549:		XAudio2_8.dll を使用します
-553:		XAudio2 インターフェースの取得と初期化を行います....  成功 Ver2.8
-608:	XAudio2 の初期化は正常に終了しました
-611:	d3d11.dll の読み込み.... 成功
-614:	dxgi.dll の読み込み.... 成功
-614:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
-615:	IDXGIFactory2 を作成します.... 成功
-619:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
-619:	IDXGIAdapter を列挙
-620:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8043MB
-620:			Output Device No.0 Name:\\.\DISPLAY2 ( 0, 0 )-( 2560, 1080 )
-620:			Output Device No.1 Name:\\.\DISPLAY1 ( 0, -1080 )-( 2560, 0 )
-620:		Adapter No.1 Desc:Intel(R) UHD Graphics 630  VRAM:128MB
-621:		Adapter No.2 Desc:Microsoft Basic Render Driver  VRAM:0MB
-621:	API D3D11CreateDevice のアドレスを取得します.... 成功
-621:	IDXGIAdapter を取得します.... 成功
-621:	IDXGIAdapter1 を取得します.... 成功
-622:	IDXGIAdapter2 を取得します.... 成功
-622:	IDXGIAdapter3 を取得します.... 成功
-622:	IDXGIAdapter4 を取得します.... 成功
-623:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
-623:	ID3D11Device オブジェクトを取得します.... 成功
-694:	IDXGIDevice1 を取得します.... 成功
-694:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
-695:	[ウインドウモード 1280x720 ( 640, 167 )-( 1920, 887 )]
-695:	IDXGISwapChain2 を作成します.... 成功
-696:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
-696:	IDXGIOutput を取得します.... 成功
-697:	Graphics Device:NVIDIA GeForce RTX 3070
-697:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-697:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
-697:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
-697:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
-697:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-697:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-698:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
-698:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-698:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
-698:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-698:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
-698:	ＤＸＴ２テクスチャフォーマットは使えません
-699:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
-699:	ＤＸＴ４テクスチャフォーマットは使えません
-699:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
-699:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
-699:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
-700:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-700:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-700:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-700:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-700:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-701:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-701:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-701:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-701:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-701:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-701:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-702:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-702:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-702:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-702:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-702:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-703:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-703:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-703:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-703:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-703:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-703:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-704:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-704:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-704:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-704:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
-704:	同時にレンダリングできるバッファの数:8
-705:	最大テクスチャサイズ　幅:16384 高さ:16384
-705:	標準描画用の頂点バッファの作成.... 成功
-705:	シェーダーコード関係の初期化.... 成功
-715:	各種シェーダー用定数バッファの作成.... 成功
-716:	各種 ID3D11InputLayout の作成.... 成功
-736:	画像の単純転送処理の初期化... 成功
-737:	深度バッファを作成します.... 成功
-739:	フォントの初期化を行います
-741:	フォントの初期化は正常に終了しました
-781:	文字コードバッファの初期化を行います... 完了しました
-791:ＤＸライブラリの初期化処理終了
-1322:ウインドウを閉じようとしています
-1326:ウインドウが破棄されようとしています
-1327:ソフトを終了する準備が整いました
-1331:MP3変換の途中でソフトが終了しましたMP3変換の途中でソフトが終了しましたMP3変換の途中でソフトが終了しましたフォントの初期化を行います
-1979:フォントの初期化は正常に終了しました
-1995:d3d11.dll の解放 1
-1996:dxgi.dll の解放 1
-1997:Direct3D11 のオブジェクト数を出力
-1997:Direct3D11 のオブジェクト合計数 : 0
-2241:DirectInput 関連の終了処理... 完了
-2244:サウンド関連の終了処理... 完了
-2261:ウィンドウ関連の終了処理... 完了
-2331:ＣＯＭを終了... 完了
-2331:
-2331:Alloc memory dump
-2331:	Total size:0(0.000kb)  Alloc num:0
-2331:
+111:	 
+111:	ソフトの二重起動検査... 二重起動はされていませんでした
+111:	ウインドウクラスを登録します... 登録に成功しました
+112:	ウインドウモード起動用のウインドウを作成します
+112:	ディスプレイ情報のセットアップ開始
+112:		モニターの数：2  ディスプレイデバイスの数：7
+113:		No.0  モニター名：\\.\DISPLAY1　2560x1080　32bit　144Hz  96x96dpi
+113:		No.1  モニター名：\\.\DISPLAY2　2560x1080　32bit　144Hz  96x96dpi
+185:	ディスプレイ情報のセットアップ完了
+185:	ウインドウ矩形 ( 624, 129 )-( 1920, 888 )
+188:	ウインドウの作成に成功しました
+188:	ウインドウを表示します
+207:	ＩＭＥを無効にしました
+208:	ウインドウスタイルをウインドウモード用に変更します... 完了
+236:	XInput DLL の読み込み中... 成功
+239:	DirectInput関係初期化処理
+241:		DirectInput8 の取得を試みます...成功
+317:			引き続き初期化処理... 初期化成功
+320:		ジョイパッドの初期化... 
+320:			XInput 対応コントローラーのチェックを開始します
+320:				XInput 対応コントローラー No.0 をチェック
+322:				XInput 対応コントローラー No.0 の接続を確認しました
+322:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+323:				XInput 対応コントローラー No.1 をチェック
+323:				XInput 対応コントローラー No.1 の接続は確認できませんでした
+323:				XInput 対応コントローラー No.2 をチェック
+324:				XInput 対応コントローラー No.2 の接続は確認できませんでした
+324:				XInput 対応コントローラー No.3 をチェック
+324:				XInput 対応コントローラー No.3 の接続は確認できませんでした
+325:			XInput 対応コントローラーのチェック完了
+325:			DirectInput 対応ジョイパッドの列挙を開始します
+340:				DirectInput 対応入力装置を検出しました
+340:						Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+340:						Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+340:					DirectInputDevice8 の作成... 成功
+341:					DirectInputDevice の情報を取得します... 成功
+341:						Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+342:						Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+342:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+342:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+343:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
+554:				検出した DirectInput 対応入力装置の初期化を中断します
+554:			DirectInput 対応ジョイパッドの列挙終了
+554:		ジョイパッドの初期化は正常に終了しました
+554:		マウスデバイスの初期化... 初期化成功
+555:		キーボードデバイスの初期化... 初期化成功
+557:	DirectInput 関連の初期化は正常に終了しました
+560:	XAudio2 の初期化を行います
+562:		XAudio2_8.dll を使用します
+565:		XAudio2 インターフェースの取得と初期化を行います....  成功 Ver2.8
+615:	XAudio2 の初期化は正常に終了しました
+619:	d3d11.dll の読み込み.... 成功
+623:	dxgi.dll の読み込み.... 成功
+624:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
+624:	IDXGIFactory2 を作成します.... 成功
+630:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
+630:	IDXGIAdapter を列挙
+631:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8043MB
+631:			Output Device No.0 Name:\\.\DISPLAY2 ( 0, 0 )-( 2560, 1080 )
+631:			Output Device No.1 Name:\\.\DISPLAY1 ( 0, -1080 )-( 2560, 0 )
+631:		Adapter No.1 Desc:Intel(R) UHD Graphics 630  VRAM:128MB
+632:		Adapter No.2 Desc:Microsoft Basic Render Driver  VRAM:0MB
+632:	API D3D11CreateDevice のアドレスを取得します.... 成功
+632:	IDXGIAdapter を取得します.... 成功
+633:	IDXGIAdapter1 を取得します.... 成功
+633:	IDXGIAdapter2 を取得します.... 成功
+633:	IDXGIAdapter3 を取得します.... 成功
+634:	IDXGIAdapter4 を取得します.... 成功
+634:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
+635:	ID3D11Device オブジェクトを取得します.... 成功
+704:	IDXGIDevice1 を取得します.... 成功
+704:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
+705:	[ウインドウモード 1280x720 ( 640, 167 )-( 1920, 887 )]
+705:	IDXGISwapChain2 を作成します.... 成功
+706:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
+706:	IDXGIOutput を取得します.... 成功
+707:	Graphics Device:NVIDIA GeForce RTX 3070
+707:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+707:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
+707:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
+707:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
+707:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+709:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+709:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
+709:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+709:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
+709:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+710:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
+710:	ＤＸＴ２テクスチャフォーマットは使えません
+710:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
+710:	ＤＸＴ４テクスチャフォーマットは使えません
+710:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
+710:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
+711:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
+711:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+711:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+711:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+711:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+712:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+712:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+712:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+712:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+712:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+713:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+713:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+713:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+713:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+713:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+714:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+714:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+714:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+714:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+714:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+715:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+715:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+715:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+715:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+715:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+715:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+716:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
+716:	同時にレンダリングできるバッファの数:8
+716:	最大テクスチャサイズ　幅:16384 高さ:16384
+716:	標準描画用の頂点バッファの作成.... 成功
+717:	シェーダーコード関係の初期化.... 成功
+726:	各種シェーダー用定数バッファの作成.... 成功
+727:	各種 ID3D11InputLayout の作成.... 成功
+747:	画像の単純転送処理の初期化... 成功
+748:	深度バッファを作成します.... 成功
+750:	フォントの初期化を行います
+752:	フォントの初期化は正常に終了しました
+794:	文字コードバッファの初期化を行います... 完了しました
+804:ＤＸライブラリの初期化処理終了
+1510896:フォントの初期化を行います
+1510896:フォントの初期化は正常に終了しました
+1510920:d3d11.dll の解放 1
+1510920:dxgi.dll の解放 1
+1510921:Direct3D11 のオブジェクト数を出力
+1510921:Direct3D11 のオブジェクト合計数 : 0
+1510922:DirectInput 関連の終了処理... 完了
+1510922:サウンド関連の終了処理... 完了
+1510951:ウィンドウ関連の終了処理... ウインドウを閉じようとしています
+1510955:ウインドウが破棄されようとしています
+1510956:ソフトを終了する準備が整いました
+1511022:完了
+1511026:ＣＯＭを終了... 完了
+1511026:
+1511027:Alloc memory dump
+1511027:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28567  file:\Main\DxModel.cpp           line:31692   ID:15132  addr:000001f13dddf090  data:[01 00 00 00 44 42 09 44 90 9b c1 c3 5c 8c 08 c5]
+1511027:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28439  file:\Main\DxModel.cpp           line:31692   ID:12390  addr:000001f13ddfc930  data:[01 00 00 00 bc 76 58 c4 de b6 5e c3 6a 6d e0 44]
+1511027:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28396  file:\Main\DxModel.cpp           line:31692   ID:11262  addr:000001f13de1a1d0  data:[01 00 00 00 96 92 ef c4 60 af 93 44 9a eb 9d c3]
+1511027:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28376  file:\Main\DxModel.cpp           line:31692   ID:10743  addr:000001f13de37a70  data:[01 00 00 00 ee 34 74 c4 10 e5 d0 44 8b 42 22 c4]
+1511028:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28273  file:\Main\DxModel.cpp           line:31692   ID:7690   addr:000001f13de55310  data:[01 00 00 00 60 7e 5c c3 25 2c 18 45 5f f3 04 c3]
+1511028:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28631  file:\Main\DxModel.cpp           line:31692   ID:17189  addr:000001f118282300  data:[01 00 00 00 ba 30 a2 44 be 8f 79 45 02 35 b9 c4]
+1511028:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28544  file:\Main\DxModel.cpp           line:31692   ID:14487  addr:000001f1187928f0  data:[01 00 00 00 78 8c 2c 42 7b c3 8e 45 c9 87 27 44]
+1511028:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28506  file:\Main\DxModel.cpp           line:31692   ID:13362  addr:000001f116ca9100  data:[01 00 00 00 0a 97 42 c4 ad 9a b1 44 5d 98 35 45]
+1511028:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28339  file:\Main\DxModel.cpp           line:31692   ID:9789   addr:000001f117745070  data:[01 00 00 00 39 8a 9e c4 7f d4 b8 44 72 51 a5 c4]
+1511029:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:27403  file:\Main\DxModel.cpp           line:31692   ID:6973   addr:000001f1007a1330  data:[01 00 00 00 4b 49 a0 44 f9 56 a9 44 9f 30 11 44]
+1511029:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:27353  file:\Main\DxModel.cpp           line:31692   ID:5551   addr:000001f1017f9ba0  data:[01 00 00 00 33 31 2b c5 c2 6a d1 43 1e 88 a5 c5]
+1511029:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28479  file:\Main\DxModel.cpp           line:31692   ID:12849  addr:000001f1020eec40  data:[01 00 00 00 18 30 46 44 8d c9 1e 44 2d cf 14 45]
+1511029:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28419  file:\Main\DxModel.cpp           line:31692   ID:11889  addr:000001f10210b720  data:[01 00 00 00 a9 20 75 43 af f2 73 44 47 fc 45 c3]
+1511029:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:28355  file:\Main\DxModel.cpp           line:31692   ID:10164  addr:000001f102127530  data:[01 00 00 00 67 b1 de 44 9c 2d e4 44 e6 ff 29 c3]
+1511029:	Total size:1456000(1421.875kb)  Alloc num:14
+1511030:

@@ -49,7 +49,7 @@ void TestScene::Draw()
 	DrawString(0, 0, "TestScene", 0xffffff, true);
 
 	// 各クラスの描画
-//	pSkyDome_->Draw();
+	pSkyDome_->Draw();
 	GroundLineDraw();
 	pEnemyManager_->Draw();
 	pPlayer_->Draw();
@@ -62,7 +62,7 @@ void TestScene::Draw()
 void TestScene::NormalUpdate()
 {
 	// 各クラスの更新
-//	pSkyDome_->Update();
+	pSkyDome_->Update();
 	pCamera_->Update();
 	pPlayer_->Update();
 	pEnemyManager_->Update();

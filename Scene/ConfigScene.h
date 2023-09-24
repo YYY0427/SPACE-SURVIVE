@@ -23,8 +23,9 @@ private:
 	// Ý’èƒV[ƒ“‚Ì€–Ú
 	enum class Item
 	{
-		BGM,	
-		SE,
+		WHOLE_VOLUME,
+		BGM_VOLUME,	
+		SE_VOLUME,
 		PAD_STICK_SENS_X,
 		PAD_STICK_SENS_Y,
 		PAD_STICK_REVERSE_X,

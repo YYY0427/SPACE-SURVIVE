@@ -3,6 +3,19 @@
 // セーブデータの管理を行うシングルトンクラス
 class SaveData
 {
+private:
+	// セーブデータ
+	struct Data
+	{
+		int version = 0;		// データのバージョン
+		int wholeVolume = 5;	// 全体の音量
+		int bgmVolume = 5;		// BGM音量	
+		int seVolume = 5;		// SE音量	
+		int padStickSensitivityX = 6;	// パッドのスティックの感度X
+		int padStickSensitivityY = 3;	// パッドのスティックの感度Y
+		bool padStickReverseX = false;	// パッドのスティックの横のリバース
+		bool padStickReverseY = false;	// パッドのスティックの縦のリバース
+	};
 public:
 	// デストラクタ
 	~SaveData();
@@ -35,30 +48,24 @@ public:
 	bool GetPadStickReverseX() const;		
 	bool GetPadStickReverseY() const;		
 
+	Data GetSaveData();
+	template<class T> void SetConfigValue(T* configValue, int splitNum);
+
 	// 音量設定
 	// 音量の設定(最大値を超えると0に戻る)
+	void SetWholeVolume();	// 全体音量
 	void SetBgmVolume();	// BGM
 	void SetSeVolume();		// SE
 
 	// パッドのスティックの感度の設定
+	// 感度の設定(最大値を超えると0に戻る)
 	void SetPadStickSensitivityX();		 
 	void SetPadStickSensitivityY();		 
 
 	// パッドのスティックのリバースの設定
 	void SetPadStickReverseX();			
 	void SetPadStickReverseY();			
-private:
-	// セーブデータ
-	struct Data
-	{
-		int version = 0;		// データのバージョン
-		int volumeBgm = 3;		// BGM音量	
-		int volumeSe = 3;		// SE音量	
-		int padStickSensitivityX = 6;	// パッドのスティックの感度X
-		int padStickSensitivityY = 3;	// パッドのスティックの感度Y
-		bool padStickReverseX = false;	// パッドのスティックの横のリバース
-		bool padStickReverseY = false;	// パッドのスティックの縦のリバース
-	};
+
 private:
 	// コンストラクタ(シングルトンパターンなのでprivateに置く)
 	SaveData();

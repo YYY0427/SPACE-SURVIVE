@@ -185,23 +185,26 @@ void SoundManager::SetVolume(std::string fileName, int volume)
 	int setVolume = volume;
 	setVolume = static_cast<int>(volume * soundNameAndHandleTable_[fileName].volumeRate);
 
-	// コンフィグで設定した音量調節
-	int configVolume = common::config_volume_num;
+	// コンフィグで設定したサウンドの全体音量調節
+	int configWholeVolume = SaveData::GetInstance().GetSaveData().wholeVolume;
+	float configWholeRate = static_cast<float>(configWholeVolume) / common::config_volume_num;
 
-	// BGM
+	// コンフィグで設定したサウンドタイプ別音量調節
+	int configVolume = 0;
 	if (soundNameAndHandleTable_[fileName].type == SoundType::BGM)
 	{
+		// BGM
 		configVolume = SaveData::GetInstance().GetBgmVolume();
 	}
-	// SE
 	else
 	{
+		// SE
 		configVolume = SaveData::GetInstance().GetSeVolume();
 	}
 
 	// 設定したい音量とサウンドに設定された音量とコンフィグで設定された音量から求めた最終的な音量に設定
 	float configRate = static_cast<float>(configVolume) / common::config_volume_num;
-	setVolume = static_cast<int>(setVolume * configRate);
+	setVolume = static_cast<int>(setVolume * configRate * configWholeRate);
 	ChangeVolumeSoundMem(setVolume, soundNameAndHandleTable_[fileName].handle);
 }
 

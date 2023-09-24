@@ -53,7 +53,16 @@ void ConfigScene::Update()
 	// 選択されているタイプの音量の調節
 	if (InputState::IsTriggered(InputType::RIGHT))
 	{
-		if (currentSelectItem_ == static_cast<int>(Item::BGM))
+		if (currentSelectItem_ == static_cast<int>(Item::WHOLE_VOLUME))
+		{
+			// 全体音量コンフィグの増加
+			// 音量の最大値より大きくなったら最小値にする
+			SaveData::GetInstance().SetWholeVolume();
+	
+			// 設定したコンフィグから音量調節
+			SoundManager::GetInstance().SetVolume("bgmTest", 255);
+		}
+		else if (currentSelectItem_ == static_cast<int>(Item::BGM_VOLUME))
 		{
 			// BGM音量コンフィグの増加
 			// 音量の最大値より大きくなったら最小値にする
@@ -62,7 +71,7 @@ void ConfigScene::Update()
 			// 設定したコンフィグから音量調節
 			SoundManager::GetInstance().SetVolume("bgmTest", 255);
 		}
-		else if (currentSelectItem_ == static_cast<int>(Item::SE))
+		else if (currentSelectItem_ == static_cast<int>(Item::SE_VOLUME))
 		{
 			// SE音量コンフィグの増加
 			// 音量の最大値より大きくなったら最小値にする
@@ -118,12 +127,17 @@ void ConfigScene::Draw()
 	DrawString(0, 0, "ConfigScene", 0x000000, true);
 
 	// BGMの項目と音量の表示
-	int bgm = static_cast<int>(Item::BGM);
+	int whole = static_cast<int>(Item::WHOLE_VOLUME);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * whole, "全体音量", 0x000000, true);
+	DrawFormatString(draw_text_pos_x + text_space + 50, draw_text_pos_y + text_space * whole, 0x000000, "%d", SaveData::GetInstance().GetSaveData().wholeVolume);
+
+	// BGMの項目と音量の表示
+	int bgm = static_cast<int>(Item::BGM_VOLUME);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * bgm, "BGM", 0x000000, true);
 	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * bgm, 0x000000, "%d", SaveData::GetInstance().GetBgmVolume());
 
 	// SEの項目と音量の表示
-	int se = static_cast<int>(Item::SE);
+	int se = static_cast<int>(Item::SE_VOLUME);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * se, "SE", 0x000000, true);
 	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * se, 0x000000, "%d", SaveData::GetInstance().GetSeVolume());
 

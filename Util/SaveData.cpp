@@ -93,9 +93,10 @@ void SaveData::CreateNewData()
 void SaveData::InitData()
 {
 	data_.version = current_save_version;
-	data_.volumeBgm = 3;
-	data_.volumeSe = 3;
-	data_.padStickSensitivityX = 5;
+	data_.bgmVolume = 5;
+	data_.seVolume = 5;
+	data_.wholeVolume = 5;
+	data_.padStickSensitivityX = 6;
 	data_.padStickSensitivityY = 3;
 	data_.padStickReverseX = false;	
 	data_.padStickReverseY = false;	
@@ -104,13 +105,13 @@ void SaveData::InitData()
 // BGMの音量の取得
 int SaveData::GetBgmVolume() const
 {
-	return data_.volumeBgm;
+	return data_.bgmVolume;
 }
 
 // SEの音量の取得
 int SaveData::GetSeVolume() const
 {
-	return data_.volumeSe;
+	return data_.seVolume;
 }
 
 // パッドのスティックのX軸感度の取得
@@ -137,16 +138,39 @@ bool SaveData::GetPadStickReverseY() const
 	return data_.padStickReverseY;
 }
 
+template<class T> void SaveData::SetConfigValue(T* configValue, int splitNum)
+{
+	configValue++;
+	if (configValue > splitNum)
+	{
+		configValue = 0;
+	}
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
+}
+
+// 全体の音量の設定
+// 最大値を超えると0に戻る
+void SaveData::SetWholeVolume()
+{
+	data_.wholeVolume++;
+	if (data_.wholeVolume > common::config_volume_num)
+	{
+		data_.wholeVolume = 0;
+	}
+	// セーブデータに書き込む
+	SaveData::GetInstance().Write();
+}
+
 // BGMの音量の設定
 // 最大値を超えると0に戻る
 void SaveData::SetBgmVolume()
 {
-	data_.volumeBgm++;
-	if (data_.volumeBgm > common::config_volume_num)
+	data_.bgmVolume++;
+	if (data_.bgmVolume > common::config_volume_num)
 	{
-		data_.volumeBgm = 0;
+		data_.bgmVolume = 0;
 	}
-
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();
 }
@@ -155,10 +179,10 @@ void SaveData::SetBgmVolume()
 // 最大値を超えると0に戻る
 void SaveData::SetSeVolume()
 {
-	data_.volumeSe++;
-	if (data_.volumeSe > common::config_volume_num)
+	data_.seVolume++;
+	if (data_.seVolume > common::config_volume_num)
 	{
-		data_.volumeSe = 0;
+		data_.seVolume = 0;
 	}
 
 	// セーブデータに書き込む
@@ -170,7 +194,7 @@ void SaveData::SetSeVolume()
 void SaveData::SetPadStickSensitivityX()
 {
 	data_.padStickSensitivityX++;
-	if (data_.padStickSensitivityX > 10)
+	if (data_.padStickSensitivityX > common::config_pad_sensitivity_num)
 	{
 		data_.padStickSensitivityX = 0;
 	}
@@ -183,7 +207,7 @@ void SaveData::SetPadStickSensitivityX()
 void SaveData::SetPadStickSensitivityY()
 {
 	data_.padStickSensitivityY++;
-	if (data_.padStickSensitivityY > 10)
+	if (data_.padStickSensitivityY > common::config_pad_sensitivity_num)
 	{
 		data_.padStickSensitivityY = 0;
 	}
@@ -219,4 +243,9 @@ void SaveData::SetPadStickReverseY()
 	}
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();
+}
+
+SaveData::Data SaveData::GetSaveData()
+{
+	return data_;
 }

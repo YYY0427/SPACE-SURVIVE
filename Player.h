@@ -5,9 +5,7 @@
 class Model;
 class Camera;
 
-/// <summary>
-/// プレイヤークラス
-/// </summary>
+// プレイヤークラス
 class Player
 {
 public:

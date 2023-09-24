@@ -24,5 +24,8 @@ namespace common
 	constexpr float one_meter = 100.0f;
 
 	// コンフィグで設定する音量を何個に分けるか
-	constexpr int config_volume_num = 5;
+	constexpr int config_volume_num = 10;
+
+	// コンフィグで設定するパッドの感度を何個に分けるか
+	constexpr int config_pad_sensitivity_num = 10;
 };

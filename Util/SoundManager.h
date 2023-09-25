@@ -17,7 +17,7 @@ public:
 	static SoundManager& GetInstance();
 
 	// ファイルからサウンドのデータを読み取ってデータテーブルに格納
-	void LoadAndSaveSoundFileData();
+	void LoadAndStoreSoundFileData();
 
 	/// <summary>
 	/// 指定の2DSEを鳴らす
@@ -75,6 +75,30 @@ public:
 	/// <param name="angle">リスナーの向いている角度(ラジアン)</param>
 	void Set3DSoundListenerPosAndFrontPos_UpVecY(VECTOR pos, VECTOR angle);
 private:
+	// コンストラクタ
+	// シングルトンパターンなのでprivate
+	SoundManager();
+
+	// コピーと代入の禁止
+	SoundManager(const SoundManager&) = delete;			// コピーコンストラクタ禁止
+	void operator = (const SoundManager&) = delete;		// 代入禁止
+
+	/// <summary>
+	/// 2Dサウンドのロード
+	/// ロードに失敗したら止める
+	/// </summary>
+	/// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
+	/// <param name="extension">ロードしたサウンドの拡張子</param>
+	void LoadSoundFile2D(std::string fileName, std::string ext);
+
+	/// <summary>
+	/// 3Dサウンドのロード
+	/// ロードに失敗したら止める
+	/// </summary>
+	/// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
+	/// <param name="extension">ロードしたサウンドの拡張子</param>
+	void LoadSoundFile3D(std::string fileName, std::string ext);
+private:
 	// サウンドの種類
 	enum class SoundType
 	{
@@ -94,35 +118,12 @@ private:
 	// サウンドのデータ
 	struct SoundData
 	{
-		SoundType type;		// BGMか3DのSEか2DのSEか
+		SoundType type;			// BGMか3DのSEか2DのSEか
 		std::string extension;	// サウンドファイルの拡張子
-		float volumeRate;	// ボリューム調整
-		int handle;			// ハンドル
+		float volumeRate;		// ボリューム調整
+		int handle;				// ハンドル
 	};
 private:
-	// コンストラクタ(シングルトンパターンなのでprivateに置く)
-	SoundManager();
-
-	// コピーも代入も禁止する
-	SoundManager(const SoundManager&) = delete;			// コピーコンストラクタ
-	void operator = (const SoundManager&) = delete;		// 代入も禁止
-
-	/// <summary>
-	/// 2Dサウンドのロード
-	/// ロードに失敗したら止める
-	/// </summary>
-	/// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
-	/// <param name="extension">ロードしたサウンドの拡張子</param>
-	void LoadSoundFile2D(std::string fileName, std::string ext);
-
-	/// <summary>
-	/// 3Dサウンドのロード
-	/// ロードに失敗したら止める
-	/// </summary>
-	/// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
-	/// <param name="extension">ロードしたサウンドの拡張子</param>
-	void LoadSoundFile3D(std::string fileName, std::string ext);
-private:
-	// ロードしたサウンドのファイル名とハンドル
-	std::unordered_map<std::string, SoundData> soundNameAndHandleTable_;
+	// ロードしたサウンドのファイル名をIDとしたサウンドデータのテーブル
+	std::unordered_map<std::string, SoundData> soundDataTable_;
 };

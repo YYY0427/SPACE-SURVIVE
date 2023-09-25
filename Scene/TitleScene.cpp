@@ -6,6 +6,7 @@
 #include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/DrawFunctions.h"
+#include "../Util/StringManager.h"
 #include "../common.h"
 
 // コンストラクタ
@@ -56,6 +57,9 @@ void TitleScene::Draw()
 {
 	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "TitleScene", 0xffffff, true);
+
+	auto& stringManager = StringManager::GetInstance();
+	stringManager.DrawStringCenter("GameTitle", common::screen_height / 2, 0xffffff);
 
 	// フェードの描画
 	DrawFade();

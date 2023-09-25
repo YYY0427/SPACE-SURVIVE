@@ -23,7 +23,14 @@ public:
 private:
 	// 通常状態の更新
 	void NormalUpdate();
-
+private:
+	enum class Item
+	{
+		GAME_START,
+		OPSITON,
+		GAME_END,				
+		TOTAL_VALUE			// 項目の合計値
+	};
 private:
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成

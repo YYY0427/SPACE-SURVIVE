@@ -61,12 +61,13 @@ public:
 	void StopAllEffect();
 
 private:
-	// コンストラクタ(シングルトンパターンなのでprivateに置く)
+	// コンストラクタ
+	// シングルトンパターンなのでprivate
 	Effekseer3DEffectManager();
 
-	// コピーも代入も禁止する
-	Effekseer3DEffectManager(const Effekseer3DEffectManager&) = delete;	// コピーコンストラクタの禁止
-	void operator = (const Effekseer3DEffectManager&) = delete;			// 代入の禁止
+	// コピーも代入も禁止
+	Effekseer3DEffectManager(const Effekseer3DEffectManager&) = delete;	// コピーコンストラクタ禁止
+	void operator = (const Effekseer3DEffectManager&) = delete;			// 代入禁止
 
 	/// <summary>
 	/// エフェクトのロード
@@ -75,11 +76,11 @@ private:
 	void LoadEffectFile(std::string fileName);
 
 private:
-	// ロードしたエフェクトのファイル名とハンドル
-	std::unordered_map<std::string, int> effectResourceNameAndHandleTable_;
+	// エフェクトのファイル名をIDとしたエフェクトリソースのハンドルのテーブル
+	std::unordered_map<std::string, int> effectResourceHandleTable_;
 
-	// 再生中のエフェクトのファイル名とハンドル
-	std::unordered_map<std::string, int> playingEffectNameAndHandleTable_;
+	// エフェクトのファイル名をIDとした再生中のエフェクトのハンドルのテーブル
+	std::unordered_map<std::string, int> playingEffectHandleTable_;
 
 	// 画像ハンドル
 	int imgHandle_;

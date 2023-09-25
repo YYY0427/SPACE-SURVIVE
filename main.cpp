@@ -8,6 +8,7 @@
 #include "Util/Effekseer3DEffectManager.h"
 #include "Util/SaveData.h"
 #include "Util/InputState.h"
+#include "Util/StringManager.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -79,7 +80,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	// csvファイルに沿ってサウンドをロード
 	auto& soundManager = SoundManager::GetInstance();
-	soundManager.LoadAndSaveSoundFileData();
+	soundManager.LoadAndStoreSoundFileData();
+
+	// csvファイルに沿って文字列をロード
+	auto& stringManager = StringManager::GetInstance();
+	stringManager.LoadAndStoreStringFileData();
 
 	// 入力タイプの初期化
 	InputState::Init();
@@ -133,10 +138,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		}
 	}
 
-	// Effekseerの終了処理
+	// 終了処理
+	stringManager.End();
 	effectManager.End();
-
-	// ＤＸライブラリ使用の終了処理
 	DxLib_End();
 
 	// ソフトの終了 

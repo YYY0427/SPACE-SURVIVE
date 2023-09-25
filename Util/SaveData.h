@@ -67,17 +67,18 @@ public:
 	void SetPadStickReverseY();			
 
 private:
-	// コンストラクタ(シングルトンパターンなのでprivateに置く)
+	// コンストラクタ
+	// シングルトンパターンなのでprivate
 	SaveData();
 
-	// コピーも代入も禁止
-	SaveData(const SaveData&) = delete;			// コピーコンストラクタ
-	void operator = (const SaveData&) = delete;	// 代入も禁止
+	// コピーと代入の禁止
+	SaveData(const SaveData&) = delete;			// コピーコンストラクタ禁止
+	void operator = (const SaveData&) = delete;	// 代入禁止
 
 	// データの削除
 	void InitData();
 
 private:
 	// セーブデータ
-	Data data_;
+	Data saveData_;
 };

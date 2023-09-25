@@ -160,6 +160,7 @@
     <ClCompile Include="Scene\DebugScene.cpp" />
     <ClCompile Include="Scene\TestScene.cpp" />
     <ClCompile Include="SkyDome.cpp" />
+    <ClCompile Include="Util\StringManager.cpp" />
     <ClCompile Include="Util\SaveData.cpp" />
     <ClCompile Include="Util\DrawFunctions.cpp" />
     <ClCompile Include="Util\Geometry.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Scene\DebugScene.h" />
     <ClInclude Include="Scene\TestScene.h" />
     <ClInclude Include="SkyDome.h" />
+    <ClInclude Include="Util\StringManager.h" />
     <ClInclude Include="Util\SaveData.h" />
     <ClInclude Include="Util\DrawFunctions.h" />
     <ClInclude Include="common.h" />

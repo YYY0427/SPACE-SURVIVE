@@ -2,3 +2,16 @@ ID,文字列,フォント,サイズ,太さ
 TitleItemStart,スタート,あずきフォント,25,3
 TitleItemOption,オプション,あずきフォント,25,3
 TitleItemEnd,ゲーム終了,あずきフォント,25,3
+TitleItemSelectBarRight,[,あずきフォント,25,3
+TitleItemSelectBarLeft,],あずきフォント,25,3
+OptionTitle,オプション,あずきフォント,30,5
+OptionItemLanguage,言語,あずきフォント,15,3
+OptionItemWindowMode,画面モード,あずきフォント,15,3
+OptionItemMasterVolume,マスター,あずきフォント,15,3
+OptionItemBgmVolume,音楽,あずきフォント,15,3
+OptionItemSeVolume,効果音,あずきフォント,15,3
+PadSettingTitle,パッド設定,あずきフォント,30,5
+PadSettingItemSensX,縦感度,あずきフォント,15,3
+PadSettingItemSensY,横感度,あずきフォント,15,3
+PadSettingItemReverseX,縦リバース,あずきフォント,15,3
+PadSettingItemReverseY,横リバース,あずきフォント,15,3

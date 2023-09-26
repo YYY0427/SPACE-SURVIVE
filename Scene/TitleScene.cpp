@@ -16,7 +16,7 @@ namespace
 	constexpr int draw_text_pos_y = common::screen_height / 2 + 100;
 
 	// テキストの文字間
-	constexpr int text_space = 70;
+	constexpr int text_space_y = 70;
 }
 
 // コンストラクタ
@@ -25,6 +25,7 @@ TitleScene::TitleScene(SceneManager& manager) :
 	updateFunc_(&TitleScene::NormalUpdate),
 	currentSelectItem_(0)
 {
+
 }
 
 // デストラクタ
@@ -41,8 +42,6 @@ void TitleScene::Update()
 // 通常の更新
 void TitleScene::NormalUpdate()
 {
-
-
 	// 選択肢を回す処理
 	// フェード中の場合は処理を行わない
 	int sceneItemTotalValue = static_cast<int>(Item::TOTAL_VALUE);
@@ -89,21 +88,30 @@ void TitleScene::NormalUpdate()
 	}
 	// フェードの更新
 	UpdateFade();
+
+	// オプションシーンに遷移する場合はフェードアウトを通常の半分の状態で止めて遷移する
+	// オプションシーンの背景をモザイク状態で残すため
+	if (fadeBright_ > 255 / 2 && isFadeOut_ && currentSelectItem_ == static_cast<int>(Item::OPSITON))
+	{
+		fadeSpeed_ = 0;
+	}
 }
 
 // 描画
 void TitleScene::Draw()
 {
-	// 現在のシーンのテキスト表示
+	// 現在のシーンのテキスト描画
 	DrawString(0, 0, "TitleScene", 0xffffff, true);
 
+	// 項目の描画
 	auto& stringManager = StringManager::GetInstance();
-	stringManager.DrawStringCenter("TitleItemStart", draw_text_pos_y + text_space * static_cast<int>(Item::START), 0xffffff);
-	stringManager.DrawStringCenter("TitleItemOption", draw_text_pos_y + text_space * static_cast<int>(Item::OPSITON), 0xffffff);
-	stringManager.DrawStringCenter("TitleItemEnd", draw_text_pos_y + text_space * static_cast<int>(Item::END), 0xffffff);
+	stringManager.DrawStringCenter("TitleItemStart", draw_text_pos_y + text_space_y * static_cast<int>(Item::START), 0xffffff);
+	stringManager.DrawStringCenter("TitleItemOption", draw_text_pos_y + text_space_y * static_cast<int>(Item::OPSITON), 0xffffff);
+	stringManager.DrawStringCenter("TitleItemEnd", draw_text_pos_y + text_space_y * static_cast<int>(Item::END), 0xffffff);
 
-	// 現在選択中の項目の横に→を表示
-	DrawString(200, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
+	// 現在選択中の項目にバーを描画
+	stringManager.DrawString("TitleItemSelectBarRight", common::screen_width / 2 - 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
+	stringManager.DrawString("TitleItemSelectBarLeft", common::screen_width / 2  + 90, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 
 	// フェードの描画
 	DrawGaussFade();

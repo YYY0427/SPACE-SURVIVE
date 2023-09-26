@@ -24,7 +24,7 @@ namespace
 	constexpr int draw_text_pos_y = common::screen_height / 2 - 100;
 
 	// テキストの文字間
-	constexpr int text_space = 32;
+	constexpr int text_space_y = 32;
 }
 
 // コンストラクタ
@@ -103,11 +103,11 @@ void PauseScene::Draw()
 	DrawString(window_start_x + 10, window_start_y + 10, "PauseScene", 0xffff88);
 
 	// デバッグシーンから飛べる項目のテキスト表示
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(Item::DEBUG_SCENE), "DebugScene", 0x000000, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(Item::CONFIG_SCENE), "ConfigScene", 0x000000, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::DEBUG_SCENE), "DebugScene", 0x000000, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::CONFIG_SCENE), "ConfigScene", 0x000000, true);
 
 	// 現在選択中の項目の横に→を表示
-	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
+	DrawString(draw_text_pos_x - 32, draw_text_pos_y + text_space_y * currentSelectItem_, "→", 0xff0000);
 
 	// フェードの描画
 	DrawFade();

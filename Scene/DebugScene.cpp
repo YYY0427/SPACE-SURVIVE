@@ -15,7 +15,7 @@ namespace
 	constexpr int draw_text_pos_y = common::screen_height / 2 - 100;
 
 	// テキストの文字間
-	constexpr int text_space = 32;
+	constexpr int text_space_y = 32;
 }
 
 // コンストラクタ
@@ -101,14 +101,14 @@ void DebugScene::Draw()
 	DrawString(0, 0, "DebugScene", 0xffffff, true);
 
 	// デバッグシーンから飛べるシーンの項目のテキスト表示
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TEST_SCENE), "TestScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::TITLE_SCENE), "TitleScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::MAIN_SCENE), "MainScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::CONFIG_SCENE), "ConfigScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * static_cast<int>(SceneItem::PAUSE_SCENE), "PauseScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::TEST_SCENE), "TestScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::TITLE_SCENE), "TitleScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::MAIN_SCENE), "MainScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::CONFIG_SCENE), "ConfigScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::PAUSE_SCENE), "PauseScene", 0xffffff, true);
 
 	// 現在選択中の項目の横に→を表示
-	DrawString(draw_text_pos_x - text_space, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
+	DrawString(draw_text_pos_x - text_space_y, draw_text_pos_y + text_space_y * currentSelectItem_, "→", 0xff0000);
 
 	// フェードの描画
 	DrawFade();

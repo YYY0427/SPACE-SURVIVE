@@ -27,7 +27,10 @@ public:
 	void UpdateFade();			
 
 	// フェードの描画
-	void DrawFade();			
+	void DrawFade();
+
+	// モザイクフェードの描画
+	void DrawGaussFade();
 
 	// フェードアウトの開始
 	void StartFadeOut();
@@ -67,5 +70,7 @@ protected:
 
 	// フェードアウトをおこなったかどうか
 	bool isFadeOut_;	
+
+	int handle_;
 };
 

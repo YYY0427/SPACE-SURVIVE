@@ -48,6 +48,18 @@ void SceneManager::PopScene()
 	}
 }
 
+// ゲームを終了するかどうかの取得
+bool SceneManager::GetIsGameEnd() const
+{
+	return isGameEnd_;
+}
+
+// ゲームを終了するかどうかの設定
+void SceneManager::SetIsGameEnd(bool isGameEnd)
+{
+	isGameEnd_ = isGameEnd;
+}
+
 // シーンの更新
 void SceneManager::Update()
 {

@@ -1,2 +1,4 @@
 ID,文字列,フォント,サイズ,太さ
-GameTitle,杉本健介,マキナス 4 Flat,128,8
+TitleItemStart,スタート,あずきフォント,25,3
+TitleItemOption,オプション,あずきフォント,25,3
+TitleItemEnd,ゲーム終了,あずきフォント,25,3

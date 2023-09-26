@@ -32,6 +32,20 @@ public:
 	// ポーズ画面を消すときに使う
 	void PopScene();
 
+	/// <summary>
+	/// ゲームを終了するかどうかの取得
+	/// main.cppでwhile分を抜けるために作成
+	/// </summary>
+	/// <returns>true : ゲーム終了, false : 終了しない</returns>
+	bool GetIsGameEnd() const;
+
+	/// <summary>
+	/// ゲームを終了するかどうかの設定
+	/// main.cppでwhile分を抜けるために作成
+	/// </summary>
+	/// <param name="isGameEnd">true : ゲーム終了, false : 終了しない</param>
+	void SetIsGameEnd(bool isGameEnd);
+
 	// シーンの更新
 	// 一番上のシーンだけ更新
 	void Update();
@@ -44,5 +58,8 @@ private:
 	// 今実行中のシーンを切り替えていきたいので	
 	// 参照ではなくポインタとして宣言
 	std::deque<Scene*> scene_;
+
+	// ゲームを終了するかどうか
+	bool isGameEnd_;
 };
 

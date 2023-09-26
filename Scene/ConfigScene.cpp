@@ -22,9 +22,6 @@ ConfigScene::ConfigScene(SceneManager& manager) :
 	Scene(manager),
 	currentSelectItem_(0)
 {
-	// フェードを行わないようフェードしてない状態で開始
-	fadeBright_ = 0;
-
 	// BGMを鳴らす
 	SoundManager::GetInstance().PlayBGM("bgmTest");
 }
@@ -101,19 +98,26 @@ void ConfigScene::Update()
 		}
 	}
 
-	// 前の画面に戻る
-	if (InputState::IsTriggered(InputType::BACK))
+	// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
+	if (InputState::IsTriggered(InputType::BACK) && !IsFadeing())
 	{
+		// フェードアウト開始
+		StartFadeOut();
+
+		// フェードアウトが行われたかどうかのフラグを立てる
+		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
+		isFadeOut_ = true;
+
 		// シーン遷移するのでサウンドを止める
 		SoundManager::GetInstance().StopAllSound();
-
-#ifdef _DEBUG
+	}
+	// フェードアウトが終わり次第シーン遷移
+	if (isFadeOut_ && !IsFadingOut())
+	{
 		manager_.PopScene();
-#else 
-
-#endif
 		return;
 	}
+
 	// フェードの更新
 	UpdateFade();
 }
@@ -121,61 +125,58 @@ void ConfigScene::Update()
 // 描画
 void ConfigScene::Draw()
 {
-	DrawBox(0, 0, common::screen_width, common::screen_height, 0xd0d0d0, true);
-
 	// 現在のシーンのテキスト表示
-	DrawString(0, 0, "ConfigScene", 0x000000, true);
+	DrawString(0, 0, "ConfigScene", 0xffffff, true);
 
 	// BGMの項目と音量の表示
 	int whole = static_cast<int>(Item::WHOLE_VOLUME);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * whole, "全体音量", 0x000000, true);
-	DrawFormatString(draw_text_pos_x + text_space + 50, draw_text_pos_y + text_space * whole, 0x000000, "%d", SaveData::GetInstance().GetSaveData().wholeVolume);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * whole, "全体音量", 0xffffff, true);
+	DrawFormatString(draw_text_pos_x + text_space + 50, draw_text_pos_y + text_space * whole, 0xffffff, "%d", SaveData::GetInstance().GetSaveData().wholeVolume);
 
 	// BGMの項目と音量の表示
 	int bgm = static_cast<int>(Item::BGM_VOLUME);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * bgm, "BGM", 0x000000, true);
-	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * bgm, 0x000000, "%d", SaveData::GetInstance().GetBgmVolume());
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * bgm, "BGM", 0xffffff, true);
+	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * bgm, 0xffffff, "%d", SaveData::GetInstance().GetBgmVolume());
 
 	// SEの項目と音量の表示
 	int se = static_cast<int>(Item::SE_VOLUME);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * se, "SE", 0x000000, true);
-	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * se, 0x000000, "%d", SaveData::GetInstance().GetSeVolume());
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * se, "SE", 0xffffff, true);
+	DrawFormatString(draw_text_pos_x + text_space, draw_text_pos_y + text_space * se, 0xffffff, "%d", SaveData::GetInstance().GetSeVolume());
 
 	// スティックの感度Xの項目と音量の表示
 	int padStickX = static_cast<int>(Item::PAD_STICK_SENS_X);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickX, "パッドの横感度", 0x000000, true);
-	DrawFormatString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickX, 0x000000, "%d", SaveData::GetInstance().GetPadStickSensitivityX());
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickX, "パッドの横感度", 0xffffff, true);
+	DrawFormatString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickX, 0xffffff, "%d", SaveData::GetInstance().GetPadStickSensitivityX());
 
 	// スティックの感度Yの項目と音量の表示
 	int padStickY = static_cast<int>(Item::PAD_STICK_SENS_Y);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickY, "パッドの縦感度", 0x000000, true);
-	DrawFormatString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickY, 0x000000, "%d", SaveData::GetInstance().GetPadStickSensitivityY());
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickY, "パッドの縦感度", 0xffffff, true);
+	DrawFormatString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickY, 0xffffff, "%d", SaveData::GetInstance().GetPadStickSensitivityY());
 
 	int padStickReverseX = static_cast<int>(Item::PAD_STICK_REVERSE_X);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickReverseX, "パッドの横リバース", 0x000000, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickReverseX, "パッドの横リバース", 0xffffff, true);
 	if (!SaveData::GetInstance().GetPadStickReverseX())
 	{
-		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseX, "NORMAL", 0x000000);
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseX, "NORMAL", 0xffffff);
 	}
 	else
 	{
-		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseX, "REVERSE", 0x000000);
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseX, "REVERSE", 0xffffff);
 	}
 
 	int padStickReverseY = static_cast<int>(Item::PAD_STICK_REVERSE_Y);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickReverseY, "パッドの縦リバース", 0x000000, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space * padStickReverseY, "パッドの縦リバース", 0xffffff, true);
 	if (!SaveData::GetInstance().GetPadStickReverseY())
 	{
-		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseY, "NORMAL", 0x000000);
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseY, "NORMAL", 0xffffff);
 	}
 	else
 	{
-		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseY, "REVERSE", 0x000000);
+		DrawString(draw_text_pos_x + text_space + 100, draw_text_pos_y + text_space * padStickReverseY, "REVERSE", 0xffffff);
 	}
 
 	// 現在選択中の項目の横に→を表示
-	DrawString(draw_text_pos_x - text_space, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xff0000);
+	DrawString(draw_text_pos_x - text_space, draw_text_pos_y + text_space * currentSelectItem_, "→", 0xffffff);
 
-	// フェードの描画
 	DrawFade();
 }

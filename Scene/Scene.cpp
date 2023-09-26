@@ -6,6 +6,9 @@ namespace
 {
 	// 通常のフェードの速度
 	constexpr int fade_normal_speed = 8;
+
+	// モザイクパラメーターの最大値
+	constexpr int gauss_max_value = 1400;
 }
 
 // コンストラクタ
@@ -16,6 +19,7 @@ Scene::Scene(SceneManager& manager) :
 	fadeBright_(255),
 	fadeSpeed_(-fade_normal_speed)
 {
+	handle_ = MakeScreen(common::screen_width, common::screen_height);
 }
 
 // デストラクタ
@@ -56,6 +60,18 @@ void Scene::DrawFade()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeBright_);
 	DrawBox(0, 0, common::screen_width, common::screen_height, fadeColor_, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+// モザイクフェードの描画
+void Scene::DrawGaussFade()
+{
+	// 0~255の範囲を0~モザイクパラメーターの最大値に変換
+	int gaussParameter = fadeBright_ * gauss_max_value / 255;
+
+	// モザイク画像の作成
+	GetDrawScreenGraph(0, 0, common::screen_width, common::screen_height, handle_);
+	GraphFilter(handle_, DX_GRAPH_FILTER_GAUSS, 8, gaussParameter);
+	DrawGraph(0, 0, handle_, true);
 }
 
 // フェードアウトの開始

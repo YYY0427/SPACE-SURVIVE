@@ -26,13 +26,15 @@ private:
 private:
 	enum class Item
 	{
-		GAME_START,
+		START,
 		OPSITON,
-		GAME_END,				
+		END,				
 		TOTAL_VALUE			// 項目の合計値
 	};
 private:
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成
 	void (TitleScene::* updateFunc_)();
+
+	int currentSelectItem_;
 };

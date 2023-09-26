@@ -2,7 +2,6 @@
 #include "TitleScene.h"
 #include "PauseScene.h"
 #include "SceneManager.h"
-#include "DebugScene.h"
 #include "../common.h"
 #include "../Util/InputState.h"
 #include "../Util/Effekseer3DEffectManager.h"
@@ -14,7 +13,6 @@ MainScene::MainScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&MainScene::NormalUpdate)
 {
-	
 }
 
 // デストラクタ
@@ -39,22 +37,22 @@ void MainScene::NormalUpdate()
 		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}
-	// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
-	if (InputState::IsTriggered(InputType::BACK) && !IsFadeing())
-	{
-		// フェードアウト開始
-		StartFadeOut();
+	//// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
+	//if (InputState::IsTriggered(InputType::BACK) && !IsFadeing())
+	//{
+	//	// フェードアウト開始
+	//	StartFadeOut();
 
-		// フェードアウトが行われたかどうかのフラグを立てる
-		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-		isFadeOut_ = true;
-	}
-	// フェードアウトが終わり次第シーン遷移
-	if (isFadeOut_ && !IsFadingOut())
-	{
-		manager_.ChangeScene(new DebugScene(manager_));
-		return;
-	}
+	//	// フェードアウトが行われたかどうかのフラグを立てる
+	//	// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
+	//	isFadeOut_ = true;
+	//}
+	//// フェードアウトが終わり次第シーン遷移
+	//if (isFadeOut_ && !IsFadingOut())
+	//{
+	//	manager_.ChangeScene(new TitleScene(manager_));
+	//	return;
+	//}
 	// フェードの更新
 	UpdateFade();
 }

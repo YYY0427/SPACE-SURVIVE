@@ -31,17 +31,18 @@ public:
 	std::vector<std::string> SplitString(std::string& input, char delimiter);
 
 	/// <summary>
-	/// 文字列表示
+	/// ファイルに読み込んだ文字列の表示
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">表示したい文字列のID</param>
+	/// <param name="x">Y軸の座標</param>
 	/// <param name="y">Y軸の座標</param>
 	/// <param name="color">文字の描画色</param>
 	void DrawString(std::string id, int x, int y, unsigned int color);
 
 	/// <summary>
-	/// 横中央位置に文字列表示
+	/// ファイルに読み込んだ文字列を横中央位置に表示
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">表示したい文字列のID</param>
 	/// <param name="y">Y軸の座標</param>
 	/// <param name="color">文字の描画色</param>
 	void DrawStringCenter(std::string id, int y, unsigned int color);

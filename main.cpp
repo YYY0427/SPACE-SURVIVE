@@ -72,7 +72,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetUseBackCulling(TRUE);
 
 	// 重力の設定
-	MV1SetLoadModelPhysicsWorldGravity(-9.8f);
+//	MV1SetLoadModelPhysicsWorldGravity(-9.8f);
 	
 	// セーブデータの読み込み
 	auto& saveData = SaveData::GetInstance();
@@ -109,28 +109,35 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// 画面のクリア
 		ClearDrawScreen();
 
+		// 更新
 		InputState::Update();
 		sceneManager.Update();
 		effectManager.Update();
 
+		// 描画
 		sceneManager.Draw();
 		effectManager.Draw();
 
-		// FPS(Frame Per Second)の取得
+#ifdef _DEBUG
+		// FPS(Frame Per Second)の取得と描画
 		auto fps = GetFPS();
-
-		// 描画命令数の取得
-		auto drawcall = GetDrawCallCount();
-
 		DrawFormatString(10, 30, 0xffffff, "FPS = %2.2f", fps);
-		DrawFormatString(10, 60, 0xffffff, "DC = %d", drawcall);
 
+		// 描画命令数の取得と描画
+		auto drawcall = GetDrawCallCount();
+		DrawFormatString(10, 60, 0xffffff, "DC = %d", drawcall);
+#endif
 		// 裏画面を表画面を入れ替える
 		ScreenFlip();
 
+		// ゲームを終了するかのフラグのチェック
+		// フラグが立っていた場合ループを抜けてゲームを終了
+		if (sceneManager.GetIsGameEnd())	break;
+
+#ifdef _DEBUG
 		// escキーを押したら終了する
 		if (CheckHitKey(KEY_INPUT_ESCAPE))	break;
-
+#endif
 		// fpsを60に固定
 		while (GetNowHiPerformanceCount() - time < 16667)
 		{

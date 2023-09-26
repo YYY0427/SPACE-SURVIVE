@@ -10,6 +10,7 @@ namespace
 	{
 		"Data/Font/Makinas-4-Flat.otf",
 		"Data/Font/Makinas-4-Square.otf",
+		"Data/Font/azuki.ttf"
 	};
 }
 
@@ -104,16 +105,24 @@ void StringManager::End()
 // 文字列を区切る(複数の文字列に変換)
 std::vector<std::string> StringManager::SplitString(std::string& input, char delimiter)
 {
-	std::istringstream stream(input);	// stringをgetlineで使えるデータに変換
-	std::string field;					// 分割した文字列1つ分を格納する
-	std::vector<std::string> result;	// 分割後の文字列の配列
+	// stringをgetlineで使えるデータに変換
+	std::istringstream stream(input);	
+
+	// 分割した文字列1つ分を格納
+	std::string field;					
+
+	// 分割後の文字列の配列
+	std::vector<std::string> result;	
+
 	while (getline(stream, field, delimiter))
 	{
+		// 分割した文字列1つ分を格納する
 		result.push_back(field);
 	}
 	return result;
 }
 
+// ファイルに読み込んだ文字列の表示
 void StringManager::DrawString(std::string id, int x, int y, unsigned int color)
 {
 	// ロードしていない場合は止める
@@ -122,14 +131,17 @@ void StringManager::DrawString(std::string id, int x, int y, unsigned int color)
 	DrawStringToHandle(x, y, stringDataTable_[id].string.c_str(), color, stringDataTable_[id].fontHandle);
 }
 
+// ファイルに読み込んだ文字列を横中央位置に表示
 void StringManager::DrawStringCenter(std::string id, int y, unsigned int color)
 {
 	// ロードしていない場合は止める
 	assert(stringDataTable_.find(id) != stringDataTable_.end());	
 
+	// フォントサイズ、、文字列の長さから文字列の横幅の取得
 	std::string string = stringDataTable_[id].string;
 	int fontHandle = stringDataTable_[id].fontHandle;
 	int width = GetDrawStringWidthToHandle(string.c_str(), static_cast<int>(strlen(string.c_str())), fontHandle);
 
+	// 取得した文字列の横幅から文字列を横中央位置に表示
 	DrawStringToHandle(common::screen_width / 2 - width / 2, y, string.c_str(), color, fontHandle);
 }

@@ -176,7 +176,7 @@ void SoundManager::SetVolume(std::string fileName, int volume)
 	setVolume = static_cast<int>(volume * soundDataTable_[fileName].volumeRate);
 
 	// コンフィグで設定したサウンドの全体音量調節
-	int configWholeVolume = SaveData::GetInstance().GetSaveData().wholeVolume;
+	int configWholeVolume = SaveData::GetInstance().GetSaveData().masterVolume;
 	float configWholeRate = static_cast<float>(configWholeVolume) / common::config_volume_num;
 
 	// コンフィグで設定したサウンドタイプ別音量調節

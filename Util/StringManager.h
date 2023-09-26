@@ -40,12 +40,12 @@ public:
 	void DrawString(std::string id, int x, int y, unsigned int color);
 
 	/// <summary>
-	/// ファイルに読み込んだ文字列を横中央位置に表示
+	/// ファイルに読み込んだ文字列を指定した座標を中心とした位置に表示
 	/// </summary>
 	/// <param name="id">表示したい文字列のID</param>
 	/// <param name="y">Y軸の座標</param>
 	/// <param name="color">文字の描画色</param>
-	void DrawStringCenter(std::string id, int y, unsigned int color);
+	void DrawStringCenter(std::string id, int x, int y, unsigned int color);
 
 private:
 	// コンストラクタ

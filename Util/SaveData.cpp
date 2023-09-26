@@ -95,7 +95,7 @@ void SaveData::InitData()
 	saveData_.version = current_save_version;
 	saveData_.bgmVolume = 5;
 	saveData_.seVolume = 5;
-	saveData_.wholeVolume = 5;
+	saveData_.masterVolume = 5;
 	saveData_.padStickSensitivityX = 6;
 	saveData_.padStickSensitivityY = 3;
 	saveData_.padStickReverseX = false;	
@@ -153,10 +153,10 @@ template<class T> void SaveData::SetConfigValue(T* configValue, int splitNum)
 // 最大値を超えると0に戻る
 void SaveData::SetWholeVolume()
 {
-	saveData_.wholeVolume++;
-	if (saveData_.wholeVolume > common::config_volume_num)
+	saveData_.masterVolume++;
+	if (saveData_.masterVolume > common::config_volume_num)
 	{
-		saveData_.wholeVolume = 0;
+		saveData_.masterVolume = 0;
 	}
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();

@@ -1,6 +1,6 @@
 #include "PauseScene.h"
 #include "SceneManager.h"
-#include "ConfigScene.h"
+#include "OptionScene.h"
 #include "DebugScene.h"
 #include "TitleScene.h"
 #include "../Util/InputState.h"
@@ -78,7 +78,7 @@ void PauseScene::Update()
 		if (currentSelectItem_ == static_cast<int>(Item::CONFIG_SCENE))
 		{
 			isFadeOut_ = false;
-			manager_.PushScene(new ConfigScene(manager_));
+			manager_.PushScene(new OptionScene(manager_));
 			return;
 		}
 	}

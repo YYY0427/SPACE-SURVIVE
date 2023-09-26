@@ -2,7 +2,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "MainScene.h"
-#include "ConfigScene.h"
+#include "OptionScene.h"
 #include "DebugScene.h"
 #include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
@@ -25,7 +25,8 @@ TitleScene::TitleScene(SceneManager& manager) :
 	updateFunc_(&TitleScene::NormalUpdate),
 	currentSelectItem_(0)
 {
-
+	// BGMを鳴らす
+	SoundManager::GetInstance().PlayBGM("bgmTest");
 }
 
 // デストラクタ
@@ -77,7 +78,7 @@ void TitleScene::NormalUpdate()
 		{
 			isFadeOut_ = false;
 			fadeSpeed_ = -8;
-			manager_.PushScene(new ConfigScene(manager_));
+			manager_.PushScene(new OptionScene(manager_));
 			return;
 		}
 		else if (currentSelectItem_ == static_cast<int>(Item::END))
@@ -105,9 +106,9 @@ void TitleScene::Draw()
 
 	// 項目の描画
 	auto& stringManager = StringManager::GetInstance();
-	stringManager.DrawStringCenter("TitleItemStart", draw_text_pos_y + text_space_y * static_cast<int>(Item::START), 0xffffff);
-	stringManager.DrawStringCenter("TitleItemOption", draw_text_pos_y + text_space_y * static_cast<int>(Item::OPSITON), 0xffffff);
-	stringManager.DrawStringCenter("TitleItemEnd", draw_text_pos_y + text_space_y * static_cast<int>(Item::END), 0xffffff);
+	stringManager.DrawStringCenter("TitleItemStart", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::START), 0xffffff);
+	stringManager.DrawStringCenter("TitleItemOption", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::OPSITON), 0xffffff);
+	stringManager.DrawStringCenter("TitleItemEnd", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::END), 0xffffff);
 
 	// 現在選択中の項目にバーを描画
 	stringManager.DrawString("TitleItemSelectBarRight", common::screen_width / 2 - 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);

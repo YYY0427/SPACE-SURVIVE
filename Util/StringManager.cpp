@@ -131,8 +131,8 @@ void StringManager::DrawString(std::string id, int x, int y, unsigned int color)
 	DrawStringToHandle(x, y, stringDataTable_[id].string.c_str(), color, stringDataTable_[id].fontHandle);
 }
 
-// ファイルに読み込んだ文字列を横中央位置に表示
-void StringManager::DrawStringCenter(std::string id, int y, unsigned int color)
+// ファイルに読み込んだ文字列を指定した座標を中心とした位置に表示
+void StringManager::DrawStringCenter(std::string id, int x, int y, unsigned int color)
 {
 	// ロードしていない場合は止める
 	assert(stringDataTable_.find(id) != stringDataTable_.end());	
@@ -143,5 +143,5 @@ void StringManager::DrawStringCenter(std::string id, int y, unsigned int color)
 	int width = GetDrawStringWidthToHandle(string.c_str(), static_cast<int>(strlen(string.c_str())), fontHandle);
 
 	// 取得した文字列の横幅から文字列を横中央位置に表示
-	DrawStringToHandle(common::screen_width / 2 - width / 2, y, string.c_str(), color, fontHandle);
+	DrawStringToHandle(x - width / 2, y, string.c_str(), color, fontHandle);
 }

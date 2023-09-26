@@ -3,7 +3,7 @@
 #include "TitleScene.h"
 #include "MainScene.h"
 #include "PauseScene.h"
-#include "ConfigScene.h"
+#include "OptionScene.h"
 #include "TestScene.h"
 #include "../Util/InputState.h"
 #include "../common.h"
@@ -78,7 +78,7 @@ void DebugScene::Update()
 			// ポーズの場合シーンが残っているので初期化
 			isFadeOut_ = false;
 
-			manager_.PushScene(new ConfigScene(manager_));
+			manager_.PushScene(new OptionScene(manager_));
 			return;
 		}
 		else if (currentSelectItem_ == static_cast<int>(SceneItem::PAUSE_SCENE))

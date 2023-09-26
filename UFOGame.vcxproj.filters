@@ -45,7 +45,7 @@
     <ClCompile Include="Scene\PauseScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\ConfigScene.cpp">
+    <ClCompile Include="Scene\OptionScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp">
@@ -113,7 +113,7 @@
     <ClInclude Include="Scene\PauseScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\ConfigScene.h">
+    <ClInclude Include="Scene\OptionScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Util\Effekseer3DEffectManager.h">

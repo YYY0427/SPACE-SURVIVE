@@ -1,18 +1,19 @@
 #pragma once
 #include "Scene.h"
+#include <vector>
 
 // 設定シーン
-class ConfigScene : public Scene
+class OptionScene : public Scene
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="manager">シーンマネージャーの参照</param>
-	ConfigScene(SceneManager& manager);
+	OptionScene(SceneManager& manager);
 
 	// デストラクタ
-	virtual ~ConfigScene();
+	virtual ~OptionScene();
 
 	// 更新
 	void Update();
@@ -23,16 +24,26 @@ private:
 	// 設定シーンの項目
 	enum class Item
 	{
-		WHOLE_VOLUME,
+		LANGUAGE, 
+		WINDOW_MODE,
+		MASTER_VOLUME,
 		BGM_VOLUME,	
 		SE_VOLUME,
-		PAD_STICK_SENS_X,
+		PAD_SETTING, 
+		BACK,
+		/*PAD_STICK_SENS_X,
 		PAD_STICK_SENS_Y,
 		PAD_STICK_REVERSE_X,
-		PAD_STICK_REVERSE_Y,
+		PAD_STICK_REVERSE_Y,*/
 		TOTAL_VALUE			// 項目の合計値
 	};
 private:
 	// 現在選択中の項目
 	int currentSelectItem_;
+
+	// 項目の描画色データ
+	std::vector<int> itemColorDataTable_;
+
+	// 音量アイコンの画像ハンドル
+	int soundIconImgHandle_;
 };

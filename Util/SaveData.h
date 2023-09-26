@@ -8,7 +8,7 @@ private:
 	struct Data
 	{
 		int version = 0;		// データのバージョン
-		int wholeVolume = 5;	// 全体の音量
+		int masterVolume = 5;	// 全体の音量
 		int bgmVolume = 5;		// BGM音量	
 		int seVolume = 5;		// SE音量	
 		int padStickSensitivityX = 6;	// パッドのスティックの感度X

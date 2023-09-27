@@ -34,25 +34,16 @@ void MainScene::NormalUpdate()
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{
+		// フェードアウト開始
+		StartFadeOut();
+	}
+	// フェードアウトが終わり次第シーン遷移
+	if (IsStartFadeOutAfterFadingOut())
+	{
+		StartFadeIn();
 		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}
-	//// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
-	//if (InputState::IsTriggered(InputType::BACK) && !IsFadeing())
-	//{
-	//	// フェードアウト開始
-	//	StartFadeOut();
-
-	//	// フェードアウトが行われたかどうかのフラグを立てる
-	//	// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-	//	isFadeOut_ = true;
-	//}
-	//// フェードアウトが終わり次第シーン遷移
-	//if (isFadeOut_ && !IsFadingOut())
-	//{
-	//	manager_.ChangeScene(new TitleScene(manager_));
-	//	return;
-	//}
 	// フェードの更新
 	UpdateFade();
 }
@@ -65,4 +56,7 @@ void MainScene::Draw()
 
 	// フェードの描画
 	DrawFade();
+
+	// モザイクフェードの描画
+	DrawGaussFade();
 }

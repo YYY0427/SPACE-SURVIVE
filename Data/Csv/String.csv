@@ -17,3 +17,9 @@ PadSettingItemSensX,縦感度,あずきフォント,20,3
 PadSettingItemSensY,横感度,あずきフォント,20,3
 PadSettingItemReverseX,縦リバース,あずきフォント,20,3
 PadSettingItemReverseY,横リバース,あずきフォント,20,3
+PauseTitle,ポーズメニュー,あずきフォント,50,5
+PauseItemContinue,つづける,あずきフォント,20,3
+PauseItemOption,オプション,あずきフォント,20,3
+PauseItemTitle,タイトルに戻る,あずきフォント,20,3
+PausetemSelectBarRight,[,あずきフォント,20,3
+PausetemSelectBarLeft,],あずきフォント,20,3

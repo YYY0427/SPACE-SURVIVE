@@ -35,6 +35,9 @@ public:
 	// フェードアウトの開始
 	void StartFadeOut(int fadeSpeed = 8);
 
+	// フェードインの開始
+	void StartFadeIn(int fadeSpeed = 8);
+
 	/// <summary>
 	/// フェードイン中かどうか
 	/// </summary>

@@ -77,6 +77,16 @@ void Scene::StartFadeOut(int fadeSpeed)
 	fadeSpeed_ = abs(fadeSpeed);;
 }
 
+// フェードインの開始
+void Scene::StartFadeIn(int fadeSpeed)
+{
+	// 初期化
+	isFadeOut_ = false;
+
+	// フェード速度の設定
+	fadeSpeed_ = -abs(fadeSpeed);
+}
+
 // フェードイン中かどうか
 bool Scene::IsFadingIn() const
 {

@@ -31,8 +31,6 @@ OptionScene::OptionScene(SceneManager& manager) :
 	currentSelectItem_(0),
 	soundIconImgHandle_(-1)
 {
-	SoundManager::GetInstance().PlayBGM("bgmTest");
-
 	// 画像のロード
 	soundIconImgHandle_ = my::MyLoadGraph("Data/Image/Sound.png");
 
@@ -52,6 +50,12 @@ OptionScene::~OptionScene()
 // 更新
 void OptionScene::Update()
 {
+	// カラーの初期化
+	for (auto& itemColor : itemColorDataTable_)
+	{
+		itemColor = normal_color;
+	}
+
 	// 選択肢を回す処理
 	int itemTotalValue = static_cast<int>(Item::TOTAL_VALUE);
 	if (InputState::IsTriggered(InputType::UP))
@@ -63,23 +67,17 @@ void OptionScene::Update()
 		currentSelectItem_ = (currentSelectItem_ + 1) % itemTotalValue;
 	}
 
-	// カラーの初期化
-	for (auto& itemColor : itemColorDataTable_)
-	{
-		itemColor = normal_color;
-	}
+	// 選択されている項目の色を変える
+	itemColorDataTable_[currentSelectItem_] = choose_color;
 
 	if (currentSelectItem_ == static_cast<int>(Item::LANGUAGE))
 	{
-		itemColorDataTable_[static_cast<int>(Item::LANGUAGE)] = choose_color;
 	}
 	else if (currentSelectItem_ == static_cast<int>(Item::WINDOW_MODE))
 	{
-		itemColorDataTable_[static_cast<int>(Item::WINDOW_MODE)] = choose_color;
 	}
 	else if(currentSelectItem_ == static_cast<int>(Item::MASTER_VOLUME))
 	{
-		itemColorDataTable_[static_cast<int>(Item::MASTER_VOLUME)] = choose_color;
 
 		if (InputState::IsTriggered(InputType::RIGHT))
 		{
@@ -93,7 +91,6 @@ void OptionScene::Update()
 	}
 	else if (currentSelectItem_ == static_cast<int>(Item::BGM_VOLUME))
 	{
-		itemColorDataTable_[static_cast<int>(Item::BGM_VOLUME)] = choose_color;
 
 		if (InputState::IsTriggered(InputType::RIGHT))
 		{
@@ -107,7 +104,6 @@ void OptionScene::Update()
 	}
 	else if (currentSelectItem_ == static_cast<int>(Item::SE_VOLUME))
 	{
-		itemColorDataTable_[static_cast<int>(Item::SE_VOLUME)] = choose_color;
 
 		if (InputState::IsTriggered(InputType::RIGHT))
 		{
@@ -122,20 +118,14 @@ void OptionScene::Update()
 	}
 	else if (currentSelectItem_ == static_cast<int>(Item::PAD_SETTING))
 	{
-		itemColorDataTable_[static_cast<int>(Item::PAD_SETTING)] = choose_color;
 	}
 	else if (currentSelectItem_ == static_cast<int>(Item::BACK))
 	{
-		itemColorDataTable_[static_cast<int>(Item::BACK)] = choose_color;
 
 		if (InputState::IsTriggered(InputType::DECISION))
 		{
 			// フェードアウト開始
 			StartFadeOut();
-
-			// フェードアウトが行われたかどうかのフラグを立てる
-			// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-			isFadeOut_ = true;
 		}
 	}
 	//else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_SENS_X))

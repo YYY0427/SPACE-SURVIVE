@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <cassert>
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "MainScene.h"
@@ -44,9 +45,8 @@ void TitleScene::Update()
 void TitleScene::NormalUpdate()
 {
 	// 選択肢を回す処理
-	// フェード中の場合は処理を行わない
 	int sceneItemTotalValue = static_cast<int>(Item::TOTAL_VALUE);
-	if (InputState::IsTriggered(InputType::UP) && !IsFadeing())
+	if (InputState::IsTriggered(InputType::UP))
 	{
 		currentSelectItem_ = ((currentSelectItem_ - 1) + sceneItemTotalValue) % sceneItemTotalValue;
 	}
@@ -55,37 +55,32 @@ void TitleScene::NormalUpdate()
 		currentSelectItem_ = (currentSelectItem_ + 1) % sceneItemTotalValue;
 	}
 
-	// 次へのボタンが押されて、フェード中でなかったらフェードアウトの開始
-	if (InputState::IsTriggered(InputType::DECISION) && !IsFadeing())
+	// 次へのボタンが押されてたらフェードアウトの開始
+	if (InputState::IsTriggered(InputType::DECISION))
 	{
 		// フェードアウトの開始
 		StartFadeOut();
-
-		// フェードアウトが行われたかどうかのフラグを立てる
-		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-		isFadeOut_ = true;
 	}
 	// フェードアウトが終わり次第シーン遷移
-	if (isFadeOut_ && !IsFadingOut())
+	if (IsStartFadeOutAfterFadingOut())
 	{
-		if (currentSelectItem_ == static_cast<int>(Item::START))
+		switch (currentSelectItem_)
 		{
-			isFadeOut_ = false;
+		case static_cast<int>(Item::START):
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
-		}
-		else if (currentSelectItem_ == static_cast<int>(Item::OPSITON))
-		{
-			isFadeOut_ = false;
-			fadeSpeed_ = -8;
+		case static_cast<int>(Item::OPSITON):
 			manager_.PushScene(new OptionScene(manager_));
-			return;
-		}
-		else if (currentSelectItem_ == static_cast<int>(Item::END))
-		{
+			break;
+		case static_cast<int>(Item::END):
 			manager_.SetIsGameEnd(true);
 			return;
+		default:
+			assert(0);
 		}
+		// PushSceneした場合シーンが残ったままなので
+		// フェードインを開始する
+		StartFadeIn();
 	}
 	// フェードの更新
 	UpdateFade();

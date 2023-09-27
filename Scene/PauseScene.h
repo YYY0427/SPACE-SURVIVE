@@ -23,8 +23,9 @@ private:
 	// ポーズシーンから選択できる項目
 	enum class Item
 	{
-		DEBUG_SCENE,	// デバッグシーン
-		CONFIG_SCENE,	// 設定シーン
+		CONTINUE,		// 続ける
+		OPTION,			// 設定シーン
+		TITLE,			// タイトルシーン
 		TOTAL_VALUE		// 項目の合計値
 	};
 private:

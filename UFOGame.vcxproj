@@ -181,6 +181,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Util\Range.h" />
     <ClInclude Include="Scene\DebugScene.h" />
     <ClInclude Include="Scene\TestScene.h" />
     <ClInclude Include="SkyDome.h" />

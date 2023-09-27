@@ -6,6 +6,7 @@
 #include "OptionScene.h"
 #include "TestScene.h"
 #include "../Util/InputState.h"
+#include "../Util/Range.h"
 #include "../common.h"
 
 namespace
@@ -23,6 +24,7 @@ DebugScene::DebugScene(SceneManager& manager):
 	Scene(manager),
 	currentSelectItem_(0)
 {
+
 }
 
 // デストラクタ
@@ -34,29 +36,26 @@ DebugScene::~DebugScene()
 // 更新
 void DebugScene::Update()
 {
-	
 
 	// 選択肢を回す処理
-	// フェード中の場合は処理を行わない
 	int sceneItemTotalValue = static_cast<int>(SceneItem::TOTAL_VALUE);
-	if (InputState::IsTriggered(InputType::UP) && !IsFadeing())
+	if (InputState::IsTriggered(InputType::UP))
 	{
 		currentSelectItem_ = ((currentSelectItem_ - 1) + sceneItemTotalValue) % sceneItemTotalValue;
 	}
-	else if (InputState::IsTriggered(InputType::DOWN) && !IsFadeing())
+	else if (InputState::IsTriggered(InputType::DOWN))
 	{
 		currentSelectItem_ = (currentSelectItem_ + 1) % sceneItemTotalValue;
 	}
 
 	// 決定ボタンを押されて、フェード中ではなかったらフェードアウト開始
-	if (InputState::IsTriggered(InputType::DECISION) && !IsFadeing())
+	if (InputState::IsTriggered(InputType::DECISION))
 	{
-		// フェードアウトが行われたかどうかのフラグを立てる
-		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-		isFadeOut_ = true;
+		// フェードアウト開始
+		StartFadeOut();
 	}
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
-	if (isFadeOut_ && !IsFadingOut())
+	if (IsStartFadeOutAfterFadingOut())
 	{
 		if (currentSelectItem_ == static_cast<int>(SceneItem::TEST_SCENE))
 		{

@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "../common.h"
 #include <cmath>
+#include "../Util/Range.h"
 
 namespace
 {
@@ -19,7 +20,7 @@ Scene::Scene(SceneManager& manager) :
 	fadeBright_(255),
 	fadeSpeed_(-fade_normal_speed)
 {
-	handle_ = MakeScreen(common::screen_width, common::screen_height);
+	gaussScreen_ = MakeScreen(common::screen_width, common::screen_height);
 }
 
 // デストラクタ
@@ -34,24 +35,16 @@ void Scene::UpdateFade()
 	// フェードの明るさの更新
 	fadeBright_ += fadeSpeed_;
 
-	// フェードアウト終了処理
-	if (fadeBright_ >= 255)
-	{
-		fadeBright_ = 255;
-		if (fadeSpeed_ > 0)
-		{
-			fadeSpeed_ = 0;
-		}
-	}
-	// フェードイン終了処理
-	if (fadeBright_ <= 0)
-	{
-		fadeBright_ = 0;
-		if (fadeSpeed_ < 0)
-		{
-			fadeSpeed_ = 0;
-		}
-	}
+	// フェードの明るさの下限値と上限値の設定
+	const Range<int> fadeBrightRange(0, 255);
+	
+	// フェードの明るさが設定した範囲を超えたらフェードを止める
+	if (!fadeBrightRange.IsInside(fadeBright_))	fadeSpeed_ = 0;
+
+	// フェードの明るさを設定した範囲内にクランプする
+	fadeBright_ = fadeBrightRange.Clamp(fadeBright_);
+
+
 }
 
 // フェードの描画
@@ -69,41 +62,43 @@ void Scene::DrawGaussFade()
 	int gaussParameter = fadeBright_ * gauss_max_value / 255;
 
 	// モザイク画像の作成
-	GetDrawScreenGraph(0, 0, common::screen_width, common::screen_height, handle_);
-	GraphFilter(handle_, DX_GRAPH_FILTER_GAUSS, 8, gaussParameter);
-	DrawGraph(0, 0, handle_, true);
+	GetDrawScreenGraph(0, 0, common::screen_width, common::screen_height, gaussScreen_);
+	GraphFilter(gaussScreen_, DX_GRAPH_FILTER_GAUSS, 8, gaussParameter);
+	DrawGraph(0, 0, gaussScreen_, true);
 }
 
 // フェードアウトの開始
-void Scene::StartFadeOut()
+void Scene::StartFadeOut(int fadeSpeed)
 {
-	fadeSpeed_ = fade_normal_speed;
+	// フェードアウトが行われたかどうかのフラグを立てる
+	isFadeOut_ = true;
+
+	// フェード速度の設定
+	fadeSpeed_ = abs(fadeSpeed);;
 }
 
 // フェードイン中かどうか
 bool Scene::IsFadingIn() const
 {
-	if (fadeSpeed_ < 0)
-	{
-		return true;
-	}
-	return false;
+	return (fadeSpeed_ < 0);
 }
 
 // フェードアウト中かどうか
 bool Scene::IsFadingOut() const
 {
-	if (fadeSpeed_ > 0)
-	{
-		return true;
-	}
-	return false;
+	return (fadeSpeed_ > 0);
 }
 
 // フェード中かどうか
 bool Scene::IsFadeing() const
 {
 	return IsFadingIn() || IsFadingOut();
+}
+
+// フェードアウトスタート後にフェードアウト中ではないか 
+bool Scene::IsStartFadeOutAfterFadingOut()
+{
+	return !IsFadingOut() && isFadeOut_;
 }
 
 /// <summary>

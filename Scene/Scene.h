@@ -33,26 +33,32 @@ public:
 	void DrawGaussFade();
 
 	// フェードアウトの開始
-	void StartFadeOut();
+	void StartFadeOut(int fadeSpeed = 8);
 
 	/// <summary>
 	/// フェードイン中かどうか
 	/// </summary>
-	/// <returns>true : フェードイン中、false : フェードインしていない</returns>
+	/// <returns>true : フェードイン中, false : フェードインしていない</returns>
 	bool IsFadingIn() const;
 
 	/// <summary>
 	/// フェードアウト中かどうか
 	/// </summary>
-	/// <returns>true : フェードアウト中、false : フェードアウトしていない</returns>
+	/// <returns>true : フェードアウト中, false : フェードアウトしていない</returns>
 	bool IsFadingOut() const;	
 
 	/// <summary>
 	/// フェード中かどうか
 	/// </summary>
-	/// <returns>true : フェード中、false : フェードしてない</returns>
+	/// <returns>true : フェード中, false : フェードしてない</returns>
 	bool IsFadeing() const;	
 
+	/// <summary>
+	/// フェードアウトスタート後にフェードアウト中ではないか 
+	/// </summary>
+	/// <returns>true : フェードアウト処理をスタートしていてフェードアウト中ではない,
+	///			false : フェードアウト処理をスタートしていない,　スタートしているがフェードアウト中</returns>
+	bool IsStartFadeOutAfterFadingOut();
 protected:
 	// シーンマネーシャーの参照
 	SceneManager& manager_; 
@@ -71,6 +77,7 @@ protected:
 	// フェードアウトをおこなったかどうか
 	bool isFadeOut_;	
 
-	int handle_;
+	// モザイクフェード用の描画グラフィック
+	int gaussScreen_;
 };
 

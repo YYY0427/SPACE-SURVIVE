@@ -161,5 +161,8 @@
     <ClInclude Include="Util\StringManager.h">
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Util\Range.h">
+      <Filter>ヘッダー ファイル\Util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

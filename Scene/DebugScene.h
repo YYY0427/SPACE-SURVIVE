@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include <array>
 
 // デバッグ用シーン
 // デバッグをしやすくするために作成

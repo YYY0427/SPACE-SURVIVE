@@ -24,7 +24,11 @@ DebugScene::DebugScene(SceneManager& manager):
 	Scene(manager),
 	currentSelectItem_(0)
 {
-
+	/*scene_[static_cast<int>(SceneItem::TEST_SCENE)] = new TestScene(manager_);
+	scene_[static_cast<int>(SceneItem::TITLE_SCENE)] = new TitleScene(manager_);
+	scene_[static_cast<int>(SceneItem::MAIN_SCENE)] = new MainScene(manager_);
+	scene_[static_cast<int>(SceneItem::OPTION_SCENE)] = new OptionScene(manager_);
+	scene_[static_cast<int>(SceneItem::PAUSE_SCENE)] = new PauseScene(manager_);*/
 }
 
 // デストラクタ
@@ -57,36 +61,31 @@ void DebugScene::Update()
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		if (currentSelectItem_ == static_cast<int>(SceneItem::TEST_SCENE))
+		/*manager_.ChangeScene(scene_[currentSelectItem_]);
+		return;*/
+		switch (currentSelectItem_)
 		{
+		case static_cast<int>(SceneItem::TEST_SCENE):
 			manager_.ChangeScene(new TestScene(manager_));
 			return;
-		}
-		else if (currentSelectItem_ == static_cast<int>(SceneItem::TITLE_SCENE))
-		{
+		case static_cast<int>(SceneItem::TITLE_SCENE):
 			manager_.ChangeScene(new TitleScene(manager_));
 			return;
-		}
-		else if (currentSelectItem_ == static_cast<int>(SceneItem::MAIN_SCENE))
-		{
+		case static_cast<int>(SceneItem::MAIN_SCENE):
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
-		}
-		else if (currentSelectItem_ == static_cast<int>(SceneItem::CONFIG_SCENE))
-		{
+		case static_cast<int>(SceneItem::OPTION_SCENE):
 			// ポーズの場合シーンが残っているので初期化
 			isFadeOut_ = false;
-
 			manager_.PushScene(new OptionScene(manager_));
 			return;
-		}
-		else if (currentSelectItem_ == static_cast<int>(SceneItem::PAUSE_SCENE))
-		{
+		case static_cast<int>(SceneItem::PAUSE_SCENE):
 			// ポーズの場合シーンが残っているので初期化
 			isFadeOut_ = false;
-
 			manager_.PushScene(new PauseScene(manager_));
 			return;
+		default:
+			assert(0);
 		}
 	}
 	// フェードの更新
@@ -103,7 +102,7 @@ void DebugScene::Draw()
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::TEST_SCENE), "TestScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::TITLE_SCENE), "TitleScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::MAIN_SCENE), "MainScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::CONFIG_SCENE), "ConfigScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::OPTION_SCENE), "ConfigScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::PAUSE_SCENE), "PauseScene", 0xffffff, true);
 
 	// 現在選択中の項目の横に→を表示

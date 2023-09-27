@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include <array>
+#include <memory>
 
 // デバッグ用シーン
 // デバッグをしやすくするために作成
@@ -29,11 +30,12 @@ private:
 		TEST_SCENE,			// テストシーン
 		TITLE_SCENE,		// タイトルシーン
 		MAIN_SCENE,			// メインシーン
-		CONFIG_SCENE,		// 設定シーン
+		OPTION_SCENE,		// 設定シーン
 		PAUSE_SCENE,		// ポーズシーン
 		TOTAL_VALUE			// 項目の合計値
 	};
 private:
 	// 現在選択中の項目
 	int currentSelectItem_;
+//	std::array<Scene*, static_cast<int>(SceneItem::TOTAL_VALUE)> scene_;
 };

@@ -37,6 +37,7 @@ private:
 		PAD_STICK_REVERSE_Y,*/
 		TOTAL_VALUE			// €–Ú‚Ì‡Œv’l
 	};
+
 private:
 	// Œ»İ‘I‘ğ’†‚Ì€–Ú
 	int currentSelectItem_;

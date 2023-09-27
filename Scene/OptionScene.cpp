@@ -31,6 +31,8 @@ OptionScene::OptionScene(SceneManager& manager) :
 	currentSelectItem_(0),
 	soundIconImgHandle_(-1)
 {
+	SoundManager::GetInstance().PlayBGM("bgmTest");
+
 	// 画像のロード
 	soundIconImgHandle_ = my::MyLoadGraph("Data/Image/Sound.png");
 
@@ -51,9 +53,8 @@ OptionScene::~OptionScene()
 void OptionScene::Update()
 {
 	// 選択肢を回す処理
-	// フェード中の場合は処理を行わない
 	int itemTotalValue = static_cast<int>(Item::TOTAL_VALUE);
-	if (InputState::IsTriggered(InputType::UP) && !IsFadeing())
+	if (InputState::IsTriggered(InputType::UP))
 	{
 		currentSelectItem_ = ((currentSelectItem_ - 1) + itemTotalValue) % itemTotalValue;
 	}
@@ -157,22 +158,17 @@ void OptionScene::Update()
 	//}
 
 	// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
-	if (InputState::IsTriggered(InputType::BACK) && !IsFadeing())
+	if (InputState::IsTriggered(InputType::BACK))
 	{
 		// フェードアウト開始
 		StartFadeOut();
-
-		// フェードアウトが行われたかどうかのフラグを立てる
-		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-		isFadeOut_ = true;
 	}
 	// フェードアウトが終わり次第シーン遷移
-	if (isFadeOut_ && !IsFadingOut())
+	if (IsStartFadeOutAfterFadingOut())
 	{
 		manager_.PopScene();
 		return;
 	}
-
 	// フェードの更新
 	UpdateFade();
 }

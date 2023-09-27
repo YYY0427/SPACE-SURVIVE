@@ -58,13 +58,15 @@ void TitleScene::NormalUpdate()
 	// 次へのボタンが押されてたらフェードアウトの開始
 	if (InputState::IsTriggered(InputType::DECISION))
 	{
+		decisionSelectItem_ = currentSelectItem_;
+
 		// フェードアウトの開始
 		StartFadeOut();
 	}
 	// フェードアウトが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		switch (currentSelectItem_)
+		switch (decisionSelectItem_)
 		{
 		case static_cast<int>(Item::START):
 			manager_.ChangeScene(new MainScene(manager_));
@@ -82,15 +84,17 @@ void TitleScene::NormalUpdate()
 		// フェードインを開始する
 		StartFadeIn();
 	}
-	// フェードの更新
-	UpdateFade();
-
 	// オプションシーンに遷移する場合はフェードアウトを通常の半分の状態で止めて遷移する
 	// オプションシーンの背景をモザイク状態で残すため
-	if (fadeBright_ > 255 / 2 && isFadeOut_ && currentSelectItem_ == static_cast<int>(Item::OPSITON))
+	const bool isOption = decisionSelectItem_ == static_cast<int>(Item::OPSITON);
+	const bool isHalfFade = fadeBright_ > 255 / 2;
+	const bool isOpsionFade = isOption && isHalfFade && isFadeOut_;
+	if (isOpsionFade)
 	{
 		fadeSpeed_ = 0;
 	}
+	// フェードの更新
+	UpdateFade();
 }
 
 // 描画

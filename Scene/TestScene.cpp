@@ -55,7 +55,9 @@ void TestScene::Draw()
 	pPlayer_->Draw();
 
 	// フェードの描画
-	DrawFade();
+//	DrawFade();
+
+	DrawGaussFade();
 }
 
 // 通常の更新
@@ -82,6 +84,12 @@ void TestScene::NormalUpdate()
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{
 		Effekseer3DEffectManager::GetInstance().StopAllEffect();
+
+		StartFadeOut();
+	}
+	if (IsStartFadeOutAfterFadingOut())
+	{
+		StartFadeIn();
 		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}

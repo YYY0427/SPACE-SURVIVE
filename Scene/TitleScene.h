@@ -37,4 +37,5 @@ private:
 	void (TitleScene::* updateFunc_)();
 
 	int currentSelectItem_;
+	int decisionSelectItem_;
 };

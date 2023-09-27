@@ -23,6 +23,7 @@ PauseScene::PauseScene(SceneManager& manager) :
 	Scene(manager),
 	currentSelectItem_(0)
 {
+	fadeBright_ = 0;
 }
 
 // デストラクタ
@@ -95,8 +96,8 @@ void PauseScene::Draw()
 	stringManager.DrawStringCenter("PausetemSelectBarLeft", draw_text_pos_x + 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 
 	// フェードの描画
-	DrawFade();
+//	DrawFade();
 
 	// モザイクフェードの描画
-	DrawGaussFade();
+//	DrawGaussFade();
 }

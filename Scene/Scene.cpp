@@ -43,8 +43,6 @@ void Scene::UpdateFade()
 
 	// フェードの明るさを設定した範囲内にクランプする
 	fadeBright_ = fadeBrightRange.Clamp(fadeBright_);
-
-
 }
 
 // フェードの描画

@@ -1,6 +1,7 @@
 #include "OptionScene.h"
 #include "SceneManager.h"
 #include "DebugScene.h"
+#include "PadSettingScene.h"
 #include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/SaveData.h"
@@ -32,6 +33,8 @@ OptionScene::OptionScene(SceneManager& manager) :
 	currentSelectItem_(0),
 	soundIconImgHandle_(-1)
 {
+	SetFadeBright(0);
+
 	// 画像のロード
 	soundIconImgHandle_ = my::MyLoadGraph("Data/Image/Sound.png");
 
@@ -78,52 +81,51 @@ void OptionScene::Update()
 	case static_cast<int>(Item::WINDOW_MODE):
 		break;
 	case static_cast<int>(Item::MASTER_VOLUME):
+		// 全体音量の調整
 		SaveData::GetInstance().SetMasterVolume();
 		break;
 	case static_cast<int>(Item::BGM_VOLUME):
+		// BGM音量の調整
 		SaveData::GetInstance().SetBgmVolume();
 		break;
 	case static_cast<int>(Item::SE_VOLUME):
+		// SE音量の調整
 		SaveData::GetInstance().SetSeVolume();
 		break;
 	case static_cast<int>(Item::PAD_SETTING):
+		if(InputState::IsTriggered(InputType::DECISION)) StartFadeOut(255, 16);
 		break;
 	case static_cast<int>(Item::BACK):
-		break;
+		if (InputState::IsTriggered(InputType::DECISION)) manager_.PopScene();
+		return;
 	}
-	//else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_SENS_X))
-	//{
-	//	// 感度の最大値より大きくなったら最小値にする
-	//	SaveData::GetInstance().SetPadStickSensitivityX();
-	//}
-	//else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_SENS_Y))
-	//{
-	//	// 感度の最大値より大きくなったら最小値にする
-	//	SaveData::GetInstance().SetPadStickSensitivityY();
-	//}
-	//else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_REVERSE_X))
-	//{
-	//	SaveData::GetInstance().SetPadStickReverseX();
-	//}
-	//else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_REVERSE_Y))
-	//{
-	//	SaveData::GetInstance().SetPadStickReverseY();
-	//}
+	
+	if (IsStartFadeOutAfterFadingOut())
+	{
+		StartFadeIn();
+		manager_.PushScene(new PadSettingScene(manager_));
+		return;
+	}
 
 	if (InputState::IsTriggered(InputType::BACK))
 	{
 		manager_.PopScene();
 		return;
 	}
+
+	// フェードの更新
+	UpdateFade();
 }
 
 // 描画
 void OptionScene::Draw()
 {
-	// 現在のシーンのテキスト表示
-	DrawString(0, 0, "ConfigScene", 0xffffff, true);
-
+	// インスタンスの取得
 	auto& stringManager = StringManager::GetInstance();
+
+	// 描画透明度の設定
+	int fade = 255 - GetFadeBright();
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fade);
 
 	// シーンタイトルの描画
 	stringManager.DrawStringCenter("OptionTitle", common::screen_width / 2, 100, 0xffffff);
@@ -145,7 +147,7 @@ void OptionScene::Draw()
 	stringManager.DrawStringCenter("OptionItemBack", common::screen_width / 2, draw_text_pos_y + text_space_y * back, itemColorDataTable_[back]);
 
 	// 各サウンド音量の表示
-	std::array<int, 3> volume;
+	std::array<int, 3> volume = {};
 	volume[0] = SaveData::GetInstance().GetSaveData().masterVolume;
 	volume[1] = SaveData::GetInstance().GetSaveData().bgmVolume;
 	volume[2] = SaveData::GetInstance().GetSaveData().seVolume;
@@ -166,6 +168,11 @@ void OptionScene::Draw()
 	}
 	SetDrawBright(255, 255, 255);
 
+	// 描画の設定の初期化
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	// 描画の設定の初期化
+//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	//// BGMの項目と音量の表示
 	//int whole = static_cast<int>(Item::MASTER_VOLUME);
 	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * whole, "全体音量", 0xffffff, true);

@@ -93,6 +93,9 @@
     <ClCompile Include="Util\StringManager.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\PadSettingScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Util\Range.h">
       <Filter>ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PadSettingScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

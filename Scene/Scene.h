@@ -26,14 +26,20 @@ public:
 	// フェードの更新
 	void UpdateFade();			
 
-	// フェードの描画
-	void DrawFade();
+	/// <summary>
+	/// フェードの描画
+	/// </summary>
+	/// <param name="isPlay">true : フェードを行う, false: フェードを行わない</param>
+	void DrawFade(bool isPlay);
 
-	// モザイクフェードの描画
-	void DrawGaussFade();
+	/// <summary>
+	/// モザイクフェードの描画 
+	/// </summary>
+	/// <param name="isPlay">true : フェードを行う, false: フェードを行わない</param>
+	void DrawGaussFade(bool isPlay);
 
 	// フェードアウトの開始
-	void StartFadeOut(int fadeSpeed = 8);
+	void StartFadeOut(int fadeBrightUpperLimitValue, int fadeSpeed = 8);
 
 	// フェードインの開始
 	void StartFadeIn(int fadeSpeed = 8);
@@ -62,10 +68,13 @@ public:
 	/// <returns>true : フェードアウト処理をスタートしていてフェードアウト中ではない,
 	///			false : フェードアウト処理をスタートしていない,　スタートしているがフェードアウト中</returns>
 	bool IsStartFadeOutAfterFadingOut();
+
+	int GetFadeBright() const;
+	void SetFadeBright(int fadeBright) { fadeBright_ = fadeBright; }
 protected:
 	// シーンマネーシャーの参照
-	SceneManager& manager_; 
-
+	SceneManager& manager_;
+private:
 	// フェードの色
 	unsigned int fadeColor_;		
 
@@ -82,5 +91,9 @@ protected:
 
 	// モザイクフェード用の描画グラフィック
 	int gaussScreen_;
+
+	// フェードの上限値
+	// 0(フェードしない)～255(最後までフェードを行う)
+	int fadeBrightUpperLimitValue_;
 };
 

@@ -24,11 +24,7 @@ DebugScene::DebugScene(SceneManager& manager):
 	Scene(manager),
 	currentSelectItem_(0)
 {
-	/*scene_[static_cast<int>(SceneItem::TEST_SCENE)] = new TestScene(manager_);
-	scene_[static_cast<int>(SceneItem::TITLE_SCENE)] = new TitleScene(manager_);
-	scene_[static_cast<int>(SceneItem::MAIN_SCENE)] = new MainScene(manager_);
-	scene_[static_cast<int>(SceneItem::OPTION_SCENE)] = new OptionScene(manager_);
-	scene_[static_cast<int>(SceneItem::PAUSE_SCENE)] = new PauseScene(manager_);*/
+	
 }
 
 // デストラクタ
@@ -42,7 +38,7 @@ void DebugScene::Update()
 {
 
 	// 選択肢を回す処理
-	int sceneItemTotalValue = static_cast<int>(SceneItem::TOTAL_VALUE);
+	int sceneItemTotalValue = static_cast<int>(Item::TOTAL_VALUE);
 	if (InputState::IsTriggered(InputType::UP))
 	{
 		currentSelectItem_ = ((currentSelectItem_ - 1) + sceneItemTotalValue) % sceneItemTotalValue;
@@ -56,37 +52,34 @@ void DebugScene::Update()
 	if (InputState::IsTriggered(InputType::DECISION))
 	{
 		// フェードアウト開始
-		StartFadeOut();
+		StartFadeOut(255);
 	}
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		/*manager_.ChangeScene(scene_[currentSelectItem_]);
-		return;*/
 		switch (currentSelectItem_)
 		{
-		case static_cast<int>(SceneItem::TEST_SCENE):
+		case static_cast<int>(Item::TEST_SCENE):
 			manager_.ChangeScene(new TestScene(manager_));
 			return;
-		case static_cast<int>(SceneItem::TITLE_SCENE):
+		case static_cast<int>(Item::TITLE_SCENE):
 			manager_.ChangeScene(new TitleScene(manager_));
 			return;
-		case static_cast<int>(SceneItem::MAIN_SCENE):
+		case static_cast<int>(Item::MAIN_SCENE):
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
-		case static_cast<int>(SceneItem::OPTION_SCENE):
-			// ポーズの場合シーンが残っているので初期化
-			isFadeOut_ = false;
+		case static_cast<int>(Item::OPTION_SCENE):
 			manager_.PushScene(new OptionScene(manager_));
-			return;
-		case static_cast<int>(SceneItem::PAUSE_SCENE):
-			// ポーズの場合シーンが残っているので初期化
-			isFadeOut_ = false;
+			break;
+		case static_cast<int>(Item::PAUSE_SCENE):
 			manager_.PushScene(new PauseScene(manager_));
-			return;
+			break;
 		default:
 			assert(0);
 		}
+		// PushSceneした場合シーンが残ったままなので
+		// フェードインの設定
+		StartFadeIn();
 	}
 	// フェードの更新
 	UpdateFade();
@@ -99,15 +92,15 @@ void DebugScene::Draw()
 	DrawString(0, 0, "DebugScene", 0xffffff, true);
 
 	// デバッグシーンから飛べるシーンの項目のテキスト表示
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::TEST_SCENE), "TestScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::TITLE_SCENE), "TitleScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::MAIN_SCENE), "MainScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::OPTION_SCENE), "ConfigScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(SceneItem::PAUSE_SCENE), "PauseScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::TEST_SCENE), "TestScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::TITLE_SCENE), "TitleScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::MAIN_SCENE), "MainScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::OPTION_SCENE), "ConfigScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::PAUSE_SCENE), "PauseScene", 0xffffff, true);
 
 	// 現在選択中の項目の横に→を表示
 	DrawString(draw_text_pos_x - text_space_y, draw_text_pos_y + text_space_y * currentSelectItem_, "→", 0xff0000);
 
 	// フェードの描画
-	DrawFade();
+	DrawFade(true);
 }

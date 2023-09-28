@@ -18,7 +18,8 @@ Scene::Scene(SceneManager& manager) :
 	isFadeOut_(false),
 	fadeColor_(GetColor(0, 0, 0)),
 	fadeBright_(255),
-	fadeSpeed_(-fade_normal_speed)
+	fadeSpeed_(-fade_normal_speed),
+	fadeBrightUpperLimitValue_(255)
 {
 	gaussScreen_ = MakeScreen(common::screen_width, common::screen_height);
 }
@@ -26,7 +27,7 @@ Scene::Scene(SceneManager& manager) :
 // デストラクタ
 Scene::~Scene()
 {
-	// 処理なし
+	DeleteGraph(gaussScreen_);
 }
 
 // フェードの更新
@@ -36,7 +37,7 @@ void Scene::UpdateFade()
 	fadeBright_ += fadeSpeed_;
 
 	// フェードの明るさの下限値と上限値の設定
-	const Range<int> fadeBrightRange(0, 255);
+	const Range<int> fadeBrightRange(0, fadeBrightUpperLimitValue_);
 	
 	// フェードの明るさが設定した範囲を超えたらフェードを止める
 	if (!fadeBrightRange.IsInside(fadeBright_))	fadeSpeed_ = 0;
@@ -46,16 +47,20 @@ void Scene::UpdateFade()
 }
 
 // フェードの描画
-void Scene::DrawFade()
+void Scene::DrawFade(bool isPlay)
 {
+	if (!isPlay) return;
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeBright_);
 	DrawBox(0, 0, common::screen_width, common::screen_height, fadeColor_, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 // モザイクフェードの描画
-void Scene::DrawGaussFade()
+void Scene::DrawGaussFade(bool isPlay)
 {
+	if (!isPlay) return;
+
 	// 0~255の範囲を0~モザイクパラメーターの最大値に変換
 	int gaussParameter = fadeBright_ * gauss_max_value / 255;
 
@@ -66,8 +71,12 @@ void Scene::DrawGaussFade()
 }
 
 // フェードアウトの開始
-void Scene::StartFadeOut(int fadeSpeed)
+void Scene::StartFadeOut(int fadeBrightUpperLimitValue, int fadeSpeed)
 {
+	// フェードアウトをどのくらいまで行うのか値を設定
+	// 0(フェードしない)～255(最後までフェードを行う)
+	fadeBrightUpperLimitValue_ = fadeBrightUpperLimitValue;
+
 	// フェードアウトが行われたかどうかのフラグを立てる
 	isFadeOut_ = true;
 
@@ -107,6 +116,11 @@ bool Scene::IsFadeing() const
 bool Scene::IsStartFadeOutAfterFadingOut()
 {
 	return !IsFadingOut() && isFadeOut_;
+}
+
+int Scene::GetFadeBright() const
+{
+	return fadeBright_;
 }
 
 /// <summary>

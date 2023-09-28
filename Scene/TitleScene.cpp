@@ -24,8 +24,11 @@ namespace
 TitleScene::TitleScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&TitleScene::NormalUpdate),
-	currentSelectItem_(0)
+	currentSelectItem_(0),
+	isDoFade_(true)
 {
+	handle_ = LoadGraph("Data/title.png");
+
 	// BGMを鳴らす
 	SoundManager::GetInstance().PlayBGM("bgmTest");
 }
@@ -33,6 +36,7 @@ TitleScene::TitleScene(SceneManager& manager) :
 // デストラクタ
 TitleScene::~TitleScene()
 {
+	// 処理なし
 }
 
 // メンバ関数ポインタの更新
@@ -58,15 +62,13 @@ void TitleScene::NormalUpdate()
 	// 次へのボタンが押されてたらフェードアウトの開始
 	if (InputState::IsTriggered(InputType::DECISION))
 	{
-		decisionSelectItem_ = currentSelectItem_;
-
 		// フェードアウトの開始
-		StartFadeOut();
+		StartFadeOut(255);
 	}
 	// フェードアウトが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		switch (decisionSelectItem_)
+		switch (currentSelectItem_)
 		{
 		case static_cast<int>(Item::START):
 			manager_.ChangeScene(new MainScene(manager_));
@@ -86,13 +88,13 @@ void TitleScene::NormalUpdate()
 	}
 	// オプションシーンに遷移する場合はフェードアウトを通常の半分の状態で止めて遷移する
 	// オプションシーンの背景をモザイク状態で残すため
-	const bool isOption = decisionSelectItem_ == static_cast<int>(Item::OPSITON);
+	/*const bool isOption = currentSelectItem_ == static_cast<int>(Item::OPSITON);
 	const bool isHalfFade = fadeBright_ > 255 / 2;
 	const bool isOpsionFade = isOption && isHalfFade && isFadeOut_;
 	if (isOpsionFade)
 	{
 		fadeSpeed_ = 0;
-	}
+	}*/
 	// フェードの更新
 	UpdateFade();
 }
@@ -100,6 +102,8 @@ void TitleScene::NormalUpdate()
 // 描画
 void TitleScene::Draw()
 {
+	DrawGraph(0, 0, handle_, true);
+
 	// 現在のシーンのテキスト描画
 	DrawString(0, 0, "TitleScene", 0xffffff, true);
 
@@ -109,13 +113,13 @@ void TitleScene::Draw()
 	stringManager.DrawStringCenter("TitleItemOption", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::OPSITON), 0xffffff);
 	stringManager.DrawStringCenter("TitleItemEnd", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::END), 0xffffff);
 
-	// 現在選択中の項目にバーを描画
+	// 選択中の項目にバーを描画
 	stringManager.DrawString("TitleItemSelectBarRight", common::screen_width / 2 - 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 	stringManager.DrawString("TitleItemSelectBarLeft", common::screen_width / 2  + 90, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 
 	// フェードの描画
-	DrawGaussFade();
+	DrawGaussFade(true);
 
 	// フェードの描画
-	DrawFade();
+	DrawFade(true);
 }

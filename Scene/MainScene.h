@@ -29,4 +29,6 @@ private:
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成
 	void (MainScene::*updateFunc_) () ;
+
+	int handle_;
 };

@@ -23,7 +23,13 @@ PauseScene::PauseScene(SceneManager& manager) :
 	Scene(manager),
 	currentSelectItem_(0)
 {
-	fadeBright_ = 0;
+	// フェードインを行わない
+	SetFadeBright(0);
+
+	// 各項目によってフェードの設定
+	fadeConfigTable_[static_cast<int>(Item::CONTINUE)] = { 0, 8, false, false, false};
+	fadeConfigTable_[static_cast<int>(Item::OPTION)] = { 255, 16, false , false, true };
+	fadeConfigTable_[static_cast<int>(Item::TITLE)] = { 255, 8, true, true, false };
 }
 
 // デストラクタ
@@ -35,10 +41,7 @@ PauseScene::~PauseScene()
 // 更新
 void PauseScene::Update()
 {
-	
-
 	// 選択肢を回す処理
-	// フェード中の場合は処理を行わない
 	if (InputState::IsTriggered(InputType::UP))
 	{
 		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(Item::TOTAL_VALUE)) % static_cast<int>(Item::TOTAL_VALUE);
@@ -47,39 +50,48 @@ void PauseScene::Update()
 	{
 		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(Item::TOTAL_VALUE);
 	}
+
 	// 決定ボタンを押したらフェードアウト開始
 	if (InputState::IsTriggered(InputType::DECISION))
 	{
+		// 選択肢によってフェードの値を設定
 		// フェードアウト開始
-		StartFadeOut();
+		StartFadeOut(fadeConfigTable_[currentSelectItem_].fadeValue, fadeConfigTable_[currentSelectItem_].fadeSpeed);
 	}
-	// フェードアウトが終わりしだい選択された項目に飛ぶ
-	if (IsStartFadeOutAfterFadingOut())
-	{
-		switch (currentSelectItem_)
-		{
-		case static_cast<int>(Item::CONTINUE):
-			manager_.PopScene();
-			return;
-		case static_cast<int>(Item::OPTION):
-			manager_.PushScene(new OptionScene(manager_));
-			break;
-		case static_cast<int>(Item::TITLE):
-			// タイトルに戻るので全てのサウンドを止める
-			SoundManager::GetInstance().StopAllSound();
-			manager_.ChangeScene(new TitleScene(manager_));
-			return;
-		}
-		// PushSceneした場合シーンが残ったままなので
-		// フェードインを開始する
-		StartFadeIn();
-	}
+
 	// ポーズ画面から戻る
 	if (InputState::IsTriggered(InputType::BACK) || InputState::IsTriggered(InputType::PAUSE))
 	{
 		manager_.PopScene();
 		return;
 	}
+
+	// フェードアウトが終わりしだい選択された項目に飛ぶ
+	if (IsStartFadeOutAfterFadingOut())
+	{
+		switch (currentSelectItem_)
+		{
+		// 続ける
+		case static_cast<int>(Item::CONTINUE):
+			manager_.PopScene();
+			return;
+		// オプション
+		case static_cast<int>(Item::OPTION):
+			manager_.PushScene(new OptionScene(manager_));
+			break;
+		// タイトル
+		case static_cast<int>(Item::TITLE):
+			// 全てのサウンドを止める
+			SoundManager::GetInstance().StopAllSound();
+
+			manager_.PopAllSceneAndChangeScene(new TitleScene(manager_));
+			return;
+		}
+		// PushSceneした場合シーンが残ったままなので
+		// フェードインの設定
+		StartFadeIn();
+	}
+
 	// フェードの更新
 	UpdateFade();
 }
@@ -87,17 +99,34 @@ void PauseScene::Update()
 // 描画
 void PauseScene::Draw()
 {
+	// インスタンスの取得
 	auto& stringManager = StringManager::GetInstance();
+
+	// 項目に設定されたフェード設定に該当するときだけ文字をフェードする
+	if (fadeConfigTable_[currentSelectItem_].isOnlyStringFade)
+	{
+		// 描画透明度の設定
+		int fade = 255 - GetFadeBright();
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, fade);
+	}
+	// 項目の表示
 	stringManager.DrawStringCenter("PauseTitle", draw_text_pos_x, 100, 0xffffff);
 	stringManager.DrawStringCenter("PauseItemContinue", draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::CONTINUE), 0xffffff);
 	stringManager.DrawStringCenter("PauseItemOption", draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::OPTION), 0xffffff);
 	stringManager.DrawStringCenter("PauseItemTitle", draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::TITLE), 0xffffff);
+
+	// 選択されている項目にバーを描画
 	stringManager.DrawStringCenter("PausetemSelectBarRight", draw_text_pos_x - 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 	stringManager.DrawStringCenter("PausetemSelectBarLeft", draw_text_pos_x + 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 
-	// フェードの描画
-//	DrawFade();
+	// 描画の設定の初期化
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	// フェードの描画 
+	// 項目に設定されたフェード設定に該当するときだけフェードする
+	DrawFade(fadeConfigTable_[currentSelectItem_].isFade);
 
 	// モザイクフェードの描画
-//	DrawGaussFade();
+	// 項目に設定されたフェード設定に該当するときだけフェードする
+	DrawGaussFade(fadeConfigTable_[currentSelectItem_].isGaussFade);
 }

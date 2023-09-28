@@ -36,6 +36,10 @@ private:
 	// Updateを切り替えるために作成
 	void (TitleScene::* updateFunc_)();
 
+	int handle_;
+
 	int currentSelectItem_;
-	int decisionSelectItem_;
+
+	// フェードを行うか
+	bool isDoFade_;
 };

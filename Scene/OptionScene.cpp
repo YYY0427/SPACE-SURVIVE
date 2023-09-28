@@ -44,7 +44,7 @@ OptionScene::OptionScene(SceneManager& manager) :
 // デストラクタ
 OptionScene::~OptionScene()
 {
-	// 処理なし
+	DeleteGraph(soundIconImgHandle_);
 }
 
 // 更新
@@ -121,12 +121,6 @@ void OptionScene::Update()
 	}
 	else if (currentSelectItem_ == static_cast<int>(Item::BACK))
 	{
-
-		if (InputState::IsTriggered(InputType::DECISION))
-		{
-			// フェードアウト開始
-			StartFadeOut();
-		}
 	}
 	//else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_SENS_X))
 	//{
@@ -149,12 +143,6 @@ void OptionScene::Update()
 
 	// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
 	if (InputState::IsTriggered(InputType::BACK))
-	{
-		// フェードアウト開始
-		StartFadeOut();
-	}
-	// フェードアウトが終わり次第シーン遷移
-	if (IsStartFadeOutAfterFadingOut())
 	{
 		manager_.PopScene();
 		return;
@@ -273,8 +261,8 @@ void OptionScene::Draw()
 	//}
 
 	// フェードの描画
-	DrawFade();
+//	DrawFade(true);
 
 	// モザイクフェードの描画
-	DrawGaussFade();
+//	DrawGaussFade(true);
 }

@@ -24,8 +24,12 @@ public:
 	// 描画
 	void Draw();
 private:
+	struct FadeData
+	{
+	};
+private:
 	// デバッグシーンから飛べるシーンの項目
-	enum class SceneItem
+	enum class Item
 	{
 		TEST_SCENE,			// テストシーン
 		TITLE_SCENE,		// タイトルシーン
@@ -37,5 +41,4 @@ private:
 private:
 	// 現在選択中の項目
 	int currentSelectItem_;
-//	std::array<Scene*, static_cast<int>(SceneItem::TOTAL_VALUE)> scene_;
 };

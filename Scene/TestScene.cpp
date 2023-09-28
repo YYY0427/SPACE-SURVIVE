@@ -57,7 +57,7 @@ void TestScene::Draw()
 	// フェードの描画
 //	DrawFade();
 
-	DrawGaussFade();
+	DrawGaussFade(true);
 }
 
 // 通常の更新
@@ -85,7 +85,7 @@ void TestScene::NormalUpdate()
 	{
 		Effekseer3DEffectManager::GetInstance().StopAllEffect();
 
-		StartFadeOut();
+		StartFadeOut(255);
 	}
 	if (IsStartFadeOutAfterFadingOut())
 	{
@@ -102,7 +102,7 @@ void TestScene::NormalUpdate()
 void TestScene::GameOverUpdate()
 {
 	// フェードアウトが終わり次第シーン遷移
-	if (isFadeOut_ && !IsFadingOut())
+	if (IsStartFadeOutAfterFadingOut())
 	{
 		manager_.ChangeScene(new DebugScene(manager_));
 		return;
@@ -115,15 +115,7 @@ void TestScene::GameOverUpdate()
 	if (pPlayer_->GameOverUpdate() && !IsFadeing())
 	{
 		// フェードアウトの開始
-		StartFadeOut();
-
-		// フェードの設定の変更
-		fadeColor_ = 0x000000;
-		fadeSpeed_ = 3;
-
-		// フェードアウトが行われたかどうかのフラグを立てる
-		// シーン遷移の際、フェードアウトが行われたかどうかを確認するため
-		isFadeOut_ = true;
+		StartFadeOut(255);
 	}
 	// フェードの更新
 	UpdateFade();

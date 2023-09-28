@@ -80,6 +80,7 @@ void DebugScene::Update()
 		// PushSceneした場合シーンが残ったままなので
 		// フェードインの設定
 		StartFadeIn();
+		return;
 	}
 	// フェードの更新
 	UpdateFade();

@@ -39,6 +39,6 @@ private:
 		TOTAL_VALUE			// 項目の合計値
 	};
 private:
-	// 現在選択中の項目
+	// 選択中の項目
 	int currentSelectItem_;
 };

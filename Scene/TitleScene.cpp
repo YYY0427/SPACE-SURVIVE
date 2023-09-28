@@ -24,10 +24,13 @@ namespace
 TitleScene::TitleScene(SceneManager& manager) :
 	Scene(manager),
 	updateFunc_(&TitleScene::NormalUpdate),
-	currentSelectItem_(0),
-	isDoFade_(true)
+	currentSelectItem_(0)
 {
 	handle_ = LoadGraph("Data/title.png");
+
+	fadeDataTable_[static_cast<int>(Item::START)] = { 255, 8, true, true };
+	fadeDataTable_[static_cast<int>(Item::END)] = { 255, 8, true, true };
+	fadeDataTable_[static_cast<int>(Item::OPSITON)] = { 200, 8, true, true };
 
 	// BGMを鳴らす
 	SoundManager::GetInstance().PlayBGM("bgmTest");
@@ -36,7 +39,7 @@ TitleScene::TitleScene(SceneManager& manager) :
 // デストラクタ
 TitleScene::~TitleScene()
 {
-	// 処理なし
+	DeleteGraph(handle_);
 }
 
 // メンバ関数ポインタの更新
@@ -63,8 +66,9 @@ void TitleScene::NormalUpdate()
 	if (InputState::IsTriggered(InputType::DECISION))
 	{
 		// フェードアウトの開始
-		StartFadeOut(255);
+		StartFadeOut(fadeDataTable_[currentSelectItem_].fadeValue, fadeDataTable_[currentSelectItem_].fadeSpeed);
 	}
+
 	// フェードアウトが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
@@ -85,16 +89,9 @@ void TitleScene::NormalUpdate()
 		// PushSceneした場合シーンが残ったままなので
 		// フェードインを開始する
 		StartFadeIn();
+		return;
 	}
-	// オプションシーンに遷移する場合はフェードアウトを通常の半分の状態で止めて遷移する
-	// オプションシーンの背景をモザイク状態で残すため
-	/*const bool isOption = currentSelectItem_ == static_cast<int>(Item::OPSITON);
-	const bool isHalfFade = fadeBright_ > 255 / 2;
-	const bool isOpsionFade = isOption && isHalfFade && isFadeOut_;
-	if (isOpsionFade)
-	{
-		fadeSpeed_ = 0;
-	}*/
+
 	// フェードの更新
 	UpdateFade();
 }
@@ -118,8 +115,8 @@ void TitleScene::Draw()
 	stringManager.DrawString("TitleItemSelectBarLeft", common::screen_width / 2  + 90, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 
 	// フェードの描画
-	DrawGaussFade(true);
+	DrawGaussFade(fadeDataTable_[currentSelectItem_].isFade);
 
 	// フェードの描画
-	DrawFade(true);
+	DrawFade(fadeDataTable_[currentSelectItem_].isGaussFade);
 }

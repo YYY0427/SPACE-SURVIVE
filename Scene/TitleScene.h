@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include <array>
 
 // タイトルシーン
 class TitleScene : public Scene
@@ -24,6 +25,14 @@ private:
 	// 通常状態の更新
 	void NormalUpdate();
 private:
+	struct FadeData
+	{
+		int fadeValue;
+		int fadeSpeed;
+		bool isFade;
+		bool isGaussFade;
+	};
+private:
 	enum class Item
 	{
 		START,
@@ -38,8 +47,8 @@ private:
 
 	int handle_;
 
-	int currentSelectItem_;
+	std::array<FadeData, static_cast<int>(Item::TOTAL_VALUE)> fadeDataTable_;
 
-	// フェードを行うか
-	bool isDoFade_;
+	// 現在選択中の項目
+	int currentSelectItem_;
 };

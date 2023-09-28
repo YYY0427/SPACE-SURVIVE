@@ -73,14 +73,17 @@ void PauseScene::Update()
 		{
 		// 続ける
 		case static_cast<int>(Item::CONTINUE):
+
 			manager_.PopScene();
 			return;
 		// オプション
 		case static_cast<int>(Item::OPTION):
+
 			manager_.PushScene(new OptionScene(manager_));
 			break;
 		// タイトル
 		case static_cast<int>(Item::TITLE):
+
 			// 全てのサウンドを止める
 			SoundManager::GetInstance().StopAllSound();
 
@@ -90,6 +93,7 @@ void PauseScene::Update()
 		// PushSceneした場合シーンが残ったままなので
 		// フェードインの設定
 		StartFadeIn();
+		return;
 	}
 
 	// フェードの更新
@@ -109,6 +113,7 @@ void PauseScene::Draw()
 		int fade = 255 - GetFadeBright();
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, fade);
 	}
+
 	// 項目の表示
 	stringManager.DrawStringCenter("PauseTitle", draw_text_pos_x, 100, 0xffffff);
 	stringManager.DrawStringCenter("PauseItemContinue", draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::CONTINUE), 0xffffff);

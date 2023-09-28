@@ -8,6 +8,7 @@
 #include "../Util/DrawFunctions.h"
 #include "../common.h"
 #include <DxLib.h>
+#include <array>
 
 namespace
 {
@@ -62,7 +63,7 @@ void OptionScene::Update()
 	{
 		currentSelectItem_ = ((currentSelectItem_ - 1) + itemTotalValue) % itemTotalValue;
 	}
-	else if (InputState::IsTriggered(InputType::DOWN) && !IsFadeing())
+	else if (InputState::IsTriggered(InputType::DOWN))
 	{
 		currentSelectItem_ = (currentSelectItem_ + 1) % itemTotalValue;
 	}
@@ -70,57 +71,25 @@ void OptionScene::Update()
 	// 選択されている項目の色を変える
 	itemColorDataTable_[currentSelectItem_] = choose_color;
 
-	if (currentSelectItem_ == static_cast<int>(Item::LANGUAGE))
+	switch (currentSelectItem_)
 	{
-	}
-	else if (currentSelectItem_ == static_cast<int>(Item::WINDOW_MODE))
-	{
-	}
-	else if(currentSelectItem_ == static_cast<int>(Item::MASTER_VOLUME))
-	{
-
-		if (InputState::IsTriggered(InputType::RIGHT))
-		{
-			// 全体音量コンフィグの増加
-			// 音量の最大値より大きくなったら最小値にする
-			SaveData::GetInstance().SetWholeVolume();
-
-			// 設定したコンフィグから音量調節
-			SoundManager::GetInstance().SetVolume("bgmTest", 255);
-		}
-	}
-	else if (currentSelectItem_ == static_cast<int>(Item::BGM_VOLUME))
-	{
-
-		if (InputState::IsTriggered(InputType::RIGHT))
-		{
-			// BGM音量コンフィグの増加
-			// 音量の最大値より大きくなったら最小値にする
-			SaveData::GetInstance().SetBgmVolume();
-
-			// 設定したコンフィグから音量調節
-			SoundManager::GetInstance().SetVolume("bgmTest", 255);
-		}
-	}
-	else if (currentSelectItem_ == static_cast<int>(Item::SE_VOLUME))
-	{
-
-		if (InputState::IsTriggered(InputType::RIGHT))
-		{
-			// SE音量コンフィグの増加
-			// 音量の最大値より大きくなったら最小値にする
-			SaveData::GetInstance().SetSeVolume();
-
-			// SEは変更するたびにサウンドを鳴らす
-			// 設定したコンフィグから音量調節
-			SoundManager::GetInstance().Play("cursorTest");
-		}
-	}
-	else if (currentSelectItem_ == static_cast<int>(Item::PAD_SETTING))
-	{
-	}
-	else if (currentSelectItem_ == static_cast<int>(Item::BACK))
-	{
+	case static_cast<int>(Item::LANGUAGE):
+		break;
+	case static_cast<int>(Item::WINDOW_MODE):
+		break;
+	case static_cast<int>(Item::MASTER_VOLUME):
+		SaveData::GetInstance().SetMasterVolume();
+		break;
+	case static_cast<int>(Item::BGM_VOLUME):
+		SaveData::GetInstance().SetBgmVolume();
+		break;
+	case static_cast<int>(Item::SE_VOLUME):
+		SaveData::GetInstance().SetSeVolume();
+		break;
+	case static_cast<int>(Item::PAD_SETTING):
+		break;
+	case static_cast<int>(Item::BACK):
+		break;
 	}
 	//else if (currentSelectItem_ == static_cast<int>(Item::PAD_STICK_SENS_X))
 	//{
@@ -141,14 +110,11 @@ void OptionScene::Update()
 	//	SaveData::GetInstance().SetPadStickReverseY();
 	//}
 
-	// 戻るボタンが押され、フェード中じゃない場合フェードアウト開始
 	if (InputState::IsTriggered(InputType::BACK))
 	{
 		manager_.PopScene();
 		return;
 	}
-	// フェードの更新
-	UpdateFade();
 }
 
 // 描画
@@ -178,38 +144,25 @@ void OptionScene::Draw()
 	stringManager.DrawStringCenter("OptionItemPadSetting", common::screen_width / 2, draw_text_pos_y + text_space_y * padSetting, itemColorDataTable_[padSetting]);
 	stringManager.DrawStringCenter("OptionItemBack", common::screen_width / 2, draw_text_pos_y + text_space_y * back, itemColorDataTable_[back]);
 
-	// マスター音量の描画
-	for (int i = 0; i < SaveData::GetInstance().GetSaveData().masterVolume; i++)
+	// 各サウンド音量の表示
+	std::array<int, 3> volume;
+	volume[0] = SaveData::GetInstance().GetSaveData().masterVolume;
+	volume[1] = SaveData::GetInstance().GetSaveData().bgmVolume;
+	volume[2] = SaveData::GetInstance().GetSaveData().seVolume;
+	int item = masterVolume;
+	for(int i = 0; i < volume.size(); i++)
 	{
-		SetDrawBright(70, 70, 70);
-		if (currentSelectItem_ == masterVolume)
+		for (int j = 0; j < volume[i]; j++)
 		{
-			SetDrawBright(255, 255, 255);
+			SetDrawBright(70, 70, 70);
+			if (currentSelectItem_ == item)
+			{
+				SetDrawBright(255, 255, 255);
+			}
+			int textSpaceX = j * 70;
+			DrawRotaGraph(draw_text_pos_x + 170 + textSpaceX, draw_text_pos_y + text_space_y * item + 10, 0.2, 0.0, soundIconImgHandle_, true);
 		}
-		int textSpaceX = i * 70;
-		DrawRotaGraph(draw_text_pos_x + 170 + textSpaceX, draw_text_pos_y + text_space_y * masterVolume + 10, 0.2, 0.0, soundIconImgHandle_, true);
-	}
-	// BGM音量の描画
-	for (int i = 0; i < SaveData::GetInstance().GetSaveData().bgmVolume; i++)
-	{
-		SetDrawBright(70, 70, 70);
-		if (currentSelectItem_ == bgmVolume)
-		{
-			SetDrawBright(255, 255, 255);
-		}
-		int textSpaceX = i * 70;
-		DrawRotaGraph(draw_text_pos_x + 170 + textSpaceX, draw_text_pos_y + text_space_y * bgmVolume + 10, 0.2, 0.0, soundIconImgHandle_, true);
-	}
-	// SE音量の描画
-	for (int i = 0; i < SaveData::GetInstance().GetSaveData().seVolume; i++)
-	{
-		SetDrawBright(70, 70, 70);
-		if (currentSelectItem_ == seVolume)
-		{
-			SetDrawBright(255, 255, 255);
-		}
-		int textSpaceX = i * 70;
-		DrawRotaGraph(draw_text_pos_x + 170 + textSpaceX, draw_text_pos_y + text_space_y * seVolume + 10, 0.2, 0.0, soundIconImgHandle_, true);
+		item++;
 	}
 	SetDrawBright(255, 255, 255);
 
@@ -259,10 +212,4 @@ void OptionScene::Draw()
 	//{
 	//	DrawString(draw_text_pos_x + text_space_y + 100, draw_text_pos_y + text_space_y * padStickReverseY, "REVERSE", 0xffffff);
 	//}
-
-	// フェードの描画
-//	DrawFade(true);
-
-	// モザイクフェードの描画
-//	DrawGaussFade(true);
 }

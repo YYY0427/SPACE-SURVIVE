@@ -39,9 +39,10 @@ private:
 		TOTAL_VALUE		// 項目の合計値
 	};
 private:
+	// 
 	std::array<FadeData, static_cast<int>(Item::TOTAL_VALUE)> fadeConfigTable_;
 
-	// 現在選択中の項目
+	// 選択中の項目
 	int currentSelectItem_;
 };
 

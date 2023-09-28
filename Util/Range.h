@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <cmath>
 #include <cassert>
 
 // 下限値と上限値を管理する範囲クラス
@@ -41,10 +42,11 @@ public:
 		return  std::clamp(value, min_, max_);
 	}
 
-	/*T Wrap(T value) const
+	T Wrap(T value) const
 	{
-		return std::wrap(value, min_, max_);
-	}*/
+		const float n = std::fmod(value - min_, max_ - min_);
+		return (n >= 0) ? (n + min_) : (n + max_);
+	}
 
 	// 設定した下限値の取得
 	T GetMinValue() const { return min_; }

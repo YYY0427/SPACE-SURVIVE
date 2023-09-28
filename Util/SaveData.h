@@ -1,5 +1,7 @@
 #pragma once
 
+class SoundManager;
+
 // セーブデータの管理を行うシングルトンクラス
 class SaveData
 {
@@ -49,11 +51,11 @@ public:
 	bool GetPadStickReverseY() const;		
 
 	Data GetSaveData();
-	template<class T> void SetConfigValue(T* configValue, int splitNum);
+	void SetConfigValue(int& configValue, int splitNum);
 
 	// 音量設定
 	// 音量の設定(最大値を超えると0に戻る)
-	void SetWholeVolume();	// 全体音量
+	void SetMasterVolume();	// 全体音量
 	void SetBgmVolume();	// BGM
 	void SetSeVolume();		// SE
 
@@ -81,4 +83,6 @@ private:
 private:
 	// セーブデータ
 	Data saveData_;
+
+	SoundManager& soundManger_;
 };

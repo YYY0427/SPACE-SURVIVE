@@ -35,8 +35,7 @@ void MainScene::NormalUpdate()
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{
 		// フェードアウト開始
-		// フェードアウトを通常の半分で止める
-		StartFadeOut(255 / 2);
+		StartFadeOut(200, 16);
 	}
 	// フェードが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())

@@ -1,4 +1,7 @@
 #include "SaveData.h"
+#include "SoundManager.h"
+#include "Range.h"
+#include "InputState.h"
 #include "../common.h"
 #include <string>
 #include <cassert>
@@ -15,9 +18,10 @@ namespace
 }
 
 // コンストラクタ
-SaveData::SaveData()
+SaveData::SaveData() :
+	soundManger_(SoundManager::GetInstance())
 {
-
+	
 }
 
 // デストラクタ
@@ -138,55 +142,62 @@ bool SaveData::GetPadStickReverseY() const
 	return saveData_.padStickReverseY;
 }
 
-template<class T> void SaveData::SetConfigValue(T* configValue, int splitNum)
+void SaveData::SetConfigValue(int& configValue, int splitNum)
 {
-	configValue++;
-	if (configValue > splitNum)
+	if (InputState::IsTriggered(InputType::RIGHT))
 	{
-		configValue = 0;
+		configValue++;
 	}
+	if (InputState::IsTriggered(InputType::LEFT))
+	{
+		configValue--;
+	}
+
+	const Range<int> configValueRange(0, splitNum + 1);
+
+	configValue = configValueRange.Wrap(configValue);
+
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();
 }
 
 // 全体の音量の設定
 // 最大値を超えると0に戻る
-void SaveData::SetWholeVolume()
+void SaveData::SetMasterVolume()
 {
-	saveData_.masterVolume++;
-	if (saveData_.masterVolume > common::config_volume_num)
+	SetConfigValue(saveData_.masterVolume, common::config_volume_num);
+
+	if (InputState::IsTriggered(InputType::RIGHT) ||
+		InputState::IsTriggered(InputType::LEFT))
 	{
-		saveData_.masterVolume = 0;
+		soundManger_.SetVolume("bgmTest", 255);
 	}
-	// セーブデータに書き込む
-	SaveData::GetInstance().Write();
 }
 
 // BGMの音量の設定
 // 最大値を超えると0に戻る
 void SaveData::SetBgmVolume()
 {
-	saveData_.bgmVolume++;
-	if (saveData_.bgmVolume > common::config_volume_num)
+	SetConfigValue(saveData_.bgmVolume, common::config_volume_num);
+
+	if (InputState::IsTriggered(InputType::RIGHT) ||
+		InputState::IsTriggered(InputType::LEFT))
 	{
-		saveData_.bgmVolume = 0;
+		soundManger_.SetVolume("bgmTest", 255);
 	}
-	// セーブデータに書き込む
-	SaveData::GetInstance().Write();
 }
 
 // SEの音量の設定
 // 最大値を超えると0に戻る
 void SaveData::SetSeVolume()
 {
-	saveData_.seVolume++;
-	if (saveData_.seVolume > common::config_volume_num)
-	{
-		saveData_.seVolume = 0;
-	}
+	SetConfigValue(saveData_.seVolume, common::config_volume_num);
 
-	// セーブデータに書き込む
-	SaveData::GetInstance().Write();
+	if (InputState::IsTriggered(InputType::RIGHT) ||
+		InputState::IsTriggered(InputType::LEFT))
+	{
+		soundManger_.Play("cursorTest");
+	}
 }
 
 // パッドのスティックのX軸感度の設定

@@ -64,7 +64,7 @@ void EnemyManager::CheckEnabled()
 	pEnemies_.erase(enemies, pEnemies_.end());
 }
 
-std::vector<std::shared_ptr<Enemy>> EnemyManager::GetEnemies()
+std::list<std::shared_ptr<Enemy>> EnemyManager::GetEnemies()
 {
 	return pEnemies_;
 }

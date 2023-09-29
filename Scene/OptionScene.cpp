@@ -21,7 +21,7 @@ namespace
 	constexpr int text_space_y = 64;
 
 	// 選択されていないときの描画色
-	constexpr int normal_color = 0x444444;
+	constexpr int normal_color = 0x666666;
 
 	// 選択されているときの描画色
 	constexpr int choose_color = 0xffffff;

@@ -4,7 +4,7 @@
 #include <cassert>
 
 // 下限値と上限値を管理する範囲クラス
-template<typename T>
+template<class T>
 class Range
 {
 public:

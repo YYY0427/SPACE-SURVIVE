@@ -142,7 +142,7 @@ bool SaveData::GetPadStickReverseY() const
 	return saveData_.padStickReverseY;
 }
 
-void SaveData::SetConfigValue(int& configValue, int splitNum)
+template<class T> void SaveData::SetConfigValue(T& configValue, int splitNum)
 {
 	if (InputState::IsTriggered(InputType::RIGHT))
 	{
@@ -153,7 +153,7 @@ void SaveData::SetConfigValue(int& configValue, int splitNum)
 		configValue--;
 	}
 
-	const Range<int> configValueRange(0, splitNum + 1);
+	const Range<T> configValueRange(0, splitNum + 1);
 
 	configValue = configValueRange.Wrap(configValue);
 
@@ -204,39 +204,33 @@ void SaveData::SetSeVolume()
 // 最大値を超えると0に戻る
 void SaveData::SetPadStickSensitivityX()
 {
-	saveData_.padStickSensitivityX++;
-	if (saveData_.padStickSensitivityX > common::config_pad_sensitivity_num)
-	{
-		saveData_.padStickSensitivityX = 0;
-	}
-	// セーブデータに書き込む
-	SaveData::GetInstance().Write();
+	SetConfigValue(saveData_.padStickSensitivityX, common::config_pad_sensitivity_num);
 }
 
 // パッドのスティックのY軸感度の設定
 // 最大値を超えると0に戻る
 void SaveData::SetPadStickSensitivityY()
 {
-	saveData_.padStickSensitivityY++;
-	if (saveData_.padStickSensitivityY > common::config_pad_sensitivity_num)
-	{
-		saveData_.padStickSensitivityY = 0;
-	}
-	// セーブデータに書き込む
-	SaveData::GetInstance().Write();
+	SetConfigValue(saveData_.padStickSensitivityY, common::config_pad_sensitivity_num);
 }
 
 // パッドのスティックのX軸リバースの設定
 void SaveData::SetPadStickReverseX()
 {
-	if (saveData_.padStickReverseX)
+	if (InputState::IsTriggered(InputType::RIGHT) ||
+		InputState::IsTriggered(InputType::LEFT))
 	{
-		saveData_.padStickReverseX = false;
+	//	saveData_.padStickReverseX = (saveData_.padStickReverseX) ? (!saveData_.padStickReverseX) : (saveData_.padStickReverseX);
+		if (saveData_.padStickReverseX)
+		{
+			saveData_.padStickReverseX = false;
+		}
+		else
+		{
+			saveData_.padStickReverseX = true;
+		}
 	}
-	else
-	{
-		saveData_.padStickReverseX = true;
-	}
+	
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();
 }
@@ -244,14 +238,19 @@ void SaveData::SetPadStickReverseX()
 // パッドのスティックのY軸リバースの設定
 void SaveData::SetPadStickReverseY()
 {
-	if (saveData_.padStickReverseY)
+	if (InputState::IsTriggered(InputType::RIGHT) ||
+		InputState::IsTriggered(InputType::LEFT))
 	{
-		saveData_.padStickReverseY = false;
+		if (saveData_.padStickReverseY)
+		{
+			saveData_.padStickReverseY = false;
+		}
+		else
+		{
+			saveData_.padStickReverseY = true;
+		}
 	}
-	else
-	{
-		saveData_.padStickReverseY = true;
-	}
+	
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();
 }

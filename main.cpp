@@ -146,6 +146,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	}
 
 	// I—¹ˆ—
+	soundManager.StopAllSound();
 	stringManager.End();
 	effectManager.End();
 	DxLib_End();

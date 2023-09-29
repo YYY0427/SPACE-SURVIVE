@@ -51,7 +51,8 @@ public:
 	bool GetPadStickReverseY() const;		
 
 	Data GetSaveData();
-	void SetConfigValue(int& configValue, int splitNum);
+	template<class T> void SetConfigValue(T& configValue, int splitNum);
+
 
 	// ‰¹—Êİ’è
 	// ‰¹—Ê‚Ìİ’è(Å‘å’l‚ğ’´‚¦‚é‚Æ0‚É–ß‚é)

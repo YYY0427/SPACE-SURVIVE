@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <list>
 #include <memory>
 
 class Enemy;
@@ -18,8 +18,8 @@ public:
 	void CheckEnabled();
 
 
-	std::vector<std::shared_ptr<Enemy>> GetEnemies();
+	std::list<std::shared_ptr<Enemy>> GetEnemies();
 private:
 	std::shared_ptr<Player> pPlayer_;
-	std::vector<std::shared_ptr<Enemy>> pEnemies_;
+	std::list<std::shared_ptr<Enemy>> pEnemies_;
 };

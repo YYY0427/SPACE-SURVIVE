@@ -55,7 +55,7 @@ void TestScene::Draw()
 	pPlayer_->Draw();
 
 	// フェードの描画
-//	DrawFade();
+	DrawFade(true);
 
 	DrawGaussFade(true);
 }
@@ -83,12 +83,13 @@ void TestScene::NormalUpdate()
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{
-		Effekseer3DEffectManager::GetInstance().StopAllEffect();
+	//	Effekseer3DEffectManager::GetInstance().StopAllEffect();
 
-		StartFadeOut(255);
+		StartFadeOut(200, 64);
 	}
 	if (IsStartFadeOutAfterFadingOut())
 	{
+		Effekseer3DEffectManager::GetInstance().StopAllEffect();
 		StartFadeIn();
 		manager_.PushScene(new PauseScene(manager_));
 		return;

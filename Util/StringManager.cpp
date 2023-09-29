@@ -145,3 +145,18 @@ void StringManager::DrawStringCenter(std::string id, int x, int y, unsigned int 
 	// 取得した文字列の横幅から文字列を横中央位置に表示
 	DrawStringToHandle(x - width / 2, y, string.c_str(), color, fontHandle);
 }
+
+// フォントを使った数字を指定した座標を中心として表示
+void StringManager::DrawFormatStringCenter(std::string id, int num, int x, int y, unsigned int color)
+{
+	// ロードしていない場合は止める
+	assert(stringDataTable_.find(id) != stringDataTable_.end());
+
+	// フォントサイズ、、文字列の長さから文字列の横幅の取得
+	std::string string = std::to_string(num);
+	int fontHandle = stringDataTable_[id].fontHandle;
+	int width = GetDrawStringWidthToHandle(string.c_str(), static_cast<int>(strlen(string.c_str())), fontHandle);
+
+	// 取得した文字列の横幅から文字列を横中央位置に表示
+	DrawFormatStringToHandle(x - width / 2, y, color, fontHandle, "%d", num);
+}

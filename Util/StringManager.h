@@ -43,9 +43,21 @@ public:
 	/// ファイルに読み込んだ文字列を指定した座標を中心とした位置に表示
 	/// </summary>
 	/// <param name="id">表示したい文字列のID</param>
+	/// <param name="x">真ん中に指定したいX軸の座標</param>
 	/// <param name="y">Y軸の座標</param>
 	/// <param name="color">文字の描画色</param>
 	void DrawStringCenter(std::string id, int x, int y, unsigned int color);
+
+	/// <summary>
+	/// フォントに読み込んだデータから作成したフォントデータを使って
+	/// 指定した座標を中心とした位置に数字の表示
+	/// </summary>
+	/// <param name="id">使いたいフォントのID</param>
+	/// <param name="num">表示したい数字</param>
+	/// <param name="x">真ん中に指定したいX軸の座標</param>
+	/// <param name="y">Y軸の座標</param>
+	/// <param name="color">文字の描画色</param>
+	void DrawFormatStringCenter(std::string id, int num, int x, int y, unsigned int color);
 
 private:
 	// コンストラクタ

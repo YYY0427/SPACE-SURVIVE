@@ -13,8 +13,12 @@
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
+	// セーブデータの読み込み
+	auto& saveData = SaveData::GetInstance();
+	saveData.Load();
+
 	// Windowモード設定
-	ChangeWindowMode(common::window_mode);
+	ChangeWindowMode(saveData.GetSaveData().windowMode);
 
 	// Window名設定
 	SetMainWindowText(common::title_text);
@@ -74,10 +78,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// 重力の設定
 //	MV1SetLoadModelPhysicsWorldGravity(-9.8f);
 	
-	// セーブデータの読み込み
-	auto& saveData = SaveData::GetInstance();
-	saveData.Load();
-
 	// csvファイルに沿ってサウンドをロード
 	auto& soundManager = SoundManager::GetInstance();
 	soundManager.LoadAndStoreSoundFileData();
@@ -117,6 +117,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// 描画
 		sceneManager.Draw();
 		effectManager.Draw();
+
+		// Windowモード設定
+		ChangeWindowMode(saveData.GetSaveData().windowMode);
 
 #ifdef _DEBUG
 		// FPS(Frame Per Second)の取得と描画

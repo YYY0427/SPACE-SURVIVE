@@ -17,6 +17,7 @@ private:
 		int padStickSensitivityY = 3;	// パッドのスティックの感度Y
 		bool padStickReverseX = false;	// パッドのスティックの横のリバース
 		bool padStickReverseY = false;	// パッドのスティックの縦のリバース
+		bool windowMode = false;		// ウィンドウモードの切り替え	
 	};
 public:
 	// デストラクタ
@@ -38,21 +39,9 @@ public:
 	// セーブデータを新規作成して上書き
 	void CreateNewData();
 
-	// 音量の取得
-	int GetBgmVolume() const;	// BGM
-	int GetSeVolume() const;	// SE
-
-	// パッドのスティックの感度の取得
-	int GetPadStickSensitivityX() const;	
-	int GetPadStickSensitivityY() const;	
-
-	// パッドのスティックのリバースかどうかの取得
-	bool GetPadStickReverseX() const;		
-	bool GetPadStickReverseY() const;		
-
-	Data GetSaveData();
+	Data GetSaveData() const;
 	template<class T> void SetConfigValue(T& configValue, int splitNum);
-
+	void SetConfigSwitch(bool& config);
 
 	// 音量設定
 	// 音量の設定(最大値を超えると0に戻る)
@@ -67,7 +56,10 @@ public:
 
 	// パッドのスティックのリバースの設定
 	void SetPadStickReverseX();			
-	void SetPadStickReverseY();			
+	void SetPadStickReverseY();		
+
+	// ウィンドウモードの切り替え
+	void SetWindowMode();
 
 private:
 	// コンストラクタ

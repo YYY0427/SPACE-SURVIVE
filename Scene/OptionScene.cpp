@@ -79,6 +79,7 @@ void OptionScene::Update()
 	case static_cast<int>(Item::LANGUAGE):
 		break;
 	case static_cast<int>(Item::WINDOW_MODE):
+		SaveData::GetInstance().SetWindowMode();
 		break;
 	case static_cast<int>(Item::MASTER_VOLUME):
 		// 全体音量の調整
@@ -122,6 +123,7 @@ void OptionScene::Draw()
 {
 	// インスタンスの取得
 	auto& stringManager = StringManager::GetInstance();
+	auto& saveData = SaveData::GetInstance();
 
 	// 描画透明度の設定
 	int fade = 255 - GetFadeBright();
@@ -145,6 +147,16 @@ void OptionScene::Draw()
 	stringManager.DrawStringCenter("OptionItemSeVolume", draw_text_pos_x, draw_text_pos_y + text_space_y * seVolume, itemColorDataTable_[seVolume]);
 	stringManager.DrawStringCenter("OptionItemPadSetting", common::screen_width / 2, draw_text_pos_y + text_space_y * padSetting, itemColorDataTable_[padSetting]);
 	stringManager.DrawStringCenter("OptionItemBack", common::screen_width / 2, draw_text_pos_y + text_space_y * back, itemColorDataTable_[back]);
+
+	// ウィンドウモードの状態の表示
+	if (saveData.GetSaveData().windowMode)
+	{
+		stringManager.DrawStringCenter("OptionItemWindowModeOff", common::screen_width / 2, draw_text_pos_y + text_space_y * windowMode, itemColorDataTable_[windowMode]);
+	}
+	else
+	{
+		stringManager.DrawStringCenter("OptionItemWindowModeOn", common::screen_width / 2, draw_text_pos_y + text_space_y * windowMode, itemColorDataTable_[windowMode]);
+	}
 
 	// 各サウンド音量の表示
 	std::array<int, 3> volume = {};
@@ -170,53 +182,4 @@ void OptionScene::Draw()
 
 	// 描画の設定の初期化
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	// 描画の設定の初期化
-//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	//// BGMの項目と音量の表示
-	//int whole = static_cast<int>(Item::MASTER_VOLUME);
-	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * whole, "全体音量", 0xffffff, true);
-	//DrawFormatString(draw_text_pos_x + text_space_y + 50, draw_text_pos_y + text_space_y * whole, 0xffffff, "%d", SaveData::GetInstance().GetSaveData().masterVolume);
-
-	//// BGMの項目と音量の表示
-	//int bgm = static_cast<int>(Item::BGM_VOLUME);
-	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * bgm, "BGM", 0xffffff, true);
-	//DrawFormatString(draw_text_pos_x + text_space_y, draw_text_pos_y + text_space_y * bgm, 0xffffff, "%d", SaveData::GetInstance().GetBgmVolume());
-
-	//// SEの項目と音量の表示
-	//int se = static_cast<int>(Item::SE_VOLUME);
-	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * se, "SE", 0xffffff, true);
-	//DrawFormatString(draw_text_pos_x + text_space_y, draw_text_pos_y + text_space_y * se, 0xffffff, "%d", SaveData::GetInstance().GetSeVolume());
-
-	//// スティックの感度Xの項目と音量の表示
-	//int padStickX = static_cast<int>(Item::PAD_STICK_SENS_X);
-	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * padStickX, "パッドの横感度", 0xffffff, true);
-	//DrawFormatString(draw_text_pos_x + text_space_y + 100, draw_text_pos_y + text_space_y * padStickX, 0xffffff, "%d", SaveData::GetInstance().GetPadStickSensitivityX());
-
-	//// スティックの感度Yの項目と音量の表示
-	//int padStickY = static_cast<int>(Item::PAD_STICK_SENS_Y);
-	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * padStickY, "パッドの縦感度", 0xffffff, true);
-	//DrawFormatString(draw_text_pos_x + text_space_y + 100, draw_text_pos_y + text_space_y * padStickY, 0xffffff, "%d", SaveData::GetInstance().GetPadStickSensitivityY());
-
-	//int padStickReverseX = static_cast<int>(Item::PAD_STICK_REVERSE_X);
-	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * padStickReverseX, "パッドの横リバース", 0xffffff, true);
-	//if (!SaveData::GetInstance().GetPadStickReverseX())
-	//{
-	//	DrawString(draw_text_pos_x + text_space_y + 100, draw_text_pos_y + text_space_y * padStickReverseX, "NORMAL", 0xffffff);
-	//}
-	//else
-	//{
-	//	DrawString(draw_text_pos_x + text_space_y + 100, draw_text_pos_y + text_space_y * padStickReverseX, "REVERSE", 0xffffff);
-	//}
-
-	//int padStickReverseY = static_cast<int>(Item::PAD_STICK_REVERSE_Y);
-	//DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * padStickReverseY, "パッドの縦リバース", 0xffffff, true);
-	//if (!SaveData::GetInstance().GetPadStickReverseY())
-	//{
-	//	DrawString(draw_text_pos_x + text_space_y + 100, draw_text_pos_y + text_space_y * padStickReverseY, "NORMAL", 0xffffff);
-	//}
-	//else
-	//{
-	//	DrawString(draw_text_pos_x + text_space_y + 100, draw_text_pos_y + text_space_y * padStickReverseY, "REVERSE", 0xffffff);
-	//}
 }

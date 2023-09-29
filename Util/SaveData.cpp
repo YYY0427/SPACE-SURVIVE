@@ -104,42 +104,7 @@ void SaveData::InitData()
 	saveData_.padStickSensitivityY = 3;
 	saveData_.padStickReverseX = false;	
 	saveData_.padStickReverseY = false;	
-}
-
-// BGMの音量の取得
-int SaveData::GetBgmVolume() const
-{
-	return saveData_.bgmVolume;
-}
-
-// SEの音量の取得
-int SaveData::GetSeVolume() const
-{
-	return saveData_.seVolume;
-}
-
-// パッドのスティックのX軸感度の取得
-int SaveData::GetPadStickSensitivityX() const
-{
-	return saveData_.padStickSensitivityX;
-}
-
-// パッドのスティックのY軸感度の取得
-int SaveData::GetPadStickSensitivityY() const
-{
-	return saveData_.padStickSensitivityY;
-}
-
-// パッドのスティックのX軸リバースの取得
-bool SaveData::GetPadStickReverseX() const
-{
-	return saveData_.padStickReverseX;
-}
-
-// パッドのスティックのY軸リバースの取得
-bool SaveData::GetPadStickReverseY() const
-{
-	return saveData_.padStickReverseY;
+	saveData_.windowMode = false;
 }
 
 template<class T> void SaveData::SetConfigValue(T& configValue, int splitNum)
@@ -217,45 +182,40 @@ void SaveData::SetPadStickSensitivityY()
 // パッドのスティックのX軸リバースの設定
 void SaveData::SetPadStickReverseX()
 {
-	if (InputState::IsTriggered(InputType::RIGHT) ||
-		InputState::IsTriggered(InputType::LEFT))
-	{
-	//	saveData_.padStickReverseX = (saveData_.padStickReverseX) ? (!saveData_.padStickReverseX) : (saveData_.padStickReverseX);
-		if (saveData_.padStickReverseX)
-		{
-			saveData_.padStickReverseX = false;
-		}
-		else
-		{
-			saveData_.padStickReverseX = true;
-		}
-	}
-	
-	// セーブデータに書き込む
-	SaveData::GetInstance().Write();
+	SetConfigSwitch(saveData_.padStickReverseX);
 }
 
 // パッドのスティックのY軸リバースの設定
 void SaveData::SetPadStickReverseY()
 {
+	SetConfigSwitch(saveData_.padStickReverseY);
+}
+
+void SaveData::SetWindowMode()
+{
+	SetConfigSwitch(saveData_.windowMode);
+}
+
+SaveData::Data SaveData::GetSaveData() const
+{
+	return saveData_;
+}
+
+void SaveData::SetConfigSwitch(bool& config)
+{
 	if (InputState::IsTriggered(InputType::RIGHT) ||
 		InputState::IsTriggered(InputType::LEFT))
 	{
-		if (saveData_.padStickReverseY)
+		if (config)
 		{
-			saveData_.padStickReverseY = false;
+			config = false;
 		}
 		else
 		{
-			saveData_.padStickReverseY = true;
+			config = true;
 		}
 	}
-	
+
 	// セーブデータに書き込む
 	SaveData::GetInstance().Write();
-}
-
-SaveData::Data SaveData::GetSaveData()
-{
-	return saveData_;
 }

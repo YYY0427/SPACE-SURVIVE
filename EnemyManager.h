@@ -17,7 +17,6 @@ public:
 	// ‘¶İ‚µ‚Ä‚¢‚é‚©‚ÌŠm”F
 	void CheckEnabled();
 
-
 	std::list<std::shared_ptr<Enemy>> GetEnemies();
 private:
 	std::shared_ptr<Player> pPlayer_;

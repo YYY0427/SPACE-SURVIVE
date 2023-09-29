@@ -184,12 +184,12 @@ void SoundManager::SetVolume(std::string fileName, int volume)
 	if (soundDataTable_[fileName].type == SoundType::BGM)
 	{
 		// BGM
-		configVolume = SaveData::GetInstance().GetBgmVolume();
+		configVolume = SaveData::GetInstance().GetSaveData().bgmVolume;
 	}
 	else
 	{
 		// SE
-		configVolume = SaveData::GetInstance().GetSeVolume();
+		configVolume = SaveData::GetInstance().GetSaveData().seVolume;
 	}
 
 	// 設定したい音量とサウンドに設定された音量とコンフィグで設定された音量から求めた最終的な音量に設定

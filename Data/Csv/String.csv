@@ -10,6 +10,8 @@ OptionItemWindowMode,画面モード,あずきフォント,20,3
 OptionItemMasterVolume,マスター,あずきフォント,20,3
 OptionItemBgmVolume,音楽,あずきフォント,20,3
 OptionItemPadSetting,コントローラー設定,あずきフォント,20,3
+OptionItemWindowModeOn,フルスクリーン,あずきフォント,20,3
+OptionItemWindowModeOff,ウィンドウ,あずきフォント,20,3
 OptionItemSeVolume,効果音,あずきフォント,20,3
 OptionItemBack,戻る,あずきフォント,20,3
 PadSettingTitle,パッド設定,あずきフォント,50,5

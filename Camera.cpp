@@ -46,12 +46,12 @@ void Camera::Update()
 	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
 
 	// セーブデータの感度情報の取得
-	int padStickSensX = SaveData::GetInstance().GetPadStickSensitivityX();
-	int padStickSensY = SaveData::GetInstance().GetPadStickSensitivityY();
+	int padStickSensX = SaveData::GetInstance().GetSaveData().padStickSensitivityX;
+	int padStickSensY = SaveData::GetInstance().GetSaveData().padStickSensitivityY;
 
 	// セーブデータのリバース情報の取得
-	bool padStickReversX = SaveData::GetInstance().GetPadStickReverseX();
-	bool padStickReversY = SaveData::GetInstance().GetPadStickReverseY();
+	bool padStickReversX = SaveData::GetInstance().GetSaveData().padStickReverseX;
+	bool padStickReversY = SaveData::GetInstance().GetSaveData().padStickReverseY;
 
 	int x = 1, y = 1;
 	if (padStickReversX)	x *= -1;

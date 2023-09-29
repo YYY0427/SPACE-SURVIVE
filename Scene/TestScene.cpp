@@ -83,8 +83,6 @@ void TestScene::NormalUpdate()
 	// ƒ|[ƒY‰æ–Ê‚É‘JˆÚ
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{
-	//	Effekseer3DEffectManager::GetInstance().StopAllEffect();
-
 		StartFadeOut(200, 64);
 	}
 	if (IsStartFadeOutAfterFadingOut())

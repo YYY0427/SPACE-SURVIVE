@@ -31,6 +31,8 @@ void MainScene::Update()
 // 通常の更新
 void MainScene::NormalUpdate()
 {
+
+
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{

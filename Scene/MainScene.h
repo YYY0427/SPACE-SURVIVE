@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 
+class Player;
+
 // メインシーン
 // ゲームのメインの処理を行うシーン
 class MainScene : public Scene

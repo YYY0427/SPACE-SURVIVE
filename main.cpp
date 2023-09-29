@@ -47,12 +47,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// 垂直同期を有効化
 	SetWaitVSyncFlag(TRUE);
 
+	// 3Dでの描画処理のサポート
+	SetUseLarge3DPositionSupport(TRUE);
+
 	// ＤＸライブラリ初期化処理
 	if (DxLib_Init() == -1)
 	{
 		// エラーが起きたら止める
 		assert(0);
 	}
+	// 非同期読み込み設定に変更
+//	SetUseASyncLoadFlag(TRUE);
+
 	// Effekseerの初期化
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 	effectManager.Init();
@@ -141,8 +147,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// escキーを押したら終了する
 		if (CheckHitKey(KEY_INPUT_ESCAPE))	break;
 #endif
-		// fpsを60に固定
-		while (GetNowHiPerformanceCount() - time < 16667)
+		// fpsを固定
+		while (GetNowHiPerformanceCount() - time < (static_cast<long long>((1000 / common::fps)) * 1000))
 		{
 
 		}

@@ -21,4 +21,5 @@ public:
 private:
 	std::shared_ptr<Player> pPlayer_;
 	std::list<std::shared_ptr<Enemy>> pEnemies_;
+	int handle_;
 };

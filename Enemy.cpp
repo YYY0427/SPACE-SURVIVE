@@ -5,15 +5,15 @@
 
 namespace
 {
-	const std::string model_file_path = "Data/Model/Cube.mv1";
+	const std::string model_file_path = "Data/Model/Meteor.mv1";
 }
 
-Enemy::Enemy(VECTOR pos, VECTOR vec, float scale, std::shared_ptr<Player> pPlayer) :
+Enemy::Enemy(int handle, VECTOR pos, VECTOR vec, float scale, std::shared_ptr<Player> pPlayer) :
 	pPlayer_(pPlayer),
 	isEnabled_(true),
 	timer_(0)
 {
-	pModel_ = std::make_shared<Model>(model_file_path);
+	pModel_ = std::make_shared<Model>(handle);
 	pModel_->SetUseCollision(true);
 	pModel_->SetScale(VGet(scale, scale, scale));
 	pos_ = pos;

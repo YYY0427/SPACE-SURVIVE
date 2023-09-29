@@ -118,9 +118,16 @@ bool Scene::IsStartFadeOutAfterFadingOut()
 	return !IsFadingOut() && isFadeOut_;
 }
 
+// フェードの明るさの取得
 int Scene::GetFadeBright() const
 {
 	return fadeBright_;
+}
+
+// フェードの明るさの設定
+void Scene::SetFadeBright(int fadeBright)
+{
+	fadeBright_ = fadeBright;
 }
 
 /// <summary>

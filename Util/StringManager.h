@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "../common.h"
 
+// 文字列を管理するクラス
 class StringManager
 {
 public:
@@ -81,7 +82,7 @@ private:
 	// 文字列のデータ
 	struct StringData
 	{
-		int fontHandle;
+		int fontHandle = -1;
 		std::string string;
 	};
 private:

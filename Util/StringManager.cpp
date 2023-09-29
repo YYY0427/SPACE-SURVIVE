@@ -152,7 +152,7 @@ void StringManager::DrawFormatStringCenter(std::string id, int num, int x, int y
 	// ロードしていない場合は止める
 	assert(stringDataTable_.find(id) != stringDataTable_.end());
 
-	// フォントサイズ、、文字列の長さから文字列の横幅の取得
+	// フォントサイズ、文字列の長さから文字列の横幅の取得
 	std::string string = std::to_string(num);
 	int fontHandle = stringDataTable_[id].fontHandle;
 	int width = GetDrawStringWidthToHandle(string.c_str(), static_cast<int>(strlen(string.c_str())), fontHandle);

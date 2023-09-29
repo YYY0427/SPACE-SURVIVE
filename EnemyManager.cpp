@@ -10,10 +10,12 @@ namespace
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer) :
 	pPlayer_(pPlayer)
 {
+	handle_ = MV1LoadModel("Data/Model/Meteor.mv1");
 }
 
 EnemyManager::~EnemyManager()
 {
+	MV1DeleteModel(handle_);
 }
 
 void EnemyManager::Update()
@@ -21,21 +23,21 @@ void EnemyManager::Update()
 	float vecZ = GetRand(10) - 5;
 	float vecY = GetRand(10) - 5;
 
-	float scale = (GetRand(10) + 10) * 5;
+	float scale = (GetRand(5));
 
 	static int timer = 0;
 	static bool isWitch = false;
 	timer++;
-	if (timer % 10 == 0)
+	if (timer % 100 == 0)
 	{
 		if(!isWitch)
 		{
-			pEnemies_.push_back(std::make_shared<Enemy>(model_pos, VGet(-5.0f, vecY, vecZ), scale, pPlayer_));
+			pEnemies_.push_back(std::make_shared<Enemy>(handle_, model_pos, VGet(-5.0f, vecY, vecZ), scale, pPlayer_));
 			isWitch = true;
 		}
 		else
 		{
-			pEnemies_.push_back(std::make_shared<Enemy>(model_pos_2, VGet(5.0f, vecY, vecZ), scale, pPlayer_));
+			pEnemies_.push_back(std::make_shared<Enemy>(handle_, model_pos_2, VGet(5.0f, vecY, vecZ), scale, pPlayer_));
 			isWitch = false;
 		}
 	}

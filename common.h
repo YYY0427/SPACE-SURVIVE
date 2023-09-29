@@ -11,7 +11,7 @@ namespace common
 #endif
 
 	// Window名
-	const char* const title_text = "SPACE_SURVIVE";
+	const char* const title_text = "SPACE SURVIVE";
 
 	// Windowサイズ
 	constexpr int screen_width = 1280;
@@ -28,4 +28,7 @@ namespace common
 
 	// コンフィグで設定するパッドの感度を何個に分けるか
 	constexpr int config_pad_sensitivity_num = 10;
+
+	// fps制限
+	constexpr int fps = 60;
 };

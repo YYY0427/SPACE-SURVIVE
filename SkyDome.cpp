@@ -5,7 +5,7 @@
 
 namespace
 {
-	const std::string model_file_path = "Data/Model/testSkydome.mv1";
+	const std::string model_file_path = "Data/Model/TestSkydome.mv1";
 
 	constexpr float model_scale = 15.0f;
 }

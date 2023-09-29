@@ -8,7 +8,7 @@ class Player;
 class Enemy
 {
 public:
-	Enemy(VECTOR pos, VECTOR vec, float scale, std::shared_ptr<Player> pPlayer);
+	Enemy(int handle, VECTOR pos, VECTOR vec, float scale, std::shared_ptr<Player> pPlayer);
 	virtual ~Enemy();
 
 	void Update();

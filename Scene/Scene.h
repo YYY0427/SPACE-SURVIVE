@@ -69,8 +69,14 @@ public:
 	///			false : フェードアウト処理をスタートしていない,　スタートしているがフェードアウト中</returns>
 	bool IsStartFadeOutAfterFadingOut();
 
+	// フェードの明るさの取得
 	int GetFadeBright() const;
-	void SetFadeBright(int fadeBright) { fadeBright_ = fadeBright; }
+
+	/// <summary>
+	/// フェードの明るさの設定
+	/// </summary>
+	/// <param name="fadeBright">設定したい明るさの値</param>
+	void SetFadeBright(int fadeBright);
 protected:
 	// シーンマネーシャーの参照
 	SceneManager& manager_;

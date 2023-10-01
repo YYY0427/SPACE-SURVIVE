@@ -26,7 +26,7 @@ TitleScene::TitleScene(SceneManager& manager) :
 	updateFunc_(&TitleScene::NormalUpdate),
 	currentSelectItem_(0)
 {
-	handle_ = LoadGraph("Data/title.png");
+	handle_ = LoadGraph("Data/Image/title.png");
 
 	fadeDataTable_[static_cast<int>(Item::START)] = { 255, 8, true, true };
 	fadeDataTable_[static_cast<int>(Item::END)] = { 255, 8, true, true };

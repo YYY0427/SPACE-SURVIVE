@@ -5,6 +5,7 @@
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
+#include "../Util/DataReaderFromUnity.h"
 #include "../Camera.h"
 #include "../Player.h"
 #include "../SkyDome.h"
@@ -18,13 +19,16 @@ TestScene::TestScene(SceneManager& manager) :
 	updateFunc_(&TestScene::NormalUpdate)
 {
 	// インスタンス作成
+	pDataReader_ = std::make_shared<DataReaderFromUnity>();
 	pPlayer_ = std::make_shared<Player>();
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
-	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
+//	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_);
 
 	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
+
+	pDataReader_->LoadUnityGameObjectData();
 }
 
 //  デストラクタ
@@ -53,6 +57,13 @@ void TestScene::Draw()
 	GroundLineDraw();
 	pEnemyManager_->Draw();
 	pPlayer_->Draw();
+
+	int x = 200, y = 200;
+	for (const auto& data : pDataReader_->GetData())
+	{
+		DrawFormatString(x, y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}", data.name.c_str(), data.pos.x, data.pos.y, data.pos.z, data.rot.x, data.rot.y, data.rot.z);
+		y += 16;
+	}
 
 	// フェードの描画
 	DrawFade(true);

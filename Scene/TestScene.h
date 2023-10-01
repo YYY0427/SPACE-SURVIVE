@@ -7,6 +7,7 @@ class EnemyManager;
 class SkyDome;
 class Camera;
 class Player;
+class DataReaderFromUnity;
 
 // テストシーン
 // 色々試すようのシーン
@@ -46,5 +47,6 @@ private:
 	std::shared_ptr<Player> pPlayer_;
 	std::shared_ptr<EnemyManager> pEnemyManager_;
 	std::shared_ptr<SkyDome> pSkyDome_;
+	std::shared_ptr<DataReaderFromUnity> pDataReader_;
 };
 

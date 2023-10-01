@@ -10,8 +10,8 @@
 
 namespace
 {
-	// セーブデータファイル名
-	const std::string data_file_path = "Data/Save/Data.dat";
+	// ファイルのパス
+	const std::string data_file_path = "Data/Save/SaveData.dat";
 
 	// セーブデータバージョン　
 	constexpr int current_save_version = 0;

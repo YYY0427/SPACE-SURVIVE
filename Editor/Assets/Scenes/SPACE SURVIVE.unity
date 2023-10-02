@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 413253557}
   - component: {fileID: 413253556}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413253554}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 50, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 556080636}
   - component: {fileID: 556080635}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 1060129615}
   - component: {fileID: 1060129614}
   m_Layer: 0
-  m_Name: player
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -643,7 +643,7 @@ GameObject:
   - component: {fileID: 1619681704}
   - component: {fileID: 1619681703}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 2010927417}
   - component: {fileID: 2010927416}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -837,7 +837,7 @@ GameObject:
   - component: {fileID: 2076346912}
   - component: {fileID: 2076346911}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -934,7 +934,7 @@ GameObject:
   - component: {fileID: 2115981788}
   - component: {fileID: 2115981787}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

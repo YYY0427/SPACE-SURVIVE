@@ -5,6 +5,8 @@ namespace
 {
 	// // ファイルのパス
 	const std::string data_file_path = "Data/ObjectData.dat";
+
+	const std::string player_data_name = "player";
 }
 
 // コンストラクタ
@@ -28,13 +30,10 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 	int result = FileRead_read(&dataNum, sizeof(dataNum), dataHandle);
 	assert(result != -1);
 
-	// オブジェクト数ぶん配列を確保
-	data_.resize(dataNum);
-
 	// データの読み取り
 	for (int i = 0; i < dataNum; i++)
 	{
-		auto& data = data_[i];
+		UnityGameObject data;
 
 		// 名前の文字列数の読み取り
 		uint8_t nameSize = 0;
@@ -53,16 +52,26 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		// 回転データxyzを読む
 		result = FileRead_read(&data.rot, sizeof(data.rot), dataHandle);
 		assert(result != -1);
+
+		// 度数法を弧度法に変換
+		data.rot.x = RadianFromDegree(data.rot.x);
+		data.rot.y = RadianFromDegree(data.rot.y);
+		data.rot.z = RadianFromDegree(data.rot.z);
+
+		if (data.name == "player")
+		{
+			playerData_ = data;
+		}
+		else if (data.name == "enemy")
+		{
+			enemyData_.push_back(data);
+		}
+		else
+		{
+			assert(0);
+		}
 	}
 	FileRead_close(dataHandle);
-
-	// 度数法を弧度法に変換
-	for (auto& object : data_)
-	{
-		object.rot.x = RadianFromDegree(object.rot.x);
-		object.rot.y = RadianFromDegree(object.rot.y);
-		object.rot.z = RadianFromDegree(object.rot.z);
-	}
 }
 
 // 度数法から弧度法(180->π)
@@ -72,7 +81,12 @@ float DataReaderFromUnity::RadianFromDegree(float degree)
 }
 
 // 読み取ったデータの取得
-std::vector<DataReaderFromUnity::UnityGameObject> DataReaderFromUnity::GetData() const
+std::vector<DataReaderFromUnity::UnityGameObject> DataReaderFromUnity::GetEnemyData() const
 {
-	return data_;
+	return enemyData_;
+}
+
+DataReaderFromUnity::UnityGameObject DataReaderFromUnity::GetPlayerData() const
+{
+	return playerData_;
 }

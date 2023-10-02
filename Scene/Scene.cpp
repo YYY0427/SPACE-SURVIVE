@@ -21,11 +21,23 @@ Scene::Scene(SceneManager& manager) :
 	fadeSpeed_(-fade_normal_speed),
 	fadeBrightUpperLimitValue_(255)
 {
-	gaussScreen_ = MakeScreen(common::screen_width, common::screen_height);
 }
 
 // デストラクタ
 Scene::~Scene()
+{
+	// 処理なし
+}
+
+// 初期化
+void Scene::Init()
+{
+	// モザイク処理用のグラフィックの作成
+	gaussScreen_ = MakeScreen(common::screen_width, common::screen_height);
+}
+
+// 終了処理
+void Scene::End()
 {
 	DeleteGraph(gaussScreen_);
 }

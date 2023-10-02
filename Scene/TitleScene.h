@@ -15,6 +15,12 @@ public:
 	// デストラクタ
 	virtual ~TitleScene();
 
+	// 初期化
+	void Init();
+
+	// 終了処理
+	void End();
+
 	// メンバ関数ポインタの更新
 	void Update();
 
@@ -25,6 +31,7 @@ private:
 	// 通常状態の更新
 	void NormalUpdate();
 private:
+	// フェード設定データ
 	struct FadeData
 	{
 		int fadeValue;
@@ -33,11 +40,12 @@ private:
 		bool isGaussFade;
 	};
 private:
+	// 項目
 	enum class Item
 	{
-		START,
-		OPSITON,
-		END,				
+		START,				// ゲームスタート
+		OPSITON,			// オプション
+		END,				// ゲーム終了
 		TOTAL_VALUE			// 項目の合計値
 	};
 private:
@@ -45,8 +53,10 @@ private:
 	// Updateを切り替えるために作成
 	void (TitleScene::* updateFunc_)();
 
+	// 画像ハンドル
 	int handle_;
 
+	// フェード設定のデータテーブル
 	std::array<FadeData, static_cast<int>(Item::TOTAL_VALUE)> fadeDataTable_;
 
 	// 現在選択中の項目

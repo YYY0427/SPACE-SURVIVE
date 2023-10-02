@@ -15,26 +15,28 @@ public:
 	// デストラクタ
 	virtual ~OptionScene();
 
+	// 初期化
+	void Init();
+
+	// 終了処理
+	void End();
+
 	// 更新
 	void Update();
 
 	// 描画
 	void Draw();
 private:
-	// 設定シーンの項目
+	// 項目
 	enum class Item
 	{
-		LANGUAGE, 
-		WINDOW_MODE,
-		MASTER_VOLUME,
-		BGM_VOLUME,	
-		SE_VOLUME,
-		PAD_SETTING, 
-		BACK,
-		/*PAD_STICK_SENS_X,
-		PAD_STICK_SENS_Y,
-		PAD_STICK_REVERSE_X,
-		PAD_STICK_REVERSE_Y,*/
+		LANGUAGE,			// 言語
+		WINDOW_MODE,		// ウィンドウモード
+		MASTER_VOLUME,		// 全体音量
+		BGM_VOLUME,			// BGM音量
+		SE_VOLUME,			// SE音量
+		PAD_SETTING,		// パッド設定シーン
+		BACK,				// 戻る
 		TOTAL_VALUE			// 項目の合計値
 	};
 
@@ -43,7 +45,7 @@ private:
 	int currentSelectItem_;
 
 	// 項目の描画色データ
-	std::vector<int> itemColorDataTable_;
+	std::vector<int> itemColorTable_;
 
 	// 音量アイコンの画像ハンドル
 	int soundIconImgHandle_;

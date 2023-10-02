@@ -24,10 +24,6 @@ public:
 	// 描画
 	void Draw();
 private:
-	struct FadeData
-	{
-	};
-private:
 	// デバッグシーンから飛べるシーンの項目
 	enum class Item
 	{

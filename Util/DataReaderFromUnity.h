@@ -32,8 +32,12 @@ public:
 	float RadianFromDegree(float degree);
 
 	// 読み取ったデータの取得
-	std::vector<UnityGameObject> GetData() const;
+	std::vector<UnityGameObject> GetEnemyData() const;	// 敵
+	UnityGameObject GetPlayerData() const;				// プレイヤー
+
 private:
 	// 
-	std::vector<UnityGameObject> data_;
+	std::vector<UnityGameObject> enemyData_;
+
+	UnityGameObject playerData_;
 };

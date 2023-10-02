@@ -26,8 +26,20 @@ TitleScene::TitleScene(SceneManager& manager) :
 	updateFunc_(&TitleScene::NormalUpdate),
 	currentSelectItem_(0)
 {
-	handle_ = LoadGraph("Data/Image/title.png");
+}
 
+// デストラクタ
+TitleScene::~TitleScene()
+{
+}
+
+// 初期化
+void TitleScene::Init()
+{
+	// 画像のロード
+	handle_ = my::MyLoadGraph("Data/Image/title.png");
+
+	// フェードの設定
 	fadeDataTable_[static_cast<int>(Item::START)] = { 255, 8, true, true };
 	fadeDataTable_[static_cast<int>(Item::END)] = { 255, 8, true, true };
 	fadeDataTable_[static_cast<int>(Item::OPSITON)] = { 200, 8, true, true };
@@ -36,8 +48,8 @@ TitleScene::TitleScene(SceneManager& manager) :
 	SoundManager::GetInstance().PlayBGM("bgmTest");
 }
 
-// デストラクタ
-TitleScene::~TitleScene()
+// 終了処理
+void TitleScene::End()
 {
 	DeleteGraph(handle_);
 }
@@ -72,20 +84,28 @@ void TitleScene::NormalUpdate()
 	// フェードアウトが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		switch (currentSelectItem_)
+		switch (static_cast<Item>(currentSelectItem_))
 		{
-		case static_cast<int>(Item::START):
+		// ゲームスタート
+		case Item::START:
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
-		case static_cast<int>(Item::OPSITON):
+
+		// オプション
+		case Item::OPSITON:
 			manager_.PushScene(new OptionScene(manager_));
 			break;
-		case static_cast<int>(Item::END):
+
+		// ゲーム終了
+		case Item::END:
 			manager_.SetIsGameEnd(true);
 			return;
+
+		// ありえないので止める
 		default:
 			assert(0);
 		}
+
 		// PushSceneした場合シーンが残ったままなので
 		// フェードインを開始する
 		StartFadeIn();
@@ -114,7 +134,7 @@ void TitleScene::Draw()
 	stringManager.DrawString("TitleItemSelectBarRight", common::screen_width / 2 - 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 	stringManager.DrawString("TitleItemSelectBarLeft", common::screen_width / 2  + 90, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 
-	// フェードの描画
+	// モザイクフェードの描画
 	DrawGaussFade(fadeDataTable_[currentSelectItem_].isFade);
 
 	// フェードの描画

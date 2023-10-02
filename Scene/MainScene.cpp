@@ -15,14 +15,8 @@
 
 // コンストラクタ
 MainScene::MainScene(SceneManager& manager) :
-	Scene(manager),
-	updateFunc_(&MainScene::NormalUpdate)
+	Scene(manager)
 {
-	// インスタンス作成
-	pPlayer_ = std::make_shared<Player>();
-	pCamera_ = std::make_shared<Camera>(pPlayer_);
-//	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
-	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_);
 }
 
 // デストラクタ
@@ -34,8 +28,21 @@ MainScene::~MainScene()
 // 初期化
 void MainScene::Init()
 {
+	// オブジェクトの配置データの読み込み
+	pDataReader_ = std::make_shared<DataReaderFromUnity>();
+	pDataReader_->LoadUnityGameObjectData();
+
+	pPlayer_ = std::make_shared<Player>(pDataReader_->GetPlayerData());
+	pCamera_ = std::make_shared<Camera>(pPlayer_);
+	pEnemyManager_ = std::make_shared<EnemyManager>(pDataReader_->GetRockData(), pPlayer_);
+	//	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
+
 	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
+
+	pPlayer_->Init();
+	pEnemyManager_->Init();
+	updateFunc_ = &MainScene::NormalUpdate;
 }
 
 // メンバ関数ポインタの更新

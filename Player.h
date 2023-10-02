@@ -1,6 +1,7 @@
 #pragma once
 #include <DxLib.h>
 #include <memory>
+#include "Util/DataReaderFromUnity.h"
 
 class Model;
 class Camera;
@@ -9,11 +10,17 @@ class Camera;
 class Player
 {
 public:
-	// コンストラクタ
-	Player();
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="data"></param>
+	Player(DataReaderFromUnity::UnityGameObject data);
 
 	// デストラクタ
 	virtual ~Player();
+
+	// 初期化
+	void Init();
 
 	// 通常の更新
 	void Update();
@@ -61,6 +68,9 @@ private:
 	// 位置情報
 	VECTOR pos_;
 	
+	// 回転
+	VECTOR rot_;
+
 	// 移動ベクトル
 	VECTOR moveVec_;
 

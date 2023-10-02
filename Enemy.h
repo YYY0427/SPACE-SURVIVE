@@ -20,10 +20,9 @@ public:
 	// 存在するか
 	bool GetIsEnabled();
 private:
-	// 参照
-	std::shared_ptr<Player> pPlayer_;
 
 	// ポインタ
+	std::shared_ptr<Player> pPlayer_;
 	std::shared_ptr<Model> pModel_;
 
 	// 座標

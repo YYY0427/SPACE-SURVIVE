@@ -11,10 +11,13 @@ namespace
 	std::string model_file_path = "Data/Model/UFO.mv1";
 
 	// プレイヤーの移動量
-	constexpr VECTOR player_vec_up{ 0, 0, -1 };
-	constexpr VECTOR player_vec_down{ 0, 0, 1 };
-	constexpr VECTOR player_vec_right{ 1, 0, 0 };
-	constexpr VECTOR player_vec_left{ -1, 0, 0 };
+	constexpr VECTOR player_vec_up = { 0, 0, -1 };
+	constexpr VECTOR player_vec_down = { 0, 0, 1 };
+	constexpr VECTOR player_vec_right = { 1, 0, 0 };
+	constexpr VECTOR player_vec_left = { -1, 0, 0 };
+
+	// モデルの拡大率
+	constexpr VECTOR model_scale = { 10.0f, 10.0f, 10.0f };
 
 	// プレイヤーの通常移動速度
 	constexpr float move_normal_speed = 3.0f;
@@ -45,8 +48,9 @@ namespace
 }
 
 //  コンストラクタ
-Player::Player() :
-	pos_(VGet(0.0f, 2000.0f, 0.0f)),
+Player::Player(DataReaderFromUnity::UnityGameObject data) :
+	pos_(data.pos),
+	rot_(data.rot),
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
@@ -57,17 +61,31 @@ Player::Player() :
 	isSlow_(false),
 	isReverseMoveVec_(false)
 {
-	// プレイヤーモデルのインスタンスの作成
-	pModel_ = std::make_shared<Model>(model_file_path.c_str());
-
-	// プレイヤーモデルの拡大率の設定
-	pModel_->SetScale(VGet(10.0f, 10.0f, 10.0f));
 }
 
 //  デストラクタ
 Player::~Player()
 {
 	// 処理なし
+}
+
+// 初期化
+void Player::Init()
+{
+	// プレイヤーモデルのインスタンスの作成
+	pModel_ = std::make_shared<Model>(model_file_path.c_str());
+
+	// モデルの拡大率の設定
+	pModel_->SetScale(model_scale);
+
+	// 回転率の設定
+	pModel_->SetRot(rot_);
+
+	// 位置情報の設定
+	pModel_->SetPos(pos_);
+
+	// アニメーションと当たり判定の更新
+	pModel_->Update();
 }
 
 // 更新
@@ -196,7 +214,6 @@ bool Player::GameOverUpdate()
 		{
 			return true;
 		}
-		return false;
 	}
 	
 	// 位置座標の設定
@@ -207,6 +224,8 @@ bool Player::GameOverUpdate()
 
 	// アニメーションと当たり判定の更新
 	pModel_->Update();
+
+	return false;
 }
 
 // ブーストの処理

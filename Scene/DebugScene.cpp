@@ -24,7 +24,6 @@ DebugScene::DebugScene(SceneManager& manager):
 	Scene(manager),
 	currentSelectItem_(0)
 {
-	
 }
 
 // デストラクタ

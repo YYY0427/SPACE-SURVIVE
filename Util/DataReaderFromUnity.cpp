@@ -3,10 +3,12 @@
 
 namespace
 {
-	// // ファイルのパス
+	// ファイルのパス
 	const std::string data_file_path = "Data/ObjectData.dat";
 
-	const std::string player_data_name = "player";
+	const std::string player_data_name = "Player";
+	const std::string rock_data_name = "Rock";
+	const std::string meteor_data_name = "Meteor";
 }
 
 // コンストラクタ
@@ -58,19 +60,26 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		data.rot.y = RadianFromDegree(data.rot.y);
 		data.rot.z = RadianFromDegree(data.rot.z);
 
-		if (data.name == "player")
+		// 名前によって保存する変数を変える
+		if (data.name == player_data_name)
 		{
 			playerData_ = data;
 		}
-		else if (data.name == "enemy")
+		else if (data.name == rock_data_name)
 		{
-			enemyData_.push_back(data);
+			rockData_.push_back(data);
+		}
+		else if (data.name == meteor_data_name)
+		{
+			meteorData_.push_back(data);
 		}
 		else
 		{
+			// ありえないので止める
 			assert(0);
 		}
 	}
+	// ファイルを閉じる
 	FileRead_close(dataHandle);
 }
 
@@ -80,12 +89,19 @@ float DataReaderFromUnity::RadianFromDegree(float degree)
 	return DX_PI_F * degree / 180.0f;
 }
 
-// 読み取ったデータの取得
-std::vector<DataReaderFromUnity::UnityGameObject> DataReaderFromUnity::GetEnemyData() const
+// 岩のデータの取得
+std::vector<DataReaderFromUnity::UnityGameObject> DataReaderFromUnity::GetRockData() const
 {
-	return enemyData_;
+	return rockData_;
 }
 
+// 隕石のデータの取得
+std::vector<DataReaderFromUnity::UnityGameObject> DataReaderFromUnity::GetMeteorData() const
+{
+	return meteorData_;
+}
+
+// プレイヤーのデータの取得
 DataReaderFromUnity::UnityGameObject DataReaderFromUnity::GetPlayerData() const
 {
 	return playerData_;

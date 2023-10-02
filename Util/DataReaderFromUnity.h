@@ -6,8 +6,7 @@
 // Unityで配置したオブジェクトのデータを読み取るクラス
 class DataReaderFromUnity
 {
-private:
-	// 
+public:
 	struct UnityGameObject
 	{
 		std::string name;
@@ -32,12 +31,17 @@ public:
 	float RadianFromDegree(float degree);
 
 	// 読み取ったデータの取得
-	std::vector<UnityGameObject> GetEnemyData() const;	// 敵
+	std::vector<UnityGameObject> GetRockData() const;	// 岩
+	std::vector<UnityGameObject> GetMeteorData() const;	// 岩
 	UnityGameObject GetPlayerData() const;				// プレイヤー
 
 private:
-	// 
-	std::vector<UnityGameObject> enemyData_;
+	// 岩のデータの保存用
+	std::vector<UnityGameObject> rockData_;
 
+	// 隕石のデータの保存用
+	std::vector<UnityGameObject> meteorData_;
+
+	// プレイヤーのデータの保存用
 	UnityGameObject playerData_;
 };

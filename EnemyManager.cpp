@@ -3,14 +3,14 @@
 
 namespace
 {
-	constexpr VECTOR model_pos = {3897, 1415, 60};
+	constexpr VECTOR model_pos = { 3897, 1415, 60 };
 	constexpr VECTOR model_pos_2 = { -3926, 1415, 110 };
 }
 
-EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer) :
+EnemyManager::EnemyManager(std::vector<DataReaderFromUnity::UnityGameObject> data, std::shared_ptr<Player> pPlayer) :
+	data_(data),
 	pPlayer_(pPlayer)
 {
-	handle_ = MV1LoadModel("Data/Model/Meteor.mv1");
 }
 
 EnemyManager::~EnemyManager()
@@ -18,9 +18,19 @@ EnemyManager::~EnemyManager()
 	MV1DeleteModel(handle_);
 }
 
+void EnemyManager::Init()
+{
+	handle_ = MV1LoadModel("Data/Model/Meteor.mv1");
+
+	for (auto& data : data_)
+	{
+		pEnemies_.push_back(std::make_shared<Enemy>(handle_, data.pos, VGet(-5.0f, 5, 5), 3, pPlayer_));
+	}
+}
+
 void EnemyManager::Update()
 {
-	float vecZ = GetRand(10) - 5;
+	/*float vecZ = GetRand(10) - 5;
 	float vecY = GetRand(10) - 5;
 
 	float scale = (GetRand(5));
@@ -40,7 +50,7 @@ void EnemyManager::Update()
 			pEnemies_.push_back(std::make_shared<Enemy>(handle_, model_pos_2, VGet(5.0f, vecY, vecZ), scale, pPlayer_));
 			isWitch = false;
 		}
-	}
+	}*/
 
 	for (auto& enemies : pEnemies_)
 	{

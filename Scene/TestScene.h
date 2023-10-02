@@ -23,6 +23,9 @@ public:
 	// デストラクタ
 	virtual ~TestScene();
 
+	// 初期化
+	void Init();
+
 	// メンバ関数ポインタの更新
 	void Update();
 

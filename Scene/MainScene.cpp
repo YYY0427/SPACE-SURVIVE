@@ -23,14 +23,19 @@ MainScene::MainScene(SceneManager& manager) :
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
 //	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_);
-
-	// コンストラクタで渡せないポインタの設定
-	pPlayer_->SetCameraPointer(pCamera_);
 }
 
 // デストラクタ
 MainScene::~MainScene()
 {
+	// 処理なし
+}
+
+// 初期化
+void MainScene::Init()
+{
+	// コンストラクタで渡せないポインタの設定
+	pPlayer_->SetCameraPointer(pCamera_);
 }
 
 // メンバ関数ポインタの更新

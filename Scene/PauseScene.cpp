@@ -7,6 +7,7 @@
 #include "../Util/StringManager.h"
 #include "../common.h"
 #include <DxLib.h>
+#include <cassert>
 
 namespace
 {
@@ -23,13 +24,6 @@ PauseScene::PauseScene(SceneManager& manager) :
 	Scene(manager),
 	currentSelectItem_(0)
 {
-	// フェードインを行わない
-	SetFadeBright(0);
-
-	// 各項目によってフェードの設定
-	fadeConfigTable_[static_cast<int>(Item::CONTINUE)] = { 0, 8, false, false, false};
-	fadeConfigTable_[static_cast<int>(Item::OPTION)] = { 255, 16, false , false, true };
-	fadeConfigTable_[static_cast<int>(Item::TITLE)] = { 255, 8, true, true, false };
 }
 
 // デストラクタ
@@ -38,17 +32,30 @@ PauseScene::~PauseScene()
 	// 処理なし
 }
 
+// 初期化
+void PauseScene::Init()
+{
+	// フェードインを行わない
+	SetFadeBright(0);
+
+	// 各項目によってフェードの設定
+	fadeConfigTable_[static_cast<int>(Item::CONTINUE)] = { 0, 8, false, false, false };
+	fadeConfigTable_[static_cast<int>(Item::OPTION)] = { 255, 16, false , false, true };
+	fadeConfigTable_[static_cast<int>(Item::TITLE)] = { 255, 8, true, true, false };
+}
+
 // 更新
 void PauseScene::Update()
 {
 	// 選択肢を回す処理
+	int itemTotalValue = static_cast<int>(Item::TOTAL_VALUE);
 	if (InputState::IsTriggered(InputType::UP))
 	{
-		currentSelectItem_ = ((currentSelectItem_ - 1) + static_cast<int>(Item::TOTAL_VALUE)) % static_cast<int>(Item::TOTAL_VALUE);
+		currentSelectItem_ = ((currentSelectItem_ - 1) + itemTotalValue) % itemTotalValue;
 	}
 	else if (InputState::IsTriggered(InputType::DOWN))
 	{
-		currentSelectItem_ = (currentSelectItem_ + 1) % static_cast<int>(Item::TOTAL_VALUE);
+		currentSelectItem_ = (currentSelectItem_ + 1) % itemTotalValue;
 	}
 
 	// 決定ボタンを押したらフェードアウト開始
@@ -69,27 +76,31 @@ void PauseScene::Update()
 	// フェードアウトが終わりしだい選択された項目に飛ぶ
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		switch (currentSelectItem_)
+		switch (static_cast<Item>(currentSelectItem_))
 		{
 		// 続ける
-		case static_cast<int>(Item::CONTINUE):
-
+		case Item::CONTINUE:
 			manager_.PopScene();
 			return;
-		// オプション
-		case static_cast<int>(Item::OPTION):
 
+		// オプション
+		case Item::OPTION:
 			manager_.PushScene(new OptionScene(manager_));
 			break;
-		// タイトル
-		case static_cast<int>(Item::TITLE):
 
+		// タイトル
+		case Item::TITLE:
 			// 全てのサウンドを止める
 			SoundManager::GetInstance().StopAllSound();
-
+			// タイトルに遷移
 			manager_.PopAllSceneAndChangeScene(new TitleScene(manager_));
 			return;
+
+		// ありえないので止める
+		default:
+			assert(0);
 		}
+
 		// PushSceneした場合シーンが残ったままなので
 		// フェードインの設定
 		StartFadeIn();

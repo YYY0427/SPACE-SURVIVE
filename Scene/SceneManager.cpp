@@ -7,12 +7,17 @@ void SceneManager::PopAllSceneAndChangeScene(Scene* scene)
 	// すべてのシーンの削除
 	for (auto& scene : scene_)
 	{
-		delete scene_.front();
-		scene_.pop_front(); 
+		// シーンの終了処理
+		scene->End();
+
+		// シーンの削除
+		delete scene;
 	}
+	// すべて配列を削除
+	scene_.clear();
 
 	// 次のシーンの追加
-	scene_.push_front(scene);
+	PushScene(scene);
 }
 
 // シーンの切り替え
@@ -21,19 +26,27 @@ void SceneManager::ChangeScene(Scene* scene)
 	// シーンスタックが空ではなかったら
 	if (!scene_.empty())
 	{
+		// シーンの終了処理
+		scene_.front()->End();
+
 		// 現在のシーンの削除
 		delete scene_.front();		
+
+		// 削除したシーンの配列を削除
 		scene_.pop_front();			
 	}
 	// 次のシーンの追加
-	scene_.push_front(scene);		
+	PushScene(scene);
 }
 
 // 現在のシーンの上にシーンを積む(ポーズ)
 void SceneManager::PushScene(Scene* scene)
 {
 	// シーンの追加
-	scene_.push_front(scene);		
+	scene_.push_front(scene);
+
+	// 初期化
+	scene_.front()->Init();
 }
 
 // 一番上のシーンを削除する
@@ -42,8 +55,13 @@ void SceneManager::PopScene()
 	// シーンが0にならないようにする
 	if (scene_.size() > 1)
 	{
-		// シーンの削除
+		// シーンの終了処理
+		scene_.front()->End();
+
+		// 現在のシーンの削除
 		delete scene_.front();
+
+		// 削除したシーンの配列を削除
 		scene_.pop_front();
 	}
 }

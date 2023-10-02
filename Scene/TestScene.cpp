@@ -24,17 +24,22 @@ TestScene::TestScene(SceneManager& manager) :
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
 //	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_);
-
-	// コンストラクタで渡せないポインタの設定
-	pPlayer_->SetCameraPointer(pCamera_);
-
-	pDataReader_->LoadUnityGameObjectData();
 }
 
 //  デストラクタ
 TestScene::~TestScene()
 {
 	// 処理なし
+}
+
+// 初期化
+void TestScene::Init()
+{
+	// コンストラクタで渡せないポインタの設定
+	pPlayer_->SetCameraPointer(pCamera_);
+
+	// オブジェクトの配置データの読み込み
+	pDataReader_->LoadUnityGameObjectData();
 }
 
 // メンバ関数ポインタの更新
@@ -59,11 +64,13 @@ void TestScene::Draw()
 	pPlayer_->Draw();
 
 	int x = 200, y = 200;
-	for (const auto& data : pDataReader_->GetData())
+	for (const auto& data : pDataReader_->GetEnemyData())
 	{
 		DrawFormatString(x, y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}", data.name.c_str(), data.pos.x, data.pos.y, data.pos.z, data.rot.x, data.rot.y, data.rot.z);
 		y += 16;
 	}
+
+	DrawFormatString(200, y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}", pDataReader_->GetPlayerData().name.c_str(), pDataReader_->GetPlayerData().pos.x, pDataReader_->GetPlayerData().pos.y, pDataReader_->GetPlayerData().pos.z, pDataReader_->GetPlayerData().rot.x, pDataReader_->GetPlayerData().rot.y, pDataReader_->GetPlayerData().rot.z);
 
 	// フェードの描画
 	DrawFade(true);

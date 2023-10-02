@@ -22,23 +22,33 @@ namespace
 	constexpr int choose_color = 0xffffff;
 }
 
+// コンストラクタ
 PadSettingScene::PadSettingScene(SceneManager& manager) : 
 	Scene(manager),
-	currentSelectItem_(0),
-	itemColorTable_({})
+	currentSelectItem_(0)
 {
-	for (auto& item : itemColorTable_)
+}
+
+// デストラクタ
+PadSettingScene::~PadSettingScene()
+{
+	// 処理なし
+}
+
+// 初期化
+void PadSettingScene::Init()
+{
+	// 項目の描画色を選択されていないときの色に初期化
+	for (int i = 0; i < static_cast<int>(Item::TOTAL_VALUE); i++)
 	{
-		item = normal_color;
+		itemColorTable_.push_back(normal_color);
 	}
 }
 
-PadSettingScene::~PadSettingScene()
-{
-}
-
+// 更新
 void PadSettingScene::Update()
 {
+	// カラーの初期化
 	for (auto& item : itemColorTable_)
 	{
 		item = normal_color;
@@ -55,73 +65,93 @@ void PadSettingScene::Update()
 		currentSelectItem_ = (currentSelectItem_ + 1) % itemTotalValue;
 	}
 
+	// 選択されている項目の色を変える
 	itemColorTable_[currentSelectItem_] = choose_color;
 
-	switch (currentSelectItem_)
+	// 選択されている項目がどれか
+	switch (static_cast<Item>(currentSelectItem_))
 	{
-	case static_cast<int>(Item::PAD_SENS_X):
+	// パッドスティックの横感度
+	case Item::PAD_SENS_X:
 		SaveData::GetInstance().SetPadStickSensitivityX();
 		break;
-	case static_cast<int>(Item::PAD_SENS_Y):
+
+	// パッドスティックの縦感度
+	case Item::PAD_SENS_Y:
 		SaveData::GetInstance().SetPadStickSensitivityY();
 		break;
-	case static_cast<int>(Item::PAD_REVERSE_X):
+
+	// パッドスティックの横反転
+	case Item::PAD_REVERSE_X:
 		SaveData::GetInstance().SetPadStickReverseX();
 		break;
-	case static_cast<int>(Item::PAD_REVERSE_Y):
+
+	// パッドスティックの縦反転
+	case Item::PAD_REVERSE_Y:
 		SaveData::GetInstance().SetPadStickReverseY();
 		break;
-	case static_cast<int>(Item::BACK):
+
+	// 戻る
+	case Item::BACK:
 		if(InputState::IsTriggered(InputType::DECISION)) manager_.PopScene();
 		return;
+
+	// ありえないので止める
 	default:
 		assert(0);
 	}
 
+	// 戻るボタンが押されたか
 	if (InputState::IsTriggered(InputType::BACK))
 	{
+		// ひとつ前のシーンに戻る
 		manager_.PopScene();
 		return;
 	}
 }
 
+// 描画
 void PadSettingScene::Draw()
 {
 	// インスタンスの取得
 	auto& stringManager = StringManager::GetInstance();
 	auto& saveData = SaveData::GetInstance();
 
-	// タイトルの描画
+	// タイトルの表示
 	stringManager.DrawStringCenter("PadSettingTitle", common::screen_width / 2, 100, 0xffffff);
 
-	// 項目の描画
-	int padSensXItemColor = static_cast<int>(Item::PAD_SENS_X);
-	int padSensYItemColor = static_cast<int>(Item::PAD_SENS_Y);
-	int padReverseXItemColor = static_cast<int>(Item::PAD_REVERSE_X);
-	int padReverseYItemColor = static_cast<int>(Item::PAD_REVERSE_Y);
-	int backItemColor = static_cast<int>(Item::BACK);
-	stringManager.DrawStringCenter("PadSettingItemSensX", draw_text_pos_x, draw_text_pos_y + text_space_y * padSensXItemColor, itemColorTable_[padSensXItemColor]);
-	stringManager.DrawStringCenter("PadSettingItemSensY", draw_text_pos_x, draw_text_pos_y + text_space_y * padSensYItemColor, itemColorTable_[padSensYItemColor]);
-	stringManager.DrawStringCenter("PadSettingItemReverseX", draw_text_pos_x, draw_text_pos_y + text_space_y * padReverseXItemColor, itemColorTable_[padReverseXItemColor]);
-	stringManager.DrawStringCenter("PadSettingItemReverseY", draw_text_pos_x, draw_text_pos_y + text_space_y * padReverseYItemColor, itemColorTable_[padReverseYItemColor]);
-	stringManager.DrawStringCenter("PadSettingItemBack", common::screen_width / 2, draw_text_pos_y + text_space_y * backItemColor, itemColorTable_[backItemColor]);
+	// 項目の表示
+	int padSensXItem = static_cast<int>(Item::PAD_SENS_X);
+	int padSensYItem = static_cast<int>(Item::PAD_SENS_Y);
+	int padReverseXItem = static_cast<int>(Item::PAD_REVERSE_X);
+	int padReverseYItem = static_cast<int>(Item::PAD_REVERSE_Y);
+	int backItem = static_cast<int>(Item::BACK);
+	stringManager.DrawStringCenter("PadSettingItemSensX", draw_text_pos_x, draw_text_pos_y + text_space_y * padSensXItem, itemColorTable_[padSensXItem]);
+	stringManager.DrawStringCenter("PadSettingItemSensY", draw_text_pos_x, draw_text_pos_y + text_space_y * padSensYItem, itemColorTable_[padSensYItem]);
+	stringManager.DrawStringCenter("PadSettingItemReverseX", draw_text_pos_x, draw_text_pos_y + text_space_y * padReverseXItem, itemColorTable_[padReverseXItem]);
+	stringManager.DrawStringCenter("PadSettingItemReverseY", draw_text_pos_x, draw_text_pos_y + text_space_y * padReverseYItem, itemColorTable_[padReverseYItem]);
+	stringManager.DrawStringCenter("PadSettingItemBack", common::screen_width / 2, draw_text_pos_y + text_space_y * backItem, itemColorTable_[backItem]);
 	
-	stringManager.DrawFormatStringCenter("PadSettingNumber", saveData.GetSaveData().padStickSensitivityX, common::screen_width / 2, draw_text_pos_y + text_space_y * padSensXItemColor, itemColorTable_[padSensXItemColor]);
-	stringManager.DrawFormatStringCenter("PadSettingNumber", saveData.GetSaveData().padStickSensitivityY, common::screen_width / 2, draw_text_pos_y + text_space_y * padSensYItemColor, itemColorTable_[padSensYItemColor]);
+	// パッドの感度の表示
+	stringManager.DrawFormatStringCenter("PadSettingNumber", saveData.GetSaveData().padStickSensitivityX, common::screen_width / 2, draw_text_pos_y + text_space_y * padSensXItem, itemColorTable_[padSensXItem]);
+	stringManager.DrawFormatStringCenter("PadSettingNumber", saveData.GetSaveData().padStickSensitivityY, common::screen_width / 2, draw_text_pos_y + text_space_y * padSensYItem, itemColorTable_[padSensYItem]);
 
-	DrawSwitch(saveData.GetSaveData().padStickReverseX, padReverseXItemColor);
-	DrawSwitch(saveData.GetSaveData().padStickReverseY, padReverseYItemColor);
+	// パッドの反転の表示
+	DrawPadReverse(saveData.GetSaveData().padStickReverseX, padReverseXItem);
+	DrawPadReverse(saveData.GetSaveData().padStickReverseY, padReverseYItem);
 }
 
-void PadSettingScene::DrawSwitch(bool isOn, int item)
+// パッドの反転のオン、オフの表示
+void PadSettingScene::DrawPadReverse(bool isOn, int item)
 {
+	// インスタンスの取得
 	auto& stringManager = StringManager::GetInstance();
-	if (isOn)
-	{
-		stringManager.DrawStringCenter("PadSettingItemReverseOn", common::screen_width / 2, draw_text_pos_y + text_space_y * item, itemColorTable_[item]);
-	}
-	else
-	{
-		stringManager.DrawStringCenter("PadSettingItemReverseOff", common::screen_width / 2, draw_text_pos_y + text_space_y * item, itemColorTable_[item]);
-	}
+
+	// isOnによってオン、オフ表示
+	(isOn) ? 
+		// true : オン表示
+		(stringManager.DrawStringCenter("PadSettingItemReverseOn", common::screen_width / 2, draw_text_pos_y + text_space_y * item, itemColorTable_[item])) : 
+
+		// false : オフ表示
+		(stringManager.DrawStringCenter("PadSettingItemReverseOff", common::screen_width / 2, draw_text_pos_y + text_space_y * item, itemColorTable_[item]));
 }

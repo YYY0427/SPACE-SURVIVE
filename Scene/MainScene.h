@@ -22,6 +22,8 @@ public:
 	// デストラクタ
 	virtual ~MainScene();
 
+	void Init();
+
 	// メンバ関数ポインタの更新
 	void Update();
 	

@@ -15,12 +15,16 @@ public:
 	// デストラクタ
 	virtual ~PauseScene();
 
+	// 初期化
+	void Init();
+
 	// 更新
 	virtual void Update() override;
 
 	// 描画
 	void Draw();
 private:
+	// フェード設定データ
 	struct FadeData
 	{
 		int fadeValue;
@@ -30,7 +34,7 @@ private:
 		bool isOnlyStringFade;
 	};
 private:
-	// ポーズシーンから選択できる項目
+	// 項目
 	enum class Item
 	{
 		CONTINUE,		// 続ける
@@ -39,7 +43,7 @@ private:
 		TOTAL_VALUE		// 項目の合計値
 	};
 private:
-	// 
+	// フェードの設定データテーブル
 	std::array<FadeData, static_cast<int>(Item::TOTAL_VALUE)> fadeConfigTable_;
 
 	// 選択中の項目

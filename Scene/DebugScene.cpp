@@ -36,7 +36,6 @@ DebugScene::~DebugScene()
 // 更新
 void DebugScene::Update()
 {
-
 	// 選択肢を回す処理
 	int sceneItemTotalValue = static_cast<int>(Item::TOTAL_VALUE);
 	if (InputState::IsTriggered(InputType::UP))
@@ -54,29 +53,42 @@ void DebugScene::Update()
 		// フェードアウト開始
 		StartFadeOut(255);
 	}
+
 	// フェードアウトが終わりしだい選択されたシーンに飛ぶ
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		switch (currentSelectItem_)
+		switch (static_cast<Item>(currentSelectItem_))
 		{
-		case static_cast<int>(Item::TEST_SCENE):
+		// テストシーン
+		case Item::TEST_SCENE:
 			manager_.ChangeScene(new TestScene(manager_));
 			return;
-		case static_cast<int>(Item::TITLE_SCENE):
+
+		// タイトルシーン
+		case Item::TITLE_SCENE:
 			manager_.ChangeScene(new TitleScene(manager_));
 			return;
-		case static_cast<int>(Item::MAIN_SCENE):
+
+		// メインシーン
+		case Item::MAIN_SCENE:
 			manager_.ChangeScene(new MainScene(manager_));
 			return;
-		case static_cast<int>(Item::OPTION_SCENE):
+
+		// オプションシーン
+		case Item::OPTION_SCENE:
 			manager_.PushScene(new OptionScene(manager_));
 			break;
-		case static_cast<int>(Item::PAUSE_SCENE):
+
+		// ポーズシーン
+		case Item::PAUSE_SCENE:
 			manager_.PushScene(new PauseScene(manager_));
 			break;
+
+		// ありえないので止める
 		default:
 			assert(0);
 		}
+
 		// PushSceneした場合シーンが残ったままなので
 		// フェードインの設定
 		StartFadeIn();
@@ -104,4 +116,7 @@ void DebugScene::Draw()
 
 	// フェードの描画
 	DrawFade(true);
+
+	// モザイクフェードの描画
+	DrawGaussFade(true);
 }

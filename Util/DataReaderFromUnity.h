@@ -2,6 +2,7 @@
 #include <string>
 #include <DxLib.h>
 #include <vector>
+#include <unordered_map>
 
 struct UnityGameObject
 {
@@ -32,17 +33,9 @@ public:
 	float RadianFromDegree(float degree);
 
 	// 読み取ったデータの取得
-	std::vector<UnityGameObject> GetRockData() const;	// 岩
-	std::vector<UnityGameObject> GetMeteorData() const;	// 岩
-	UnityGameObject GetPlayerData() const;				// プレイヤー
+	std::unordered_map<std::string, std::vector<UnityGameObject>> GetData() const;
 
 private:
-	// 岩のデータの保存用
-	std::vector<UnityGameObject> rockData_;
-
-	// 隕石のデータの保存用
-	std::vector<UnityGameObject> meteorData_;
-
-	// プレイヤーのデータの保存用
-	UnityGameObject playerData_;
+	// Unityでのオブジェクトの名前のIDとしたUnityで読み取ったデータのテーブルのデータタイプのテーブル
+	std::unordered_map<std::string, std::vector<UnityGameObject>> data_;
 };

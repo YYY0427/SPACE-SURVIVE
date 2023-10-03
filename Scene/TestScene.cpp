@@ -21,9 +21,9 @@ TestScene::TestScene(SceneManager& manager) :
 	// オブジェクトの配置データの読み込み
 	pDataReader_ = std::make_shared<DataReaderFromUnity>();
 	pDataReader_->LoadUnityGameObjectData();
-
-	pPlayer_ = std::make_shared<Player>(pDataReader_->GetPlayerData());
-	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetRockData(), pDataReader_->GetMeteorData(), pPlayer_);
+	
+	pPlayer_ = std::make_shared<Player>(pDataReader_->GetData().find("Player")->second.front());
+	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetData().find("Rock")->second, pDataReader_->GetData().find("Meteor")->second, pPlayer_);
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
 //	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
 

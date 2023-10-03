@@ -107,8 +107,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	sceneManager.ChangeScene(new TitleScene(sceneManager));
 #endif
 
-
-
 	// ˆÙí‚ª‹N‚«‚½‚ÉI—¹
 	while (ProcessMessage() == 0)
 	{

@@ -15,12 +15,6 @@ public:
 	// デストラクタ
 	virtual ~TitleScene();
 
-	// 初期化
-	void Init();
-
-	// 終了処理
-	void End();
-
 	// メンバ関数ポインタの更新
 	void Update();
 

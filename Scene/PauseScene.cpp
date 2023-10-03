@@ -24,17 +24,6 @@ PauseScene::PauseScene(SceneManager& manager) :
 	Scene(manager),
 	currentSelectItem_(0)
 {
-}
-
-// デストラクタ
-PauseScene::~PauseScene()
-{
-	// 処理なし
-}
-
-// 初期化
-void PauseScene::Init()
-{
 	// フェードインを行わない
 	SetFadeBright(0);
 
@@ -42,6 +31,12 @@ void PauseScene::Init()
 	fadeConfigTable_[static_cast<int>(Item::CONTINUE)] = { 0, 8, false, false, false };
 	fadeConfigTable_[static_cast<int>(Item::OPTION)] = { 255, 16, false , false, true };
 	fadeConfigTable_[static_cast<int>(Item::TITLE)] = { 255, 8, true, true, false };
+}
+
+// デストラクタ
+PauseScene::~PauseScene()
+{
+	// 処理なし
 }
 
 // 更新

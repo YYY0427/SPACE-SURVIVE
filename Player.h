@@ -14,13 +14,10 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="data"></param>
-	Player(DataReaderFromUnity::UnityGameObject data);
+	Player(UnityGameObject data);
 
 	// デストラクタ
 	virtual ~Player();
-
-	// 初期化
-	void Init();
 
 	// 通常の更新
 	void Update();
@@ -68,9 +65,6 @@ private:
 	// 位置情報
 	VECTOR pos_;
 	
-	// 回転
-	VECTOR rot_;
-
 	// 移動ベクトル
 	VECTOR moveVec_;
 

@@ -15,9 +15,6 @@ public:
 	// デストラクタ
 	virtual ~PauseScene();
 
-	// 初期化
-	void Init();
-
 	// 更新
 	virtual void Update() override;
 

@@ -1,5 +1,6 @@
 #pragma once
 
+// 全ファイル共通の定数
 // TODO:定数をまとめずにファイル分けする、それと外部ファイル化
 namespace common
 {

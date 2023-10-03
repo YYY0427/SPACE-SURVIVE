@@ -9,40 +9,32 @@
 #include "../Camera.h"
 #include "../Player.h"
 #include "../SkyDome.h"
-#include "../EnemyManager.h"
-#include "../Enemy.h"
+#include "../Rock/RockManager.h"
+#include "../Rock/RockBase.h"
 #include "../common.h"
 
 // コンストラクタ
 TestScene::TestScene(SceneManager& manager) :
-	Scene(manager)
-{
-}
-
-//  デストラクタ
-TestScene::~TestScene()
-{
-	// 処理なし
-}
-
-// 初期化
-void TestScene::Init()
+	Scene(manager),
+	updateFunc_(&TestScene::NormalUpdate)
 {
 	// オブジェクトの配置データの読み込み
 	pDataReader_ = std::make_shared<DataReaderFromUnity>();
 	pDataReader_->LoadUnityGameObjectData();
 
 	pPlayer_ = std::make_shared<Player>(pDataReader_->GetPlayerData());
+	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetRockData(), pDataReader_->GetMeteorData(), pPlayer_);
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
-	pEnemyManager_ = std::make_shared<EnemyManager>(pDataReader_->GetRockData(), pPlayer_);
 //	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
 
 	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
+}
 
-	pPlayer_->Init();
-	pEnemyManager_->Init();
-	updateFunc_ = &TestScene::NormalUpdate;
+//  デストラクタ
+TestScene::~TestScene()
+{
+	// 処理なし
 }
 
 // メンバ関数ポインタの更新
@@ -63,15 +55,17 @@ void TestScene::Draw()
 	// 各クラスの描画
 //	pSkyDome_->Draw();
 	GroundLineDraw();
-	pEnemyManager_->Draw();
+	pRockManager_->Draw();
 	pPlayer_->Draw();
 
 	int x = 200, y = 200;
 	for (const auto& data : pDataReader_->GetRockData())
 	{
-		DrawFormatString(x, y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}", data.name.c_str(), data.pos.x, data.pos.y, data.pos.z, data.rot.x, data.rot.y, data.rot.z);
+		DrawFormatString(x, y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}, scale {%.2f, %.2f, %.2f}", data.name.c_str(), data.pos.x, data.pos.y, data.pos.z, data.rot.x, data.rot.y, data.rot.z, data.scale.x, data.scale.y, data.scale.z);
 		y += 16;
 	}
+	auto player = pDataReader_->GetPlayerData();
+	DrawFormatString(x,  y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}, scale {%.2f, %.2f, %.2f}", player.name.c_str(), player.pos.x, player.pos.y, player.pos.z, player.rot.x, player.rot.y, player.rot.z, player.scale.x, player.scale.y, player.scale.z);
 
 	// フェードの描画
 	DrawFade(true);
@@ -87,10 +81,10 @@ void TestScene::NormalUpdate()
 //	pSkyDome_->Update();
 	pCamera_->Update();
 	pPlayer_->Update();
-	pEnemyManager_->Update();
+	pRockManager_->Update();
 
 	// 敵とぶつかったらゲームオーバー
-	for (auto& enemies : pEnemyManager_->GetEnemies())
+	for (auto& enemies : pRockManager_->GetRocks())
 	{
 		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(enemies->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
 		if (result.HitNum > 0)

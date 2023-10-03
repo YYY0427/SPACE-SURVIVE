@@ -27,22 +27,17 @@ PadSettingScene::PadSettingScene(SceneManager& manager) :
 	Scene(manager),
 	currentSelectItem_(0)
 {
+	// 項目の描画色を選択されていないときの色に初期化
+	for (int i = 0; i < static_cast<int>(Item::TOTAL_VALUE); i++)
+	{
+		itemColorTable_.push_back(normal_color);
+	}
 }
 
 // デストラクタ
 PadSettingScene::~PadSettingScene()
 {
 	// 処理なし
-}
-
-// 初期化
-void PadSettingScene::Init()
-{
-	// 項目の描画色を選択されていないときの色に初期化
-	for (int i = 0; i < static_cast<int>(Item::TOTAL_VALUE); i++)
-	{
-		itemColorTable_.push_back(normal_color);
-	}
 }
 
 // 更新

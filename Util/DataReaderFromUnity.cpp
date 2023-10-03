@@ -51,6 +51,9 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		result = FileRead_read(&data.pos, sizeof(data.pos), dataHandle);
 		assert(result != -1);
 
+		// Unityとの座標データを合わせるために100倍
+		data.pos = VScale(data.pos, 100);
+
 		// 回転データxyzを読む
 		result = FileRead_read(&data.rot, sizeof(data.rot), dataHandle);
 		assert(result != -1);
@@ -59,6 +62,10 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		data.rot.x = RadianFromDegree(data.rot.x);
 		data.rot.y = RadianFromDegree(data.rot.y);
 		data.rot.z = RadianFromDegree(data.rot.z);
+
+		// 拡大データxyzを読む
+		result = FileRead_read(&data.scale, sizeof(data.scale), dataHandle);
+		assert(result != -1);
 
 		// 名前によって保存する変数を変える
 		if (data.name == player_data_name)
@@ -90,19 +97,19 @@ float DataReaderFromUnity::RadianFromDegree(float degree)
 }
 
 // 岩のデータの取得
-std::vector<DataReaderFromUnity::UnityGameObject> DataReaderFromUnity::GetRockData() const
+std::vector<UnityGameObject> DataReaderFromUnity::GetRockData() const
 {
 	return rockData_;
 }
 
 // 隕石のデータの取得
-std::vector<DataReaderFromUnity::UnityGameObject> DataReaderFromUnity::GetMeteorData() const
+std::vector<UnityGameObject> DataReaderFromUnity::GetMeteorData() const
 {
 	return meteorData_;
 }
 
 // プレイヤーのデータの取得
-DataReaderFromUnity::UnityGameObject DataReaderFromUnity::GetPlayerData() const
+UnityGameObject DataReaderFromUnity::GetPlayerData() const
 {
 	return playerData_;
 }

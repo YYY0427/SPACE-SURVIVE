@@ -3,16 +3,17 @@
 #include <DxLib.h>
 #include <vector>
 
+struct UnityGameObject
+{
+	std::string name;
+	VECTOR pos;
+	VECTOR rot;
+	VECTOR scale;
+};
+
 // Unityで配置したオブジェクトのデータを読み取るクラス
 class DataReaderFromUnity
 {
-public:
-	struct UnityGameObject
-	{
-		std::string name;
-		VECTOR pos;
-		VECTOR rot;
-	};
 public:
 	// コンストラクタ
 	DataReaderFromUnity();

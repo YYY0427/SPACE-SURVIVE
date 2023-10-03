@@ -34,16 +34,6 @@ OptionScene::OptionScene(SceneManager& manager) :
 	currentSelectItem_(0),
 	soundIconImgHandle_(-1)
 {
-}
-
-// デストラクタ
-OptionScene::~OptionScene()
-{
-}
-
-// 初期化
-void OptionScene::Init()
-{
 	// フェードインを行わない
 	SetFadeBright(0);
 
@@ -57,8 +47,8 @@ void OptionScene::Init()
 	}
 }
 
-// 終了処理
-void OptionScene::End()
+// デストラクタ
+OptionScene::~OptionScene()
 {
 	// 画像ハンドルの削除
 	DeleteGraph(soundIconImgHandle_);

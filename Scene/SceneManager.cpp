@@ -7,9 +7,6 @@ void SceneManager::PopAllSceneAndChangeScene(Scene* scene)
 	// すべてのシーンの削除
 	for (auto& scene : scene_)
 	{
-		// シーンの終了処理
-		scene->End();
-
 		// シーンの削除
 		delete scene;
 	}
@@ -26,9 +23,6 @@ void SceneManager::ChangeScene(Scene* scene)
 	// シーンスタックが空ではなかったら
 	if (!scene_.empty())
 	{
-		// シーンの終了処理
-		scene_.front()->End();
-
 		// 現在のシーンの削除
 		delete scene_.front();		
 
@@ -44,9 +38,6 @@ void SceneManager::PushScene(Scene* scene)
 {
 	// シーンの追加
 	scene_.push_front(scene);
-
-	// 初期化
-	scene_.front()->Init();
 }
 
 // 一番上のシーンを削除する
@@ -55,9 +46,6 @@ void SceneManager::PopScene()
 	// シーンが0にならないようにする
 	if (scene_.size() > 1)
 	{
-		// シーンの終了処理
-		scene_.front()->End();
-
 		// 現在のシーンの削除
 		delete scene_.front();
 

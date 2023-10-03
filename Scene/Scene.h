@@ -17,12 +17,6 @@ public:
 	// デストラクタ
 	virtual ~Scene();
 
-	// 初期化
-	virtual void Init();
-
-	// 終了処理
-	virtual void End();
-
 	// 更新
 	virtual void Update() = 0;
 

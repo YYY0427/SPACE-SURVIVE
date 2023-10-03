@@ -48,9 +48,8 @@ namespace
 }
 
 //  コンストラクタ
-Player::Player(DataReaderFromUnity::UnityGameObject data) :
+Player::Player(UnityGameObject data) :
 	pos_(data.pos),
-	rot_(data.rot),
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
@@ -61,31 +60,26 @@ Player::Player(DataReaderFromUnity::UnityGameObject data) :
 	isSlow_(false),
 	isReverseMoveVec_(false)
 {
-}
-
-//  デストラクタ
-Player::~Player()
-{
-	// 処理なし
-}
-
-// 初期化
-void Player::Init()
-{
 	// プレイヤーモデルのインスタンスの作成
 	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 
 	// モデルの拡大率の設定
-	pModel_->SetScale(model_scale);
+	pModel_->SetScale(data.scale);
 
 	// 回転率の設定
-	pModel_->SetRot(rot_);
+	pModel_->SetRot(data.rot);
 
 	// 位置情報の設定
 	pModel_->SetPos(pos_);
 
 	// アニメーションと当たり判定の更新
 	pModel_->Update();
+}
+
+//  デストラクタ
+Player::~Player()
+{
+	// 処理なし
 }
 
 // 更新

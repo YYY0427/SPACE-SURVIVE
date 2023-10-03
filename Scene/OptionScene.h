@@ -15,12 +15,6 @@ public:
 	// デストラクタ
 	virtual ~OptionScene();
 
-	// 初期化
-	void Init();
-
-	// 終了処理
-	void End();
-
 	// 更新
 	void Update();
 

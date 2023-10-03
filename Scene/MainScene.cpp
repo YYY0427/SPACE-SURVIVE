@@ -9,40 +9,32 @@
 #include "../Camera.h"
 #include "../Player.h"
 #include "../SkyDome.h"
-#include "../EnemyManager.h"
-#include "../Enemy.h"
+#include "../Rock/RockManager.h"
+#include "../Rock/RockBase.h"
 #include <DxLib.h>
 
 // コンストラクタ
 MainScene::MainScene(SceneManager& manager) :
-	Scene(manager)
+	Scene(manager),
+	updateFunc_(&MainScene::NormalUpdate)
 {
+//	// オブジェクトの配置データの読み込み
+//	pDataReader_ = std::make_shared<DataReaderFromUnity>();
+//	pDataReader_->LoadUnityGameObjectData();
+//
+//	pPlayer_ = std::make_shared<Player>(pDataReader_->GetPlayerData());
+//	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetRockData(), pPlayer_);
+//	pCamera_ = std::make_shared<Camera>(pPlayer_);
+////	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
+//
+//	// コンストラクタで渡せないポインタの設定
+//	pPlayer_->SetCameraPointer(pCamera_);
 }
 
 // デストラクタ
 MainScene::~MainScene()
 {
 	// 処理なし
-}
-
-// 初期化
-void MainScene::Init()
-{
-	// オブジェクトの配置データの読み込み
-	pDataReader_ = std::make_shared<DataReaderFromUnity>();
-	pDataReader_->LoadUnityGameObjectData();
-
-	pPlayer_ = std::make_shared<Player>(pDataReader_->GetPlayerData());
-	pCamera_ = std::make_shared<Camera>(pPlayer_);
-	pEnemyManager_ = std::make_shared<EnemyManager>(pDataReader_->GetRockData(), pPlayer_);
-	//	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
-
-	// コンストラクタで渡せないポインタの設定
-	pPlayer_->SetCameraPointer(pCamera_);
-
-	pPlayer_->Init();
-	pEnemyManager_->Init();
-	updateFunc_ = &MainScene::NormalUpdate;
 }
 
 // メンバ関数ポインタの更新
@@ -54,22 +46,22 @@ void MainScene::Update()
 // 通常の更新
 void MainScene::NormalUpdate()
 {
-	// 各クラスの更新
-//	pSkyDome_->Update();
-	pCamera_->Update();
-	pPlayer_->Update();
-	pEnemyManager_->Update();
-
-	// 敵とぶつかったらゲームオーバー
-	for (auto& enemies : pEnemyManager_->GetEnemies())
-	{
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(enemies->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
-		if (result.HitNum > 0)
-		{
-			// Updateをゲームオーバー時のUpdateに変更
-			updateFunc_ = &MainScene::GameOverUpdate;
-		}
-	}
+//	// 各クラスの更新
+////	pSkyDome_->Update();
+//	pCamera_->Update();
+//	pPlayer_->Update();
+//	pRockManager_->Update();
+//
+//	// 敵とぶつかったらゲームオーバー
+//	for (auto& rock : pRockManager_->GetRocks())
+//	{
+//		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(rock->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
+//		if (result.HitNum > 0)
+//		{
+//			// Updateをゲームオーバー時のUpdateに変更
+//			updateFunc_ = &MainScene::GameOverUpdate;
+//		}
+//	}
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
@@ -77,14 +69,21 @@ void MainScene::NormalUpdate()
 		// フェードアウト開始
 		StartFadeOut(200, 64);
 	}
+
 	// フェードが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
+		// エフェクトを全て止める
 		Effekseer3DEffectManager::GetInstance().StopAllEffect();
+
+		// PushSceneするのでシーンが残るためフェードインの設定
 		StartFadeIn();
+
+		// シーン遷移
 		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}
+
 	// フェードの更新
 	UpdateFade();
 }
@@ -99,7 +98,7 @@ void MainScene::GameOverUpdate()
 	}
 
 	// カメラの更新
-	pCamera_->Update();
+//	pCamera_->Update();
 
 	// プレイヤーのゲームオーバー時の更新が終了かつフェードしてなかったらフェードアウト開始
 	if (pPlayer_->GameOverUpdate() && !IsFadeing())
@@ -119,8 +118,8 @@ void MainScene::Draw()
 
 	// 各クラスの描画
 //	pSkyDome_->Draw();
-	pEnemyManager_->Draw();
-	pPlayer_->Draw();
+//	pRockManager_->Draw();
+//	pPlayer_->Draw();
 
 	// フェードの描画
 	DrawFade(true);

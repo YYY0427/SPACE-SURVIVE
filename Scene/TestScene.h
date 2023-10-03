@@ -3,7 +3,7 @@
 #include <memory>
 
 // プロトタイプ宣言
-class EnemyManager;
+class RockManager;
 class SkyDome;
 class Camera;
 class Player;
@@ -22,9 +22,6 @@ public:
 
 	// デストラクタ
 	virtual ~TestScene();
-
-	// 初期化
-	void Init();
 
 	// メンバ関数ポインタの更新
 	void Update();
@@ -48,7 +45,7 @@ private:
 	// ポインタ
 	std::shared_ptr<Camera> pCamera_;
 	std::shared_ptr<Player> pPlayer_;
-	std::shared_ptr<EnemyManager> pEnemyManager_;
+	std::shared_ptr<RockManager> pRockManager_;
 	std::shared_ptr<SkyDome> pSkyDome_;
 	std::shared_ptr<DataReaderFromUnity> pDataReader_;
 };

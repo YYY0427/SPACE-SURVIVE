@@ -154,9 +154,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Rock\Meteor.cpp" />
+    <ClCompile Include="Rock\RockBase.cpp" />
     <ClCompile Include="Util\DataReaderFromUnity.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="Rock\Rock.cpp" />
+    <ClCompile Include="Rock\RockManager.cpp" />
     <ClCompile Include="Scene\PadSettingScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\DebugScene.cpp" />
@@ -181,9 +183,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Rock\Meteor.h" />
+    <ClInclude Include="Rock\RockBase.h" />
     <ClInclude Include="Util\DataReaderFromUnity.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="Rock\Rock.h" />
+    <ClInclude Include="Rock\RockManager.h" />
     <ClInclude Include="Scene\PadSettingScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Util\Timer.h" />

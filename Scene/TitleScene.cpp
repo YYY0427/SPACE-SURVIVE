@@ -26,16 +26,6 @@ TitleScene::TitleScene(SceneManager& manager) :
 	updateFunc_(&TitleScene::NormalUpdate),
 	currentSelectItem_(0)
 {
-}
-
-// デストラクタ
-TitleScene::~TitleScene()
-{
-}
-
-// 初期化
-void TitleScene::Init()
-{
 	// 画像のロード
 	handle_ = my::MyLoadGraph("Data/Image/title.png");
 
@@ -48,8 +38,8 @@ void TitleScene::Init()
 	SoundManager::GetInstance().PlayBGM("bgmTest");
 }
 
-// 終了処理
-void TitleScene::End()
+// デストラクタ
+TitleScene::~TitleScene()
 {
 	DeleteGraph(handle_);
 }

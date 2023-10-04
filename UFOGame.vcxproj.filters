@@ -31,6 +31,12 @@
     <Filter Include="ヘッダー ファイル\Rock">
       <UniqueIdentifier>{fd766e07-65cd-4eaa-bdeb-d1c4602a0500}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Planet">
+      <UniqueIdentifier>{9686814b-b0d9-4532-b9ff-c5fd818d3027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Planet">
+      <UniqueIdentifier>{aad0a412-52fe-40ea-8722-1fba6b31fe81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -113,6 +119,18 @@
     </ClCompile>
     <ClCompile Include="Rock\Meteor.cpp">
       <Filter>ソース ファイル\Rock</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet\PlanetBase.cpp">
+      <Filter>ソース ファイル\Planet</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet\PlanetManager.cpp">
+      <Filter>ソース ファイル\Planet</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet\Sun.cpp">
+      <Filter>ソース ファイル\Planet</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet\Earth.cpp">
+      <Filter>ソース ファイル\Planet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +217,18 @@
     </ClInclude>
     <ClInclude Include="Rock\Meteor.h">
       <Filter>ヘッダー ファイル\Rock</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\PlanetBase.h">
+      <Filter>ヘッダー ファイル\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\PlanetManager.h">
+      <Filter>ヘッダー ファイル\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\Sun.h">
+      <Filter>ヘッダー ファイル\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\Earth.h">
+      <Filter>ヘッダー ファイル\Planet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

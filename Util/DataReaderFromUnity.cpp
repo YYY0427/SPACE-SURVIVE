@@ -63,6 +63,7 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		result = FileRead_read(&data.scale, sizeof(data.scale), dataHandle);
 		assert(result != -1);
 
+		// オブジェクトの名前ごとに保存
 		data_[data.name].push_back(data);
 	}
 

@@ -154,8 +154,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Planet\Earth.cpp" />
+    <ClCompile Include="Planet\PlanetManager.cpp" />
+    <ClCompile Include="Planet\PlanetBase.cpp" />
     <ClCompile Include="Rock\Meteor.cpp" />
     <ClCompile Include="Rock\RockBase.cpp" />
+    <ClCompile Include="Planet\Sun.cpp" />
     <ClCompile Include="Util\DataReaderFromUnity.cpp" />
     <ClCompile Include="Rock\Rock.cpp" />
     <ClCompile Include="Rock\RockManager.cpp" />
@@ -183,8 +187,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Planet\Earth.h" />
+    <ClInclude Include="Planet\PlanetManager.h" />
+    <ClInclude Include="Planet\PlanetBase.h" />
     <ClInclude Include="Rock\Meteor.h" />
     <ClInclude Include="Rock\RockBase.h" />
+    <ClInclude Include="Planet\Sun.h" />
     <ClInclude Include="Util\DataReaderFromUnity.h" />
     <ClInclude Include="Rock\Rock.h" />
     <ClInclude Include="Rock\RockManager.h" />

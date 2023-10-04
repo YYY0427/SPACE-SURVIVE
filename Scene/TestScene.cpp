@@ -11,6 +11,8 @@
 #include "../SkyDome.h"
 #include "../Rock/RockManager.h"
 #include "../Rock/RockBase.h"
+#include "../Planet/PlanetManager.h"
+#include "../Planet/PlanetBase.h"
 #include "../common.h"
 
 // コンストラクタ
@@ -21,9 +23,15 @@ TestScene::TestScene(SceneManager& manager) :
 	// オブジェクトの配置データの読み込み
 	pDataReader_ = std::make_shared<DataReaderFromUnity>();
 	pDataReader_->LoadUnityGameObjectData();
-	
-	pPlayer_ = std::make_shared<Player>(pDataReader_->GetData().find("Player")->second.front());
-	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetData().find("Rock")->second, pDataReader_->GetData().find("Meteor")->second, pPlayer_);
+	auto playerData = pDataReader_->GetData().find("Player")->second.front();
+	auto rockData = pDataReader_->GetData().find("Rock")->second;
+	auto meteorData = pDataReader_->GetData().find("Meteor")->second;
+	auto sunData = pDataReader_->GetData().find("Sun")->second;
+	auto earthData = pDataReader_->GetData().find("Earth")->second;
+
+	pPlayer_ = std::make_shared<Player>(playerData);
+	pRockManager_ = std::make_shared<RockManager>(rockData, meteorData, pPlayer_);
+	pPlanetManager_ = std::make_shared<PlanetManager>(sunData, earthData);
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
 //	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
 
@@ -56,16 +64,8 @@ void TestScene::Draw()
 //	pSkyDome_->Draw();
 	GroundLineDraw();
 	pRockManager_->Draw();
+	pPlanetManager_->Draw();
 	pPlayer_->Draw();
-
-	int x = 200, y = 200;
-	for (const auto& data : pDataReader_->GetRockData())
-	{
-		DrawFormatString(x, y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}, scale {%.2f, %.2f, %.2f}", data.name.c_str(), data.pos.x, data.pos.y, data.pos.z, data.rot.x, data.rot.y, data.rot.z, data.scale.x, data.scale.y, data.scale.z);
-		y += 16;
-	}
-	auto player = pDataReader_->GetPlayerData();
-	DrawFormatString(x,  y, 0x000000, "%s = pos {%.2f, %.2f, %.2f}, rot {%.2f, %.2f, %.2f}, scale {%.2f, %.2f, %.2f}", player.name.c_str(), player.pos.x, player.pos.y, player.pos.z, player.rot.x, player.rot.y, player.rot.z, player.scale.x, player.scale.y, player.scale.z);
 
 	// フェードの描画
 	DrawFade(true);
@@ -82,6 +82,7 @@ void TestScene::NormalUpdate()
 	pCamera_->Update();
 	pPlayer_->Update();
 	pRockManager_->Update();
+	pPlanetManager_->Update();
 
 	// 敵とぶつかったらゲームオーバー
 	for (auto& enemies : pRockManager_->GetRocks())
@@ -99,6 +100,8 @@ void TestScene::NormalUpdate()
 	{
 		StartFadeOut(200, 64);
 	}
+
+	// フェードが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
 		Effekseer3DEffectManager::GetInstance().StopAllEffect();

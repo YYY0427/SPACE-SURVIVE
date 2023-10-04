@@ -50,6 +50,7 @@ namespace
 //  コンストラクタ
 Player::Player(UnityGameObject data) :
 	pos_(data.pos),
+	rot_(data.rot),
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
@@ -67,7 +68,7 @@ Player::Player(UnityGameObject data) :
 	pModel_->SetScale(data.scale);
 
 	// 回転率の設定
-	pModel_->SetRot(data.rot);
+	pModel_->SetRot(rot_);
 
 	// 位置情報の設定
 	pModel_->SetPos(pos_);
@@ -164,11 +165,13 @@ void Player::Update()
 		}
 	}
 
+	rot_ = VGet(moveVec_.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec_.x * DX_PI_F / 180.0f / slowRate_);
+
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
 
 	// 向いている方向の設定
-	pModel_->SetRot(VGet(moveVec_.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec_.x * DX_PI_F / 180.0f / slowRate_));
+	pModel_->SetRot(rot_);
 
 	// アニメーションを進める
 	pModel_->Update();

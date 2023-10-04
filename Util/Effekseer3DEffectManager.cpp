@@ -49,8 +49,10 @@ void Effekseer3DEffectManager::Init()
 	imgHandle_ = my::MyLoadGraph("Data/Effect/background.png");
 
 	// ここから↓でEffectをロードする
-	LoadEffectFile("explosion2");
-	LoadEffectFile("starFire");
+	LoadEffectFile("explosion2");	// プレイヤー死亡時に出すエフェクト
+	LoadEffectFile("starFire");		// プレイヤーブースト時に継続的に出すエフェクト
+	LoadEffectFile("acceleration");	// プレイヤーブースト時に一度だけ出すエフェクト
+	LoadEffectFile("boost");		// 
 }
 
 // 更新

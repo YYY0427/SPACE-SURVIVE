@@ -2,6 +2,7 @@
 #include <list>
 #include <vector>
 #include <memory>
+#include <map>
 #include "../Util/DataReaderFromUnity.h"
 
 class RockBase;
@@ -21,7 +22,12 @@ public:
 
 	std::list<std::shared_ptr<RockBase>> GetRocks();
 private:
+	enum class RockType
+	{
+		ROCK,
+		METEOR,
+	};
+private:
 	std::list<std::shared_ptr<RockBase>> pRocks_;
-	int handle_;
-	int handle2_;
+	std::map<RockType, int>handleMap_;	
 };

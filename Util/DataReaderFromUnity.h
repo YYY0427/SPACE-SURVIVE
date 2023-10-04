@@ -36,6 +36,6 @@ public:
 	std::unordered_map<std::string, std::vector<UnityGameObject>> GetData() const;
 
 private:
-	// Unityでのオブジェクトの名前のIDとしたUnityで読み取ったデータのテーブルのデータタイプのテーブル
+	// Unityでのオブジェクトの名前のIDとしたUnityで読み取ったデータのデータタイプのテーブル
 	std::unordered_map<std::string, std::vector<UnityGameObject>> data_;
 };

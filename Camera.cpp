@@ -17,7 +17,7 @@ namespace
 
 	// 描画距離(near, far)
 	constexpr float near_distance = 5.0f;
-	constexpr float far_distance = 18400.0f;
+	constexpr float far_distance = 30000.0f;
 }
 
 // コンストラクタ

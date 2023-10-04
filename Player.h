@@ -65,6 +65,9 @@ private:
 	// 位置情報
 	VECTOR pos_;
 	
+	// 回転情報
+	VECTOR rot_;
+
 	// 移動ベクトル
 	VECTOR moveVec_;
 

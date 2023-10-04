@@ -4,6 +4,7 @@
 
 // プロトタイプ宣言
 class RockManager;
+class PlanetManager;
 class SkyDome;
 class Camera;
 class Player;
@@ -48,5 +49,6 @@ private:
 	std::shared_ptr<RockManager> pRockManager_;
 	std::shared_ptr<SkyDome> pSkyDome_;
 	std::shared_ptr<DataReaderFromUnity> pDataReader_;
+	std::shared_ptr<PlanetManager> pPlanetManager_;
 };
 

@@ -5,9 +5,9 @@
 
 namespace
 {
-	const std::string model_file_path = "Data/Model/TestSkydome.mv1";
+	const std::string model_file_path = "Data/Model/MV1/SkyDome.mv1";
 
-	constexpr float model_scale = 15.0f;
+	constexpr float model_scale = 2000.0f;
 }
 
 SkyDome::SkyDome(std::shared_ptr<Player> pPlayer) : 

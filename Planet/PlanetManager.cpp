@@ -8,8 +8,8 @@
 
 namespace
 {
-	const std::string sun_model_file_path = "Data/Model/Sun.mv1";
-	const std::string earth_model_file_path = "Data/Model/Earth.mv1";
+	const std::string sun_model_file_path = "Data/Model/MV1/Sun.mv1";
+	const std::string earth_model_file_path = "Data/Model/MV1/Earth.mv1";
 }
 
 PlanetManager::PlanetManager(std::vector<UnityGameObject> sunData, std::vector<UnityGameObject> earthData)

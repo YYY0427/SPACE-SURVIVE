@@ -3,8 +3,6 @@
 
 Sun::Sun(int handle, UnityGameObject data)
 {
-//	pModel_ = std::make_shared<Model>(handle);
-
 	pos_ = data.pos;
 	rot_ = data.rot;
 
@@ -22,7 +20,6 @@ Sun::~Sun()
 
 void Sun::Update()
 {
-	rot_.y += 0.001f;
 
 	// Œü‚¢‚Ä‚¢‚é•ûŒü‚ÌÝ’è
 	pModel_->SetRot(rot_);

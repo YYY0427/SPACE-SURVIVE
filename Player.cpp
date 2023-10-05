@@ -8,7 +8,7 @@
 namespace
 {
 	// プレイヤーモデルのファイルのパス
-	std::string model_file_path = "Data/Model/UFO.mv1";
+	std::string model_file_path = "Data/Model/MV1/Player.mv1";
 
 	// プレイヤーの移動量
 	constexpr VECTOR player_vec_up = { 0, 0, -1 };
@@ -17,7 +17,7 @@ namespace
 	constexpr VECTOR player_vec_left = { -1, 0, 0 };
 
 	// モデルの拡大率
-	constexpr VECTOR model_scale = { 10.0f, 10.0f, 10.0f };
+	constexpr float model_scale = 0.5f;
 
 	// プレイヤーの通常移動速度
 	constexpr float move_normal_speed = 3.0f;
@@ -44,7 +44,7 @@ namespace
 	constexpr float energy_recovery_amount = 10.0f;
 
 	// プレイヤーの当たり判定の半径
-	constexpr float model_collision_radius = 60.0f;
+	constexpr float model_collision_radius = 30.0f;
 }
 
 //  コンストラクタ
@@ -65,7 +65,8 @@ Player::Player(UnityGameObject data) :
 	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 
 	// モデルの拡大率の設定
-	pModel_->SetScale(data.scale);
+//	pModel_->SetScale(data.scale);
+	pModel_->SetScale(VGet(model_scale, model_scale, model_scale));
 
 	// 回転率の設定
 	pModel_->SetRot(rot_);

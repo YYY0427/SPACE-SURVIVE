@@ -7,8 +7,8 @@
 namespace
 {
 	// モデルのファイルパス
-	std::string rock_data_file_path = "Data/Model/Rock.mv1";
-	std::string meteor_data_file_path = "Data/Model/Meteor.mv1";
+	std::string rock_data_file_path = "Data/Model/MV1/Rock.mv1";
+	std::string meteor_data_file_path = "Data/Model/MV1/Meteor.mv1";
 }
 
 RockManager::RockManager(std::vector<UnityGameObject> rockData, std::vector<UnityGameObject> meteorData, std::shared_ptr<Player> pPlayer)

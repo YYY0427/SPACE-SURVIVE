@@ -6,7 +6,9 @@
 namespace
 {
 	// カメラの初期位置
-	constexpr VECTOR camera_init_pos = { 0, 200, -500 };
+	constexpr VECTOR camera_init_pos = { 0, 100, -250 };
+
+//	constexpr VECTOR camera_init_pos = { 0, 400, -1000 };
 
 	// カメラの初期注視点
 	constexpr VECTOR camera_init_target = { 0, 0, 0 };

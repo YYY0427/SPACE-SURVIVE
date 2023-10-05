@@ -33,7 +33,7 @@ TestScene::TestScene(SceneManager& manager) :
 	pRockManager_ = std::make_shared<RockManager>(rockData, meteorData, pPlayer_);
 	pPlanetManager_ = std::make_shared<PlanetManager>(sunData, earthData);
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
-//	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
+	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
 
 	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
@@ -61,7 +61,7 @@ void TestScene::Draw()
 	DrawString(0, 0, "TestScene", 0xffffff, true);
 
 	// 各クラスの描画
-//	pSkyDome_->Draw();
+	pSkyDome_->Draw();
 	GroundLineDraw();
 	pRockManager_->Draw();
 	pPlanetManager_->Draw();
@@ -78,7 +78,7 @@ void TestScene::Draw()
 void TestScene::NormalUpdate()
 {
 	// 各クラスの更新
-//	pSkyDome_->Update();
+	pSkyDome_->Update();
 	pCamera_->Update();
 	pPlayer_->Update();
 	pRockManager_->Update();

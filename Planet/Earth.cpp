@@ -9,7 +9,6 @@ Earth::Earth(int handle, UnityGameObject data)
 	pModel_ = std::make_shared<Model>(handle);
 	pModel_->SetUseCollision(true);
 	pModel_->SetScale(VGet(data.scale.x, data.scale.y, data.scale.z));
-	/*pModel_->SetScale(VGet(0.1f, 0.1f, 0.1f));*/
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update(); 
@@ -21,7 +20,7 @@ Earth::~Earth()
 
 void Earth::Update()
 {
-	rot_.y += 0.001f;
+//	rot_.y += 0.001f;
 
 	// Œü‚¢‚Ä‚¢‚é•ûŒü‚ÌÝ’è
 	pModel_->SetRot(rot_);

@@ -1,0 +1,1 @@
+#include "GoalDirectionAllow.h"

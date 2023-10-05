@@ -11,6 +11,7 @@ namespace
 Meteor::Meteor(int handle, std::shared_ptr<Player> pPlayer, UnityGameObject rockData) :
 	pPlayer_(pPlayer)
 {
+	isTest_ = false;
 	isEnabled_ = true;
 	pos_ = rockData.pos;
 	rot_ = rockData.rot;
@@ -48,7 +49,12 @@ void Meteor::Update()
 
 //	effectManager.PlayEffect("boost", pos_, 500.0f, 1.0f);
 
-	pos_ = VAdd(pos_, vec_);
+
+
+	if (isTest_)
+	{
+		pos_ = VAdd(pos_, vec_);
+	}
 
 	pModel_->SetPos(pos_);
 

@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="GoalDirectionAllow.cpp" />
     <ClCompile Include="Planet\Earth.cpp" />
     <ClCompile Include="Planet\PlanetManager.cpp" />
     <ClCompile Include="Planet\PlanetBase.cpp" />
@@ -187,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GoalDirectionAllow.h" />
     <ClInclude Include="Planet\Earth.h" />
     <ClInclude Include="Planet\PlanetManager.h" />
     <ClInclude Include="Planet\PlanetBase.h" />

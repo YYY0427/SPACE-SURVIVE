@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "OptionScene.h"
 #include "TitleScene.h"
+#include "DebugScene.h"
 #include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/StringManager.h"
@@ -87,8 +88,12 @@ void PauseScene::Update()
 		case Item::TITLE:
 			// 全てのサウンドを止める
 			SoundManager::GetInstance().StopAllSound();
+#ifdef _DEBUG
 			// タイトルに遷移
+			manager_.PopAllSceneAndChangeScene(new DebugScene(manager_));
+#else 
 			manager_.PopAllSceneAndChangeScene(new TitleScene(manager_));
+#endif
 			return;
 
 		// ありえないので止める

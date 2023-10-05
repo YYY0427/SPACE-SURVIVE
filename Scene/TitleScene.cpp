@@ -59,7 +59,7 @@ void TitleScene::NormalUpdate()
 	{
 		currentSelectItem_ = ((currentSelectItem_ - 1) + sceneItemTotalValue) % sceneItemTotalValue;
 	}
-	else if (InputState::IsTriggered(InputType::DOWN) && !IsFadeing())
+	else if (InputState::IsTriggered(InputType::DOWN))
 	{
 		currentSelectItem_ = (currentSelectItem_ + 1) % sceneItemTotalValue;
 	}

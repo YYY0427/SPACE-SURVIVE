@@ -385,8 +385,8 @@ void Player::Draw()
 #endif 
 	}
 #ifdef _DEBUG
-	DrawFormatString(10, 80, 0x000000, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
-	DrawFormatString(10, 105, 0x000000, "energyGauge = %.2f", energyGauge_);
+	DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
+	DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
 #endif
 }
 

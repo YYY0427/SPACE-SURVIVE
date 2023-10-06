@@ -40,6 +40,9 @@ public:
 	// 描画
 	void Draw();
 
+
+	void Fall(float param);
+
 	// 位置情報の取得
 	VECTOR GetPos() const;			
 
@@ -54,6 +57,9 @@ public:
 
 	// プレイヤーの当たり判定の半径の取得
 	float GetCollsionRadius() const;	
+
+	// プレイヤーモデルのハンドルの取得
+	int GetModelHandle() const; 
 
 	// カメラクラスのポインタの設定
 	void SetCameraPointer(std::shared_ptr<Camera> pCamera);

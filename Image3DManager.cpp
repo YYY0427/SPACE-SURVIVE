@@ -15,7 +15,7 @@ Image3DManager::Image3DManager(std::vector<UnityGameObject> roadsData)
 
 	for (auto& roadData : roadsData)
 	{
-		pImgae3Des_.push_back(std::make_shared<Image3D>(handleMap_[Image3DType::LOAD], roadData));
+		pRoads_.push_back(std::make_shared<Image3D>(handleMap_[Image3DType::LOAD], roadData));
 	}
 }
 
@@ -30,8 +30,17 @@ Image3DManager::~Image3DManager()
 
 void Image3DManager::Draw()
 {
+	for (auto& road : pRoads_)
+	{
+		road->Draw();
+	}
 	for (auto& image3D : pImgae3Des_)
 	{
 		image3D->Draw();
 	}
+}
+
+std::vector<std::shared_ptr<Image3D>> Image3DManager::GetRoads() const
+{
+	return pRoads_;
 }

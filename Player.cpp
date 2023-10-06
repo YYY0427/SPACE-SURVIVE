@@ -20,10 +20,10 @@ namespace
 	constexpr float model_scale = 0.5f;
 
 	// プレイヤーの通常移動速度
-	constexpr float move_normal_speed = 3.0f;
+	constexpr float move_normal_speed = 1.5f;
 
 	// プレイヤーのブースト時移動速度
-	constexpr float move_boost_speed = 6.0f;
+	constexpr float move_boost_speed = 3.0f;
 
 	// プレイヤーの上昇、下降スピード
 	constexpr float move_y_speed = 5.0f;
@@ -390,6 +390,11 @@ void Player::Draw()
 #endif
 }
 
+void Player::Fall(float param)
+{
+	pos_.y -= param;
+}
+
 // 位置情報の取得
 VECTOR Player::GetPos() const
 {
@@ -412,6 +417,12 @@ float Player::GetSlowRate() const
 float Player::GetCollsionRadius() const
 {
 	return model_collision_radius;
+}
+
+// プレイヤーモデルのハンドルの取得
+int Player::GetModelHandle() const
+{
+	return pModel_->GetModelHandle();
 }
 
 // カメラクラスのポインタの設定

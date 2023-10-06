@@ -8,18 +8,17 @@ namespace
 
 Image3D::Image3D(int imgHandle, UnityGameObject data)
 {
-	imgHandle_ = imgHandle;
-	float imgWidth = 0.0f, imgHeight = 0.0f;
+	pos_ = data.pos;
 
+	imgHandle_ = imgHandle;
 #if false
 	// 画像の大きさどおり画像を描画する
-	GetGraphSizeF(imgHandle_, &imgWidth, &imgHeight);
+	GetGraphSizeF(imgHandle_, &imgWidth_, &imgHeight_);
 #else
 	// Unityでの表示どおりに画像を描画する
-	imgWidth = 500.0f * data.scale.x;
-	imgHeight = 500.0f * data.scale.z;
+	imgWidth_ = 500.0f * data.scale.x;
+	imgHeight_ = 500.0f * data.scale.z;
 #endif
-
 
 	vectex_[0].dif = GetColorU8(255, 255, 255, 255);
 	vectex_[0].spc = GetColorU8(0, 0, 0, 0);
@@ -57,13 +56,13 @@ Image3D::Image3D(int imgHandle, UnityGameObject data)
 	transformMatrix = MGetRotX(data.rot.x);
 	transformMatrix = MMult(transformMatrix, MGetRotY(data.rot.y));
 	transformMatrix = MMult(transformMatrix, MGetRotZ(data.rot.z));
-	transformMatrix = MMult(transformMatrix, MGetTranslate(VGet(data.pos.x, data.pos.y, data.pos.z)));
+	transformMatrix = MMult(transformMatrix, MGetTranslate(VGet(pos_.x, pos_.y, pos_.z)));
 
 	// 行列を使ってワールド座標を算出
-	vectex_[0].pos = VTransform(VGet(-imgWidth, imgHeight, 0.0f), transformMatrix);
-	vectex_[1].pos = VTransform(VGet(imgWidth, imgHeight, 0.0f), transformMatrix);
-	vectex_[2].pos = VTransform(VGet(-imgWidth, -imgHeight, 0.0f), transformMatrix);
-	vectex_[3].pos = VTransform(VGet(imgWidth, -imgHeight, 0.0f), transformMatrix);
+	vectex_[0].pos = VTransform(VGet(-imgWidth_, imgHeight_, 0.0f), transformMatrix);	// 左上
+	vectex_[1].pos = VTransform(VGet(imgWidth_, imgHeight_, 0.0f), transformMatrix);	// 右上
+	vectex_[2].pos = VTransform(VGet(-imgWidth_, -imgHeight_, 0.0f), transformMatrix);	// 左下
+	vectex_[3].pos = VTransform(VGet(imgWidth_, -imgHeight_, 0.0f), transformMatrix);	// 右下
 
 	vectex_[4].pos = vectex_[2].pos;
 	vectex_[5].pos = vectex_[1].pos;
@@ -87,8 +86,33 @@ void Image3D::Draw()
 	SetUseLighting(FALSE);
 
 	// ２ポリゴンの描画
-	DrawPolygon3D(vectex_, 2, imgHandle_, true);
+	DrawPolygon3D(vectex_.data(), 2, imgHandle_, true);
 
 	// ライティングは行わない
 	SetUseLighting(TRUE);
+}
+
+VECTOR Image3D::GetPos() const
+{
+	return pos_;
+}
+
+float Image3D::GetImgWidth() const
+{
+	return imgWidth_;
+}
+
+float Image3D::GetImgHeight() const
+{
+	return imgHeight_;
+}
+
+int Image3D::GetImgHandle() const
+{
+	return imgHandle_;
+}
+
+std::array<VERTEX3D, 6> Image3D::GetVertex() const
+{
+	return vectex_;
 }

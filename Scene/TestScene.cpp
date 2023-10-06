@@ -59,19 +59,34 @@ void TestScene::Update()
 // 描画
 void TestScene::Draw()
 {
-	// 背景を白に変更
-	DrawBox(0, 0, common::screen_width, common::screen_height, 0xcccccc, true);
-
 	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "TestScene", 0xffffff, true);
 
 	// 各クラスの描画
 	pSkyDome_->Draw();
 	pImg3DManager_->Draw();
-	GroundLineDraw();
+//	GroundLineDraw();
 	pRockManager_->Draw();
 	pPlanetManager_->Draw();
 	pPlayer_->Draw();
+
+	for (auto& road : pImg3DManager_->GetRoads())
+	{
+		VECTOR leftTop = road->GetVertex()[0].pos;
+		VECTOR rightTop = road->GetVertex()[1].pos;
+		VECTOR leftBottom = road->GetVertex()[2].pos;
+		VECTOR rightBottom = road->GetVertex()[3].pos;
+
+		DrawSphere3D(leftBottom, 32, 8, 0xff0000, 0xff0000, 0xff0000);
+	}
+	/*for (auto& road : pImg3DManager_->GetRoads())
+	{
+		float up = road->GetPos().z + road->GetImgHeight();
+		float down = road->GetPos().z - road->GetImgHeight();
+		float right = road->GetPos().x + road->GetImgWidth();
+		float left = road->GetPos().x - road->GetImgWidth();
+		DrawFormatString(50, 200, 0xffffff, "%f, %f, %f, %f", up, down, right, left);
+	}*/
 
 	// フェードの描画
 	DrawFade(true);
@@ -90,10 +105,56 @@ void TestScene::NormalUpdate()
 	pRockManager_->Update();
 	pPlanetManager_->Update();
 
-	// 敵とぶつかったらゲームオーバー
-	for (auto& enemies : pRockManager_->GetRocks())
+	// 道の上にいなかったらプレイヤーが落下する処理
+	bool isFall = true;
+	for (auto& road : pImg3DManager_->GetRoads())
 	{
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(enemies->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
+		VECTOR leftTop = road->GetVertex()[0].pos;
+		VECTOR rightTop = road->GetVertex()[1].pos;
+		VECTOR leftBottom = road->GetVertex()[2].pos;
+		VECTOR rightBottom = road->GetVertex()[3].pos;
+
+		VECTOR top = VAdd(leftTop, rightTop);
+		VECTOR bottm = VAdd(leftBottom, rightBottom);
+		VECTOR right = VAdd(rightTop, rightBottom);
+		VECTOR left = VAdd(leftTop, leftBottom);
+
+
+		VECTOR pos = pPlayer_->GetPos();
+		if (leftTop.x < pos.x && rightTop.x > pos.x && leftBottom.x < pos.x && rightBottom.x > pos.x && 
+			leftTop.z > pos.z && rightTop.z > pos.z && leftBottom.z < pos.z && rightBottom.z < pos.z)
+		{
+			isFall = false;
+		}
+		if (!isFall)
+		{
+			break;
+		}
+
+		//float up = road->GetPos().z + road->GetImgHeight();
+		//float down = road->GetPos().z - road->GetImgHeight();
+		//float right = road->GetPos().x + road->GetImgWidth();
+		//float left = road->GetPos().x - road->GetImgWidth();
+
+		//if (pPlayer_->GetPos().x < right && pPlayer_->GetPos().x > left &&
+		//	pPlayer_->GetPos().z < up && pPlayer_->GetPos().z > down &&
+		//	pPlayer_->GetPos().y > road->GetPos().y)
+		//{
+		//	// 道の上にいる
+		//	isFall = false;
+		//	break;
+		//}
+	}
+	if (isFall)
+	{
+		// 道の上にいなかったので落下
+		pPlayer_->Fall(10.0f);
+	}
+
+	// 敵とぶつかったらゲームオーバー
+	for (auto& rocks : pRockManager_->GetRocks())
+	{
+		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(rocks->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
 		if (result.HitNum > 0)
 		{
 			// Updateをゲームオーバー時のUpdateに変更

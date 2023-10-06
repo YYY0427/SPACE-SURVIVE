@@ -8,8 +8,6 @@ namespace
 	// ƒJƒƒ‰‚Ì‰ŠúˆÊ’u
 	constexpr VECTOR camera_init_pos = { 0, 100, -250 };
 
-//	constexpr VECTOR camera_init_pos = { 0, 400, -1000 };
-
 	// ƒJƒƒ‰‚Ì‰Šú’Ž‹“_
 	constexpr VECTOR camera_init_target = { 0, 0, 0 };
 
@@ -62,7 +60,7 @@ void Camera::Update()
 	// “ü—Íî•ñ‚©‚çƒJƒƒ‰‚ð‰ñ“]
 	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f) * x;
 	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f) * y;
-
+	
 	// c‰ñ“]‚Ì‰ñ“]Šp“x‚Ì§ŒÀ
 	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f)
 	{

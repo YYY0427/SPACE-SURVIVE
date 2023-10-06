@@ -1,5 +1,6 @@
 #pragma once
 #include <DxLib.h>
+#include <array>
 #include "Util/DataReaderFromUnity.h"
 
 class Image3D
@@ -9,7 +10,16 @@ public:
 	virtual ~Image3D();
 
 	void Draw();
+
+	VECTOR GetPos() const;
+	float GetImgWidth() const;
+	float GetImgHeight() const;
+	int GetImgHandle() const;
+	std::array<VERTEX3D, 6> GetVertex() const;
 private:
-	VERTEX3D vectex_[6];
+	std::array<VERTEX3D, 6> vectex_;
+	VECTOR pos_;
 	int imgHandle_;
+	float imgWidth_;
+	float imgHeight_;
 };

@@ -154,7 +154,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Imge3D.cpp" />
+    <ClCompile Include="Image3DManager.cpp" />
+    <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="Planet\Earth.cpp" />
     <ClCompile Include="Planet\PlanetManager.cpp" />
     <ClCompile Include="Planet\PlanetBase.cpp" />
@@ -188,7 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Imge3D.h" />
+    <ClInclude Include="Image3DManager.h" />
+    <ClInclude Include="Image3D.h" />
     <ClInclude Include="Planet\Earth.h" />
     <ClInclude Include="Planet\PlanetManager.h" />
     <ClInclude Include="Planet\PlanetBase.h" />

@@ -14,7 +14,8 @@
 #include "../Rock/RockBase.h"
 #include "../Planet/PlanetManager.h"
 #include "../Planet/PlanetBase.h"
-#include "../Imge3D.h"
+#include "../Image3D.h"
+#include "../Image3DManager.h"
 #include "../common.h"
 
 // コンストラクタ
@@ -30,10 +31,9 @@ TestScene::TestScene(SceneManager& manager) :
 	auto meteorData = pDataReader_->GetData().find("Meteor")->second;
 	auto sunData = pDataReader_->GetData().find("Sun")->second;
 	auto earthData = pDataReader_->GetData().find("Earth")->second;
+	auto roadData = pDataReader_->GetData().find("Stage")->second;
 
-	handle_ = my::MyLoadGraph("Data/Model/g.jpg");
-	img3D_ = std::make_shared<Imge3D>(handle_, VGet(0, 0, 0), VGet(0, 0, 0));
-
+	pImg3DManager_ = std::make_shared<Image3DManager>(roadData);
 	pPlayer_ = std::make_shared<Player>(playerData);
 	pRockManager_ = std::make_shared<RockManager>(rockData, meteorData, pPlayer_);
 	pPlanetManager_ = std::make_shared<PlanetManager>(sunData, earthData);
@@ -67,13 +67,11 @@ void TestScene::Draw()
 
 	// 各クラスの描画
 	pSkyDome_->Draw();
+	pImg3DManager_->Draw();
 	GroundLineDraw();
 	pRockManager_->Draw();
 	pPlanetManager_->Draw();
 	pPlayer_->Draw();
-
-//	DrawGraph(0, 0, handle_, true);
-	img3D_->Draw();
 
 	// フェードの描画
 	DrawFade(true);

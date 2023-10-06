@@ -132,7 +132,10 @@
     <ClCompile Include="Planet\Earth.cpp">
       <Filter>ソース ファイル\Planet</Filter>
     </ClCompile>
-    <ClCompile Include="Imge3D.cpp">
+    <ClCompile Include="Image3D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Image3DManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -233,7 +236,10 @@
     <ClInclude Include="Planet\Earth.h">
       <Filter>ヘッダー ファイル\Planet</Filter>
     </ClInclude>
-    <ClInclude Include="Imge3D.h">
+    <ClInclude Include="Image3D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Image3DManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -54,6 +54,11 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		result = FileRead_read(&data.rot, sizeof(data.rot), dataHandle);
 		assert(result != -1);
 
+		if (data.name == "Stage")
+		{
+			data.rot.x = data.rot.x + 90.0f;
+		}
+
 		// 度数法を弧度法に変換
 		data.rot.x = RadianFromDegree(data.rot.x);
 		data.rot.y = RadianFromDegree(data.rot.y);
@@ -62,7 +67,7 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		// 拡大データxyzを読む
 		result = FileRead_read(&data.scale, sizeof(data.scale), dataHandle);
 		assert(result != -1);
-
+		
 		// オブジェクトの名前ごとに保存
 		data_[data.name].push_back(data);
 	}

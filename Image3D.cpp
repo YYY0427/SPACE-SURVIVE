@@ -1,17 +1,25 @@
-#include "Imge3D.h"
+#include "Image3D.h"
 #include "Util/DrawFunctions.h"
 #include <string>
 
 namespace
 {
-	
 }
 
-Imge3D::Imge3D(int imgHandle, VECTOR pos, VECTOR rot)
+Image3D::Image3D(int imgHandle, UnityGameObject data)
 {
 	imgHandle_ = imgHandle;
-	pos_ = pos;
-	rot_ = rot;
+	float imgWidth = 0.0f, imgHeight = 0.0f;
+
+#if false
+	// 画像の大きさどおり画像を描画する
+	GetGraphSizeF(imgHandle_, &imgWidth, &imgHeight);
+#else
+	// Unityでの表示どおりに画像を描画する
+	imgWidth = 500.0f * data.scale.x;
+	imgHeight = 500.0f * data.scale.z;
+#endif
+
 
 	vectex_[0].dif = GetColorU8(255, 255, 255, 255);
 	vectex_[0].spc = GetColorU8(0, 0, 0, 0);
@@ -44,19 +52,18 @@ Imge3D::Imge3D(int imgHandle, VECTOR pos, VECTOR rot)
 	vectex_[4] = vectex_[2];
 	vectex_[5] = vectex_[1];
 
-	MATRIX transformMatrix;
-
 	// 回転( x, y, z軸回転の順 )＋座標移動行列の作成
-	transformMatrix = MGetRotX(rot_.x);
-	transformMatrix = MMult(transformMatrix, MGetRotY(rot_.y));
-	transformMatrix = MMult(transformMatrix, MGetRotZ(rot_.z));
-	transformMatrix = MMult(transformMatrix, MGetTranslate(VGet(pos.x, pos.y, pos.z)));
+	MATRIX transformMatrix;
+	transformMatrix = MGetRotX(data.rot.x);
+	transformMatrix = MMult(transformMatrix, MGetRotY(data.rot.y));
+	transformMatrix = MMult(transformMatrix, MGetRotZ(data.rot.z));
+	transformMatrix = MMult(transformMatrix, MGetTranslate(VGet(data.pos.x, data.pos.y, data.pos.z)));
 
 	// 行列を使ってワールド座標を算出
-	vectex_[0].pos = VTransform(VGet(-100.0f, 100.0f, 0.0f), transformMatrix);
-	vectex_[1].pos = VTransform(VGet(100.0f, 100.0f, 0.0f), transformMatrix);
-	vectex_[2].pos = VTransform(VGet(-100.0f, -100.0f, 0.0f), transformMatrix);
-	vectex_[3].pos = VTransform(VGet(100.0f, -100.0f, 0.0f), transformMatrix);
+	vectex_[0].pos = VTransform(VGet(-imgWidth, imgHeight, 0.0f), transformMatrix);
+	vectex_[1].pos = VTransform(VGet(imgWidth, imgHeight, 0.0f), transformMatrix);
+	vectex_[2].pos = VTransform(VGet(-imgWidth, -imgHeight, 0.0f), transformMatrix);
+	vectex_[3].pos = VTransform(VGet(imgWidth, -imgHeight, 0.0f), transformMatrix);
 
 	vectex_[4].pos = vectex_[2].pos;
 	vectex_[5].pos = vectex_[1].pos;
@@ -70,12 +77,11 @@ Imge3D::Imge3D(int imgHandle, VECTOR pos, VECTOR rot)
 	vectex_[5].norm = vectex_[0].norm;
 }
 
-Imge3D::~Imge3D()
+Image3D::~Image3D()
 {
-	DeleteGraph(imgHandle_);
 }
 
-void Imge3D::Draw()
+void Image3D::Draw()
 {
 	// ライティングは行わない
 	SetUseLighting(FALSE);

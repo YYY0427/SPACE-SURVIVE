@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "DebugScene.h"
 #include "PauseScene.h"
+#include "../Util/DrawFunctions.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
@@ -13,6 +14,7 @@
 #include "../Rock/RockBase.h"
 #include "../Planet/PlanetManager.h"
 #include "../Planet/PlanetBase.h"
+#include "../Imge3D.h"
 #include "../common.h"
 
 // コンストラクタ
@@ -28,6 +30,9 @@ TestScene::TestScene(SceneManager& manager) :
 	auto meteorData = pDataReader_->GetData().find("Meteor")->second;
 	auto sunData = pDataReader_->GetData().find("Sun")->second;
 	auto earthData = pDataReader_->GetData().find("Earth")->second;
+
+	handle_ = my::MyLoadGraph("Data/Model/g.jpg");
+	img3D_ = std::make_shared<Imge3D>(handle_, VGet(0, 0, 0), VGet(0, 0, 0));
 
 	pPlayer_ = std::make_shared<Player>(playerData);
 	pRockManager_ = std::make_shared<RockManager>(rockData, meteorData, pPlayer_);
@@ -66,6 +71,9 @@ void TestScene::Draw()
 	pRockManager_->Draw();
 	pPlanetManager_->Draw();
 	pPlayer_->Draw();
+
+//	DrawGraph(0, 0, handle_, true);
+	img3D_->Draw();
 
 	// フェードの描画
 	DrawFade(true);

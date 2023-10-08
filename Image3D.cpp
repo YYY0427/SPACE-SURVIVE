@@ -9,7 +9,7 @@ namespace
 Image3D::Image3D(int imgHandle, UnityGameObject data)
 {
 	pos_ = data.pos;
-
+	rot_ = data.rot;
 	imgHandle_ = imgHandle;
 #if false
 	// ‰æ‘œ‚Ì‘å‚«‚³‚Ç‚¨‚è‰æ‘œ‚ð•`‰æ‚·‚é
@@ -95,6 +95,11 @@ void Image3D::Draw()
 VECTOR Image3D::GetPos() const
 {
 	return pos_;
+}
+
+VECTOR Image3D::GetRot() const
+{
+	return rot_;
 }
 
 float Image3D::GetImgWidth() const

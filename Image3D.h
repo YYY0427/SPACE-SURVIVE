@@ -12,6 +12,7 @@ public:
 	void Draw();
 
 	VECTOR GetPos() const;
+	VECTOR GetRot() const;
 	float GetImgWidth() const;
 	float GetImgHeight() const;
 	int GetImgHandle() const;
@@ -19,6 +20,7 @@ public:
 private:
 	std::array<VERTEX3D, 6> vectex_;
 	VECTOR pos_;
+	VECTOR rot_;
 	int imgHandle_;
 	float imgWidth_;
 	float imgHeight_;

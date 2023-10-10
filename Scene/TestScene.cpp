@@ -38,7 +38,7 @@ TestScene::TestScene(SceneManager& manager) :
 	pRockManager_ = std::make_shared<RockManager>(rockData, meteorData, pPlayer_);
 	pPlanetManager_ = std::make_shared<PlanetManager>(sunData, earthData);
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
-	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_);
+	pSkyDome_ = std::make_shared<SkyDome>();
 
 	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
@@ -69,6 +69,8 @@ void TestScene::Draw()
 	pPlanetManager_->Draw();
 	pPlayer_->Draw();
 
+#ifdef _DEBUG
+	// 地面の角の位置表示
 	for (auto& road : pImg3DManager_->GetRoads())
 	{
 		VECTOR leftTop = road->GetVertex()[0].pos;
@@ -81,6 +83,7 @@ void TestScene::Draw()
 		DrawSphere3D(leftBottom, 32, 8, 0xff0000, 0xff0000, 0xff0000);
 		DrawSphere3D(rightBottom, 32, 8, 0xff0000, 0xff0000, 0xff0000);
 	}
+#endif
 
 	// フェードの描画
 	DrawFade(true);
@@ -93,68 +96,62 @@ void TestScene::Draw()
 void TestScene::NormalUpdate()
 {
 	// 各クラスの更新
-	pSkyDome_->Update();
+	pSkyDome_->Update(pPlayer_->GetPos());
 	pCamera_->Update();
 	pPlayer_->Update();
 	pRockManager_->Update();
 	pPlanetManager_->Update();
 
-	// 道の上にいなかったらプレイヤーが落下する処理
-	bool isFall = true;
-	for (auto& road : pImg3DManager_->GetRoads())
-	{
-		VECTOR leftTop = road->GetVertex()[0].pos;
-		VECTOR rightTop = road->GetVertex()[1].pos;
-		VECTOR leftBottom = road->GetVertex()[2].pos;
-		VECTOR rightBottom = road->GetVertex()[3].pos;
-
-		MATRIX rotMtxRoll = MGetRotZ(road->GetRot().z);
-		MATRIX rotMtxPitch = MGetRotX(road->GetRot().x);
-		MATRIX rotMtxYaw = MGetRotY(road->GetRot().y);
-
-		MATRIX rotMtx = MMult(rotMtxRoll, rotMtxPitch);
-		rotMtx = MMult(rotMtx, rotMtxYaw);
-
-		VECTOR pos = pPlayer_->GetPos();
-
-		if (leftTop.x < pos.x && rightTop.x > pos.x && leftBottom.x < pos.x && rightBottom.x > pos.x &&
-			leftTop.z > pos.z && rightTop.z > pos.z && leftBottom.z < pos.z && rightBottom.z < pos.z)
-		{
-			isFall = false;
-		}
-		if (!isFall)
-		{
-			break;
-		}
-	}
-	if (isFall)
+	// プレイヤーが道の上にいるか
+	if (!JudgePlayerOnTheRoad())
 	{
 		// 道の上にいなかったので落下
-		pPlayer_->Fall(10.0f);
+		pPlayer_->Fall();
+
+		// プレイヤーが落下死亡判定の高さまで落ちたかどうか
+		if (pPlayer_->IsDeathJudgHeight())
+		{
+			// 落ちていたらUpdateをプレイヤー落下死亡時のUpdateに変更
+			updateFunc_ = &TestScene::DeathFallPlayerUpdate;
+			return;
+		}
 	}
 
-	// 敵とぶつかったらゲームオーバー
+	// 岩とぶつかったらゲームオーバー
 	for (auto& rocks : pRockManager_->GetRocks())
 	{
+		// 無敵時間中なら当たらない
+		if (pPlayer_->IsUltimate()) continue;
+
+		// 岩とプレイヤーの当たり判定チェック
 		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(rocks->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
+
+		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0)
 		{
 			// Updateをゲームオーバー時のUpdateに変更
-			updateFunc_ = &TestScene::GameOverUpdate;
+			updateFunc_ = &TestScene::CollisionRockUpdate;
+			return;
 		}
 	}
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{
+		// フェードアウト開始
 		StartFadeOut(200, 64);
 	}
 
 	// フェードが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
+		// 全てのエフェクトの再生を停止
 		Effekseer3DEffectManager::GetInstance().StopAllEffect();
+
+		// PushSceneするのでシーンが残るためフェードインの設定
 		StartFadeIn();
+
+		// ポーズシーンに遷移
 		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}
@@ -163,8 +160,8 @@ void TestScene::NormalUpdate()
 	UpdateFade();
 }
 
-// ゲームオーバー時の更新
-void TestScene::GameOverUpdate()
+// 岩と衝突時の更新
+void TestScene::CollisionRockUpdate()
 {
 	// フェードアウトが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
@@ -176,12 +173,66 @@ void TestScene::GameOverUpdate()
 	// カメラの更新
 	pCamera_->Update();
 
-	// プレイヤーのゲームオーバー時の更新が終了かつフェードしてなかったらフェードアウト開始
-	if (pPlayer_->GameOverUpdate() && !IsFadeing())
+	if (pPlayer_->CollisionRockUpdate() && !IsFadeing())
+	{
+		// プレイヤーが生きているか
+		if (pPlayer_->IsLive())
+		{
+			// Updateを通常時のUpdateに変更
+			updateFunc_ = &TestScene::NormalUpdate;
+			return;
+		}
+		else
+		{
+			// ゲームオーバー
+			// フェードアウトの開始
+			StartFadeOut(255);
+		}
+	}
+
+	// フェードの更新
+	UpdateFade();
+}
+
+// プレイヤー落下死亡時の更新
+void TestScene::DeathFallPlayerUpdate()
+{
+	// フェードアウトが終了したらリスポーン
+	if (IsStartFadeOutAfterFadingOut())
+	{
+		// ダメージ処理
+		pPlayer_->OnDamage();
+
+		// プレイヤーが生きていたらリスポーン
+		if (pPlayer_->IsLive())
+		{
+			// プレイヤーから1番近い道の座標の取得
+			VECTOR restartPos = pImg3DManager_->GetClosestRoadPos(pPlayer_->GetPos());
+
+			// プレイヤーのリスポーン処理
+			pPlayer_->Respawn(restartPos);
+
+			// フェードインの開始
+			StartFadeIn();
+
+			// Updateを通常のUpdateに変更
+			updateFunc_ = &TestScene::NormalUpdate;
+		}
+		// 死んでいたらシーン遷移
+		else
+		{
+			manager_.ChangeScene(new DebugScene(manager_));
+		}
+		return;
+	}
+
+	// 1度だけフェードアウト処理を実行
+	if (!IsFadeing())
 	{
 		// フェードアウトの開始
 		StartFadeOut(255);
 	}
+
 	// フェードの更新
 	UpdateFade();
 }
@@ -209,4 +260,37 @@ void TestScene::GroundLineDraw()
 		pos1.z += lineAreaSize / lineNum;
 		pos2.z += lineAreaSize / lineNum;
 	}
+}
+
+// プレイヤーが道の上にいるか判定
+bool TestScene::JudgePlayerOnTheRoad()
+{
+	// 道の上にいなかったらプレイヤーが落下する処理
+	bool isPlayerOnTheRoad = false;
+	for (auto& road : pImg3DManager_->GetRoads())
+	{
+		// プレイヤーの現在位置から下方向に線を伸ばして地面のポリゴンと当たっているか確かめる
+		VECTOR leftTop = road->GetVertex()[0].pos;
+		VECTOR rightTop = road->GetVertex()[1].pos;
+		VECTOR leftBottom = road->GetVertex()[2].pos;
+		VECTOR rightBottom = road->GetVertex()[3].pos;
+
+		// ラインを伸ばす開始位置
+		VECTOR startLinePos = pPlayer_->GetPos();
+
+		// ラインの終了位置
+		VECTOR endLinePos = VGet(pPlayer_->GetPos().x, pPlayer_->GetPos().y - 10000.0f, pPlayer_->GetPos().z);
+
+		// 道は2つのポリゴンで描画しているので2つともチェック
+		HITRESULT_LINE result = HitCheck_Line_Triangle(startLinePos, endLinePos, leftTop, rightTop, leftBottom);
+		HITRESULT_LINE result2 = HitCheck_Line_Triangle(startLinePos, endLinePos, rightBottom, leftBottom, rightTop);
+
+		// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたらプレイヤーは落下しない
+		if (result.HitFlag || result2.HitFlag)
+		{
+			isPlayerOnTheRoad = true;
+			break;
+		}
+	}
+	return isPlayerOnTheRoad;
 }

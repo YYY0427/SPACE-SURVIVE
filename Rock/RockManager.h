@@ -29,5 +29,5 @@ private:
 	};
 private:
 	std::list<std::shared_ptr<RockBase>> pRocks_;
-	std::map<RockType, int>handleMap_;	
+	std::map<RockType, int>handleTable_;	
 };

@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <memory>
 #include "Util/DataReaderFromUnity.h"
+#include "Util/Timer.h"
 
 class Model;
 class Camera;
@@ -23,10 +24,10 @@ public:
 	void Update();
 
 	/// <summary>
-	/// ゲームオーバー時の更新
+	/// 岩との衝突時の更新
 	/// </summary>
-	/// <returns>エフェクトを再生し終えたか</returns>
-	bool GameOverUpdate();
+	/// <returns>処理が終了したか true : 処理終了, false : 処理途中</returns>
+	bool CollisionRockUpdate();
 
 	// ブーストの処理
 	void BoostProcess();
@@ -40,8 +41,32 @@ public:
 	// 描画
 	void Draw();
 
+	// プレイヤーの落下処理
+	void Fall();
 
-	void Fall(float param);
+	// プレイヤーのリスポーン処理
+	void Respawn(VECTOR restartPos);
+
+	// プレイヤーのダメージ処理
+	void OnDamage();
+
+	/// </summary>
+	/// プレイヤーの高さが落下死亡判定の高さより小さくなったか
+	/// </summary>
+	/// <returns>true : 小さくなった, false : 小さくなってない</returns>
+	bool IsDeathJudgHeight() const;
+
+	/// <summary>
+	/// プレイヤーが無敵時間中か
+	/// </summary>
+	/// <returns>true : 無敵時間中, false : 無敵時間中じゃない</returns>
+	bool IsUltimate() const;
+
+	/// <summary>
+	/// プレイヤーが生きているか
+	/// </summary>
+	/// <returns>true : 生きている, false : 死んでいる</returns>
+	bool IsLive() const;
 
 	// 位置情報の取得
 	VECTOR GetPos() const;			
@@ -76,6 +101,12 @@ private:
 
 	// 移動ベクトル
 	VECTOR moveVec_;
+
+	// 命
+	int hp_;
+
+	// 無敵時間
+	int ultimateTimer_;
 
 	// プレイヤーの移動速度
 	float moveSpeed_;

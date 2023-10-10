@@ -35,10 +35,19 @@ private:
 	void NormalUpdate();
 
 	// ゲームオーバー時の更新
-	void GameOverUpdate();
+	void CollisionRockUpdate();
+
+	// プレイヤー落下死亡時の更新
+	void DeathFallPlayerUpdate();
 
 	// 地面の線の描画
 	void GroundLineDraw();
+
+	/// <summary>
+	/// プレイヤーが道の上にいるか判定
+	/// </summary>
+	/// <returns>true : 道の上にいる, false : 道の上にいない</returns>
+	bool JudgePlayerOnTheRoad();
 private:
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成

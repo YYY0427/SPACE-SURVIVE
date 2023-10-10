@@ -1,19 +1,29 @@
 #pragma once
 #include <memory>
+#include <DxLib.h>
 
-class Player;
-
+// プロトタイプ宣言
 class Model;
 
+// スカイドーム
 class SkyDome
 {
 public:
-	SkyDome(std::shared_ptr<Player> pPlayer);
+	// コンストラクタ
+	SkyDome();
+
+	// デストラクタ
 	virtual ~SkyDome();
 
-	void Update();
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="playerPos">プレイヤーの位置情報</param>
+	void Update(VECTOR playerPos);
+
+	// 描画
 	void Draw();
 private:
+	// モデル
 	std::shared_ptr<Model> pModel_;
-	std::shared_ptr<Player> pPlayer_;
 };

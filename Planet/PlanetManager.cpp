@@ -15,22 +15,22 @@ namespace
 PlanetManager::PlanetManager(std::vector<UnityGameObject> sunData, std::vector<UnityGameObject> earthData)
 {
 	// モデルのロード
-	handleMap_[PlanetType::SUN] = MV1LoadModel(sun_model_file_path.c_str());
-	handleMap_[PlanetType::EARTH] = MV1LoadModel(earth_model_file_path.c_str());
+	handleTable_[PlanetType::SUN] = MV1LoadModel(sun_model_file_path.c_str());
+	handleTable_[PlanetType::EARTH] = MV1LoadModel(earth_model_file_path.c_str());
 
 	// 1つでもモデルのロードに失敗したら止める
-	for (auto& handle : handleMap_)
+	for (auto& handle : handleTable_)
 	{
 		assert(handle.second != -1);
 	}
 
-	pPlanets_.push_back(std::make_shared<Sun>(handleMap_[PlanetType::SUN], sunData.front()));
-	pPlanets_.push_back(std::make_shared<Earth>(handleMap_[PlanetType::EARTH], earthData.front()));
+	pPlanets_.push_back(std::make_shared<Sun>(handleTable_[PlanetType::SUN], sunData.front()));
+	pPlanets_.push_back(std::make_shared<Earth>(handleTable_[PlanetType::EARTH], earthData.front()));
 }
 
 PlanetManager::~PlanetManager()
 {
-	for (auto& handle : handleMap_)
+	for (auto& handle : handleTable_)
 	{
 		MV1DeleteModel(handle.second);
 	}

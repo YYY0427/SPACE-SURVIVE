@@ -45,6 +45,18 @@ namespace
 
 	// プレイヤーの当たり判定の半径
 	constexpr float model_collision_radius = 30.0f;
+
+	// プレイヤーが地面から落ちた時の落下速度
+	constexpr float fall_speed = 20.0f;
+
+	// 落下死亡判定の高さ
+	constexpr float death_judg_height = -1000.0f;
+
+	// 無敵時間のフレーム数
+	constexpr int ultimate_frames = 120;
+
+	// HP
+	constexpr int hp = 5;
 }
 
 //  コンストラクタ
@@ -52,6 +64,8 @@ Player::Player(UnityGameObject data) :
 	pos_(data.pos),
 	rot_(data.rot),
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
+	hp_(hp),
+	ultimateTimer_(0),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
 	energyGauge_(energy_gauge_total_amount),
@@ -166,6 +180,11 @@ void Player::Update()
 		}
 	}
 
+	// 無敵時間のタイマーの更新
+	// 0以下にはならない
+	ultimateTimer_ = (std::max)(--ultimateTimer_, 0);
+
+	// 移動ベクトルの大きさからプレイヤーの傾き具合を算出
 	rot_ = VGet(moveVec_.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec_.x * DX_PI_F / 180.0f / slowRate_);
 
 	// 位置座標の設定
@@ -178,8 +197,8 @@ void Player::Update()
 	pModel_->Update();
 }
 
-// ゲームオーバー時の更新
-bool Player::GameOverUpdate()
+// 岩との衝突時の更新
+bool Player::CollisionRockUpdate()
 {
 	// ブースト時のエフェクトの再生のストップ
 	Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
@@ -200,16 +219,31 @@ bool Player::GameOverUpdate()
 	// ベクトルが特定の大きさよりも小さくなったらゲームオーバーエフェクト再生
 	if(VSize(moveVec_) <= 1.0f)
 	{
-		// ゲームオーバーエフェクトを再生してなかったら再生
-		// 既に再生していたら再生しない
-		if (!isPlayGameOverEffect_)
+		// ダメージ処理
+		OnDamage();
+
+		if (hp_ <= 0)
 		{
-			isPlayGameOverEffect_ = true;
-			Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", pos_, 50.0f, 0.5f);
+			// ゲームオーバーエフェクトを再生してなかったら再生
+			// 既に再生していたら再生しない
+			if (!isPlayGameOverEffect_)
+			{
+				isPlayGameOverEffect_ = true;
+				Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", pos_, 50.0f, 0.5f);
+			}
+			// エフェクトを再生し終えたらtrueを返す
+			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2") && isPlayGameOverEffect_)
+			{
+				// 処理終了
+				return true;
+			}
 		}
-		// エフェクトを再生し終えたらtrueを返す
-		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2") && isPlayGameOverEffect_)
+		else
 		{
+			// 初期化
+			isReverseMoveVec_ = false;
+
+			// 処理終了
 			return true;
 		}
 	}
@@ -223,6 +257,7 @@ bool Player::GameOverUpdate()
 	// アニメーションと当たり判定の更新
 	pModel_->Update();
 
+	// 処理が途中なのでfalseを返す
 	return false;
 }
 
@@ -376,6 +411,21 @@ void Player::EnergyProcess()
 // 描画
 void Player::Draw()
 {
+#ifdef _DEBUG
+	DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
+	DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
+	DrawFormatString(10, 135, 0xffffff, "hp = %d", hp_);
+#endif
+
+	// 無敵時間の点滅
+	if (IsUltimate())
+	{
+		if ((ultimateTimer_ / 5) % 2 == 0)
+		{
+			return;
+		}
+	}
+
 	// プレイヤーモデルの描画
 	if (!isPlayGameOverEffect_)
 	{
@@ -384,15 +434,54 @@ void Player::Draw()
 		DrawSphere3D(pos_, model_collision_radius, 8, 0xff0000, 0xff0000, false);
 #endif 
 	}
-#ifdef _DEBUG
-	DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
-	DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
-#endif
 }
 
-void Player::Fall(float param)
+// プレイヤーの落下処理
+void Player::Fall()
 {
-	pos_.y -= param;
+	// 落下
+	pos_.y -= fall_speed;
+}
+
+// プレイヤーのリスポーン処理
+void Player::Respawn(VECTOR restartPos)
+{
+	// Y軸の値を大きくする
+	// そのままだと道にめり込むため
+	restartPos = VGet(restartPos.x, restartPos.y + 200.0f, restartPos.z);
+
+	// リスポーン
+	pos_ = restartPos;
+}
+
+// ダメージ処理
+void Player::OnDamage()
+{
+	// 無敵時間中はダメージを受けない
+	if (IsUltimate()) return;
+
+	// HPを減らす
+	hp_--;
+
+	// 無敵時間の設定
+	ultimateTimer_ = ultimate_frames;
+}
+
+// プレイヤーの高さが落下死亡判定の高さより小さくなったか
+bool Player::IsDeathJudgHeight() const
+{
+	return (pos_.y < death_judg_height) ? true : false;
+}
+
+// プレイヤーが無敵時間中か
+bool Player::IsUltimate() const
+{
+	return (ultimateTimer_ > 0) ? true : false;
+}
+
+bool Player::IsLive() const
+{
+	return (hp_ > 0 ) ? true : false;
 }
 
 // 位置情報の取得

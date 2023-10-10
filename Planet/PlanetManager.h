@@ -26,5 +26,5 @@ private:
 	};
 private:
 	std::list<std::shared_ptr<PlanetBase>> pPlanets_;
-	std::map<PlanetType, int> handleMap_;
+	std::map<PlanetType, int> handleTable_;
 };

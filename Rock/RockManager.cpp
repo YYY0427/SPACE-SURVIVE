@@ -14,28 +14,28 @@ namespace
 RockManager::RockManager(std::vector<UnityGameObject> rockData, std::vector<UnityGameObject> meteorData, std::shared_ptr<Player> pPlayer)
 {
 	// モデルのロード
-	handleMap_[RockType::ROCK] = MV1LoadModel(rock_data_file_path.c_str());
-	handleMap_[RockType::METEOR] = MV1LoadModel(meteor_data_file_path.c_str());
+	handleTable_[RockType::ROCK] = MV1LoadModel(rock_data_file_path.c_str());
+	handleTable_[RockType::METEOR] = MV1LoadModel(meteor_data_file_path.c_str());
 
 	// 1つでもモデルのロードに失敗したら止める
-	for (auto& handle : handleMap_)
+	for (auto& handle : handleTable_)
 	{
 		assert(handle.second != -1);
 	}
 
 	for (auto& data : rockData)
 	{
-		pRocks_.push_back(std::make_shared<Rock>(handleMap_[RockType::ROCK], pPlayer, data));
+		pRocks_.push_back(std::make_shared<Rock>(handleTable_[RockType::ROCK], pPlayer, data));
 	}
 	for (auto& data : meteorData)
 	{
-		pRocks_.push_back(std::make_shared<Meteor>(handleMap_[RockType::METEOR], pPlayer, data));
+		pRocks_.push_back(std::make_shared<Meteor>(handleTable_[RockType::METEOR], pPlayer, data));
 	}
 }
 
 RockManager::~RockManager()
 {
-	for (auto& handle : handleMap_)
+	for (auto& handle : handleTable_)
 	{
 		MV1DeleteModel(handle.second);
 	}

@@ -117,6 +117,10 @@ void TestScene::NormalUpdate()
 		}
 	}
 
+	// プレイヤーから1番近い道の高さ + 1000.0fよりプレイヤーの高さが高くなったら落下
+	VECTOR nearRoadPos = pImg3DManager_->GetClosestRoadPos(pPlayer_->GetPos());
+	if(pPlayer_->GetPos().y)
+
 	// 岩とぶつかったらゲームオーバー
 	for (auto& rocks : pRockManager_->GetRocks())
 	{

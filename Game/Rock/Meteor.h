@@ -15,6 +15,4 @@ public:
 private:
 	// ƒ|ƒCƒ“ƒ^
 	std::shared_ptr<Player> pPlayer_;
-
-	bool isTest_;
 };

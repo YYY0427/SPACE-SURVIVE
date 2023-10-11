@@ -108,14 +108,17 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 }
 
 // 指定のエフェクトの再生
-void Effekseer3DEffectManager::PlayEffect(std::string fileName, VECTOR pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffect(std::string fileName, bool isForcePlay, VECTOR pos, float scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
 
-	// 再生中の場合再生しない
-	if (IsPlayingEffect(fileName))	return;
-
+	if (!isForcePlay)
+	{
+		// 再生中の場合再生しない
+		if (IsPlayingEffect(fileName))	return;
+	}
+	
 	// エフェクトの再生(失敗したら止める)
 	playingEffectHandleTable_[fileName] = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
 	assert(playingEffectHandleTable_[fileName] != -1); // -1以外じゃなかったら止める

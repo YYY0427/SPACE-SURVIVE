@@ -33,11 +33,12 @@ public:
 	/// 指定のエフェクトの再生
 	/// </summary>
 	/// <param name="fileName">再生したいエフェクトのファイル名(拡張子は含まない)</param>
+	/// <param name="isForcePlay">すでに指定されたエフェクトが再生されている場合も再生するか</param>
 	/// <param name="pos">位置</param>
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転</param>
-	void PlayEffect(std::string fileName, VECTOR pos, float scale, float speed, VECTOR rot = VGet(0, 0, 0));
+	void PlayEffect(std::string fileName, bool isForcePlay, VECTOR pos, float scale, float speed, VECTOR rot = VGet(0, 0, 0));
 
 	void SetPosPlayingEffect(std::string fileName, VECTOR pos);
 	void SetScalePlayingEffect(std::string fileName, float  scale);

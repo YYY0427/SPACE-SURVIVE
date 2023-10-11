@@ -5,13 +5,12 @@
 
 namespace
 {
-	constexpr float move_speed = 30.0f;
+	constexpr float move_speed = 10.0f;
 }
 
 Meteor::Meteor(int handle, std::shared_ptr<Player> pPlayer, UnityGameObject rockData) :
 	pPlayer_(pPlayer)
 {
-	isTest_ = false;
 	isEnabled_ = true;
 	pos_ = rockData.pos;
 	rot_ = rockData.rot;
@@ -34,27 +33,13 @@ Meteor::~Meteor()
 
 void Meteor::Update()
 {
-
-	//// ­‚µŽžŠÔ‚ªŒo‚Á‚½‚çÁ‚·
-	//if (timer_++ > 60 * 30)
-	//{
-	//	isEnabled_ = false;
-	//}
-
-	//VECTOR tempVec = VScale(vec_, pPlayer_->GetSlowRate());
-
-	//pos_ = VAdd(pos_, tempVec);
-
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
-//	effectManager.PlayEffect("boost", pos_, 500.0f, 1.0f);
+	VECTOR effectRot = VGet(0, 0, 0);
+	effectManager.PlayEffect("boost", false, pos_, 200.0f, 1.0f, effectRot);
+	effectManager.SetPosPlayingEffect("boost", pos_);
 
-
-
-	if (isTest_)
-	{
-		pos_ = VAdd(pos_, vec_);
-	}
+	pos_ = VAdd(pos_, vec_);
 
 	pModel_->SetPos(pos_);
 

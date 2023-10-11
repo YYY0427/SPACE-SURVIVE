@@ -9,7 +9,7 @@ namespace
 Image3D::Image3D(int imgHandle, UnityGameObject data)
 {
 	pos_ = data.pos;
-	rot_ = data.rot;
+	rot_ = VGet(data.rot.x + (DX_PI_F * 90.0f / 180.0f), data.rot.y, data.rot.z);
 	imgHandle_ = imgHandle;
 #if false
 	// 画像の大きさどおり画像を描画する
@@ -53,9 +53,9 @@ Image3D::Image3D(int imgHandle, UnityGameObject data)
 
 	// 回転( x, y, z軸回転の順 )＋座標移動行列の作成
 	MATRIX transformMatrix;
-	transformMatrix = MGetRotX(data.rot.x);
-	transformMatrix = MMult(transformMatrix, MGetRotY(data.rot.y));
-	transformMatrix = MMult(transformMatrix, MGetRotZ(data.rot.z));
+	transformMatrix = MGetRotX(rot_.x);
+	transformMatrix = MMult(transformMatrix, MGetRotY(rot_.y));
+	transformMatrix = MMult(transformMatrix, MGetRotZ(rot_.z));
 	transformMatrix = MMult(transformMatrix, MGetTranslate(VGet(pos_.x, pos_.y, pos_.z)));
 
 	// 行列を使ってワールド座標を算出

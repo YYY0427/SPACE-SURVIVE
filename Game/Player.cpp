@@ -229,7 +229,7 @@ bool Player::CollisionRockUpdate()
 			if (!isPlayGameOverEffect_)
 			{
 				isPlayGameOverEffect_ = true;
-				Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", pos_, 50.0f, 0.5f);
+				Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", false, pos_, 50.0f, 0.5f);
 			}
 			// エフェクトを再生し終えたらtrueを返す
 			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2") && isPlayGameOverEffect_)
@@ -282,7 +282,7 @@ void Player::BoostProcess()
 	if (isBoost_)
 	{
 		// ブースト時のエフェクトを再生
-		Effekseer3DEffectManager::GetInstance().PlayEffect("starFire", pos_, 50.0f, 1.0f);
+		Effekseer3DEffectManager::GetInstance().PlayEffect("starFire", false, pos_, 50.0f, 1.0f);
 
 		// エフェクトの再生位置の更新
 		Effekseer3DEffectManager::GetInstance().SetPosPlayingEffect("starFire", pos_);

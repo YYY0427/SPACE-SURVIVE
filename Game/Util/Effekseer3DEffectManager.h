@@ -2,10 +2,28 @@
 #include <DxLib.h>
 #include <string>
 #include <unordered_map>
+#include <list>
+
+// エフェクトの再生タイプ
+enum class PlayType
+{
+	NORMAL,
+	LOOP,
+};
 
 // Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス
 class Effekseer3DEffectManager
 {
+private:
+	struct EffectData
+	{
+		int playingEffectHandle;
+		PlayType type;
+		VECTOR pos;
+		VECTOR rot;
+		float scale;
+		float speed;
+	};
 public:
 	// デストラクタ
 	~Effekseer3DEffectManager();
@@ -38,7 +56,7 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転</param>
-	void PlayEffect(std::string fileName, bool isForcePlay, VECTOR pos, float scale, float speed, VECTOR rot = VGet(0, 0, 0));
+	void PlayEffect(std::string fileName, PlayType type, VECTOR pos, float scale, float speed, VECTOR rot = VGet(0, 0, 0));
 
 	void SetPosPlayingEffect(std::string fileName, VECTOR pos);
 	void SetScalePlayingEffect(std::string fileName, float  scale);
@@ -80,8 +98,7 @@ private:
 	// エフェクトのファイル名をIDとしたエフェクトリソースのハンドルのテーブル
 	std::unordered_map<std::string, int> effectResourceHandleTable_;
 
-	// エフェクトのファイル名をIDとした再生中のエフェクトのハンドルのテーブル
-	std::unordered_map<std::string, int> playingEffectHandleTable_;
+	std::list<EffectData> effectDataTable_;
 
 	// 画像ハンドル
 	int imgHandle_;

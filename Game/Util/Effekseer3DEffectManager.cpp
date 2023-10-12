@@ -118,32 +118,34 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 }
 
 // 指定のエフェクトの再生
-void Effekseer3DEffectManager::PlayEffect(std::string fileName, bool isForcePlay, VECTOR pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffect(std::string fileName, PlayType type, VECTOR pos, float scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
 
-	if (!isForcePlay)
-	{
-		// 再生中の場合再生しない
-		if (IsPlayingEffect(fileName))	return;
-	}
-	
-	// エフェクトの再生(失敗したら止める)
-	playingEffectHandleTable_[fileName] = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
-	assert(playingEffectHandleTable_[fileName] != -1); // -1以外じゃなかったら止める
+	EffectData data{};
+	data.playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
+	assert(data.playingEffectHandle != -1); // -1以外じゃなかったら止める
+
+	data.type = type;
+	data.pos = pos;
+	data.rot = rot;
+	data.scale = scale;
+	data.speed = speed;
+
+	effectDataTable_.push_back(data);
 
 	// エフェクトの再生速度を設定
-	SetSpeedPlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], speed);
+	SetSpeedPlayingEffekseer3DEffect(data.playingEffectHandle, speed);
 
 	// エフェクトの拡大率の設定
-	SetScalePlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], scale, scale, scale);
+	SetScalePlayingEffekseer3DEffect(data.playingEffectHandle, scale, scale, scale);
 
 	// エフェクトの回転率の設定
-	SetRotationPlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], rot.x, rot.y, rot.z);
+	SetRotationPlayingEffekseer3DEffect(data.playingEffectHandle, rot.x, rot.y, rot.z);
 
 	// エフェクトの位置の設定
-	SetPosPlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], pos.x, pos.y, pos.z);
+	SetPosPlayingEffekseer3DEffect(data.playingEffectHandle, pos.x, pos.y, pos.z);
 }
 
 void Effekseer3DEffectManager::SetPosPlayingEffect(std::string fileName, VECTOR pos)

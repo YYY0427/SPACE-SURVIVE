@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Image3DManager.cpp" />
     <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="Planet\Earth.cpp" />
@@ -189,11 +190,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Image3DManager.h" />
     <ClInclude Include="Image3D.h" />
     <ClInclude Include="Planet\Earth.h" />
     <ClInclude Include="Planet\PlanetManager.h" />
     <ClInclude Include="Planet\PlanetBase.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Rock\Meteor.h" />
     <ClInclude Include="Rock\RockBase.h" />
     <ClInclude Include="Planet\Sun.h" />
@@ -222,6 +225,9 @@
     <ClInclude Include="Util\SoundManager.h" />
     <ClInclude Include="Scene\OptionScene.h" />
     <ClInclude Include="Util\Effekseer3DEffectManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UFOGame.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -41,8 +41,11 @@ public:
 	// 描画
 	void Draw();
 
-	// プレイヤーの落下処理
-	void Fall();
+	/// <summary>
+	/// プレイヤーの落下処理 
+	/// </summary>
+	/// <param name="fallSpeed">落下スピード</param>
+	void Fall(float fallSpeed);
 
 	// プレイヤーのリスポーン処理
 	void Respawn(VECTOR restartPos);

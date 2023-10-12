@@ -46,9 +46,6 @@ namespace
 	// プレイヤーの当たり判定の半径
 	constexpr float model_collision_radius = 30.0f;
 
-	// プレイヤーが地面から落ちた時の落下速度
-	constexpr float fall_speed = 20.0f;
-
 	// 落下死亡判定の高さ
 	constexpr float death_judg_height = -1000.0f;
 
@@ -437,10 +434,10 @@ void Player::Draw()
 }
 
 // プレイヤーの落下処理
-void Player::Fall()
+void Player::Fall(float fallSpeed)
 {
 	// 落下
-	pos_.y -= fall_speed;
+	pos_.y -= (fallSpeed * slowRate_);
 }
 
 // プレイヤーのリスポーン処理

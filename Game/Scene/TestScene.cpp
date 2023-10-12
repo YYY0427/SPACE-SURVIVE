@@ -18,6 +18,18 @@
 #include "../Image3DManager.h"
 #include "../common.h"
 
+namespace
+{
+	// 道からどのくらいの高さまでプレイヤーが上昇できるか
+	constexpr float rise_possible_height = 2000.0f;
+
+	// 通常のプレイヤーの落下速度
+	constexpr float normal_player_fall_speed = 20.0f;
+
+	// プレイヤーの高さが特定の高さよりも高くなった時の落下速度
+	constexpr float special_player_fall_speed = 40.0f;
+}
+
 // コンストラクタ
 TestScene::TestScene(SceneManager& manager) :
 	Scene(manager),
@@ -33,6 +45,7 @@ TestScene::TestScene(SceneManager& manager) :
 	auto earthData = pDataReader_->GetData().find("Earth")->second;
 	auto roadData = pDataReader_->GetData().find("Stage")->second;
 
+	// 読み込んだ配置データからオブジェクトのインスタンスの生成
 	pImg3DManager_ = std::make_shared<Image3DManager>(roadData);
 	pPlayer_ = std::make_shared<Player>(playerData);
 	pRockManager_ = std::make_shared<RockManager>(rockData, meteorData, pPlayer_);
@@ -102,24 +115,8 @@ void TestScene::NormalUpdate()
 	pRockManager_->Update();
 	pPlanetManager_->Update();
 
-	// プレイヤーが道の上にいるか
-	if (!JudgePlayerOnTheRoad())
-	{
-		// 道の上にいなかったので落下
-		pPlayer_->Fall();
-
-		// プレイヤーが落下死亡判定の高さまで落ちたかどうか
-		if (pPlayer_->IsDeathJudgHeight())
-		{
-			// 落ちていたらUpdateをプレイヤー落下死亡時のUpdateに変更
-			updateFunc_ = &TestScene::DeathFallPlayerUpdate;
-			return;
-		}
-	}
-
-	// プレイヤーから1番近い道の高さ + 1000.0fよりプレイヤーの高さが高くなったら落下
-	VECTOR nearRoadPos = pImg3DManager_->GetClosestRoadPos(pPlayer_->GetPos());
-	if(pPlayer_->GetPos().y)
+	// プレイヤーの落下処理
+	PlayerFallProcess();
 
 	// 岩とぶつかったらゲームオーバー
 	for (auto& rocks : pRockManager_->GetRocks())
@@ -233,12 +230,44 @@ void TestScene::DeathFallPlayerUpdate()
 	// 1度だけフェードアウト処理を実行
 	if (!IsFadeing())
 	{
+		// 全てのエフェクトの再生を停止
+		Effekseer3DEffectManager::GetInstance().StopAllEffect();
+
 		// フェードアウトの開始
 		StartFadeOut(255);
 	}
 
 	// フェードの更新
 	UpdateFade();
+}
+
+// プレイヤーの落下処理をまとめたもの
+void TestScene::PlayerFallProcess()
+{
+	// プレイヤーが道の上にいるか
+	bool isPlayerOnTheRoad = JudgePlayerOnTheRoad();
+
+	// 道からプレイヤーまでの距離が特定の距離を超えているか
+	bool isOverLimitPlayerHeight = OverLimitPlayerHeight();
+
+	// プレイヤーが道の上になかったらプレイヤーが落下
+	if (!isPlayerOnTheRoad)
+	{
+		pPlayer_->Fall(normal_player_fall_speed);
+	}
+	// 道からプレイヤーまでの距離が特定の距離を超えていたらプレイヤーが落下
+	if (isOverLimitPlayerHeight)
+	{
+		pPlayer_->Fall(special_player_fall_speed);
+	}
+	
+	// プレイヤーが落下死亡判定の高さまで落ちたかどうか
+	if (pPlayer_->IsDeathJudgHeight())
+	{
+		// 落ちていたらUpdateをプレイヤー落下死亡時のUpdateに変更
+		updateFunc_ = &TestScene::DeathFallPlayerUpdate;
+		return;
+	}
 }
 
 // 地面の線の描画
@@ -269,8 +298,47 @@ void TestScene::GroundLineDraw()
 // プレイヤーが道の上にいるか判定
 bool TestScene::JudgePlayerOnTheRoad()
 {
-	// 道の上にいなかったらプレイヤーが落下する処理
-	bool isPlayerOnTheRoad = false;
+	// プレイヤーから下に伸びる線と道の当たり判定
+	HITRESULT_LINE result{}, result2{};
+	CollisionRoadAndPlayer(result, result2);
+
+	// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたら道の上にいる判定
+	if (result.HitFlag || result2.HitFlag)
+	{
+		return true;
+	}
+	return false;
+}
+
+// プレイヤーから伸ばした線とその線に当たった道までの距離が特定の距離を超えているか
+bool TestScene::OverLimitPlayerHeight()
+{
+	// プレイヤーから下に伸びる線と道の当たり判定
+	HITRESULT_LINE result{}, result2{};
+	CollisionRoadAndPlayer(result, result2);
+	
+	// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたらチェック
+	if (result.HitFlag || result2.HitFlag)
+	{
+		// プレイヤーから当たった道までの高さの距離の取得
+		float distanceFromPlayerToRoad = 0.0f;
+		(result.HitFlag) ?
+			(distanceFromPlayerToRoad = fabs((result.Position.y - pPlayer_->GetPos().y))) :
+			(distanceFromPlayerToRoad = fabs((result2.Position.y - pPlayer_->GetPos().y)));
+
+		// 高さの距離が特定の距離を超えていたらtrue
+		if (rise_possible_height < distanceFromPlayerToRoad)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+// プレイヤーから下に伸びている線と道との当たり判定
+void TestScene::CollisionRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2)
+{
+	// 全ての道の数チェック
 	for (auto& road : pImg3DManager_->GetRoads())
 	{
 		// プレイヤーの現在位置から下方向に線を伸ばして地面のポリゴンと当たっているか確かめる
@@ -286,15 +354,14 @@ bool TestScene::JudgePlayerOnTheRoad()
 		VECTOR endLinePos = VGet(pPlayer_->GetPos().x, pPlayer_->GetPos().y - 10000.0f, pPlayer_->GetPos().z);
 
 		// 道は2つのポリゴンで描画しているので2つともチェック
-		HITRESULT_LINE result = HitCheck_Line_Triangle(startLinePos, endLinePos, leftTop, rightTop, leftBottom);
-		HITRESULT_LINE result2 = HitCheck_Line_Triangle(startLinePos, endLinePos, rightBottom, leftBottom, rightTop);
+		result = HitCheck_Line_Triangle(startLinePos, endLinePos, leftTop, rightTop, leftBottom);
+		result2 = HitCheck_Line_Triangle(startLinePos, endLinePos, rightBottom, leftBottom, rightTop);
 
-		// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたらプレイヤーは落下しない
+		// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたら処理終了
+		// 当たった後も処理を続けると結果が書き変わってしまうため
 		if (result.HitFlag || result2.HitFlag)
 		{
-			isPlayerOnTheRoad = true;
 			break;
 		}
 	}
-	return isPlayerOnTheRoad;
 }

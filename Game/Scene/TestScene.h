@@ -40,6 +40,9 @@ private:
 	// プレイヤー落下死亡時の更新
 	void DeathFallPlayerUpdate();
 
+	// プレイヤーの落下処理をまとめたもの
+	void PlayerFallProcess();
+
 	// 地面の線の描画
 	void GroundLineDraw();
 
@@ -48,6 +51,21 @@ private:
 	/// </summary>
 	/// <returns>true : 道の上にいる, false : 道の上にいない</returns>
 	bool JudgePlayerOnTheRoad();
+
+	/// <summary>
+	/// プレイヤーから伸ばした線とその線に当たった道の距離が特定の距離を超えているか
+	/// </summary>
+	/// <returns>true : 特定の距離を超えている, false : 特定の距離を超えていない</returns>
+	bool OverLimitPlayerHeight();
+
+	/// <summary>
+	/// プレイヤーから下に伸びている線と道との当たり判定
+	/// 当たっている道を見つけたら処理終了
+	/// 道はポリゴンを2つ使って描画しているため、resultは2つ
+	/// </summary>
+	/// <param name="result">線と当たったポリゴン1つ目の当たり判定結果</param>
+	/// <param name="result2">線とポリゴン2つ目の当たり判定結果</param>
+	void CollisionRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2);
 private:
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成

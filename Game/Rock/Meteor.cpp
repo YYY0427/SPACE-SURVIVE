@@ -2,6 +2,7 @@
 #include "../Util/Model.h"
 #include "../Player.h"
 #include "../Util/Effekseer3DEffectManager.h"
+#include <cmath>
 
 namespace
 {
@@ -36,12 +37,17 @@ void Meteor::Update()
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
 	VECTOR effectRot = VGet(0, 0, 0);
-	effectManager.PlayEffect("boost", false, pos_, 200.0f, 1.0f, effectRot);
-	effectManager.SetPosPlayingEffect("boost", pos_);
 
-	pos_ = VAdd(pos_, vec_);
 
-	pModel_->SetPos(pos_);
+	effectManager.PlayEffect("boost", false, VGet(0, 100, 0), 100.0f, 1.0f, effectRot);
+
+	MATRIX rotMtx = MGetRotVec2(vec_, VScale(vec_, -1));
+
+//	effectManager.SetPosPlayingEffect("boost", pos_);
+
+//	pos_ = VAdd(pos_, vec_);
+
+//	pModel_->SetPos(pos_);
 
 	pModel_->Update();
 }

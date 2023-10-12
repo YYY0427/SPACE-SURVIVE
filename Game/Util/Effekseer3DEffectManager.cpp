@@ -3,6 +3,14 @@
 #include "DrawFunctions.h"
 #include <cassert>
 
+namespace EffectID
+{
+	std::string player_dead = "explosion2";				// プレイヤー死亡時に出すエフェクト
+	std::string player_boost = "starFire";				// プレイヤーブースト時に継続的に出すエフェクト
+	std::string player_acceleration = "acceleration";	// プレイヤーブースト時に一度だけ出すエフェクト
+	std::string meteor = "boost";						// 隕石用エフェクト
+}
+
 namespace
 {
 	// エフェクトのファイルパス
@@ -37,6 +45,8 @@ Effekseer3DEffectManager& Effekseer3DEffectManager::GetInstance()
 // Effekseerの初期化とエフェクトのロード
 void Effekseer3DEffectManager::Init()
 {
+//	auto manager = ::Effekseer::Manager::Create(3000);
+
 	// Effekseerを初期化する
 	// 引数には画面に表示する最大パーティクル数を設定する
 	if (Effkseer_Init(8000) == -1)
@@ -49,10 +59,10 @@ void Effekseer3DEffectManager::Init()
 	imgHandle_ = my::MyLoadGraph("Data/Effect/background.png");
 
 	// ここから↓でEffectをロードする
-	LoadEffectFile("explosion2");	// プレイヤー死亡時に出すエフェクト
-	LoadEffectFile("starFire");		// プレイヤーブースト時に継続的に出すエフェクト
-	LoadEffectFile("acceleration");	// プレイヤーブースト時に一度だけ出すエフェクト
-	LoadEffectFile("boost");		// 
+	LoadEffectFile(EffectID::player_dead.c_str());	
+	LoadEffectFile(EffectID::player_boost.c_str());		
+	LoadEffectFile(EffectID::player_acceleration.c_str());	
+	LoadEffectFile(EffectID::meteor.c_str());		
 }
 
 // 更新

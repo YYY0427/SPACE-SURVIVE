@@ -134,4 +134,6 @@ private:
 
 	// ゲームオーバーエフェクトを再生したか
 	bool isPlayGameOverEffect_;
+
+	float boostEffectScale_;
 };

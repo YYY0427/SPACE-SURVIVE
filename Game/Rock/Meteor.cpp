@@ -26,6 +26,11 @@ Meteor::Meteor(int handle, std::shared_ptr<Player> pPlayer, UnityGameObject rock
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update();
+
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	float scale = 100.0f, speed = 1.0f;
+	VECTOR rot{ 0.0f, 0.0f, 0.0f };
+	effectManager.PlayEffect("boost", PlayType::NORMAL, &pos_, &scale, &speed, &rot);
 }
 
 Meteor::~Meteor()
@@ -34,20 +39,11 @@ Meteor::~Meteor()
 
 void Meteor::Update()
 {
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-
-	VECTOR effectRot = VGet(0, 0, 0);
-
-
-	effectManager.PlayEffect("boost", false, VGet(0, 100, 0), 100.0f, 1.0f, effectRot);
-
 	MATRIX rotMtx = MGetRotVec2(vec_, VScale(vec_, -1));
 
-//	effectManager.SetPosPlayingEffect("boost", pos_);
+	pos_ = VAdd(pos_, vec_);
 
-//	pos_ = VAdd(pos_, vec_);
-
-//	pModel_->SetPos(pos_);
+	pModel_->SetPos(pos_);
 
 	pModel_->Update();
 }

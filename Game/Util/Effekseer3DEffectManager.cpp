@@ -5,10 +5,10 @@
 
 namespace EffectID
 {
-	std::string player_dead = "explosion2";				// プレイヤー死亡時に出すエフェクト
-	std::string player_boost = "starFire";				// プレイヤーブースト時に継続的に出すエフェクト
-	std::string player_acceleration = "acceleration";	// プレイヤーブースト時に一度だけ出すエフェクト
-	std::string meteor = "boost";						// 隕石用エフェクト
+	const std::string player_dead = "explosion2";				// プレイヤー死亡時に出すエフェクト
+	const std::string player_boost = "starFire";				// プレイヤーブースト時に継続的に出すエフェクト
+	const std::string player_acceleration = "acceleration";		// プレイヤーブースト時に一度だけ出すエフェクト
+	const std::string meteor = "boost";							// 隕石用エフェクト
 }
 
 namespace
@@ -68,6 +68,26 @@ void Effekseer3DEffectManager::Init()
 // 更新
 void Effekseer3DEffectManager::Update()
 {
+	// 追従エフェクトの場合の処理
+	for (auto& effect : effectDataTable_)
+	{
+		// 再生中しか通らない
+		if (!IsPlayingEffect(effect.playingEffectHandle)) continue;
+		if (effect.type == PlayType::FOLLOW || effect.type == PlayType::LOOP_AND_FOLLOW)
+		{
+			SetEffectParam(effect.playingEffectHandle, *effect.pos, *effect.scale, *effect.speed, *effect.rot);
+		}
+	}
+	// ループエフェクトの場合の処理
+	for (auto& effect : effectDataTable_)
+	{
+		// 再生していないときしか通らない
+		if (IsPlayingEffect(effect.playingEffectHandle)) continue;
+		if (effect.type == PlayType::LOOP || effect.type == PlayType::LOOP_AND_FOLLOW)
+		{
+			PlayEffect(effect.effectFileName, effect.type, effect.pos, effect.scale, effect.speed, effect.rot);
+		}
+	}
 	// DXライブラリのカメラとEffekseerのカメラを同期する
 	Effekseer_Sync3DSetting();
 
@@ -118,93 +138,60 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 }
 
 // 指定のエフェクトの再生
-void Effekseer3DEffectManager::PlayEffect(std::string fileName, PlayType type, VECTOR pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffect(std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
 
 	EffectData data{};
+	data.effectFileName = fileName;
 	data.playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
-	assert(data.playingEffectHandle != -1); // -1以外じゃなかったら止める
-
 	data.type = type;
 	data.pos = pos;
 	data.rot = rot;
 	data.scale = scale;
 	data.speed = speed;
-
 	effectDataTable_.push_back(data);
 
+	SetEffectParam(data.playingEffectHandle, *data.pos, *data.scale, *data.speed, *data.rot);
+}
+
+void Effekseer3DEffectManager::SetEffectParam(int playingEffectHandle, VECTOR pos, float scale, float speed, VECTOR rot)
+{
 	// エフェクトの再生速度を設定
-	SetSpeedPlayingEffekseer3DEffect(data.playingEffectHandle, speed);
+	SetSpeedPlayingEffekseer3DEffect(playingEffectHandle, speed);
 
 	// エフェクトの拡大率の設定
-	SetScalePlayingEffekseer3DEffect(data.playingEffectHandle, scale, scale, scale);
+	SetScalePlayingEffekseer3DEffect(playingEffectHandle, scale, scale, scale);
 
 	// エフェクトの回転率の設定
-	SetRotationPlayingEffekseer3DEffect(data.playingEffectHandle, rot.x, rot.y, rot.z);
+	SetRotationPlayingEffekseer3DEffect(playingEffectHandle, rot.x, rot.y, rot.z);
 
 	// エフェクトの位置の設定
-	SetPosPlayingEffekseer3DEffect(data.playingEffectHandle, pos.x, pos.y, pos.z);
-}
-
-void Effekseer3DEffectManager::SetPosPlayingEffect(std::string fileName, VECTOR pos)
-{
-	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
-	assert(playingEffectHandleTable_.find(fileName) != playingEffectHandleTable_.end());
-
-	// エフェクトの位置の設定
-	SetPosPlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], pos.x, pos.y, pos.z);
-}
-
-void Effekseer3DEffectManager::SetScalePlayingEffect(std::string fileName, float scale)
-{
-	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
-	assert(playingEffectHandleTable_.find(fileName) != playingEffectHandleTable_.end());
-
-	// エフェクトの拡大率の設定
-	SetScalePlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], scale, scale, scale);
-}
-
-void Effekseer3DEffectManager::SetSpeedPlayingEffect(std::string fileName, float speed)
-{
-	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
-	assert(playingEffectHandleTable_.find(fileName) != playingEffectHandleTable_.end());
-
-	// エフェクトの再生速度を設定
-	SetSpeedPlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], speed);
-}
-
-void Effekseer3DEffectManager::SetRotPlayingEffect(std::string fileName, VECTOR rot)
-{
-	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
-	assert(playingEffectHandleTable_.find(fileName) != playingEffectHandleTable_.end());
-
-	// エフェクトの回転率の設定
-	SetRotationPlayingEffekseer3DEffect(playingEffectHandleTable_[fileName], rot.x, rot.y, rot.z);
+	SetPosPlayingEffekseer3DEffect(playingEffectHandle, pos.x, pos.y, pos.z);
 }
 
 // 特定のエフェクトが再生中か
-bool Effekseer3DEffectManager::IsPlayingEffect(std::string fileName)
+bool Effekseer3DEffectManager::IsPlayingEffect(int effectPlayingHandle)
 {
-	if (IsEffekseer3DEffectPlaying(playingEffectHandleTable_[fileName]) == 0)
+	if (IsEffekseer3DEffectPlaying(effectPlayingHandle) == 0)
 	{
 		return true;
 	}
 	return false;
 }
 
-// 特定のエフェクトの再生をストップ
-void Effekseer3DEffectManager::StopEffect(std::string fileName)
+void Effekseer3DEffectManager::StopEffect(int effectPlayingHandle)
 {
-	StopEffekseer3DEffect(playingEffectHandleTable_[fileName]);
+	assert(effectPlayingHandle != -1);
+	StopEffekseer3DEffect(effectPlayingHandle);
 }
 
 // エフェクト全ての再生をストップ
 void Effekseer3DEffectManager::StopAllEffect()
 {
-	for (auto& effect : playingEffectHandleTable_)
+	for (auto& effect : effectDataTable_)
 	{
-		StopEffekseer3DEffect(effect.second);
+		StopEffect(effect.playingEffectHandle);
 	}
 }

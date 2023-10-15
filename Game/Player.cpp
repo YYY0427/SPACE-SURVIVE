@@ -67,6 +67,7 @@ Player::Player(UnityGameObject data) :
 	moveSpeed_(move_normal_speed),
 	energyGauge_(energy_gauge_total_amount),
 	slowRate_(1.0f),
+	boostEffectScale_(50.0f), 
 	isPlayGameOverEffect_(false),
 	isBoost_(false),
 	isSlow_(false),
@@ -198,7 +199,7 @@ void Player::Update()
 bool Player::CollisionRockUpdate()
 {
 	// ブースト時のエフェクトの再生のストップ
-	Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
+//	Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
 	
 	// 移動ベクトルを反転していなかったら反転
 	// 既に反転していたら反転しない
@@ -226,10 +227,12 @@ bool Player::CollisionRockUpdate()
 			if (!isPlayGameOverEffect_)
 			{
 				isPlayGameOverEffect_ = true;
-				Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", false, pos_, 50.0f, 0.5f);
+				float scale = 50.0f, speed = 0.5f;
+				VECTOR rot{ 0.0f, 0.0f, 0.0f };
+				Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", PlayType::NORMAL, &pos_, &scale, &speed, &rot);
 			}
 			// エフェクトを再生し終えたらtrueを返す
-			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2") && isPlayGameOverEffect_)
+//			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2") && isPlayGameOverEffect_)
 			{
 				// 処理終了
 				return true;
@@ -268,6 +271,10 @@ void Player::BoostProcess()
 		if (!isBoost_ && energyGauge_ > 0)
 		{
 			isBoost_ = true;
+
+			// ブースト時のエフェクトを再生
+			VECTOR rot{ 0.0f, 0.0f, 0.0f };
+			Effekseer3DEffectManager::GetInstance().PlayEffect("starFire", PlayType::LOOP_AND_FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &rot);
 		}
 		// ブースト時の場合は通常速度に移行
 		else
@@ -278,25 +285,11 @@ void Player::BoostProcess()
 	// ブースト時
 	if (isBoost_)
 	{
-		// ブースト時のエフェクトを再生
-		Effekseer3DEffectManager::GetInstance().PlayEffect("starFire", false, pos_, 50.0f, 1.0f);
-
-		// エフェクトの再生位置の更新
-		Effekseer3DEffectManager::GetInstance().SetPosPlayingEffect("starFire", pos_);
-
 		// スローモーション時はブーストのエフェクトの大きさを小さくする
-		if (isSlow_)
-		{
-			Effekseer3DEffectManager::GetInstance().SetScalePlayingEffect("starFire", 25.0f);
-		}
 		// 通常時は通常のエフェクトの大きさ
-		else
-		{
-			Effekseer3DEffectManager::GetInstance().SetScalePlayingEffect("starFire", 50.0f);
-		}
-		// スローモーションのレートに合わせてエフェクト再生速度の設定
-		// スローモーション時はエフェクトの再生速度を遅くなる
-		Effekseer3DEffectManager::GetInstance().SetSpeedPlayingEffect("starFire", slowRate_);
+		(isSlow_) ?
+			(boostEffectScale_ = 25.0f) :
+			(boostEffectScale_ = 50.0f);
 
 		// 徐々に加速
 		moveSpeed_ += 1.0f;
@@ -311,7 +304,7 @@ void Player::BoostProcess()
 	else
 	{
 		// ブースト時のエフェクトの再生をストップ
-		Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
+	//	Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
 
 		// 徐々に減速
 		moveSpeed_ -= 1.0f;

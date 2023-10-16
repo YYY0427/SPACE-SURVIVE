@@ -27,10 +27,16 @@ Meteor::Meteor(int handle, std::shared_ptr<Player> pPlayer, UnityGameObject rock
 	pModel_->SetPos(pos_);
 	pModel_->Update();
 
+	/*effect_.effectFileName = "boost";
+	effect_.type = PlayType::NORMAL;
+	effect_.pos = &pos_;
+	*effect_.playingEffectHandle = -1;
+	*effect_.rot = { 0.0f, 0.0f, 0.0f };
+	*effect_.scale = 100.0f;
+	*effect_.speed = 1.0f;
+
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	float scale = 100.0f, speed = 1.0f;
-	VECTOR rot{ 0.0f, 0.0f, 0.0f };
-	effectManager.PlayEffect("boost", PlayType::NORMAL, &pos_, &scale, &speed, &rot);
+	effectManager.PlayEffect(effect_);*/
 }
 
 Meteor::~Meteor()

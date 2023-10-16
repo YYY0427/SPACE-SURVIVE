@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="SPACE SURVIVE" company="" webLink="http://" view-date="2023-10-15" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.2.3247" locale="ja_JP">
+    <description>
+        <![CDATA[就職作品]]>
+    </description>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="名前" width="200" order="0"/>
+        <field id="tpd4" name="開始日" width="75" order="1"/>
+        <field id="tpd5" name="終了日" width="75" order="2"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="color.recent">
+            <![CDATA[#33ffff #ff00ff #f4f4f4 #3333ff #ffffff #00ffff]]>
+        </option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="名前" width="210" order="0"/>
+        <field id="1" name="デフォルトの役割" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="0" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="4" name="プロトタイプ" color="#00ffff" meeting="false" start="2023-10-13" duration="15" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="4" expand="true">
+            <task id="26" name="予備＆調整&amp;リファクタリング" color="#33ffff" meeting="false" start="2023-10-21" duration="7" complete="0" thirdDate="2023-10-11" thirdDate-constraint="0" expand="true">
+                <notes>
+                    <![CDATA[予定通りにいかなかったところなどの予備日などなど]]>
+                </notes>
+            </task>
+            <task id="15" name="仮ゲームクリア" color="#33ffff" meeting="false" start="2023-10-18" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                <notes>
+                    <![CDATA[特に演出なしのゲームクリア
+ゲームクリアの条件の処理だけ作る感じ]]>
+                </notes>
+            </task>
+            <task id="13" name="エネルギーゲージのUI" color="#33ffff" meeting="false" start="2023-10-19" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                <notes>
+                    <![CDATA[特になにも考えていない
+何か参考にしながら頑張る]]>
+                </notes>
+            </task>
+            <task id="11" name="HPのUI" color="#33ffff" meeting="false" start="2023-10-19" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                <notes>
+                    <![CDATA[特になにも考えていない
+なんか参考にしながら頑張る]]>
+                </notes>
+            </task>
+            <task id="5" name="EffekseerManagerの作成" color="#33ffff" meeting="false" start="2023-10-13" duration="3" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                <notes>
+                    <![CDATA[Effectを管理するクラス
+個別のエフェクトでループ再生できるようにしたい
+がんばれ
+]]>
+                </notes>
+                <depend id="9" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="7" name="オブジェクトの仮配置" color="#33ffff" meeting="false" start="2023-10-20" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" expand="true"/>
+            <task id="16" name="仮ゲームスタート" color="#33ffff" meeting="false" start="2023-10-18" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                <notes>
+                    <![CDATA[特に演出のないゲームスタート処理
+マリオカートの3,2,1的な?]]>
+                </notes>
+            </task>
+            <task id="8" name="岩の処理" color="#33ffff" meeting="false" start="2023-10-16" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" expand="true">
+                <task id="23" name="ゆっくり移動する処理" color="#33ffff" meeting="false" start="2023-10-16" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                    <notes>
+                        <![CDATA[岩生成時にランダムにベクトルを取得してその方向にゆっくり進む処理]]>
+                    </notes>
+                </task>
+                <task id="22" name="ゆっくり回転させる処理" color="#33ffff" meeting="false" start="2023-10-16" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                    <notes>
+                        <![CDATA[宇宙空間に漂っている岩にみたいに回転させたい]]>
+                    </notes>
+                </task>
+                <task id="21" name="プレイヤーのfarから外れたら消す処理" color="#33ffff" meeting="false" start="2023-10-16" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                    <notes>
+                        <![CDATA[メモリ圧迫するからね]]>
+                    </notes>
+                </task>
+            </task>
+            <task id="9" name="隕石の処理" color="#33ffff" meeting="false" project="true" start="2023-10-17" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                <notes>
+                    <![CDATA[任意のタイミングでプレイヤーを目指して落ちてくる処理
+　]]>
+                </notes>
+                <task id="20" name="プレイヤーのfarから外れたら消す処理" color="#33ffff" meeting="false" start="2023-10-17" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                    <notes>
+                        <![CDATA[メモリ圧迫するから消します]]>
+                    </notes>
+                </task>
+                <task id="19" name="任意のタイミングで隕石を降らせる処理" color="#33ffff" meeting="false" start="2023-10-17" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                    <notes>
+                        <![CDATA[全ての隕石を任意のタイミングで降らせる処理を考え実装
+どんな感じにしよう]]>
+                    </notes>
+                </task>
+                <task id="18" name="隕石エフェクトの実装" color="#33ffff" meeting="false" start="2023-10-17" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true">
+                    <notes>
+                        <![CDATA[隕石の進んでいる方向とは逆からエフェクトを出す]]>
+                    </notes>
+                </task>
+                <task id="17" name="隕石のエフェクトの選定" color="#33ffff" meeting="false" start="2023-10-17" duration="1" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" priority="2" expand="true"/>
+            </task>
+        </task>
+        <task id="24" name="アルファ" color="#ff00ff" meeting="false" start="2023-10-28" duration="11" complete="0" thirdDate="2023-10-13" thirdDate-constraint="0" expand="true">
+            <task id="27" name="ステージセレクト画面の作成" color="#ff00ff" meeting="false" start="2023-10-30" duration="2" complete="0" thirdDate="2023-10-11" thirdDate-constraint="0" priority="2" expand="true"/>
+            <task id="33" name="ゲームスタート" color="#ff00ff" meeting="false" start="2023-10-28" duration="2" complete="0" thirdDate="2023-10-14" thirdDate-constraint="0" expand="true"/>
+            <task id="28" name="ゲームオーバー" color="#ff00ff" meeting="false" start="2023-11-01" duration="2" complete="0" thirdDate="2023-10-11" thirdDate-constraint="0" expand="true"/>
+            <task id="29" name="ゲームクリア" color="#ff00ff" meeting="false" start="2023-11-03" duration="2" complete="0" thirdDate="2023-10-11" thirdDate-constraint="0" expand="true"/>
+            <task id="30" name="リザルト画面" color="#ff00ff" meeting="false" start="2023-11-06" duration="2" complete="0" thirdDate="2023-10-11" thirdDate-constraint="0" priority="2" expand="true"/>
+            <task id="32" name="タイマー" color="#ff00ff" meeting="false" start="2023-11-05" duration="1" complete="0" thirdDate="2023-10-14" thirdDate-constraint="0" expand="true">
+                <notes>
+                    <![CDATA[スタートからゲームクリアまでの時間をカウントするタイマー]]>
+                </notes>
+            </task>
+        </task>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>

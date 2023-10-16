@@ -61,6 +61,7 @@ Player::Player(UnityGameObject data) :
 	pos_(data.pos),
 	rot_(data.rot),
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
+	effectRot_({0, 0, 0}),
 	hp_(hp),
 	ultimateTimer_(0),
 	isInput_(false),
@@ -68,6 +69,7 @@ Player::Player(UnityGameObject data) :
 	energyGauge_(energy_gauge_total_amount),
 	slowRate_(1.0f),
 	boostEffectScale_(50.0f), 
+	playerDeadEffectHandle_(-1),
 	isPlayGameOverEffect_(false),
 	isBoost_(false),
 	isSlow_(false),
@@ -199,7 +201,7 @@ void Player::Update()
 bool Player::CollisionRockUpdate()
 {
 	// ブースト時のエフェクトの再生のストップ
-//	Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
+	Effekseer3DEffectManager::GetInstance().StopEffect(boostEffectHandle_);
 	
 	// 移動ベクトルを反転していなかったら反転
 	// 既に反転していたら反転しない
@@ -208,6 +210,7 @@ bool Player::CollisionRockUpdate()
 		isReverseMoveVec_ = true;
 		moveVec_ = VScale(moveVec_, -1.0f);
 	}
+
 	// ベクトルを徐々に小さくする
 	moveVec_ = VScale(moveVec_, 0.96f);
 
@@ -229,10 +232,10 @@ bool Player::CollisionRockUpdate()
 				isPlayGameOverEffect_ = true;
 				float scale = 50.0f, speed = 0.5f;
 				VECTOR rot{ 0.0f, 0.0f, 0.0f };
-				Effekseer3DEffectManager::GetInstance().PlayEffect("explosion2", PlayType::NORMAL, &pos_, &scale, &speed, &rot);
+				Effekseer3DEffectManager::GetInstance().PlayEffect(&playerDeadEffectHandle_, "explosion2", PlayType::NORMAL, &pos_, &scale, &speed, &rot);
 			}
 			// エフェクトを再生し終えたらtrueを返す
-//			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect("explosion2") && isPlayGameOverEffect_)
+			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
 			{
 				// 処理終了
 				return true;
@@ -273,8 +276,7 @@ void Player::BoostProcess()
 			isBoost_ = true;
 
 			// ブースト時のエフェクトを再生
-			VECTOR rot{ 0.0f, 0.0f, 0.0f };
-			Effekseer3DEffectManager::GetInstance().PlayEffect("starFire", PlayType::LOOP_AND_FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &rot);
+			Effekseer3DEffectManager::GetInstance().PlayEffect(&boostEffectHandle_, "starFire", PlayType::FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &effectRot_);
 		}
 		// ブースト時の場合は通常速度に移行
 		else
@@ -304,7 +306,7 @@ void Player::BoostProcess()
 	else
 	{
 		// ブースト時のエフェクトの再生をストップ
-	//	Effekseer3DEffectManager::GetInstance().StopEffect("starFire");
+		Effekseer3DEffectManager::GetInstance().StopEffect(boostEffectHandle_);
 
 		// 徐々に減速
 		moveSpeed_ -= 1.0f;

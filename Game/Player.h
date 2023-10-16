@@ -135,5 +135,8 @@ private:
 	// ゲームオーバーエフェクトを再生したか
 	bool isPlayGameOverEffect_;
 
+	VECTOR effectRot_;
 	float boostEffectScale_;
+	int boostEffectHandle_;
+	int playerDeadEffectHandle_;
 };

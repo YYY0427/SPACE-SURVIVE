@@ -1,5 +1,6 @@
 #pragma once
 #include "RockBase.h"
+#include "../Util/Effekseer3DEffectManager.h"
 
 class Player;
 class Model;
@@ -13,6 +14,8 @@ public:
 	void Update();
 
 private:
+	EffectData effect_;
+
 	// ƒ|ƒCƒ“ƒ^
 	std::shared_ptr<Player> pPlayer_;
 };

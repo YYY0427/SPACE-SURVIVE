@@ -13,20 +13,20 @@ enum class PlayType
 	LOOP_AND_FOLLOW,
 };
 
+struct EffectData
+{
+	std::string effectFileName;
+	int* playingEffectHandle;
+	PlayType type;
+	VECTOR* pos;
+	VECTOR* rot;
+	float* scale;
+	float* speed;
+};
+
 // Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス
 class Effekseer3DEffectManager
 {
-private:
-	struct EffectData
-	{
-		std::string effectFileName;
-		int playingEffectHandle;
-		PlayType type;
-		VECTOR* pos;
-		VECTOR* rot;
-		float* scale;
-		float* speed;
-	};
 public:
 	// デストラクタ
 	~Effekseer3DEffectManager();
@@ -59,7 +59,8 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転</param>
-	void PlayEffect(std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot);
+	void PlayEffect(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot);
+	void PlayEffect(EffectData data);
 
 	void SetEffectParam(int playingEffectHandle, VECTOR pos, float scale, float speed, VECTOR rot);
 

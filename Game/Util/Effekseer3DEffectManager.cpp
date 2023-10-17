@@ -45,8 +45,6 @@ Effekseer3DEffectManager& Effekseer3DEffectManager::GetInstance()
 // Effekseerの初期化とエフェクトのロード
 void Effekseer3DEffectManager::Init()
 {
-//	auto manager = ::Effekseer::Manager::Create(3000);
-
 	// Effekseerを初期化する
 	// 引数には画面に表示する最大パーティクル数を設定する
 	if (Effkseer_Init(8000) == -1)
@@ -85,9 +83,12 @@ void Effekseer3DEffectManager::Update()
 		if (IsPlayingEffect(*effect.playingEffectHandle)) continue;
 		if (effect.type == PlayType::LOOP || effect.type == PlayType::LOOP_AND_FOLLOW)
 		{
-			PlayEffect(effect.playingEffectHandle, effect.effectFileName, effect.type, effect.pos, effect.scale, effect.speed, effect.rot);
+			PlayEffectLoop(effect.playingEffectHandle, effect.effectFileName, effect.type, effect.pos, effect.scale, effect.speed, effect.rot);
 		}
 	}
+	// 再生が終了したエフェクトがあった場合削除
+	effectDataTable_.remove_if([this](EffectData data) { return !IsPlayingEffect(*data.playingEffectHandle); });
+
 	// DXライブラリのカメラとEffekseerのカメラを同期する
 	Effekseer_Sync3DSetting();
 
@@ -117,7 +118,6 @@ void Effekseer3DEffectManager::End()
 	{
 		DeleteEffekseerEffect(effectResource.second);
 	}
-
 	// Effekseerを終了する
 	Effkseer_End();
 }
@@ -138,25 +138,23 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 }
 
 // 指定のエフェクトの再生
-void Effekseer3DEffectManager::PlayEffect(EffectData data)
+void Effekseer3DEffectManager::PlayEffectLoop(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
-	assert(effectResourceHandleTable_.find(data.effectFileName) != effectResourceHandleTable_.end());
+	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
 
-	EffectData data2{};
-	data2.effectFileName = data.effectFileName;
-	*data.playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandleTable_[data.effectFileName]);
-	data2.playingEffectHandle = data.playingEffectHandle;
-	data2.type = data.type;
-	data2.pos = data.pos;
-	data2.rot = data.rot;
-	data2.scale = data.scale;
-	data2.speed = data.speed;
-	effectDataTable_.push_back(data2);
+	EffectData data{};
+	data.effectFileName = fileName;
+	*playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
+	data.playingEffectHandle = playingEffectHandle;
+	data.type = type;
+	data.pos = pos;
+	data.rot = rot;
+	data.scale = scale;
+	data.speed = speed;
 
-	SetEffectParam(*data2.playingEffectHandle, *data2.pos, *data2.scale, *data2.speed, *data2.rot);
+	SetEffectParam(*data.playingEffectHandle, *data.pos, *data.scale, *data.speed, *data.rot);
 }
-
 
 // 指定のエフェクトの再生
 void Effekseer3DEffectManager::PlayEffect(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot)
@@ -205,7 +203,10 @@ bool Effekseer3DEffectManager::IsPlayingEffect(int effectPlayingHandle)
 
 void Effekseer3DEffectManager::StopEffect(int effectPlayingHandle)
 {
-	StopEffekseer3DEffect(effectPlayingHandle);
+	if (effectPlayingHandle <= -1) return;
+
+	int result = StopEffekseer3DEffect(effectPlayingHandle);
+	assert(result != -1);
 	
 	effectDataTable_.remove_if([effectPlayingHandle](EffectData data) { return *data.playingEffectHandle == effectPlayingHandle; });
 }

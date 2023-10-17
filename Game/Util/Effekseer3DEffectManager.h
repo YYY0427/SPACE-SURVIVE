@@ -60,7 +60,7 @@ public:
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転</param>
 	void PlayEffect(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot);
-	void PlayEffect(EffectData data);
+	void PlayEffectLoop(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot);
 
 	void SetEffectParam(int playingEffectHandle, VECTOR pos, float scale, float speed, VECTOR rot);
 
@@ -99,6 +99,7 @@ private:
 	// エフェクトのファイル名をIDとしたエフェクトリソースのハンドルのテーブル
 	std::unordered_map<std::string, int> effectResourceHandleTable_;
 
+	// エフェクトのデータを保存した配列
 	std::list<EffectData> effectDataTable_;
 
 	// 画像ハンドル

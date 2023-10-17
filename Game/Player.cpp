@@ -276,7 +276,7 @@ void Player::BoostProcess()
 			isBoost_ = true;
 
 			// ブースト時のエフェクトを再生
-			Effekseer3DEffectManager::GetInstance().PlayEffect(&boostEffectHandle_, "starFire", PlayType::FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &effectRot_);
+			Effekseer3DEffectManager::GetInstance().PlayEffect(&boostEffectHandle_, "starFire", PlayType::LOOP_AND_FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &effectRot_);
 		}
 		// ブースト時の場合は通常速度に移行
 		else
@@ -291,7 +291,7 @@ void Player::BoostProcess()
 		// 通常時は通常のエフェクトの大きさ
 		(isSlow_) ?
 			(boostEffectScale_ = 25.0f) :
-			(boostEffectScale_ = 50.0f);
+			(boostEffectScale_ = 40.0f);
 
 		// 徐々に加速
 		moveSpeed_ += 1.0f;
@@ -307,7 +307,7 @@ void Player::BoostProcess()
 	{
 		// ブースト時のエフェクトの再生をストップ
 		Effekseer3DEffectManager::GetInstance().StopEffect(boostEffectHandle_);
-
+			
 		// 徐々に減速
 		moveSpeed_ -= 1.0f;
 

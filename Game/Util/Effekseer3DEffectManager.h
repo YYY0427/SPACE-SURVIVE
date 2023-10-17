@@ -99,7 +99,7 @@ private:
 	// エフェクトのファイル名をIDとしたエフェクトリソースのハンドルのテーブル
 	std::unordered_map<std::string, int> effectResourceHandleTable_;
 
-	// エフェクトのデータを保存した配列
+	// エフェクトのデータを保存したテーブル
 	std::list<EffectData> effectDataTable_;
 
 	// 画像ハンドル

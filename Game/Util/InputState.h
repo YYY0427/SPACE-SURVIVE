@@ -8,6 +8,7 @@ enum class InputType
 	PAUSE,		// ポーズ
 	SLOW,		// スローモーション
 	BOOST,		// ブースト
+	CAMERA_INVERSION,	// カメラ反転
 	UP,			// 上
 	DOWN,		// 下
 	RIGHT,		// 右

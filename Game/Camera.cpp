@@ -118,6 +118,11 @@ void Camera::Update()
 	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
 	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
 
+	if (InputState::IsPressed(InputType::CAMERA_INVERSION))
+	{
+		// 進んできた道の座標をカメラのターゲットにする
+	}
+
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
 
@@ -137,6 +142,11 @@ void Camera::Draw()
 float Camera::GetCameraYaw()
 {
 	return cameraYaw_;
+}
+
+float Camera::GetCameraFar() const
+{
+	return far_distance;
 }
 
 // カメラの位置の取得

@@ -511,3 +511,8 @@ void Player::SetCameraPointer(std::shared_ptr<Camera> pCamera)
 {
 	pCamera_ = pCamera;
 }
+
+float Player::GetCameraFar() const
+{
+	return pCamera_->GetCameraFar();
+}

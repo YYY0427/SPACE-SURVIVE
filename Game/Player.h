@@ -91,6 +91,8 @@ public:
 
 	// カメラクラスのポインタの設定
 	void SetCameraPointer(std::shared_ptr<Camera> pCamera);
+
+	float GetCameraFar() const;
 private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;

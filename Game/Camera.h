@@ -28,11 +28,14 @@ public:
 	// カメラの回転情報の取得
 	float GetCameraYaw();	// Y軸
 
+	float GetCameraFar() const;
+
 	// カメラの位置の取得
 	VECTOR GetPos();
 
 	// カメラの注視点の取得
 	VECTOR GetTarget();
+
 private:
 	// ポインタ
 	std::shared_ptr<Player> pPlayer_;

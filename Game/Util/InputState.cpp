@@ -26,8 +26,9 @@ namespace InputState
 		inputMapTable_[InputType::DECISION] = { {InputCategory::PAD,  XINPUT_BUTTON_A } };			// Aボタン
 		inputMapTable_[InputType::BACK] = { {InputCategory::PAD, XINPUT_BUTTON_B} };				// Bボタン
 		inputMapTable_[InputType::PAUSE] = { {InputCategory::PAD, XINPUT_BUTTON_START } };			// スタートボタン
-		inputMapTable_[InputType::SLOW] = { {InputCategory::PAD, XINPUT_BUTTON_B } };				// 
-		inputMapTable_[InputType::BOOST] = { {InputCategory::PAD, XINPUT_BUTTON_A } };				// 
+		inputMapTable_[InputType::SLOW] = { {InputCategory::PAD, XINPUT_BUTTON_B } };				// スロー
+		inputMapTable_[InputType::BOOST] = { {InputCategory::PAD, XINPUT_BUTTON_A } };				// ブースト
+		inputMapTable_[InputType::CAMERA_INVERSION] = { {InputCategory::PAD, XINPUT_BUTTON_RIGHT_SHOULDER } };	// カメラ反転
 		inputMapTable_[InputType::UP] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_UP } };			// ↑
 		inputMapTable_[InputType::DOWN] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_DOWN } };		// ↓
 		inputMapTable_[InputType::RIGHT] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_RIGHT } };		// →

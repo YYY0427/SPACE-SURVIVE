@@ -24,7 +24,7 @@ namespace
 
 // コンストラクタ
 PadSettingScene::PadSettingScene(SceneManager& manager) : 
-	Scene(manager),
+	SceneBase(manager),
 	currentSelectItem_(0)
 {
 	// 項目の描画色を選択されていないときの色に初期化

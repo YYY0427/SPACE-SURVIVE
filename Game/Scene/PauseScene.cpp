@@ -22,7 +22,7 @@ namespace
 
 // コンストラクタ
 PauseScene::PauseScene(SceneManager& manager) :
-	Scene(manager),
+	SceneBase(manager),
 	currentSelectItem_(0)
 {
 	// フェードインを行わない

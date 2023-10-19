@@ -1,9 +1,9 @@
 #pragma once
-#include "Scene.h"
+#include "SceneBase.h"
 #include <vector>
 
 // İ’èƒV[ƒ“
-class OptionScene : public Scene
+class OptionScene : public SceneBase
 {
 public:
 	/// <summary>

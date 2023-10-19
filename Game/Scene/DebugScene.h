@@ -1,12 +1,12 @@
 #pragma once
-#include "Scene.h"
+#include "SceneBase.h"
 #include <array>
 #include <memory>
 
 // デバッグ用シーン
 // デバッグをしやすくするために作成
 // 各シーンに飛べる
-class DebugScene : public Scene
+class DebugScene : public SceneBase
 {
 public:
 	/// <summary>

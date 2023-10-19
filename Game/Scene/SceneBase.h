@@ -5,17 +5,17 @@
 class SceneManager;	
 
 // シーンの基底クラス
-class Scene
+class SceneBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="manager">シーンマネージャーの参照</param>
-	Scene(SceneManager& manager);
+	SceneBase(SceneManager& manager);
 
 	// デストラクタ
-	virtual ~Scene();
+	virtual ~SceneBase();
 
 	// 更新
 	virtual void Update() = 0;

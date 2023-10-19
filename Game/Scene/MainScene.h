@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "SceneBase.h"
 #include <memory>
 
 // プロトタイプ宣言
@@ -11,7 +11,7 @@ class DataReaderFromUnity;
 
 // メインシーン
 // ゲームのメインの処理を行うシーン
-class MainScene : public Scene
+class MainScene : public SceneBase
 {
 public:
 	/// <summary>

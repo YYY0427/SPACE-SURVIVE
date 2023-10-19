@@ -22,7 +22,7 @@ namespace
 
 // コンストラクタ
 TitleScene::TitleScene(SceneManager& manager) :
-	Scene(manager),
+	SceneBase(manager),
 	updateFunc_(&TitleScene::NormalUpdate),
 	currentSelectItem_(0)
 {

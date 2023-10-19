@@ -1,4 +1,4 @@
-#include "Scene.h"
+#include "SceneBase.h"
 #include "../common.h"
 #include <cmath>
 #include "../Util/Range.h"
@@ -13,7 +13,7 @@ namespace
 }
 
 // コンストラクタ
-Scene::Scene(SceneManager& manager) :
+SceneBase::SceneBase(SceneManager& manager) :
 	manager_(manager),
 	isFadeOut_(false),
 	fadeColor_(GetColor(0, 0, 0)),
@@ -26,13 +26,13 @@ Scene::Scene(SceneManager& manager) :
 }
 
 // デストラクタ
-Scene::~Scene()
+SceneBase::~SceneBase()
 {
 	DeleteGraph(gaussScreen_);
 }
 
 // フェードの更新
-void Scene::UpdateFade()
+void SceneBase::UpdateFade()
 {
 	// フェードの明るさの更新
 	fadeBright_ += fadeSpeed_;
@@ -48,7 +48,7 @@ void Scene::UpdateFade()
 }
 
 // フェードの描画
-void Scene::DrawFade(bool isPlay)
+void SceneBase::DrawFade(bool isPlay)
 {
 	if (!isPlay) return;
 
@@ -58,7 +58,7 @@ void Scene::DrawFade(bool isPlay)
 }
 
 // モザイクフェードの描画
-void Scene::DrawGaussFade(bool isPlay)
+void SceneBase::DrawGaussFade(bool isPlay)
 {
 	if (!isPlay) return;
 
@@ -72,7 +72,7 @@ void Scene::DrawGaussFade(bool isPlay)
 }
 
 // フェードアウトの開始
-void Scene::StartFadeOut(int fadeBrightUpperLimitValue, int fadeSpeed)
+void SceneBase::StartFadeOut(int fadeBrightUpperLimitValue, int fadeSpeed)
 {
 	// フェードアウトをどのくらいまで行うのか値を設定
 	// 0(フェードしない)～255(最後までフェードを行う)
@@ -86,7 +86,7 @@ void Scene::StartFadeOut(int fadeBrightUpperLimitValue, int fadeSpeed)
 }
 
 // フェードインの開始
-void Scene::StartFadeIn(int fadeSpeed)
+void SceneBase::StartFadeIn(int fadeSpeed)
 {
 	// 初期化
 	isFadeOut_ = false;
@@ -96,37 +96,37 @@ void Scene::StartFadeIn(int fadeSpeed)
 }
 
 // フェードイン中かどうか
-bool Scene::IsFadingIn() const
+bool SceneBase::IsFadingIn() const
 {
 	return (fadeSpeed_ < 0);
 }
 
 // フェードアウト中かどうか
-bool Scene::IsFadingOut() const
+bool SceneBase::IsFadingOut() const
 {
 	return (fadeSpeed_ > 0);
 }
 
 // フェード中かどうか
-bool Scene::IsFadeing() const
+bool SceneBase::IsFadeing() const
 {
 	return IsFadingIn() || IsFadingOut();
 }
 
 // フェードアウトスタート後にフェードアウト中ではないか 
-bool Scene::IsStartFadeOutAfterFadingOut()
+bool SceneBase::IsStartFadeOutAfterFadingOut()
 {
 	return !IsFadingOut() && isFadeOut_;
 }
 
 // フェードの明るさの取得
-int Scene::GetFadeBright() const
+int SceneBase::GetFadeBright() const
 {
 	return fadeBright_;
 }
 
 // フェードの明るさの設定
-void Scene::SetFadeBright(int fadeBright)
+void SceneBase::SetFadeBright(int fadeBright)
 {
 	fadeBright_ = fadeBright;
 }

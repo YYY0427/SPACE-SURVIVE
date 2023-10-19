@@ -1,9 +1,9 @@
 #pragma once
-#include "Scene.h"
+#include "SceneBase.h"
 #include <vector>
 
 // パッドの設定を行うシーン
-class PadSettingScene : public Scene
+class PadSettingScene : public SceneBase
 {
 public:
 	/// <summary>

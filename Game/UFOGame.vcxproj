@@ -180,7 +180,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\PauseScene.cpp" />
     <ClCompile Include="Scene\MainScene.cpp" />
-    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneBase.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Util\SoundManager.cpp" />
@@ -217,7 +217,7 @@
     <ClInclude Include="Util\Model.h" />
     <ClInclude Include="Scene\PauseScene.h" />
     <ClInclude Include="Scene\MainScene.h" />
-    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Util\SoundManager.h" />

@@ -1,9 +1,9 @@
 #pragma once
-#include "Scene.h"
+#include "SceneBase.h"
 #include <array>
 
 // ポーズシーン
-class PauseScene : public Scene
+class PauseScene : public SceneBase
 {
 public:
 	/// <summary>

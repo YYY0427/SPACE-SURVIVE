@@ -21,7 +21,7 @@ namespace
 
 // コンストラクタ
 DebugScene::DebugScene(SceneManager& manager):
-	Scene(manager),
+	SceneBase(manager),
 	currentSelectItem_(0)
 {
 }

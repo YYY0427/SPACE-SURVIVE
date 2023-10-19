@@ -1,9 +1,9 @@
 #include "SceneManager.h"
-#include "Scene.h"
+#include "SceneBase.h"
 #include "../Util/Effekseer3DEffectManager.h"
 
 // 全てのシーンの削除とシーンの切り替え
-void SceneManager::PopAllSceneAndChangeScene(Scene* scene)
+void SceneManager::PopAllSceneAndChangeScene(SceneBase* scene)
 {
 	// すべてのシーンの削除
 	for (auto& scene : scene_)
@@ -19,7 +19,7 @@ void SceneManager::PopAllSceneAndChangeScene(Scene* scene)
 }
 
 // シーンの切り替え
-void SceneManager::ChangeScene(Scene* scene)
+void SceneManager::ChangeScene(SceneBase* scene)
 {
 	// シーンスタックが空ではなかったら
 	if (!scene_.empty())
@@ -35,7 +35,7 @@ void SceneManager::ChangeScene(Scene* scene)
 }
 
 // 現在のシーンの上にシーンを積む(ポーズ)
-void SceneManager::PushScene(Scene* scene)
+void SceneManager::PushScene(SceneBase* scene)
 {
 	// シーンの追加
 	scene_.push_front(scene);

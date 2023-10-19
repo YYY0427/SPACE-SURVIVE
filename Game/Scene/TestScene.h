@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "SceneBase.h"
 #include <memory>
 
 // プロトタイプ宣言
@@ -13,7 +13,7 @@ class Image3DManager;
 
 // テストシーン
 // 色々試すようのシーン
-class TestScene : public Scene
+class TestScene : public SceneBase
 {
 public:
 	/// <summary>

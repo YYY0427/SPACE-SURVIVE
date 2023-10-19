@@ -15,7 +15,7 @@
 
 // コンストラクタ
 MainScene::MainScene(SceneManager& manager) :
-	Scene(manager),
+	SceneBase(manager),
 	updateFunc_(&MainScene::NormalUpdate)
 {
 //	// オブジェクトの配置データの読み込み

@@ -30,7 +30,7 @@ namespace
 
 // コンストラクタ
 OptionScene::OptionScene(SceneManager& manager) :
-	Scene(manager),
+	SceneBase(manager),
 	currentSelectItem_(0),
 	soundIconImgHandle_(-1)
 {

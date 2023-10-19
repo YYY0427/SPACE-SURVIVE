@@ -2,7 +2,7 @@
 #include <deque>
 
 // プロトタイプ宣言
-class Scene;
+class SceneBase;
 
 // シーンの管理クラス
 class SceneManager
@@ -13,20 +13,20 @@ public:
 	/// 主にポーズからのシーンの切り替えを行うときに使う
 	/// </summary>
 	/// <param name="scene">切り替えたいシーンのアドレス</param>
-	void PopAllSceneAndChangeScene(Scene* scene);
+	void PopAllSceneAndChangeScene(SceneBase* scene);
 
 	/// <summary>
 	/// シーンの切り替え
 	/// </summary>
 	/// <param name="scene">切り替えたいシーンのアドレス</param>
-	void ChangeScene(Scene* scene);
+	void ChangeScene(SceneBase* scene);
 
 	/// <summary>
 	/// 現在のシーンの上にシーンを積む(ポーズ)
 	/// Updateで実行されるのは上につまれたシーン
 	/// </summary>
 	/// <param name="scene">上に積みたいシーンのアドレス</param>
-	void PushScene(Scene* scene);
+	void PushScene(SceneBase* scene);
 
 	// 一番上のシーンを削除
 	// ポーズ画面を消すときに使う
@@ -57,7 +57,7 @@ private:
 	// シーン
 	// 今実行中のシーンを切り替えていきたいので	
 	// 参照ではなくポインタとして宣言
-	std::deque<Scene*> scene_;
+	std::deque<SceneBase*> scene_;
 
 	// ゲームを終了するかどうか
 	bool isGameEnd_;

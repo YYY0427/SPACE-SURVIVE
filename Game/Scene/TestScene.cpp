@@ -32,7 +32,7 @@ namespace
 
 // コンストラクタ
 TestScene::TestScene(SceneManager& manager) :
-	Scene(manager),
+	SceneBase(manager),
 	updateFunc_(&TestScene::NormalUpdate)
 {
 	// オブジェクトの配置データの読み込み

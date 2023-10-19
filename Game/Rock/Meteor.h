@@ -14,7 +14,10 @@ public:
 	void Update();
 
 private:
-	EffectData effect_;
+	int effectDataH_;
+	float effectScale_;
+	float effectSpeed_;
+	VECTOR effectRot_;
 
 	// ƒ|ƒCƒ“ƒ^
 	std::shared_ptr<Player> pPlayer_;

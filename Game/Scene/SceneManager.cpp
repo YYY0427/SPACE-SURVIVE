@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
+#include "../Util/Effekseer3DEffectManager.h"
 
 // 全てのシーンの削除とシーンの切り替え
 void SceneManager::PopAllSceneAndChangeScene(Scene* scene)
@@ -70,6 +71,11 @@ void SceneManager::SetIsGameEnd(bool isGameEnd)
 void SceneManager::Update()
 {
 	scene_.front()->Update();
+
+	if (static_cast<int>(scene_.size()) == 1)
+	{
+		Effekseer3DEffectManager::GetInstance().Update();
+	}
 }
 
 // 各シーンの描画
@@ -78,5 +84,9 @@ void SceneManager::Draw()
 	for (int i = static_cast<int>(scene_.size() - 1); 0 <= i; i--)
 	{
 		scene_[i]->Draw();
+	}
+	if (static_cast<int>(scene_.size()) == 1)
+	{
+		Effekseer3DEffectManager::GetInstance().Draw();
 	}
 }

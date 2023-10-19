@@ -154,7 +154,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Image3DManager.cpp" />
     <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="Planet\Earth.cpp" />
@@ -190,7 +189,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Effect.h" />
     <ClInclude Include="Image3DManager.h" />
     <ClInclude Include="Image3D.h" />
     <ClInclude Include="Planet\Earth.h" />

@@ -3,13 +3,7 @@
 #include "DrawFunctions.h"
 #include <cassert>
 
-namespace EffectID
-{
-	const std::string player_dead = "explosion2";				// プレイヤー死亡時に出すエフェクト
-	const std::string player_boost = "starFire";				// プレイヤーブースト時に継続的に出すエフェクト
-	const std::string player_acceleration = "acceleration";		// プレイヤーブースト時に一度だけ出すエフェクト
-	const std::string meteor = "boost";							// 隕石用エフェクト
-}
+
 
 namespace
 {
@@ -66,6 +60,16 @@ void Effekseer3DEffectManager::Init()
 // 更新
 void Effekseer3DEffectManager::Update()
 {
+	// ループエフェクトの場合の処理
+	for (auto& effect : effectDataTable_)
+	{
+		// 再生していないときしか通らない
+		if (IsPlayingEffect(*effect.playingEffectHandle)) continue;
+		if (effect.type == PlayType::LOOP || effect.type == PlayType::LOOP_AND_FOLLOW)
+		{
+			PlayEffectLoop(effect.playingEffectHandle, effect.effectFileName);
+		}
+	}
 	// 追従エフェクトの場合の処理
 	for (auto& effect : effectDataTable_)
 	{
@@ -74,16 +78,6 @@ void Effekseer3DEffectManager::Update()
 		if (effect.type == PlayType::FOLLOW || effect.type == PlayType::LOOP_AND_FOLLOW)
 		{
 			SetEffectParam(*effect.playingEffectHandle, *effect.pos, *effect.scale, *effect.speed, *effect.rot);
-		}
-	}
-	// ループエフェクトの場合の処理
-	for (auto& effect : effectDataTable_)
-	{
-		// 再生していないときしか通らない
-		if (IsPlayingEffect(*effect.playingEffectHandle)) continue;
-		if (effect.type == PlayType::LOOP || effect.type == PlayType::LOOP_AND_FOLLOW)
-		{
-			PlayEffectLoop(effect.playingEffectHandle, effect.effectFileName, effect.type, effect.pos, effect.scale, effect.speed, effect.rot);
 		}
 	}
 	// 再生が終了したエフェクトがあった場合削除
@@ -118,6 +112,7 @@ void Effekseer3DEffectManager::End()
 	{
 		DeleteEffekseerEffect(effectResource.second);
 	}
+
 	// Effekseerを終了する
 	Effkseer_End();
 }
@@ -125,6 +120,7 @@ void Effekseer3DEffectManager::End()
 // エフェクトのロード
 void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 {
+	// エフェクトのファイルパスの生成
 	std::string path = data_file_path;
 	path += fileName;
 	path += data_extension;
@@ -137,23 +133,14 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 	effectResourceHandleTable_[fileName] = handle;
 }
 
-// 指定のエフェクトの再生
-void Effekseer3DEffectManager::PlayEffectLoop(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot)
+// ループエフェクトの再生
+void Effekseer3DEffectManager::PlayEffectLoop(int* playingEffectHandle, std::string fileName)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
 
-	EffectData data{};
-	data.effectFileName = fileName;
+	// エフェクトの再再生
 	*playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
-	data.playingEffectHandle = playingEffectHandle;
-	data.type = type;
-	data.pos = pos;
-	data.rot = rot;
-	data.scale = scale;
-	data.speed = speed;
-
-	SetEffectParam(*data.playingEffectHandle, *data.pos, *data.scale, *data.speed, *data.rot);
 }
 
 // 指定のエフェクトの再生
@@ -203,12 +190,8 @@ bool Effekseer3DEffectManager::IsPlayingEffect(int effectPlayingHandle)
 
 void Effekseer3DEffectManager::StopEffect(int effectPlayingHandle)
 {
-	if (effectPlayingHandle <= -1) return;
-
 	int result = StopEffekseer3DEffect(effectPlayingHandle);
 	assert(result != -1);
-	
-	effectDataTable_.remove_if([effectPlayingHandle](EffectData data) { return *data.playingEffectHandle == effectPlayingHandle; });
 }
 
 // エフェクト全ての再生をストップ
@@ -218,5 +201,16 @@ void Effekseer3DEffectManager::StopAllEffect()
 	{
 		StopEffekseer3DEffect(*effect.playingEffectHandle);
 	}
+}
+
+void Effekseer3DEffectManager::DeleteEffect(int effectPlayingHandle)
+{
+	StopEffect(effectPlayingHandle);
+	effectDataTable_.remove_if([effectPlayingHandle](EffectData data) { return *data.playingEffectHandle == effectPlayingHandle; });
+}
+
+void Effekseer3DEffectManager::DeleteAllEffect()
+{
+	StopAllEffect();
 	effectDataTable_.clear();
 }

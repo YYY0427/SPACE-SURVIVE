@@ -4,6 +4,14 @@
 #include <unordered_map>
 #include <list>
 
+namespace EffectID
+{
+	const std::string player_dead = "explosion2";				// プレイヤー死亡時に出すエフェクト
+	const std::string player_boost = "starFire";				// プレイヤーブースト時に継続的に出すエフェクト
+	const std::string player_acceleration = "acceleration";		// プレイヤーブースト時に一度だけ出すエフェクト
+	const std::string meteor = "boost";							// 隕石用エフェクト
+}
+
 // エフェクトの再生タイプ
 enum class PlayType
 {
@@ -60,7 +68,7 @@ public:
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転</param>
 	void PlayEffect(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot);
-	void PlayEffectLoop(int* playingEffectHandle, std::string fileName, PlayType type, VECTOR* pos, float* scale, float* speed, VECTOR* rot);
+	void PlayEffectLoop(int* playingEffectHandle, std::string fileName);
 
 	void SetEffectParam(int playingEffectHandle, VECTOR pos, float scale, float speed, VECTOR rot);
 
@@ -79,6 +87,9 @@ public:
 
 	// エフェクト全ての再生をストップ
 	void StopAllEffect();
+
+	void DeleteEffect(int effectPlayingHandle);
+	void DeleteAllEffect();
 
 private:
 	// コンストラクタ

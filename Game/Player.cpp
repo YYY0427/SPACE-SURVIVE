@@ -53,7 +53,7 @@ namespace
 	constexpr int ultimate_frames = 120;
 
 	// HP
-	constexpr int hp = 5;
+	constexpr int hp = 2;
 }
 
 //  コンストラクタ
@@ -201,7 +201,7 @@ void Player::Update()
 bool Player::CollisionRockUpdate()
 {
 	// ブースト時のエフェクトの再生のストップ
-	Effekseer3DEffectManager::GetInstance().StopEffect(boostEffectHandle_);
+	Effekseer3DEffectManager::GetInstance().DeleteEffect(boostEffectHandle_);
 	
 	// 移動ベクトルを反転していなかったら反転
 	// 既に反転していたら反転しない
@@ -232,7 +232,7 @@ bool Player::CollisionRockUpdate()
 				isPlayGameOverEffect_ = true;
 				float scale = 50.0f, speed = 0.5f;
 				VECTOR rot{ 0.0f, 0.0f, 0.0f };
-				Effekseer3DEffectManager::GetInstance().PlayEffect(&playerDeadEffectHandle_, "explosion2", PlayType::NORMAL, &pos_, &scale, &speed, &rot);
+				Effekseer3DEffectManager::GetInstance().PlayEffect(&playerDeadEffectHandle_, EffectID::player_dead, PlayType::NORMAL, &pos_, &scale, &speed, &rot);
 			}
 			// エフェクトを再生し終えたらtrueを返す
 			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
@@ -276,7 +276,7 @@ void Player::BoostProcess()
 			isBoost_ = true;
 
 			// ブースト時のエフェクトを再生
-			Effekseer3DEffectManager::GetInstance().PlayEffect(&boostEffectHandle_, "starFire", PlayType::LOOP_AND_FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &effectRot_);
+			Effekseer3DEffectManager::GetInstance().PlayEffect(&boostEffectHandle_, EffectID::player_boost, PlayType::LOOP_AND_FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &effectRot_);
 		}
 		// ブースト時の場合は通常速度に移行
 		else
@@ -306,7 +306,7 @@ void Player::BoostProcess()
 	else
 	{
 		// ブースト時のエフェクトの再生をストップ
-		Effekseer3DEffectManager::GetInstance().StopEffect(boostEffectHandle_);
+		Effekseer3DEffectManager::GetInstance().DeleteEffect(boostEffectHandle_);
 			
 		// 徐々に減速
 		moveSpeed_ -= 1.0f;

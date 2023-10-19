@@ -118,11 +118,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// 更新
 		InputState::Update();
 		sceneManager.Update();
-		effectManager.Update();
+	//	effectManager.Update();
 
 		// 描画
 		sceneManager.Draw();
-		effectManager.Draw();
+	//	effectManager.Draw();
 
 		// Windowモード設定
 		ChangeWindowMode(saveData.GetSaveData().windowMode);

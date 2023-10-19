@@ -60,7 +60,8 @@ TestScene::TestScene(SceneManager& manager) :
 //  デストラクタ
 TestScene::~TestScene()
 {
-	// 処理なし
+	// 全てのエフェクトの削除
+	Effekseer3DEffectManager::GetInstance().DeleteAllEffect();
 }
 
 // メンバ関数ポインタの更新
@@ -134,6 +135,9 @@ void TestScene::NormalUpdate()
 			updateFunc_ = &TestScene::CollisionRockUpdate;
 			return;
 		}
+
+		// 当たり判定情報の後始末
+		MV1CollResultPolyDimTerminate(result);
 	}
 
 	// ポーズ画面に遷移
@@ -146,9 +150,6 @@ void TestScene::NormalUpdate()
 	// フェードが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		// 全てのエフェクトの再生を停止
-		Effekseer3DEffectManager::GetInstance().StopAllEffect();
-
 		// PushSceneするのでシーンが残るためフェードインの設定
 		StartFadeIn();
 
@@ -198,6 +199,9 @@ void TestScene::CollisionRockUpdate()
 // プレイヤー落下死亡時の更新
 void TestScene::DeathFallPlayerUpdate()
 {
+	// 全てのエフェクトの削除
+	Effekseer3DEffectManager::GetInstance().StopAllEffect();
+
 	// フェードアウトが終了したらリスポーン
 	if (IsStartFadeOutAfterFadingOut())
 	{
@@ -230,9 +234,6 @@ void TestScene::DeathFallPlayerUpdate()
 	// 1度だけフェードアウト処理を実行
 	if (!IsFadeing())
 	{
-		// 全てのエフェクトの再生を停止
-		Effekseer3DEffectManager::GetInstance().StopAllEffect();
-
 		// フェードアウトの開始
 		StartFadeOut(255);
 	}

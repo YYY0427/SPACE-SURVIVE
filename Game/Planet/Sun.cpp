@@ -20,7 +20,6 @@ Sun::~Sun()
 
 void Sun::Update()
 {
-
 	// Œü‚¢‚Ä‚¢‚é•ûŒü‚ÌÝ’è
 	pModel_->SetRot(rot_);
 

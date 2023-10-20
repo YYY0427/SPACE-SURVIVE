@@ -31,6 +31,40 @@ SceneBase::~SceneBase()
 	DeleteGraph(gaussScreen_);
 }
 
+void SceneBase::LoadAsync()
+{
+	SetUseASyncLoadFlag(TRUE);
+
+	LoadAsync2();
+
+	SetUseASyncLoadFlag(FALSE);
+}
+
+void SceneBase::LoadAsync2()
+{
+	// 処理なし
+}
+
+void SceneBase::UpdateLoadAsync()
+{
+	// 1つでも読み込み中のデータがあったら
+	if (GetASyncLoadNum() > 0)
+	{
+		return;
+	}
+}
+
+void SceneBase::DrawLoadingScreen()
+{
+	// 1つでも読み込み中のデータがあったら
+	if (GetASyncLoadNum() > 0)
+	{
+		int num = GetASyncLoadNum();
+		DrawFormatString(100, 200, 0xffffff, "なうろーでぃんぐ", num);
+		return;
+	}
+}
+
 // フェードの更新
 void SceneBase::UpdateFade()
 {

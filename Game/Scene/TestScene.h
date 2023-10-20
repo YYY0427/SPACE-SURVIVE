@@ -25,6 +25,8 @@ public:
 	// デストラクタ
 	virtual ~TestScene();
 
+	void LoadAsync2();
+
 	// メンバ関数ポインタの更新
 	void Update();
 

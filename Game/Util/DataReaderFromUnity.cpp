@@ -77,8 +77,7 @@ float DataReaderFromUnity::RadianFromDegree(float degree)
 	return DX_PI_F * degree / 180.0f;
 }
 
-// “Ç‚İæ‚Á‚½ƒf[ƒ^‚Ìæ“¾
-std::unordered_map<std::string, std::vector<UnityGameObject>> DataReaderFromUnity::GetData() const
+std::vector<UnityGameObject> DataReaderFromUnity::GetDataType(std::string objectName) const
 {
-	return data_;
+	return data_.find(objectName)->second;
 }

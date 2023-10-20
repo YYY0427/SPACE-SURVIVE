@@ -17,6 +17,12 @@ public:
 	// デストラクタ
 	virtual ~SceneBase();
 
+	// 非同期読み込み
+	void LoadAsync();
+	virtual void LoadAsync2();
+	void UpdateLoadAsync();
+	void DrawLoadingScreen();
+
 	// 更新
 	virtual void Update() = 0;
 

@@ -16,7 +16,7 @@ public:
 	virtual ~PauseScene();
 
 	// XV
-	virtual void Update() override;
+	virtual void Update();
 
 	// •`‰æ
 	void Draw();

@@ -33,7 +33,7 @@ public:
 	float RadianFromDegree(float degree);
 
 	// 読み取ったデータの取得
-	std::unordered_map<std::string, std::vector<UnityGameObject>> GetData() const;
+	std::vector<UnityGameObject> GetDataType(std::string objectName) const;
 
 private:
 	// Unityでのオブジェクトの名前のIDとしたUnityで読み取ったデータのデータタイプのテーブル

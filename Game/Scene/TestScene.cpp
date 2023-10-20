@@ -38,23 +38,19 @@ TestScene::TestScene(SceneManager& manager) :
 	// オブジェクトの配置データの読み込み
 	pDataReader_ = std::make_shared<DataReaderFromUnity>();
 	pDataReader_->LoadUnityGameObjectData();
-	auto playerData = pDataReader_->GetData().find("Player")->second.front();
-	auto rockData = pDataReader_->GetData().find("Rock")->second;
-	auto meteorData = pDataReader_->GetData().find("Meteor")->second;
-	auto sunData = pDataReader_->GetData().find("Sun")->second;
-	auto earthData = pDataReader_->GetData().find("Earth")->second;
-	auto roadData = pDataReader_->GetData().find("Stage")->second;
 
 	// 読み込んだ配置データからオブジェクトのインスタンスの生成
-	pImg3DManager_ = std::make_shared<Image3DManager>(roadData);
-	pPlayer_ = std::make_shared<Player>(playerData);
-	pRockManager_ = std::make_shared<RockManager>(rockData, meteorData, pPlayer_);
-	pPlanetManager_ = std::make_shared<PlanetManager>(sunData, earthData);
+	pImg3DManager_ = std::make_shared<Image3DManager>(pDataReader_->GetDataType("Stage"));
+	pPlayer_ = std::make_shared<Player>(pDataReader_->GetDataType("Player").front());
+	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"), pPlayer_);
+	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
 	pSkyDome_ = std::make_shared<SkyDome>();
+//	LoadAsync();
 
 	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
+
 }
 
 //  デストラクタ
@@ -64,15 +60,24 @@ TestScene::~TestScene()
 	Effekseer3DEffectManager::GetInstance().DeleteAllEffect();
 }
 
+void TestScene::LoadAsync2()
+{
+	
+}
+
 // メンバ関数ポインタの更新
 void TestScene::Update()
 {
+//	UpdateLoadAsync();
+
 	(this->*updateFunc_)();
 }
 
 // 描画
 void TestScene::Draw()
 {
+//	DrawLoadingScreen();
+
 	// 現在のシーンのテキスト表示
 	DrawString(0, 0, "TestScene", 0xffffff, true);
 

@@ -13,12 +13,12 @@ namespace
 Image3DManager::Image3DManager(std::vector<UnityGameObject> roadsData)
 {
 	// 画像のロード
-	handleTable_[Image3DType::LOAD] = my::MyLoadGraph(load_img_file_path.c_str());
+	handleTable_[Image3DType::ROAD] = my::MyLoadGraph(load_img_file_path.c_str());
 
 	// 受けっとったデータの数インスタンスの作成
 	for (auto& roadData : roadsData)
 	{
-		pRoads_.push_back(std::make_shared<Image3D>(handleTable_[Image3DType::LOAD], roadData));
+		pRoads_.push_back(std::make_shared<Image3D>(handleTable_[Image3DType::ROAD], roadData));
 	}
 }
 

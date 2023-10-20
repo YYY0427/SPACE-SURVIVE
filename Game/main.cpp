@@ -9,6 +9,7 @@
 #include "Util/SaveData.h"
 #include "Util/InputState.h"
 #include "Util/StringManager.h"
+#include "Util/Debug.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -111,6 +112,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	while (ProcessMessage() == 0)
 	{
 		LONGLONG time = GetNowHiPerformanceCount();
+		Debug::ClearLog();
 
 		// 画面のクリア
 		ClearDrawScreen();
@@ -118,11 +120,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// 更新
 		InputState::Update();
 		sceneManager.Update();
-	//	effectManager.Update();
 
 		// 描画
 		sceneManager.Draw();
-	//	effectManager.Draw();
 
 		// Windowモード設定
 		ChangeWindowMode(saveData.GetSaveData().windowMode);
@@ -130,11 +130,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 #ifdef _DEBUG
 		// FPS(Frame Per Second)の取得と描画
 		auto fps = GetFPS();
-		DrawFormatString(10, 30, 0xffffff, "FPS = %2.2f", fps);
+		Debug::Log("FPS", fps);
+	//	DrawFormatString(10, 30, 0xffffff, "FPS = %2.2f", fps);
 
 		// 描画命令数の取得と描画
 		auto drawcall = GetDrawCallCount();
-		DrawFormatString(10, 60, 0xffffff, "DC = %d", drawcall);
+		Debug::Log("DC", drawcall);
+	//	DrawFormatString(10, 60, 0xffffff, "DC = %d", drawcall);
 #endif
 		// 裏画面を表画面を入れ替える
 		ScreenFlip();

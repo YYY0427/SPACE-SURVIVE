@@ -4,525 +4,2144 @@
 2:	システムの情報を出力します
 2:		ＤＸライブラリ Ver3.24b
 2:		論理プロセッサの数 : 16
-3:		ＯＳ  Windows11 ( Build 22621  )
-103:		現時点のＣＰＵ動作速度：大体3.74GHz
+2:		ＯＳ  Windows11 ( Build 22621  )
+103:		現時点のＣＰＵ動作速度：大体3.77GHz
 103:		ＭＭＸ命令を使用します
 103:		ＳＳＥ命令が使用可能です
 103:		ＳＳＥ２命令が使用可能です
 103:		ＣＰＵベンダ：GenuineIntel
-104:		ＣＰＵ名：Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz
+105:		ＣＰＵ名：Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz
 105:	ＣＯＭの初期化... 成功
-107:	非同期読み込み処理の初期化...成功
-108:	ファイルアクセス処理の初期化...成功
-109:	メモリ総量:32601.56MB  空きメモリ領域:18960.40MB 
-109:	タイマーの精度を検査します
-109:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
-109:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
-110:	 
-110:	ソフトの二重起動検査... 二重起動はされていませんでした
-110:	ウインドウクラスを登録します... 登録に成功しました
-111:	ウインドウモード起動用のウインドウを作成します
-111:	ディスプレイ情報のセットアップ開始
-112:		モニターの数：2  ディスプレイデバイスの数：7
-112:		No.0  モニター名：\\.\DISPLAY1　2560x1080　32bit　144Hz  96x96dpi
-113:		No.1  モニター名：\\.\DISPLAY2　2560x1080　32bit　144Hz  96x96dpi
-196:	ディスプレイ情報のセットアップ完了
-196:	ウインドウ矩形 ( 624, 129 )-( 1920, 888 )
-201:	ウインドウの作成に成功しました
-202:	ウインドウを表示します
-224:	ＩＭＥを無効にしました
-225:	ウインドウスタイルをウインドウモード用に変更します... 完了
-253:	XInput DLL の読み込み中... 成功
-257:	DirectInput関係初期化処理
-257:		DirectInput8 の取得を試みます...成功
-334:			引き続き初期化処理... 初期化成功
-336:		ジョイパッドの初期化... 
-336:			XInput 対応コントローラーのチェックを開始します
-336:				XInput 対応コントローラー No.0 をチェック
-340:				XInput 対応コントローラー No.0 の接続を確認しました
-340:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
-341:				XInput 対応コントローラー No.1 をチェック
-341:				XInput 対応コントローラー No.1 の接続は確認できませんでした
-342:				XInput 対応コントローラー No.2 をチェック
-343:				XInput 対応コントローラー No.2 の接続は確認できませんでした
-343:				XInput 対応コントローラー No.3 をチェック
-344:				XInput 対応コントローラー No.3 の接続は確認できませんでした
-344:			XInput 対応コントローラーのチェック完了
-344:			DirectInput 対応ジョイパッドの列挙を開始します
-357:				DirectInput 対応入力装置を検出しました
-357:						Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
-357:						Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
-357:					DirectInputDevice8 の作成... 成功
-359:					DirectInputDevice の情報を取得します... 成功
-359:						Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
-359:						Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
-360:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-360:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-361:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
-534:				検出した DirectInput 対応入力装置の初期化を中断します
-540:			DirectInput 対応ジョイパッドの列挙終了
-540:		ジョイパッドの初期化は正常に終了しました
-540:		マウスデバイスの初期化... 初期化成功
-541:		キーボードデバイスの初期化... 初期化成功
-544:	DirectInput 関連の初期化は正常に終了しました
-547:	XAudio2 の初期化を行います
+109:	非同期読み込み処理の初期化...成功
+109:	ファイルアクセス処理の初期化...成功
+110:	メモリ総量:32601.56MB  空きメモリ領域:17910.59MB 
+110:	タイマーの精度を検査します
+111:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
+111:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
+111:	 
+111:	ソフトの二重起動検査... 二重起動はされていませんでした
+112:	ウインドウクラスを登録します... 登録に成功しました
+112:	ウインドウモード起動用のウインドウを作成します
+113:	ディスプレイ情報のセットアップ開始
+113:		モニターの数：2  ディスプレイデバイスの数：7
+114:		No.0  モニター名：\\.\DISPLAY1　2560x1080　32bit　144Hz  96x96dpi
+114:		No.1  モニター名：\\.\DISPLAY2　2560x1080　32bit　144Hz  96x96dpi
+213:	ディスプレイ情報のセットアップ完了
+213:	ウインドウ矩形 ( 624, 129 )-( 1920, 888 )
+222:	ウインドウの作成に成功しました
+222:	ウインドウを表示します
+249:	ＩＭＥを無効にしました
+250:	ウインドウスタイルをウインドウモード用に変更します... 完了
+280:	XInput DLL の読み込み中... 成功
+283:	DirectInput関係初期化処理
+283:		DirectInput8 の取得を試みます...成功
+296:			引き続き初期化処理... 初期化成功
+297:		ジョイパッドの初期化... 
+297:			XInput 対応コントローラーのチェックを開始します
+298:				XInput 対応コントローラー No.0 をチェック
+300:				XInput 対応コントローラー No.0 の接続を確認しました
+300:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+300:				XInput 対応コントローラー No.1 をチェック
+301:				XInput 対応コントローラー No.1 の接続は確認できませんでした
+301:				XInput 対応コントローラー No.2 をチェック
+302:				XInput 対応コントローラー No.2 の接続は確認できませんでした
+302:				XInput 対応コントローラー No.3 をチェック
+302:				XInput 対応コントローラー No.3 の接続は確認できませんでした
+302:			XInput 対応コントローラーのチェック完了
+303:			DirectInput 対応ジョイパッドの列挙を開始します
+313:				DirectInput 対応入力装置を検出しました
+313:						Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+313:						Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+314:					DirectInputDevice8 の作成... 成功
+314:					DirectInputDevice の情報を取得します... 成功
+315:						Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+315:						Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+315:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+316:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+316:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
+523:				検出した DirectInput 対応入力装置の初期化を中断します
+529:			DirectInput 対応ジョイパッドの列挙終了
+529:		ジョイパッドの初期化は正常に終了しました
+529:		マウスデバイスの初期化... 初期化成功
+530:		キーボードデバイスの初期化... 初期化成功
+540:	DirectInput 関連の初期化は正常に終了しました
+544:	XAudio2 の初期化を行います
 549:		XAudio2_8.dll を使用します
-552:		XAudio2 インターフェースの取得と初期化を行います....  成功 Ver2.8
+553:		XAudio2 インターフェースの取得と初期化を行います....  成功 Ver2.8
 679:	XAudio2 の初期化は正常に終了しました
 683:	d3d11.dll の読み込み.... 成功
 686:	dxgi.dll の読み込み.... 成功
-687:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
+686:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
 687:	IDXGIFactory2 を作成します.... 成功
 692:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
 692:	IDXGIAdapter を列挙
-693:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8043MB
+692:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8043MB
 693:			Output Device No.0 Name:\\.\DISPLAY2 ( 0, 0 )-( 2560, 1080 )
 693:			Output Device No.1 Name:\\.\DISPLAY1 ( 0, -1080 )-( 2560, 0 )
-694:		Adapter No.1 Desc:Intel(R) UHD Graphics 630  VRAM:128MB
+693:		Adapter No.1 Desc:Intel(R) UHD Graphics 630  VRAM:128MB
 694:		Adapter No.2 Desc:Microsoft Basic Render Driver  VRAM:0MB
 694:	API D3D11CreateDevice のアドレスを取得します.... 成功
-695:	IDXGIAdapter を取得します.... 成功
+694:	IDXGIAdapter を取得します.... 成功
 695:	IDXGIAdapter1 を取得します.... 成功
 695:	IDXGIAdapter2 を取得します.... 成功
 696:	IDXGIAdapter3 を取得します.... 成功
 696:	IDXGIAdapter4 を取得します.... 成功
 697:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
 697:	ID3D11Device オブジェクトを取得します.... 成功
-775:	IDXGIDevice1 を取得します.... 成功
-775:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
-775:	[ウインドウモード 1280x720 ( 640, 167 )-( 1920, 887 )]
-776:	IDXGISwapChain2 を作成します.... 成功
-777:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
-777:	IDXGIOutput を取得します.... 成功
-778:	Graphics Device:NVIDIA GeForce RTX 3070
-778:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-778:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
-778:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
-779:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
-779:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-779:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-779:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
-779:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-780:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
-780:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-780:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
-780:	ＤＸＴ２テクスチャフォーマットは使えません
-781:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
-781:	ＤＸＴ４テクスチャフォーマットは使えません
-781:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
-781:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
-781:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
-782:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-782:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-783:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-783:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-783:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-783:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-783:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-784:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-784:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-784:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-784:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-784:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-785:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-785:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-785:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-785:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-785:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-786:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-786:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-786:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-786:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-786:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-787:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-787:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-787:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-787:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
-787:	同時にレンダリングできるバッファの数:8
-787:	最大テクスチャサイズ　幅:16384 高さ:16384
-787:	標準描画用の頂点バッファの作成.... 成功
-788:	シェーダーコード関係の初期化.... 成功
-797:	各種シェーダー用定数バッファの作成.... 成功
-798:	各種 ID3D11InputLayout の作成.... 成功
-817:	画像の単純転送処理の初期化... 成功
-818:	深度バッファを作成します.... 成功
-820:	フォントの初期化を行います
-823:	フォントの初期化は正常に終了しました
-865:	文字コードバッファの初期化を行います... 完了しました
-873:ＤＸライブラリの初期化処理終了
-2407:ChangeWindowMode実行 
-2421:ChangeWindowMode実行 
-2437:ChangeWindowMode実行 
-2454:ChangeWindowMode実行 
-2471:ChangeWindowMode実行 
-2488:ChangeWindowMode実行 
-2506:ChangeWindowMode実行 
-2522:ChangeWindowMode実行 
-2540:ChangeWindowMode実行 
-2556:ChangeWindowMode実行 
-2571:ChangeWindowMode実行 
-2589:ChangeWindowMode実行 
-2605:ChangeWindowMode実行 
-2622:ChangeWindowMode実行 
-2639:ChangeWindowMode実行 
-2656:ChangeWindowMode実行 
-2672:ChangeWindowMode実行 
-2689:ChangeWindowMode実行 
-2706:ChangeWindowMode実行 
-2723:ChangeWindowMode実行 
-2740:ChangeWindowMode実行 
-2756:ChangeWindowMode実行 
-2772:ChangeWindowMode実行 
-2790:ChangeWindowMode実行 
-2807:ChangeWindowMode実行 
-2824:ChangeWindowMode実行 
-2840:ChangeWindowMode実行 
-2858:ChangeWindowMode実行 
-2875:ChangeWindowMode実行 
-2891:ChangeWindowMode実行 
-2908:ChangeWindowMode実行 
-2925:ChangeWindowMode実行 
-2941:ChangeWindowMode実行 
-2959:ChangeWindowMode実行 
-2975:ChangeWindowMode実行 
-2991:ChangeWindowMode実行 
-3009:ChangeWindowMode実行 
-3025:ChangeWindowMode実行 
-3041:ChangeWindowMode実行 
-3059:ChangeWindowMode実行 
-3076:ChangeWindowMode実行 
-3092:ChangeWindowMode実行 
-3109:ChangeWindowMode実行 
-3126:ChangeWindowMode実行 
-3142:ChangeWindowMode実行 
-3160:ChangeWindowMode実行 
-3175:ChangeWindowMode実行 
-3193:ChangeWindowMode実行 
-3210:ChangeWindowMode実行 
-3226:ChangeWindowMode実行 
-3242:ChangeWindowMode実行 
-3260:ChangeWindowMode実行 
-3277:ChangeWindowMode実行 
-3293:ChangeWindowMode実行 
-3310:ChangeWindowMode実行 
-3326:ChangeWindowMode実行 
-3343:ChangeWindowMode実行 
-3359:ChangeWindowMode実行 
-3378:ChangeWindowMode実行 
-3395:ChangeWindowMode実行 
-3411:ChangeWindowMode実行 
-3427:ChangeWindowMode実行 
-3445:ChangeWindowMode実行 
-3461:ChangeWindowMode実行 
-3478:ChangeWindowMode実行 
-3495:ChangeWindowMode実行 
-3511:ChangeWindowMode実行 
-3527:ChangeWindowMode実行 
-3545:ChangeWindowMode実行 
-3561:ChangeWindowMode実行 
-3578:ChangeWindowMode実行 
-3596:ChangeWindowMode実行 
-3611:ChangeWindowMode実行 
-3629:ChangeWindowMode実行 
-3646:ChangeWindowMode実行 
-3662:ChangeWindowMode実行 
-10886:ChangeWindowMode実行 
-10892:ChangeWindowMode実行 
-11052:ChangeWindowMode実行 
-11069:ChangeWindowMode実行 
-11085:ChangeWindowMode実行 
-11103:ChangeWindowMode実行 
-11120:ChangeWindowMode実行 
-11136:ChangeWindowMode実行 
-11152:ChangeWindowMode実行 
-11171:ChangeWindowMode実行 
-11187:ChangeWindowMode実行 
-11204:ChangeWindowMode実行 
-11220:ChangeWindowMode実行 
-11237:ChangeWindowMode実行 
-11255:ChangeWindowMode実行 
-11270:ChangeWindowMode実行 
-11287:ChangeWindowMode実行 
-11305:ChangeWindowMode実行 
-11321:ChangeWindowMode実行 
-11339:ChangeWindowMode実行 
-11354:ChangeWindowMode実行 
-11372:ChangeWindowMode実行 
-11388:ChangeWindowMode実行 
-11405:ChangeWindowMode実行 
-11421:ChangeWindowMode実行 
-11439:ChangeWindowMode実行 
-11455:ChangeWindowMode実行 
-11473:ChangeWindowMode実行 
-11489:ChangeWindowMode実行 
-11506:ChangeWindowMode実行 
-11522:ChangeWindowMode実行 
-11539:ChangeWindowMode実行 
-11557:ChangeWindowMode実行 
-11572:ChangeWindowMode実行 
-11590:ChangeWindowMode実行 
-11606:ChangeWindowMode実行 
-11624:ChangeWindowMode実行 
-11639:ChangeWindowMode実行 
-11658:ChangeWindowMode実行 
-11674:ChangeWindowMode実行 
-11691:ChangeWindowMode実行 
-11707:ChangeWindowMode実行 
-11724:ChangeWindowMode実行 
-11741:ChangeWindowMode実行 
-11757:ChangeWindowMode実行 
-11775:ChangeWindowMode実行 
-11791:ChangeWindowMode実行 
-11807:ChangeWindowMode実行 
-11825:ChangeWindowMode実行 
-11841:ChangeWindowMode実行 
-11858:ChangeWindowMode実行 
-11875:ChangeWindowMode実行 
-11892:ChangeWindowMode実行 
-11908:ChangeWindowMode実行 
-11925:ChangeWindowMode実行 
-11943:ChangeWindowMode実行 
-11959:ChangeWindowMode実行 
-11976:ChangeWindowMode実行 
-11994:ChangeWindowMode実行 
-12009:ChangeWindowMode実行 
-12025:ChangeWindowMode実行 
-12042:ChangeWindowMode実行 
-12061:ChangeWindowMode実行 
-12076:ChangeWindowMode実行 
-12094:ChangeWindowMode実行 
-12110:ChangeWindowMode実行 
-12127:ChangeWindowMode実行 
-12144:ChangeWindowMode実行 
-12160:ChangeWindowMode実行 
-12177:ChangeWindowMode実行 
-12195:ChangeWindowMode実行 
-12212:ChangeWindowMode実行 
-12227:ChangeWindowMode実行 
-12245:ChangeWindowMode実行 
-12261:ChangeWindowMode実行 
-12277:ChangeWindowMode実行 
-12296:ChangeWindowMode実行 
-12312:ChangeWindowMode実行 
-12328:ChangeWindowMode実行 
-12345:ChangeWindowMode実行 
-12361:ChangeWindowMode実行 
-12379:ChangeWindowMode実行 
-12395:ChangeWindowMode実行 
-12412:ChangeWindowMode実行 
-12429:ChangeWindowMode実行 
-12446:ChangeWindowMode実行 
-12463:ChangeWindowMode実行 
-12479:ChangeWindowMode実行 
-12496:ChangeWindowMode実行 
-12514:ChangeWindowMode実行 
-12530:ChangeWindowMode実行 
-12546:ChangeWindowMode実行 
-12563:ChangeWindowMode実行 
-12580:ChangeWindowMode実行 
-12596:ChangeWindowMode実行 
-12614:ChangeWindowMode実行 
-12631:ChangeWindowMode実行 
-12647:ChangeWindowMode実行 
-12664:ChangeWindowMode実行 
-12680:ChangeWindowMode実行 
-12697:ChangeWindowMode実行 
-12713:ChangeWindowMode実行 
-12731:ChangeWindowMode実行 
-12748:ChangeWindowMode実行 
-12765:ChangeWindowMode実行 
-12781:ChangeWindowMode実行 
-12798:ChangeWindowMode実行 
-12815:ChangeWindowMode実行 
-12832:ChangeWindowMode実行 
-12848:ChangeWindowMode実行 
-12865:ChangeWindowMode実行 
-12882:ChangeWindowMode実行 
-12898:ChangeWindowMode実行 
-12918:ChangeWindowMode実行 
-12931:ChangeWindowMode実行 
-12948:ChangeWindowMode実行 
-12966:ChangeWindowMode実行 
-12982:ChangeWindowMode実行 
-12999:ChangeWindowMode実行 
-13016:ChangeWindowMode実行 
-13032:ChangeWindowMode実行 
-13050:ChangeWindowMode実行 
-13067:ChangeWindowMode実行 
-13084:ChangeWindowMode実行 
-13100:ChangeWindowMode実行 
-13118:ChangeWindowMode実行 
-13133:ChangeWindowMode実行 
-13149:ChangeWindowMode実行 
-13166:ChangeWindowMode実行 
-13184:ChangeWindowMode実行 
-13200:ChangeWindowMode実行 
-13216:ChangeWindowMode実行 
-13235:ChangeWindowMode実行 
-13251:ChangeWindowMode実行 
-13267:ChangeWindowMode実行 
-13283:ChangeWindowMode実行 
-13301:ChangeWindowMode実行 
-13317:ChangeWindowMode実行 
-13335:ChangeWindowMode実行 
-13350:ChangeWindowMode実行 
-13368:ChangeWindowMode実行 
-13385:ChangeWindowMode実行 
-13401:ChangeWindowMode実行 
-13418:ChangeWindowMode実行 
-13433:ChangeWindowMode実行 
-13450:ChangeWindowMode実行 
-13466:ChangeWindowMode実行 
-13483:ChangeWindowMode実行 
-13500:ChangeWindowMode実行 
-13516:ChangeWindowMode実行 
-13533:ChangeWindowMode実行 
-13550:ChangeWindowMode実行 
-13566:ChangeWindowMode実行 
-13584:ChangeWindowMode実行 
-13601:ChangeWindowMode実行 
-13617:ChangeWindowMode実行 
-13633:ChangeWindowMode実行 
-13650:ChangeWindowMode実行 
+778:	IDXGIDevice1 を取得します.... 成功
+779:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
+779:	[ウインドウモード 1280x720 ( 640, 167 )-( 1920, 887 )]
+779:	IDXGISwapChain2 を作成します.... 成功
+781:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
+781:	IDXGIOutput を取得します.... 成功
+782:	Graphics Device:NVIDIA GeForce RTX 3070
+782:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+782:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
+782:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
+782:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
+782:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+783:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+783:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
+783:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+783:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
+783:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+783:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
+784:	ＤＸＴ２テクスチャフォーマットは使えません
+784:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
+784:	ＤＸＴ４テクスチャフォーマットは使えません
+784:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
+784:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
+785:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
+785:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+785:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+785:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+785:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+785:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+786:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+786:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+786:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+786:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+786:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+787:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+787:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+787:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+787:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+787:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+788:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+788:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+788:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+788:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+788:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+789:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+789:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+789:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+789:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+789:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+790:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
+790:	同時にレンダリングできるバッファの数:8
+790:	最大テクスチャサイズ　幅:16384 高さ:16384
+790:	標準描画用の頂点バッファの作成.... 成功
+791:	シェーダーコード関係の初期化.... 成功
+801:	各種シェーダー用定数バッファの作成.... 成功
+802:	各種 ID3D11InputLayout の作成.... 成功
+825:	画像の単純転送処理の初期化... 成功
+827:	深度バッファを作成します.... 成功
+829:	フォントの初期化を行います
+832:	フォントの初期化は正常に終了しました
+873:	文字コードバッファの初期化を行います... 完了しました
+880:ＤＸライブラリの初期化処理終了
+2413:ChangeWindowMode実行 
+2427:ChangeWindowMode実行 
+2443:ChangeWindowMode実行 
+2460:ChangeWindowMode実行 
+2477:ChangeWindowMode実行 
+2493:ChangeWindowMode実行 
+2510:ChangeWindowMode実行 
+2527:ChangeWindowMode実行 
+2545:ChangeWindowMode実行 
+2561:ChangeWindowMode実行 
+2578:ChangeWindowMode実行 
+2594:ChangeWindowMode実行 
+2611:ChangeWindowMode実行 
+2628:ChangeWindowMode実行 
+2643:ChangeWindowMode実行 
+2661:ChangeWindowMode実行 
+2678:ChangeWindowMode実行 
+2695:ChangeWindowMode実行 
+2711:ChangeWindowMode実行 
+2727:ChangeWindowMode実行 
+2746:ChangeWindowMode実行 
+2761:ChangeWindowMode実行 
+2779:ChangeWindowMode実行 
+2794:ChangeWindowMode実行 
+2811:ChangeWindowMode実行 
+2829:ChangeWindowMode実行 
+2845:ChangeWindowMode実行 
+2863:ChangeWindowMode実行 
+2879:ChangeWindowMode実行 
+2897:ChangeWindowMode実行 
+2912:ChangeWindowMode実行 
+2930:ChangeWindowMode実行 
+2947:ChangeWindowMode実行 
+2963:ChangeWindowMode実行 
+2980:ChangeWindowMode実行 
+2998:ChangeWindowMode実行 
+3014:ChangeWindowMode実行 
+3031:ChangeWindowMode実行 
+3048:ChangeWindowMode実行 
+3064:ChangeWindowMode実行 
+3081:ChangeWindowMode実行 
+3098:ChangeWindowMode実行 
+3114:ChangeWindowMode実行 
+3131:ChangeWindowMode実行 
+3147:ChangeWindowMode実行 
+3165:ChangeWindowMode実行 
+3182:ChangeWindowMode実行 
+3198:ChangeWindowMode実行 
+3215:ChangeWindowMode実行 
+3232:ChangeWindowMode実行 
+3249:ChangeWindowMode実行 
+3265:ChangeWindowMode実行 
+3284:ChangeWindowMode実行 
+3301:ChangeWindowMode実行 
+3318:ChangeWindowMode実行 
+3334:ChangeWindowMode実行 
+3334:ジョイパッドの初期化... 
+3335:	XInput 対応コントローラーのチェックを開始します
+3335:		XInput 対応コントローラー No.0 をチェック
+3335:		XInput 対応コントローラー No.0 の接続を確認しました
+3335:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+3335:		XInput 対応コントローラー No.1 をチェック
+3336:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+3336:		XInput 対応コントローラー No.2 をチェック
+3336:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+3337:		XInput 対応コントローラー No.3 をチェック
+3337:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+3337:	XInput 対応コントローラーのチェック完了
+3337:	DirectInput 対応ジョイパッドの列挙を開始します
+3383:		DirectInput 対応入力装置を検出しました
+3383:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+3383:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+3383:			DirectInputDevice8 の作成... 成功
+3384:			DirectInputDevice の情報を取得します... 成功
+3385:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+3385:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+3385:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+3385:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+3386:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+3387:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+3387:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+3388:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+3388:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+3389:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+3389:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+3389:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+3390:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+3390:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+3390:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+3390:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+3391:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+3391:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+3391:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+3391:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+3392:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+3392:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+3393:			DirectInputDevice の通知処理用の Event を作成... 成功
+3393:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+3393:			DirectInputDevice のアクセス権を取得... 成功
+3394:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+3394:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+3398:	DirectInput 対応ジョイパッドの列挙終了
+3398:ジョイパッドの初期化は正常に終了しました
+3399:ChangeWindowMode実行 
+3417:ChangeWindowMode実行 
+3435:ChangeWindowMode実行 
+3450:ChangeWindowMode実行 
+3468:ChangeWindowMode実行 
+3484:ChangeWindowMode実行 
+3502:ChangeWindowMode実行 
+3518:ChangeWindowMode実行 
+3536:ChangeWindowMode実行 
+3554:ChangeWindowMode実行 
+3569:ChangeWindowMode実行 
+3585:ChangeWindowMode実行 
+3602:ChangeWindowMode実行 
+3619:ChangeWindowMode実行 
+3636:ChangeWindowMode実行 
+3653:ChangeWindowMode実行 
+3670:ChangeWindowMode実行 
+3686:ChangeWindowMode実行 
+3703:ChangeWindowMode実行 
+3719:ChangeWindowMode実行 
+10316:ChangeWindowMode実行 
+10318:ジョイパッドの初期化... 
+10318:	XInput 対応コントローラーのチェックを開始します
+10318:		XInput 対応コントローラー No.0 をチェック
+10319:		XInput 対応コントローラー No.0 の接続を確認しました
+10319:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+10319:		XInput 対応コントローラー No.1 をチェック
+10319:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+10319:		XInput 対応コントローラー No.2 をチェック
+10320:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+10320:		XInput 対応コントローラー No.3 をチェック
+10320:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+10321:	XInput 対応コントローラーのチェック完了
+10321:	DirectInput 対応ジョイパッドの列挙を開始します
+10328:		DirectInput 対応入力装置を検出しました
+10329:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+10329:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+10329:			DirectInputDevice8 の作成... 成功
+10330:			DirectInputDevice の情報を取得します... 成功
+10330:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+10330:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+10331:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+10331:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+10332:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+10333:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+10333:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+10333:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+10334:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+10334:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+10334:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+10335:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+10335:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+10335:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+10336:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+10336:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+10337:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+10337:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+10337:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+10338:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+10338:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+10338:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+10339:			DirectInputDevice の通知処理用の Event を作成... 成功
+10339:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+10339:			DirectInputDevice のアクセス権を取得... 成功
+10340:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+10340:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+10344:	DirectInput 対応ジョイパッドの列挙終了
+10344:ジョイパッドの初期化は正常に終了しました
+10351:ChangeWindowMode実行 
+10485:ChangeWindowMode実行 
+10503:ChangeWindowMode実行 
+10519:ChangeWindowMode実行 
+10535:ChangeWindowMode実行 
+10553:ChangeWindowMode実行 
+10566:ジョイパッドの初期化... 
+10566:	XInput 対応コントローラーのチェックを開始します
+10567:		XInput 対応コントローラー No.0 をチェック
+10567:		XInput 対応コントローラー No.0 の接続を確認しました
+10567:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+10567:		XInput 対応コントローラー No.1 をチェック
+10567:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+10568:		XInput 対応コントローラー No.2 をチェック
+10568:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+10568:		XInput 対応コントローラー No.3 をチェック
+10568:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+10569:	XInput 対応コントローラーのチェック完了
+10569:	DirectInput 対応ジョイパッドの列挙を開始します
+10577:		DirectInput 対応入力装置を検出しました
+10577:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+10578:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+10578:			DirectInputDevice8 の作成... 成功
+10578:			DirectInputDevice の情報を取得します... 成功
+10579:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+10579:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+10579:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+10580:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+10580:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+10581:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+10581:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+10581:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+10582:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+10582:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+10583:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+10583:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+10583:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+10584:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+10584:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+10585:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+10585:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+10585:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+10586:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+10586:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+10587:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+10587:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+10587:			DirectInputDevice の通知処理用の Event を作成... 成功
+10588:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+10588:			DirectInputDevice のアクセス権を取得... 成功
+10588:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+10589:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+10593:	DirectInput 対応ジョイパッドの列挙終了
+10593:ジョイパッドの初期化は正常に終了しました
+10598:ChangeWindowMode実行 
+10604:ChangeWindowMode実行 
+10621:ChangeWindowMode実行 
+10639:ChangeWindowMode実行 
+10655:ChangeWindowMode実行 
+10672:ChangeWindowMode実行 
+10688:ChangeWindowMode実行 
+10706:ChangeWindowMode実行 
+10722:ChangeWindowMode実行 
+10739:ChangeWindowMode実行 
+10756:ChangeWindowMode実行 
+10772:ChangeWindowMode実行 
+10789:ChangeWindowMode実行 
+10806:ChangeWindowMode実行 
+10823:ChangeWindowMode実行 
+10840:ChangeWindowMode実行 
+10857:ChangeWindowMode実行 
+10874:ChangeWindowMode実行 
+10890:ChangeWindowMode実行 
+10908:ChangeWindowMode実行 
+10924:ChangeWindowMode実行 
+10941:ChangeWindowMode実行 
+10958:ChangeWindowMode実行 
+10974:ChangeWindowMode実行 
+10992:ChangeWindowMode実行 
+11008:ChangeWindowMode実行 
+11025:ChangeWindowMode実行 
+11041:ChangeWindowMode実行 
+11059:ChangeWindowMode実行 
+11076:ChangeWindowMode実行 
+11093:ChangeWindowMode実行 
+11109:ChangeWindowMode実行 
+11127:ChangeWindowMode実行 
+11144:ChangeWindowMode実行 
+11160:ChangeWindowMode実行 
+11176:ChangeWindowMode実行 
+11194:ChangeWindowMode実行 
+11210:ChangeWindowMode実行 
+11227:ChangeWindowMode実行 
+11246:ChangeWindowMode実行 
+11261:ChangeWindowMode実行 
+11278:ChangeWindowMode実行 
+11294:ChangeWindowMode実行 
+11311:ChangeWindowMode実行 
+11330:ChangeWindowMode実行 
+11345:ChangeWindowMode実行 
+11361:ChangeWindowMode実行 
+11378:ChangeWindowMode実行 
+11394:ChangeWindowMode実行 
+11412:ChangeWindowMode実行 
+11428:ChangeWindowMode実行 
+11445:ChangeWindowMode実行 
+11462:ChangeWindowMode実行 
+11480:ChangeWindowMode実行 
+11497:ChangeWindowMode実行 
+11513:ChangeWindowMode実行 
+11530:ChangeWindowMode実行 
+11547:ChangeWindowMode実行 
+11564:ChangeWindowMode実行 
+11579:ChangeWindowMode実行 
+11597:ChangeWindowMode実行 
+11613:ChangeWindowMode実行 
+11630:ChangeWindowMode実行 
+11647:ChangeWindowMode実行 
+11665:ChangeWindowMode実行 
+11681:ChangeWindowMode実行 
+11698:ChangeWindowMode実行 
+11717:ChangeWindowMode実行 
+11732:ChangeWindowMode実行 
+11749:ChangeWindowMode実行 
+11766:ChangeWindowMode実行 
+11781:ChangeWindowMode実行 
+11799:ChangeWindowMode実行 
+11814:ChangeWindowMode実行 
+11833:ChangeWindowMode実行 
+11849:ChangeWindowMode実行 
+11866:ChangeWindowMode実行 
+11882:ChangeWindowMode実行 
+11899:ChangeWindowMode実行 
+11918:ChangeWindowMode実行 
+11933:ChangeWindowMode実行 
+11950:ChangeWindowMode実行 
+11969:ChangeWindowMode実行 
+11983:ChangeWindowMode実行 
+12001:ChangeWindowMode実行 
+12017:ChangeWindowMode実行 
+12034:ChangeWindowMode実行 
+12051:ChangeWindowMode実行 
+12067:ChangeWindowMode実行 
+12084:ChangeWindowMode実行 
+12102:ChangeWindowMode実行 
+12118:ChangeWindowMode実行 
+12135:ChangeWindowMode実行 
+12151:ChangeWindowMode実行 
+12167:ChangeWindowMode実行 
+12185:ChangeWindowMode実行 
+12203:ChangeWindowMode実行 
+12218:ChangeWindowMode実行 
+12235:ChangeWindowMode実行 
+12252:ChangeWindowMode実行 
+12269:ChangeWindowMode実行 
+12285:ChangeWindowMode実行 
+12303:ChangeWindowMode実行 
+12319:ChangeWindowMode実行 
+12335:ChangeWindowMode実行 
+12352:ChangeWindowMode実行 
+12370:ChangeWindowMode実行 
+12387:ChangeWindowMode実行 
+12403:ChangeWindowMode実行 
+12421:ChangeWindowMode実行 
+12436:ChangeWindowMode実行 
+12454:ChangeWindowMode実行 
+12469:ChangeWindowMode実行 
+12486:ChangeWindowMode実行 
+12504:ChangeWindowMode実行 
+12522:ChangeWindowMode実行 
+12537:ChangeWindowMode実行 
+12554:ChangeWindowMode実行 
+12571:ChangeWindowMode実行 
+12587:ChangeWindowMode実行 
+12605:ChangeWindowMode実行 
+12622:ChangeWindowMode実行 
+12639:ChangeWindowMode実行 
+12654:ChangeWindowMode実行 
+12671:ChangeWindowMode実行 
+12689:ChangeWindowMode実行 
+12705:ChangeWindowMode実行 
+12723:ChangeWindowMode実行 
+12740:ChangeWindowMode実行 
+12756:ChangeWindowMode実行 
+12774:ChangeWindowMode実行 
+12789:ChangeWindowMode実行 
+12806:ChangeWindowMode実行 
+12824:ChangeWindowMode実行 
+12839:ChangeWindowMode実行 
+12856:ChangeWindowMode実行 
+12873:ChangeWindowMode実行 
+12890:ChangeWindowMode実行 
+12907:ChangeWindowMode実行 
+12924:ChangeWindowMode実行 
+12941:ChangeWindowMode実行 
+12957:ChangeWindowMode実行 
+12973:ChangeWindowMode実行 
+12991:ChangeWindowMode実行 
+13008:ChangeWindowMode実行 
+13025:ChangeWindowMode実行 
+13041:ChangeWindowMode実行 
+13057:ChangeWindowMode実行 
+13074:ChangeWindowMode実行 
+13091:ChangeWindowMode実行 
+13108:ChangeWindowMode実行 
+13125:ChangeWindowMode実行 
+13142:ChangeWindowMode実行 
+13157:ChangeWindowMode実行 
+13175:ChangeWindowMode実行 
+13192:ChangeWindowMode実行 
+13209:ChangeWindowMode実行 
+13225:ChangeWindowMode実行 
+13243:ChangeWindowMode実行 
+13259:ChangeWindowMode実行 
+13276:ChangeWindowMode実行 
+13293:ChangeWindowMode実行 
+13309:ChangeWindowMode実行 
+13326:ChangeWindowMode実行 
+13341:ChangeWindowMode実行 
+13359:ChangeWindowMode実行 
+13376:ChangeWindowMode実行 
+13393:ChangeWindowMode実行 
+13410:ChangeWindowMode実行 
+13426:ChangeWindowMode実行 
+13444:ChangeWindowMode実行 
+13461:ChangeWindowMode実行 
+13478:ChangeWindowMode実行 
+13495:ChangeWindowMode実行 
+13512:ChangeWindowMode実行 
+13528:ChangeWindowMode実行 
+13544:ChangeWindowMode実行 
+13562:ChangeWindowMode実行 
+13578:ChangeWindowMode実行 
+13594:ChangeWindowMode実行 
+13612:ChangeWindowMode実行 
+13628:ChangeWindowMode実行 
+13646:ChangeWindowMode実行 
 13667:ChangeWindowMode実行 
-13684:ChangeWindowMode実行 
-13700:ChangeWindowMode実行 
-13718:ChangeWindowMode実行 
-13734:ChangeWindowMode実行 
-13751:ChangeWindowMode実行 
-13768:ChangeWindowMode実行 
-13785:ChangeWindowMode実行 
-13801:ChangeWindowMode実行 
-13818:ChangeWindowMode実行 
-13835:ChangeWindowMode実行 
-13852:ChangeWindowMode実行 
-13868:ChangeWindowMode実行 
-13885:ChangeWindowMode実行 
-13902:ChangeWindowMode実行 
-13919:ChangeWindowMode実行 
-13937:ChangeWindowMode実行 
-13953:ChangeWindowMode実行 
-13969:ChangeWindowMode実行 
-13986:ChangeWindowMode実行 
-14003:ChangeWindowMode実行 
-14020:ChangeWindowMode実行 
-14037:ChangeWindowMode実行 
-14053:ChangeWindowMode実行 
-14069:ChangeWindowMode実行 
-14086:ChangeWindowMode実行 
-14104:ChangeWindowMode実行 
-14120:ChangeWindowMode実行 
-14136:ChangeWindowMode実行 
-14154:ChangeWindowMode実行 
-14170:ChangeWindowMode実行 
-14187:ChangeWindowMode実行 
-14205:ChangeWindowMode実行 
-14220:ChangeWindowMode実行 
-14237:ChangeWindowMode実行 
-14254:ChangeWindowMode実行 
-14271:ChangeWindowMode実行 
-14286:ChangeWindowMode実行 
-14304:ChangeWindowMode実行 
-14320:ChangeWindowMode実行 
-14338:ChangeWindowMode実行 
-14355:ChangeWindowMode実行 
-14370:ChangeWindowMode実行 
-14388:ChangeWindowMode実行 
-14404:ChangeWindowMode実行 
-14422:ChangeWindowMode実行 
-14438:ChangeWindowMode実行 
-14454:ChangeWindowMode実行 
-14470:ChangeWindowMode実行 
-14488:ChangeWindowMode実行 
-14505:ChangeWindowMode実行 
-14521:ChangeWindowMode実行 
-14539:ChangeWindowMode実行 
-14555:ChangeWindowMode実行 
-14573:ChangeWindowMode実行 
-14589:ChangeWindowMode実行 
-14604:ChangeWindowMode実行 
-14623:ChangeWindowMode実行 
-14639:ChangeWindowMode実行 
-14655:ChangeWindowMode実行 
-14672:ChangeWindowMode実行 
-14689:ChangeWindowMode実行 
-14705:ChangeWindowMode実行 
-14723:ChangeWindowMode実行 
-14739:ChangeWindowMode実行 
-14756:ChangeWindowMode実行 
-14772:ChangeWindowMode実行 
-14792:ChangeWindowMode実行 
-14808:ChangeWindowMode実行 
-14826:ChangeWindowMode実行 
-14843:ChangeWindowMode実行 
-14859:ChangeWindowMode実行 
-14876:ChangeWindowMode実行 
-14893:ChangeWindowMode実行 
-14909:ChangeWindowMode実行 
-14926:ChangeWindowMode実行 
-14944:ChangeWindowMode実行 
-14960:ChangeWindowMode実行 
-14976:ChangeWindowMode実行 
-14993:ChangeWindowMode実行 
-15009:ChangeWindowMode実行 
-15027:ChangeWindowMode実行 
-15043:ChangeWindowMode実行 
-15060:ChangeWindowMode実行 
-15076:ChangeWindowMode実行 
-15094:ChangeWindowMode実行 
-15110:ChangeWindowMode実行 
-15128:ChangeWindowMode実行 
-15143:ChangeWindowMode実行 
-15163:ChangeWindowMode実行 
-15179:ChangeWindowMode実行 
-15195:ChangeWindowMode実行 
-15212:ChangeWindowMode実行 
-15228:ChangeWindowMode実行 
-15246:ChangeWindowMode実行 
-15263:ChangeWindowMode実行 
-15279:ChangeWindowMode実行 
-15295:ChangeWindowMode実行 
-15312:ChangeWindowMode実行 
-15329:ChangeWindowMode実行 
-15346:ChangeWindowMode実行 
-15362:ChangeWindowMode実行 
-15379:ChangeWindowMode実行 
-15396:ChangeWindowMode実行 
-15413:ChangeWindowMode実行 
-15429:ChangeWindowMode実行 
-15446:ChangeWindowMode実行 
-15463:ChangeWindowMode実行 
-15479:ChangeWindowMode実行 
-15498:ChangeWindowMode実行 
-15512:ChangeWindowMode実行 
-15530:ChangeWindowMode実行 
-15547:ChangeWindowMode実行 
-15562:ChangeWindowMode実行 
-15579:ChangeWindowMode実行 
-15596:ChangeWindowMode実行 
-15612:ChangeWindowMode実行 
-15630:ChangeWindowMode実行 
-15647:ChangeWindowMode実行 
-15663:ChangeWindowMode実行 
-15680:ChangeWindowMode実行 
-15698:ChangeWindowMode実行 
-15714:ChangeWindowMode実行 
-15731:ChangeWindowMode実行 
-15775:フォントの初期化を行います
-15775:フォントの初期化は正常に終了しました
-15813:d3d11.dll の解放 1
-15814:dxgi.dll の解放 1
-15814:Direct3D11 のオブジェクト数を出力
-15815:Direct3D11 のオブジェクト合計数 : 0
-15821:DirectInput 関連の終了処理... 完了
-15822:サウンド関連の終了処理... 完了
-15914:ウィンドウ関連の終了処理... ウインドウを閉じようとしています
-15918:ウインドウが破棄されようとしています
-15919:ソフトを終了する準備が整いました
-15984:完了
-15991:ＣＯＭを終了... 完了
-15991:
-15991:Alloc memory dump
-15992:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:05653  file:\Main\DxModel.cpp           line:31692   ID:411    addr:000001ecdb5e0310  data:[01 00 00 00 9f e8 c4 c4 8d 6a e6 43 c0 8a 55 46]
-15992:	Total size:104000(101.562kb)  Alloc num:1
-15992:
+13682:ChangeWindowMode実行 
+13698:ChangeWindowMode実行 
+13716:ChangeWindowMode実行 
+13731:ChangeWindowMode実行 
+13748:ChangeWindowMode実行 
+13765:ChangeWindowMode実行 
+13776:ジョイパッドの初期化... 
+13776:	XInput 対応コントローラーのチェックを開始します
+13776:		XInput 対応コントローラー No.0 をチェック
+13777:		XInput 対応コントローラー No.0 の接続を確認しました
+13777:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+13777:		XInput 対応コントローラー No.1 をチェック
+13778:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+13778:		XInput 対応コントローラー No.2 をチェック
+13778:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+13778:		XInput 対応コントローラー No.3 をチェック
+13779:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+13779:	XInput 対応コントローラーのチェック完了
+13779:	DirectInput 対応ジョイパッドの列挙を開始します
+13788:		DirectInput 対応入力装置を検出しました
+13789:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+13789:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+13789:			DirectInputDevice8 の作成... 成功
+13789:			DirectInputDevice の情報を取得します... 成功
+13791:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+13791:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+13791:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+13792:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+13792:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+13793:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+13793:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+13794:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+13794:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+13795:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+13795:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+13795:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+13796:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+13796:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+13796:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+13797:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+13797:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+13797:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+13798:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+13798:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+13799:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+13799:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+13799:			DirectInputDevice の通知処理用の Event を作成... 成功
+13800:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+13800:			DirectInputDevice のアクセス権を取得... 成功
+13800:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+13801:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+13806:	DirectInput 対応ジョイパッドの列挙終了
+13806:ジョイパッドの初期化は正常に終了しました
+13814:ChangeWindowMode実行 
+13829:ChangeWindowMode実行 
+13846:ChangeWindowMode実行 
+13864:ChangeWindowMode実行 
+13880:ChangeWindowMode実行 
+13897:ChangeWindowMode実行 
+13913:ChangeWindowMode実行 
+13930:ChangeWindowMode実行 
+13946:ChangeWindowMode実行 
+13964:ChangeWindowMode実行 
+13981:ChangeWindowMode実行 
+13996:ChangeWindowMode実行 
+14014:ChangeWindowMode実行 
+14032:ChangeWindowMode実行 
+14047:ChangeWindowMode実行 
+14064:ChangeWindowMode実行 
+14065:ジョイパッドの初期化... 
+14066:	XInput 対応コントローラーのチェックを開始します
+14066:		XInput 対応コントローラー No.0 をチェック
+14066:		XInput 対応コントローラー No.0 の接続を確認しました
+14066:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+14066:		XInput 対応コントローラー No.1 をチェック
+14067:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+14067:		XInput 対応コントローラー No.2 をチェック
+14067:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+14067:		XInput 対応コントローラー No.3 をチェック
+14068:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+14068:	XInput 対応コントローラーのチェック完了
+14068:	DirectInput 対応ジョイパッドの列挙を開始します
+14076:		DirectInput 対応入力装置を検出しました
+14076:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+14077:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+14077:			DirectInputDevice8 の作成... 成功
+14077:			DirectInputDevice の情報を取得します... 成功
+14078:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+14078:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+14078:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+14078:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+14079:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+14079:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+14081:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+14081:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+14081:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+14082:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+14082:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+14082:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+14083:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+14083:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+14084:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+14084:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+14084:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+14085:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+14085:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+14085:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+14086:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+14086:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+14086:			DirectInputDevice の通知処理用の Event を作成... 成功
+14087:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+14087:			DirectInputDevice のアクセス権を取得... 成功
+14087:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+14088:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+14092:	DirectInput 対応ジョイパッドの列挙終了
+14092:ジョイパッドの初期化は正常に終了しました
+14099:ChangeWindowMode実行 
+14117:ChangeWindowMode実行 
+14132:ChangeWindowMode実行 
+14149:ChangeWindowMode実行 
+14167:ChangeWindowMode実行 
+14184:ChangeWindowMode実行 
+14201:ChangeWindowMode実行 
+14217:ChangeWindowMode実行 
+14234:ChangeWindowMode実行 
+14252:ChangeWindowMode実行 
+14268:ChangeWindowMode実行 
+14285:ChangeWindowMode実行 
+14299:ChangeWindowMode実行 
+14317:ChangeWindowMode実行 
+14334:ChangeWindowMode実行 
+14350:ChangeWindowMode実行 
+14367:ChangeWindowMode実行 
+14387:ChangeWindowMode実行 
+14402:ChangeWindowMode実行 
+14419:ChangeWindowMode実行 
+14435:ChangeWindowMode実行 
+14451:ChangeWindowMode実行 
+14468:ChangeWindowMode実行 
+14484:ChangeWindowMode実行 
+14501:ChangeWindowMode実行 
+14518:ChangeWindowMode実行 
+14536:ChangeWindowMode実行 
+14553:ChangeWindowMode実行 
+14569:ChangeWindowMode実行 
+14586:ChangeWindowMode実行 
+14603:ChangeWindowMode実行 
+14620:ChangeWindowMode実行 
+14637:ChangeWindowMode実行 
+14653:ChangeWindowMode実行 
+14669:ChangeWindowMode実行 
+14686:ChangeWindowMode実行 
+14703:ChangeWindowMode実行 
+14720:ChangeWindowMode実行 
+14737:ChangeWindowMode実行 
+14755:ChangeWindowMode実行 
+14771:ChangeWindowMode実行 
+14787:ChangeWindowMode実行 
+14805:ChangeWindowMode実行 
+14821:ChangeWindowMode実行 
+14838:ChangeWindowMode実行 
+14855:ChangeWindowMode実行 
+14872:ChangeWindowMode実行 
+14888:ChangeWindowMode実行 
+14905:ChangeWindowMode実行 
+14921:ChangeWindowMode実行 
+14939:ChangeWindowMode実行 
+14956:ChangeWindowMode実行 
+14972:ChangeWindowMode実行 
+14989:ChangeWindowMode実行 
+15006:ChangeWindowMode実行 
+15023:ChangeWindowMode実行 
+15039:ChangeWindowMode実行 
+15056:ChangeWindowMode実行 
+15074:ChangeWindowMode実行 
+15090:ChangeWindowMode実行 
+15107:ChangeWindowMode実行 
+15124:ChangeWindowMode実行 
+15140:ChangeWindowMode実行 
+15157:ChangeWindowMode実行 
+15174:ChangeWindowMode実行 
+15191:ChangeWindowMode実行 
+15207:ChangeWindowMode実行 
+15225:ChangeWindowMode実行 
+15242:ChangeWindowMode実行 
+15257:ChangeWindowMode実行 
+15275:ChangeWindowMode実行 
+15292:ChangeWindowMode実行 
+15310:ChangeWindowMode実行 
+15325:ChangeWindowMode実行 
+15336:ジョイパッドの初期化... 
+15336:	XInput 対応コントローラーのチェックを開始します
+15336:		XInput 対応コントローラー No.0 をチェック
+15336:		XInput 対応コントローラー No.0 の接続を確認しました
+15337:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+15337:		XInput 対応コントローラー No.1 をチェック
+15337:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+15337:		XInput 対応コントローラー No.2 をチェック
+15338:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+15338:		XInput 対応コントローラー No.3 をチェック
+15338:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+15338:	XInput 対応コントローラーのチェック完了
+15338:	DirectInput 対応ジョイパッドの列挙を開始します
+15346:		DirectInput 対応入力装置を検出しました
+15347:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+15347:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+15347:			DirectInputDevice8 の作成... 成功
+15348:			DirectInputDevice の情報を取得します... 成功
+15348:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+15348:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+15348:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+15349:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+15349:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+15350:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+15350:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+15351:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+15351:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+15351:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+15352:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+15352:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+15353:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+15353:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+15354:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+15354:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+15354:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+15355:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+15355:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+15356:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+15356:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+15356:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+15357:			DirectInputDevice の通知処理用の Event を作成... 成功
+15357:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+15358:			DirectInputDevice のアクセス権を取得... 成功
+15358:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+15358:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+15363:	DirectInput 対応ジョイパッドの列挙終了
+15363:ジョイパッドの初期化は正常に終了しました
+15371:ChangeWindowMode実行 
+15386:ChangeWindowMode実行 
+15406:ChangeWindowMode実行 
+15420:ChangeWindowMode実行 
+15436:ChangeWindowMode実行 
+15454:ChangeWindowMode実行 
+15472:ChangeWindowMode実行 
+15487:ChangeWindowMode実行 
+15505:ChangeWindowMode実行 
+15522:ChangeWindowMode実行 
+15537:ChangeWindowMode実行 
+15555:ChangeWindowMode実行 
+15573:ChangeWindowMode実行 
+15590:ChangeWindowMode実行 
+15606:ChangeWindowMode実行 
+15622:ChangeWindowMode実行 
+15638:ChangeWindowMode実行 
+15656:ChangeWindowMode実行 
+15672:ChangeWindowMode実行 
+15689:ChangeWindowMode実行 
+15706:ChangeWindowMode実行 
+15723:ChangeWindowMode実行 
+15739:ChangeWindowMode実行 
+15756:ChangeWindowMode実行 
+15772:ChangeWindowMode実行 
+15791:ChangeWindowMode実行 
+15807:ChangeWindowMode実行 
+15823:ChangeWindowMode実行 
+15841:ChangeWindowMode実行 
+15857:ChangeWindowMode実行 
+15873:ChangeWindowMode実行 
+15890:ChangeWindowMode実行 
+15907:ChangeWindowMode実行 
+15924:ChangeWindowMode実行 
+15941:ChangeWindowMode実行 
+15958:ChangeWindowMode実行 
+15975:ChangeWindowMode実行 
+15993:ChangeWindowMode実行 
+16007:ChangeWindowMode実行 
+16025:ChangeWindowMode実行 
+16041:ChangeWindowMode実行 
+16058:ChangeWindowMode実行 
+16078:ChangeWindowMode実行 
+16092:ChangeWindowMode実行 
+16109:ChangeWindowMode実行 
+16126:ChangeWindowMode実行 
+16143:ChangeWindowMode実行 
+16160:ChangeWindowMode実行 
+16176:ChangeWindowMode実行 
+16193:ChangeWindowMode実行 
+16210:ChangeWindowMode実行 
+16227:ChangeWindowMode実行 
+16243:ChangeWindowMode実行 
+16260:ChangeWindowMode実行 
+16276:ChangeWindowMode実行 
+16294:ChangeWindowMode実行 
+16309:ChangeWindowMode実行 
+16327:ChangeWindowMode実行 
+16343:ChangeWindowMode実行 
+16361:ChangeWindowMode実行 
+16378:ChangeWindowMode実行 
+16394:ChangeWindowMode実行 
+16411:ChangeWindowMode実行 
+16427:ChangeWindowMode実行 
+16444:ChangeWindowMode実行 
+16461:ChangeWindowMode実行 
+16479:ChangeWindowMode実行 
+16494:ChangeWindowMode実行 
+16512:ChangeWindowMode実行 
+16528:ChangeWindowMode実行 
+16545:ChangeWindowMode実行 
+16562:ChangeWindowMode実行 
+16578:ChangeWindowMode実行 
+16596:ChangeWindowMode実行 
+16614:ChangeWindowMode実行 
+16629:ChangeWindowMode実行 
+16645:ChangeWindowMode実行 
+16663:ChangeWindowMode実行 
+16680:ChangeWindowMode実行 
+16697:ChangeWindowMode実行 
+16713:ChangeWindowMode実行 
+16731:ChangeWindowMode実行 
+16746:ChangeWindowMode実行 
+16764:ChangeWindowMode実行 
+16781:ChangeWindowMode実行 
+16797:ChangeWindowMode実行 
+16814:ChangeWindowMode実行 
+16830:ChangeWindowMode実行 
+16847:ChangeWindowMode実行 
+16864:ChangeWindowMode実行 
+16881:ChangeWindowMode実行 
+16898:ChangeWindowMode実行 
+16914:ChangeWindowMode実行 
+16932:ChangeWindowMode実行 
+16949:ChangeWindowMode実行 
+16966:ChangeWindowMode実行 
+16982:ChangeWindowMode実行 
+16999:ChangeWindowMode実行 
+17015:ChangeWindowMode実行 
+17031:ChangeWindowMode実行 
+17049:ChangeWindowMode実行 
+17065:ChangeWindowMode実行 
+17081:ChangeWindowMode実行 
+17099:ChangeWindowMode実行 
+17117:ChangeWindowMode実行 
+17133:ChangeWindowMode実行 
+17150:ChangeWindowMode実行 
+17166:ChangeWindowMode実行 
+17183:ChangeWindowMode実行 
+17201:ChangeWindowMode実行 
+17217:ChangeWindowMode実行 
+17234:ChangeWindowMode実行 
+17250:ChangeWindowMode実行 
+17268:ChangeWindowMode実行 
+17285:ChangeWindowMode実行 
+17301:ChangeWindowMode実行 
+17318:ChangeWindowMode実行 
+17334:ChangeWindowMode実行 
+17351:ChangeWindowMode実行 
+17367:ChangeWindowMode実行 
+17385:ChangeWindowMode実行 
+17401:ChangeWindowMode実行 
+17419:ChangeWindowMode実行 
+17436:ChangeWindowMode実行 
+17451:ChangeWindowMode実行 
+17468:ChangeWindowMode実行 
+17486:ChangeWindowMode実行 
+17503:ChangeWindowMode実行 
+17519:ChangeWindowMode実行 
+17537:ChangeWindowMode実行 
+17553:ChangeWindowMode実行 
+17570:ChangeWindowMode実行 
+17587:ChangeWindowMode実行 
+17604:ChangeWindowMode実行 
+17621:ChangeWindowMode実行 
+17637:ChangeWindowMode実行 
+17654:ChangeWindowMode実行 
+17671:ChangeWindowMode実行 
+17687:ChangeWindowMode実行 
+17704:ChangeWindowMode実行 
+17721:ChangeWindowMode実行 
+17738:ChangeWindowMode実行 
+17755:ChangeWindowMode実行 
+17772:ChangeWindowMode実行 
+17789:ChangeWindowMode実行 
+17805:ChangeWindowMode実行 
+17823:ChangeWindowMode実行 
+17839:ChangeWindowMode実行 
+17854:ChangeWindowMode実行 
+17872:ChangeWindowMode実行 
+17889:ChangeWindowMode実行 
+17906:ChangeWindowMode実行 
+17922:ChangeWindowMode実行 
+17940:ChangeWindowMode実行 
+17957:ChangeWindowMode実行 
+17973:ChangeWindowMode実行 
+17989:ChangeWindowMode実行 
+18006:ChangeWindowMode実行 
+18024:ChangeWindowMode実行 
+18041:ChangeWindowMode実行 
+18056:ChangeWindowMode実行 
+18074:ChangeWindowMode実行 
+18091:ChangeWindowMode実行 
+18108:ChangeWindowMode実行 
+18124:ChangeWindowMode実行 
+18139:ChangeWindowMode実行 
+18158:ChangeWindowMode実行 
+18175:ChangeWindowMode実行 
+18191:ChangeWindowMode実行 
+18208:ChangeWindowMode実行 
+18225:ChangeWindowMode実行 
+18243:ChangeWindowMode実行 
+18258:ChangeWindowMode実行 
+18275:ChangeWindowMode実行 
+18292:ChangeWindowMode実行 
+18308:ChangeWindowMode実行 
+18326:ChangeWindowMode実行 
+18342:ChangeWindowMode実行 
+18358:ChangeWindowMode実行 
+18375:ChangeWindowMode実行 
+18391:ChangeWindowMode実行 
+18409:ChangeWindowMode実行 
+18426:ChangeWindowMode実行 
+18441:ChangeWindowMode実行 
+18459:ChangeWindowMode実行 
+18476:ChangeWindowMode実行 
+18494:ChangeWindowMode実行 
+18510:ChangeWindowMode実行 
+18526:ChangeWindowMode実行 
+18543:ChangeWindowMode実行 
+18559:ChangeWindowMode実行 
+18577:ChangeWindowMode実行 
+18593:ChangeWindowMode実行 
+18610:ChangeWindowMode実行 
+18628:ChangeWindowMode実行 
+18643:ChangeWindowMode実行 
+18660:ChangeWindowMode実行 
+18678:ChangeWindowMode実行 
+18693:ChangeWindowMode実行 
+18711:ChangeWindowMode実行 
+18727:ChangeWindowMode実行 
+18744:ChangeWindowMode実行 
+18762:ChangeWindowMode実行 
+18777:ChangeWindowMode実行 
+18795:ChangeWindowMode実行 
+18812:ChangeWindowMode実行 
+18829:ChangeWindowMode実行 
+18846:ChangeWindowMode実行 
+18862:ChangeWindowMode実行 
+18878:ChangeWindowMode実行 
+18895:ChangeWindowMode実行 
+18913:ChangeWindowMode実行 
+18929:ChangeWindowMode実行 
+18946:ChangeWindowMode実行 
+18962:ChangeWindowMode実行 
+18979:ChangeWindowMode実行 
+18996:ChangeWindowMode実行 
+19013:ChangeWindowMode実行 
+19029:ChangeWindowMode実行 
+19047:ChangeWindowMode実行 
+19064:ChangeWindowMode実行 
+19080:ChangeWindowMode実行 
+19098:ChangeWindowMode実行 
+19114:ChangeWindowMode実行 
+19131:ChangeWindowMode実行 
+19147:ChangeWindowMode実行 
+19164:ChangeWindowMode実行 
+19181:ChangeWindowMode実行 
+19198:ChangeWindowMode実行 
+19215:ChangeWindowMode実行 
+19232:ChangeWindowMode実行 
+19248:ChangeWindowMode実行 
+19266:ChangeWindowMode実行 
+19284:ChangeWindowMode実行 
+19299:ChangeWindowMode実行 
+19317:ChangeWindowMode実行 
+19333:ChangeWindowMode実行 
+19349:ChangeWindowMode実行 
+19366:ChangeWindowMode実行 
+19382:ChangeWindowMode実行 
+19401:ChangeWindowMode実行 
+19416:ChangeWindowMode実行 
+19434:ChangeWindowMode実行 
+19449:ChangeWindowMode実行 
+19467:ChangeWindowMode実行 
+19485:ChangeWindowMode実行 
+19499:ChangeWindowMode実行 
+19517:ChangeWindowMode実行 
+19535:ChangeWindowMode実行 
+19551:ChangeWindowMode実行 
+19568:ChangeWindowMode実行 
+19585:ChangeWindowMode実行 
+19601:ChangeWindowMode実行 
+19618:ChangeWindowMode実行 
+19634:ChangeWindowMode実行 
+19652:ChangeWindowMode実行 
+19668:ChangeWindowMode実行 
+19685:ChangeWindowMode実行 
+19688:ジョイパッドの初期化... 
+19688:	XInput 対応コントローラーのチェックを開始します
+19688:		XInput 対応コントローラー No.0 をチェック
+19688:		XInput 対応コントローラー No.0 の接続を確認しました
+19688:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+19689:		XInput 対応コントローラー No.1 をチェック
+19689:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+19689:		XInput 対応コントローラー No.2 をチェック
+19689:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+19690:		XInput 対応コントローラー No.3 をチェック
+19690:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+19690:	XInput 対応コントローラーのチェック完了
+19690:	DirectInput 対応ジョイパッドの列挙を開始します
+19698:		DirectInput 対応入力装置を検出しました
+19699:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+19699:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+19699:			DirectInputDevice8 の作成... 成功
+19699:			DirectInputDevice の情報を取得します... 成功
+19701:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+19701:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+19701:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+19701:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+19702:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+19703:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+19703:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+19703:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+19704:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+19704:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+19705:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+19705:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+19706:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+19706:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+19706:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+19707:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+19707:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+19708:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+19708:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+19709:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+19709:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+19709:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+19710:			DirectInputDevice の通知処理用の Event を作成... 成功
+19710:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+19711:			DirectInputDevice のアクセス権を取得... 成功
+19712:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+19712:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+19717:	DirectInput 対応ジョイパッドの列挙終了
+19717:ジョイパッドの初期化は正常に終了しました
+19725:ChangeWindowMode実行 
+19741:ChangeWindowMode実行 
+19757:ChangeWindowMode実行 
+19774:ChangeWindowMode実行 
+19791:ChangeWindowMode実行 
+19807:ChangeWindowMode実行 
+19823:ChangeWindowMode実行 
+19842:ChangeWindowMode実行 
+19858:ChangeWindowMode実行 
+19876:ChangeWindowMode実行 
+19891:ChangeWindowMode実行 
+19908:ChangeWindowMode実行 
+19924:ChangeWindowMode実行 
+19942:ChangeWindowMode実行 
+19953:ジョイパッドの初期化... 
+19953:	XInput 対応コントローラーのチェックを開始します
+19954:		XInput 対応コントローラー No.0 をチェック
+19954:		XInput 対応コントローラー No.0 の接続を確認しました
+19954:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+19954:		XInput 対応コントローラー No.1 をチェック
+19954:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+19955:		XInput 対応コントローラー No.2 をチェック
+19955:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+19955:		XInput 対応コントローラー No.3 をチェック
+19955:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+19955:	XInput 対応コントローラーのチェック完了
+19956:	DirectInput 対応ジョイパッドの列挙を開始します
+19963:		DirectInput 対応入力装置を検出しました
+19963:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+19963:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+19964:			DirectInputDevice8 の作成... 成功
+19964:			DirectInputDevice の情報を取得します... 成功
+19965:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+19965:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+19965:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+19965:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+19966:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+19967:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+19967:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+19967:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+19968:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+19968:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+19968:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+19969:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+19969:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+19970:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+19970:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+19970:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+19971:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+19971:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+19971:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+19971:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+19972:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+19972:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+19972:			DirectInputDevice の通知処理用の Event を作成... 成功
+19973:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+19973:			DirectInputDevice のアクセス権を取得... 成功
+19973:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+19974:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+19979:	DirectInput 対応ジョイパッドの列挙終了
+19979:ジョイパッドの初期化は正常に終了しました
+19986:ChangeWindowMode実行 
+19993:ChangeWindowMode実行 
+20008:ChangeWindowMode実行 
+20027:ChangeWindowMode実行 
+20043:ChangeWindowMode実行 
+20059:ChangeWindowMode実行 
+20077:ChangeWindowMode実行 
+20093:ChangeWindowMode実行 
+20110:ChangeWindowMode実行 
+20126:ChangeWindowMode実行 
+20143:ChangeWindowMode実行 
+20161:ChangeWindowMode実行 
+20177:ChangeWindowMode実行 
+20194:ChangeWindowMode実行 
+20211:ChangeWindowMode実行 
+20228:ChangeWindowMode実行 
+20244:ChangeWindowMode実行 
+20261:ChangeWindowMode実行 
+20279:ChangeWindowMode実行 
+20296:ChangeWindowMode実行 
+20312:ChangeWindowMode実行 
+20328:ChangeWindowMode実行 
+20344:ChangeWindowMode実行 
+20361:ChangeWindowMode実行 
+20379:ChangeWindowMode実行 
+20396:ChangeWindowMode実行 
+20412:ChangeWindowMode実行 
+20429:ChangeWindowMode実行 
+20445:ChangeWindowMode実行 
+20463:ChangeWindowMode実行 
+20479:ChangeWindowMode実行 
+20495:ChangeWindowMode実行 
+20512:ChangeWindowMode実行 
+20529:ChangeWindowMode実行 
+20546:ChangeWindowMode実行 
+20564:ChangeWindowMode実行 
+20579:ChangeWindowMode実行 
+20596:ChangeWindowMode実行 
+20613:ChangeWindowMode実行 
+20631:ChangeWindowMode実行 
+20646:ChangeWindowMode実行 
+20664:ChangeWindowMode実行 
+20679:ChangeWindowMode実行 
+20696:ChangeWindowMode実行 
+20715:ChangeWindowMode実行 
+20730:ChangeWindowMode実行 
+20747:ChangeWindowMode実行 
+20764:ChangeWindowMode実行 
+20781:ChangeWindowMode実行 
+20798:ChangeWindowMode実行 
+20814:ChangeWindowMode実行 
+20832:ChangeWindowMode実行 
+20848:ChangeWindowMode実行 
+20865:ChangeWindowMode実行 
+20881:ChangeWindowMode実行 
+20899:ChangeWindowMode実行 
+20916:ChangeWindowMode実行 
+20932:ChangeWindowMode実行 
+20949:ChangeWindowMode実行 
+20965:ChangeWindowMode実行 
+20983:ChangeWindowMode実行 
+21000:ChangeWindowMode実行 
+21016:ChangeWindowMode実行 
+21034:ChangeWindowMode実行 
+21049:ChangeWindowMode実行 
+21067:ChangeWindowMode実行 
+21083:ChangeWindowMode実行 
+21101:ChangeWindowMode実行 
+21117:ChangeWindowMode実行 
+21135:ChangeWindowMode実行 
+21149:ChangeWindowMode実行 
+21167:ChangeWindowMode実行 
+21183:ChangeWindowMode実行 
+21198:ChangeWindowMode実行 
+21214:ChangeWindowMode実行 
+21232:ChangeWindowMode実行 
+21247:ChangeWindowMode実行 
+21264:ChangeWindowMode実行 
+21282:ChangeWindowMode実行 
+21299:ChangeWindowMode実行 
+21315:ChangeWindowMode実行 
+21332:ChangeWindowMode実行 
+21350:ChangeWindowMode実行 
+21366:ChangeWindowMode実行 
+21382:ChangeWindowMode実行 
+21399:ChangeWindowMode実行 
+21417:ChangeWindowMode実行 
+21433:ChangeWindowMode実行 
+21449:ChangeWindowMode実行 
+21466:ChangeWindowMode実行 
+21483:ChangeWindowMode実行 
+21499:ChangeWindowMode実行 
+21516:ChangeWindowMode実行 
+21533:ChangeWindowMode実行 
+21550:ChangeWindowMode実行 
+21565:ChangeWindowMode実行 
+21583:ChangeWindowMode実行 
+21599:ChangeWindowMode実行 
+21617:ChangeWindowMode実行 
+21634:ChangeWindowMode実行 
+21651:ChangeWindowMode実行 
+21669:ChangeWindowMode実行 
+21683:ChangeWindowMode実行 
+21701:ChangeWindowMode実行 
+21718:ChangeWindowMode実行 
+21734:ChangeWindowMode実行 
+21751:ChangeWindowMode実行 
+21768:ChangeWindowMode実行 
+21785:ChangeWindowMode実行 
+21801:ChangeWindowMode実行 
+21819:ChangeWindowMode実行 
+21836:ChangeWindowMode実行 
+21852:ChangeWindowMode実行 
+21869:ChangeWindowMode実行 
+21887:ChangeWindowMode実行 
+21901:ChangeWindowMode実行 
+21919:ChangeWindowMode実行 
+21936:ChangeWindowMode実行 
+21951:ChangeWindowMode実行 
+21969:ChangeWindowMode実行 
+21985:ChangeWindowMode実行 
+22003:ChangeWindowMode実行 
+22019:ChangeWindowMode実行 
+22036:ChangeWindowMode実行 
+22053:ChangeWindowMode実行 
+22070:ChangeWindowMode実行 
+22086:ChangeWindowMode実行 
+22103:ChangeWindowMode実行 
+22119:ChangeWindowMode実行 
+22137:ChangeWindowMode実行 
+22155:ChangeWindowMode実行 
+22170:ChangeWindowMode実行 
+22187:ChangeWindowMode実行 
+22203:ChangeWindowMode実行 
+22219:ChangeWindowMode実行 
+22237:ChangeWindowMode実行 
+22253:ChangeWindowMode実行 
+22271:ChangeWindowMode実行 
+22288:ChangeWindowMode実行 
+22304:ChangeWindowMode実行 
+22320:ChangeWindowMode実行 
+22338:ChangeWindowMode実行 
+22354:ChangeWindowMode実行 
+22372:ChangeWindowMode実行 
+22389:ChangeWindowMode実行 
+22405:ChangeWindowMode実行 
+22422:ChangeWindowMode実行 
+22438:ChangeWindowMode実行 
+22454:ChangeWindowMode実行 
+22472:ChangeWindowMode実行 
+22488:ChangeWindowMode実行 
+22505:ChangeWindowMode実行 
+22522:ChangeWindowMode実行 
+22539:ChangeWindowMode実行 
+22555:ChangeWindowMode実行 
+22575:ChangeWindowMode実行 
+22591:ChangeWindowMode実行 
+22608:ChangeWindowMode実行 
+22625:ChangeWindowMode実行 
+22643:ChangeWindowMode実行 
+22658:ChangeWindowMode実行 
+22675:ChangeWindowMode実行 
+22693:ChangeWindowMode実行 
+22709:ChangeWindowMode実行 
+22725:ChangeWindowMode実行 
+22742:ChangeWindowMode実行 
+22759:ChangeWindowMode実行 
+22775:ChangeWindowMode実行 
+22793:ChangeWindowMode実行 
+22809:ChangeWindowMode実行 
+22826:ChangeWindowMode実行 
+22845:ChangeWindowMode実行 
+22859:ChangeWindowMode実行 
+22876:ChangeWindowMode実行 
+22892:ChangeWindowMode実行 
+22909:ChangeWindowMode実行 
+22926:ChangeWindowMode実行 
+22942:ChangeWindowMode実行 
+22960:ChangeWindowMode実行 
+22977:ChangeWindowMode実行 
+22993:ChangeWindowMode実行 
+23010:ChangeWindowMode実行 
+23027:ChangeWindowMode実行 
+23044:ChangeWindowMode実行 
+23059:ChangeWindowMode実行 
+23077:ChangeWindowMode実行 
+23095:ChangeWindowMode実行 
+23111:ChangeWindowMode実行 
+23128:ChangeWindowMode実行 
+23144:ChangeWindowMode実行 
+23161:ChangeWindowMode実行 
+23178:ChangeWindowMode実行 
+23195:ChangeWindowMode実行 
+23212:ChangeWindowMode実行 
+23229:ChangeWindowMode実行 
+23245:ChangeWindowMode実行 
+23265:ChangeWindowMode実行 
+23273:ジョイパッドの初期化... 
+23273:	XInput 対応コントローラーのチェックを開始します
+23274:		XInput 対応コントローラー No.0 をチェック
+23274:		XInput 対応コントローラー No.0 の接続を確認しました
+23274:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+23274:		XInput 対応コントローラー No.1 をチェック
+23275:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+23275:		XInput 対応コントローラー No.2 をチェック
+23275:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+23275:		XInput 対応コントローラー No.3 をチェック
+23276:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+23276:	XInput 対応コントローラーのチェック完了
+23276:	DirectInput 対応ジョイパッドの列挙を開始します
+23284:		DirectInput 対応入力装置を検出しました
+23284:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+23285:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+23285:			DirectInputDevice8 の作成... 成功
+23286:			DirectInputDevice の情報を取得します... 成功
+23286:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+23286:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+23286:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+23287:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+23287:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+23288:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+23288:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+23289:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+23289:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+23289:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+23289:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+23291:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+23291:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+23291:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+23292:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+23292:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+23292:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+23293:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+23293:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+23293:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+23294:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+23294:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+23295:			DirectInputDevice の通知処理用の Event を作成... 成功
+23295:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+23295:			DirectInputDevice のアクセス権を取得... 成功
+23296:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+23296:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+23301:	DirectInput 対応ジョイパッドの列挙終了
+23301:ジョイパッドの初期化は正常に終了しました
+23308:ChangeWindowMode実行 
+23325:ChangeWindowMode実行 
+23339:ChangeWindowMode実行 
+23357:ChangeWindowMode実行 
+23375:ChangeWindowMode実行 
+23391:ChangeWindowMode実行 
+23407:ChangeWindowMode実行 
+23426:ChangeWindowMode実行 
+23442:ChangeWindowMode実行 
+23457:ChangeWindowMode実行 
+23476:ChangeWindowMode実行 
+23491:ChangeWindowMode実行 
+23509:ChangeWindowMode実行 
+23525:ChangeWindowMode実行 
+23541:ChangeWindowMode実行 
+23559:ChangeWindowMode実行 
+23576:ChangeWindowMode実行 
+23592:ChangeWindowMode実行 
+23608:ChangeWindowMode実行 
+23626:ChangeWindowMode実行 
+23642:ChangeWindowMode実行 
+23658:ChangeWindowMode実行 
+23675:ChangeWindowMode実行 
+23692:ChangeWindowMode実行 
+23708:ChangeWindowMode実行 
+23726:ChangeWindowMode実行 
+23741:ChangeWindowMode実行 
+23759:ChangeWindowMode実行 
+23776:ChangeWindowMode実行 
+23792:ChangeWindowMode実行 
+23809:ChangeWindowMode実行 
+23827:ChangeWindowMode実行 
+23843:ChangeWindowMode実行 
+23860:ChangeWindowMode実行 
+23877:ChangeWindowMode実行 
+23894:ChangeWindowMode実行 
+23909:ChangeWindowMode実行 
+23926:ChangeWindowMode実行 
+23943:ChangeWindowMode実行 
+23960:ChangeWindowMode実行 
+23977:ChangeWindowMode実行 
+23995:ChangeWindowMode実行 
+24011:ChangeWindowMode実行 
+24028:ChangeWindowMode実行 
+24045:ChangeWindowMode実行 
+24061:ChangeWindowMode実行 
+24079:ChangeWindowMode実行 
+24089:ChangeWindowMode実行 
+24108:ChangeWindowMode実行 
+24124:ChangeWindowMode実行 
+24141:ChangeWindowMode実行 
+24157:ChangeWindowMode実行 
+24175:ChangeWindowMode実行 
+24192:ChangeWindowMode実行 
+24208:ChangeWindowMode実行 
+24226:ChangeWindowMode実行 
+24242:ChangeWindowMode実行 
+24258:ChangeWindowMode実行 
+24276:ChangeWindowMode実行 
+24291:ChangeWindowMode実行 
+24309:ChangeWindowMode実行 
+24327:ChangeWindowMode実行 
+24343:ChangeWindowMode実行 
+24360:ChangeWindowMode実行 
+24377:ChangeWindowMode実行 
+24394:ChangeWindowMode実行 
+24410:ChangeWindowMode実行 
+24427:ChangeWindowMode実行 
+24444:ChangeWindowMode実行 
+24461:ChangeWindowMode実行 
+24477:ChangeWindowMode実行 
+24494:ChangeWindowMode実行 
+24511:ChangeWindowMode実行 
+24528:ChangeWindowMode実行 
+24544:ChangeWindowMode実行 
+24561:ChangeWindowMode実行 
+24578:ChangeWindowMode実行 
+24595:ChangeWindowMode実行 
+24611:ChangeWindowMode実行 
+24628:ChangeWindowMode実行 
+24645:ChangeWindowMode実行 
+24661:ChangeWindowMode実行 
+24678:ChangeWindowMode実行 
+24696:ChangeWindowMode実行 
+24712:ChangeWindowMode実行 
+24729:ChangeWindowMode実行 
+24746:ChangeWindowMode実行 
+24762:ChangeWindowMode実行 
+24779:ChangeWindowMode実行 
+24796:ChangeWindowMode実行 
+24813:ChangeWindowMode実行 
+24830:ChangeWindowMode実行 
+24846:ChangeWindowMode実行 
+24863:ChangeWindowMode実行 
+24880:ChangeWindowMode実行 
+24896:ChangeWindowMode実行 
+24913:ChangeWindowMode実行 
+24929:ChangeWindowMode実行 
+24946:ChangeWindowMode実行 
+24964:ChangeWindowMode実行 
+24981:ChangeWindowMode実行 
+24998:ChangeWindowMode実行 
+25014:ChangeWindowMode実行 
+25031:ChangeWindowMode実行 
+25049:ChangeWindowMode実行 
+25064:ChangeWindowMode実行 
+25081:ChangeWindowMode実行 
+25099:ChangeWindowMode実行 
+25115:ChangeWindowMode実行 
+25132:ChangeWindowMode実行 
+25149:ChangeWindowMode実行 
+25166:ChangeWindowMode実行 
+25183:ChangeWindowMode実行 
+25200:ChangeWindowMode実行 
+25216:ChangeWindowMode実行 
+25232:ChangeWindowMode実行 
+25249:ChangeWindowMode実行 
+25267:ChangeWindowMode実行 
+25283:ChangeWindowMode実行 
+25301:ChangeWindowMode実行 
+25317:ChangeWindowMode実行 
+25332:ChangeWindowMode実行 
+25351:ChangeWindowMode実行 
+25367:ChangeWindowMode実行 
+25384:ChangeWindowMode実行 
+25400:ChangeWindowMode実行 
+25418:ChangeWindowMode実行 
+25435:ChangeWindowMode実行 
+25452:ChangeWindowMode実行 
+25468:ChangeWindowMode実行 
+25484:ChangeWindowMode実行 
+25501:ChangeWindowMode実行 
+25518:ChangeWindowMode実行 
+25535:ChangeWindowMode実行 
+25552:ChangeWindowMode実行 
+25570:ChangeWindowMode実行 
+25588:ChangeWindowMode実行 
+25607:ChangeWindowMode実行 
+25623:ChangeWindowMode実行 
+25641:ChangeWindowMode実行 
+25657:ChangeWindowMode実行 
+25674:ChangeWindowMode実行 
+25691:ChangeWindowMode実行 
+25708:ChangeWindowMode実行 
+25725:ChangeWindowMode実行 
+25741:ChangeWindowMode実行 
+25758:ChangeWindowMode実行 
+25775:ChangeWindowMode実行 
+25791:ChangeWindowMode実行 
+25808:ChangeWindowMode実行 
+25825:ChangeWindowMode実行 
+25842:ChangeWindowMode実行 
+25859:ChangeWindowMode実行 
+25875:ChangeWindowMode実行 
+25893:ChangeWindowMode実行 
+25909:ChangeWindowMode実行 
+25927:ChangeWindowMode実行 
+25944:ChangeWindowMode実行 
+25961:ChangeWindowMode実行 
+25976:ChangeWindowMode実行 
+25994:ChangeWindowMode実行 
+26011:ChangeWindowMode実行 
+26027:ChangeWindowMode実行 
+26043:ChangeWindowMode実行 
+26061:ChangeWindowMode実行 
+26078:ChangeWindowMode実行 
+26095:ChangeWindowMode実行 
+26109:ChangeWindowMode実行 
+26128:ChangeWindowMode実行 
+26144:ChangeWindowMode実行 
+26161:ChangeWindowMode実行 
+26178:ChangeWindowMode実行 
+26195:ChangeWindowMode実行 
+26211:ChangeWindowMode実行 
+26229:ChangeWindowMode実行 
+26245:ChangeWindowMode実行 
+26261:ChangeWindowMode実行 
+26278:ChangeWindowMode実行 
+26296:ChangeWindowMode実行 
+26312:ChangeWindowMode実行 
+26330:ChangeWindowMode実行 
+26345:ChangeWindowMode実行 
+26362:ChangeWindowMode実行 
+26378:ChangeWindowMode実行 
+26397:ChangeWindowMode実行 
+26413:ChangeWindowMode実行 
+26429:ChangeWindowMode実行 
+26447:ChangeWindowMode実行 
+26463:ChangeWindowMode実行 
+26480:ChangeWindowMode実行 
+26497:ChangeWindowMode実行 
+26513:ChangeWindowMode実行 
+26531:ChangeWindowMode実行 
+26547:ChangeWindowMode実行 
+26564:ChangeWindowMode実行 
+26579:ChangeWindowMode実行 
+26597:ChangeWindowMode実行 
+26615:ChangeWindowMode実行 
+26631:ChangeWindowMode実行 
+26648:ChangeWindowMode実行 
+26665:ChangeWindowMode実行 
+26681:ChangeWindowMode実行 
+26697:ChangeWindowMode実行 
+26715:ChangeWindowMode実行 
+26732:ChangeWindowMode実行 
+26748:ChangeWindowMode実行 
+26765:ChangeWindowMode実行 
+26781:ChangeWindowMode実行 
+26799:ChangeWindowMode実行 
+26815:ChangeWindowMode実行 
+26833:ChangeWindowMode実行 
+26850:ChangeWindowMode実行 
+26866:ChangeWindowMode実行 
+26884:ChangeWindowMode実行 
+26900:ChangeWindowMode実行 
+26917:ChangeWindowMode実行 
+26934:ChangeWindowMode実行 
+26950:ChangeWindowMode実行 
+26966:ChangeWindowMode実行 
+26983:ChangeWindowMode実行 
+27001:ChangeWindowMode実行 
+27018:ChangeWindowMode実行 
+27033:ChangeWindowMode実行 
+27051:ChangeWindowMode実行 
+27068:ChangeWindowMode実行 
+27084:ChangeWindowMode実行 
+27101:ChangeWindowMode実行 
+27119:ChangeWindowMode実行 
+27135:ChangeWindowMode実行 
+27152:ChangeWindowMode実行 
+27169:ChangeWindowMode実行 
+27185:ChangeWindowMode実行 
+27201:ChangeWindowMode実行 
+27219:ChangeWindowMode実行 
+27235:ChangeWindowMode実行 
+27252:ChangeWindowMode実行 
+27270:ChangeWindowMode実行 
+27286:ChangeWindowMode実行 
+27303:ChangeWindowMode実行 
+27319:ChangeWindowMode実行 
+27336:ChangeWindowMode実行 
+27353:ChangeWindowMode実行 
+27369:ChangeWindowMode実行 
+27387:ChangeWindowMode実行 
+27405:ChangeWindowMode実行 
+27420:ChangeWindowMode実行 
+27437:ChangeWindowMode実行 
+27453:ChangeWindowMode実行 
+27470:ChangeWindowMode実行 
+27487:ChangeWindowMode実行 
+27504:ChangeWindowMode実行 
+27521:ChangeWindowMode実行 
+27537:ChangeWindowMode実行 
+27555:ChangeWindowMode実行 
+27571:ChangeWindowMode実行 
+27587:ChangeWindowMode実行 
+27605:ChangeWindowMode実行 
+27621:ChangeWindowMode実行 
+27638:ChangeWindowMode実行 
+27658:ChangeWindowMode実行 
+27672:ChangeWindowMode実行 
+27685:ジョイパッドの初期化... 
+27685:	XInput 対応コントローラーのチェックを開始します
+27685:		XInput 対応コントローラー No.0 をチェック
+27685:		XInput 対応コントローラー No.0 の接続を確認しました
+27686:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+27686:		XInput 対応コントローラー No.1 をチェック
+27686:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+27686:		XInput 対応コントローラー No.2 をチェック
+27686:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+27686:		XInput 対応コントローラー No.3 をチェック
+27686:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+27686:	XInput 対応コントローラーのチェック完了
+27686:	DirectInput 対応ジョイパッドの列挙を開始します
+27694:		DirectInput 対応入力装置を検出しました
+27694:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+27694:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+27695:			DirectInputDevice8 の作成... 成功
+27695:			DirectInputDevice の情報を取得します... 成功
+27696:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+27696:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+27696:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+27696:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+27697:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+27698:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+27698:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+27698:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+27698:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+27699:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+27699:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+27699:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+27699:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+27701:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+27701:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+27701:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+27702:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+27702:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+27703:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+27703:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+27703:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+27703:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+27704:			DirectInputDevice の通知処理用の Event を作成... 成功
+27704:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+27704:			DirectInputDevice のアクセス権を取得... 成功
+27705:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+27705:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+27710:	DirectInput 対応ジョイパッドの列挙終了
+27710:ジョイパッドの初期化は正常に終了しました
+27716:ChangeWindowMode実行 
+27723:ChangeWindowMode実行 
+27741:ChangeWindowMode実行 
+27757:ChangeWindowMode実行 
+27775:ChangeWindowMode実行 
+27791:ChangeWindowMode実行 
+27808:ChangeWindowMode実行 
+27824:ChangeWindowMode実行 
+27842:ChangeWindowMode実行 
+27857:ChangeWindowMode実行 
+27875:ChangeWindowMode実行 
+27892:ChangeWindowMode実行 
+27909:ChangeWindowMode実行 
+27925:ChangeWindowMode実行 
+27941:ChangeWindowMode実行 
+27942:ジョイパッドの初期化... 
+27942:	XInput 対応コントローラーのチェックを開始します
+27943:		XInput 対応コントローラー No.0 をチェック
+27943:		XInput 対応コントローラー No.0 の接続を確認しました
+27943:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+27943:		XInput 対応コントローラー No.1 をチェック
+27943:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+27944:		XInput 対応コントローラー No.2 をチェック
+27944:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+27944:		XInput 対応コントローラー No.3 をチェック
+27944:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+27944:	XInput 対応コントローラーのチェック完了
+27945:	DirectInput 対応ジョイパッドの列挙を開始します
+27952:		DirectInput 対応入力装置を検出しました
+27952:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+27953:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+27953:			DirectInputDevice8 の作成... 成功
+27953:			DirectInputDevice の情報を取得します... 成功
+27954:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+27954:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+27954:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+27954:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+27955:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+27956:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+27956:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+27956:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+27957:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+27957:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+27957:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+27958:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+27958:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+27959:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+27959:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+27959:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+27959:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+27959:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+27961:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+27961:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+27962:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+27962:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+27962:			DirectInputDevice の通知処理用の Event を作成... 成功
+27963:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+27963:			DirectInputDevice のアクセス権を取得... 成功
+27963:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+27963:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+27968:	DirectInput 対応ジョイパッドの列挙終了
+27969:ジョイパッドの初期化は正常に終了しました
+27975:ChangeWindowMode実行 
+27991:ChangeWindowMode実行 
+28009:ChangeWindowMode実行 
+28026:ChangeWindowMode実行 
+28042:ChangeWindowMode実行 
+28058:ChangeWindowMode実行 
+28076:ChangeWindowMode実行 
+28092:ChangeWindowMode実行 
+28109:ChangeWindowMode実行 
+28126:ChangeWindowMode実行 
+28142:ChangeWindowMode実行 
+28160:ChangeWindowMode実行 
+28177:ChangeWindowMode実行 
+28193:ChangeWindowMode実行 
+28209:ChangeWindowMode実行 
+28227:ChangeWindowMode実行 
+28244:ChangeWindowMode実行 
+28259:ChangeWindowMode実行 
+28276:ChangeWindowMode実行 
+28293:ChangeWindowMode実行 
+28311:ChangeWindowMode実行 
+28327:ChangeWindowMode実行 
+28344:ChangeWindowMode実行 
+28361:ChangeWindowMode実行 
+28377:ChangeWindowMode実行 
+28395:ChangeWindowMode実行 
+28411:ChangeWindowMode実行 
+28428:ChangeWindowMode実行 
+28444:ChangeWindowMode実行 
+28462:ChangeWindowMode実行 
+28478:ChangeWindowMode実行 
+28495:ChangeWindowMode実行 
+28513:ChangeWindowMode実行 
+28529:ChangeWindowMode実行 
+28545:ChangeWindowMode実行 
+28562:ChangeWindowMode実行 
+28581:ChangeWindowMode実行 
+28596:ChangeWindowMode実行 
+28613:ChangeWindowMode実行 
+28629:ChangeWindowMode実行 
+28647:ChangeWindowMode実行 
+28663:ChangeWindowMode実行 
+28680:ChangeWindowMode実行 
+28696:ChangeWindowMode実行 
+28714:ChangeWindowMode実行 
+28730:ChangeWindowMode実行 
+28747:ChangeWindowMode実行 
+28764:ChangeWindowMode実行 
+28781:ChangeWindowMode実行 
+28797:ChangeWindowMode実行 
+28814:ChangeWindowMode実行 
+28831:ChangeWindowMode実行 
+28847:ChangeWindowMode実行 
+28865:ChangeWindowMode実行 
+28881:ChangeWindowMode実行 
+28898:ChangeWindowMode実行 
+28915:ChangeWindowMode実行 
+28932:ChangeWindowMode実行 
+28948:ChangeWindowMode実行 
+28965:ChangeWindowMode実行 
+28982:ChangeWindowMode実行 
+28999:ChangeWindowMode実行 
+29015:ChangeWindowMode実行 
+29031:ChangeWindowMode実行 
+29049:ChangeWindowMode実行 
+29064:ChangeWindowMode実行 
+29082:ChangeWindowMode実行 
+29099:ChangeWindowMode実行 
+29116:ChangeWindowMode実行 
+29133:ChangeWindowMode実行 
+29149:ChangeWindowMode実行 
+29166:ChangeWindowMode実行 
+29183:ChangeWindowMode実行 
+29200:ChangeWindowMode実行 
+29216:ChangeWindowMode実行 
+29233:ChangeWindowMode実行 
+29251:ChangeWindowMode実行 
+29266:ChangeWindowMode実行 
+29283:ChangeWindowMode実行 
+29301:ChangeWindowMode実行 
+29316:ChangeWindowMode実行 
+29334:ChangeWindowMode実行 
+29351:ChangeWindowMode実行 
+29367:ChangeWindowMode実行 
+29385:ChangeWindowMode実行 
+29400:ChangeWindowMode実行 
+29418:ChangeWindowMode実行 
+29435:ChangeWindowMode実行 
+29451:ChangeWindowMode実行 
+29468:ChangeWindowMode実行 
+29485:ChangeWindowMode実行 
+29501:ChangeWindowMode実行 
+29519:ChangeWindowMode実行 
+29536:ChangeWindowMode実行 
+29551:ChangeWindowMode実行 
+29569:ChangeWindowMode実行 
+29585:ChangeWindowMode実行 
+29603:ChangeWindowMode実行 
+29620:ChangeWindowMode実行 
+29636:ChangeWindowMode実行 
+29653:ChangeWindowMode実行 
+29670:ChangeWindowMode実行 
+29686:ChangeWindowMode実行 
+29704:ChangeWindowMode実行 
+29720:ChangeWindowMode実行 
+29737:ChangeWindowMode実行 
+29754:ChangeWindowMode実行 
+29771:ChangeWindowMode実行 
+29787:ChangeWindowMode実行 
+29804:ChangeWindowMode実行 
+29821:ChangeWindowMode実行 
+29838:ChangeWindowMode実行 
+29855:ChangeWindowMode実行 
+29871:ChangeWindowMode実行 
+29888:ChangeWindowMode実行 
+29905:ChangeWindowMode実行 
+29923:ChangeWindowMode実行 
+29937:ChangeWindowMode実行 
+29955:ChangeWindowMode実行 
+29971:ChangeWindowMode実行 
+29988:ChangeWindowMode実行 
+30006:ChangeWindowMode実行 
+30022:ChangeWindowMode実行 
+30039:ChangeWindowMode実行 
+30055:ChangeWindowMode実行 
+30073:ChangeWindowMode実行 
+30089:ChangeWindowMode実行 
+30106:ChangeWindowMode実行 
+30122:ChangeWindowMode実行 
+30139:ChangeWindowMode実行 
+30155:ChangeWindowMode実行 
+30174:ChangeWindowMode実行 
+30191:ChangeWindowMode実行 
+30209:ChangeWindowMode実行 
+30224:ChangeWindowMode実行 
+30241:ChangeWindowMode実行 
+30257:ChangeWindowMode実行 
+30274:ChangeWindowMode実行 
+30291:ChangeWindowMode実行 
+30307:ChangeWindowMode実行 
+30325:ChangeWindowMode実行 
+30342:ChangeWindowMode実行 
+30343:ジョイパッドの初期化... 
+30343:	XInput 対応コントローラーのチェックを開始します
+30343:		XInput 対応コントローラー No.0 をチェック
+30343:		XInput 対応コントローラー No.0 の接続を確認しました
+30343:		XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+30344:		XInput 対応コントローラー No.1 をチェック
+30344:		XInput 対応コントローラー No.1 の接続は確認できませんでした
+30344:		XInput 対応コントローラー No.2 をチェック
+30344:		XInput 対応コントローラー No.2 の接続は確認できませんでした
+30345:		XInput 対応コントローラー No.3 をチェック
+30345:		XInput 対応コントローラー No.3 の接続は確認できませんでした
+30345:	XInput 対応コントローラーのチェック完了
+30345:	DirectInput 対応ジョイパッドの列挙を開始します
+30352:		DirectInput 対応入力装置を検出しました
+30352:				Device Product GUID  : 0b13045e,0000,0000,00,00,50,49,44,56,49,44
+30353:				Device Instance GUID : e8bef8f0,e436,11ed,80,02,44,45,53,54,00,00
+30353:			DirectInputDevice8 の作成... 成功
+30354:			DirectInputDevice の情報を取得します... 成功
+30354:				Device Product Name  : Bluetooth LE XINPUT 互換入力デバイス
+30354:				Device Instance Name : Bluetooth LE XINPUT 互換入力デバイス
+30354:			検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+30355:			検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+30355:			検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+30356:			DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+30356:			DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+30357:			DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+30357:			DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+30358:			DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+30358:			DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+30358:			DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+30359:			DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+30359:			DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 16 個です
+30359:			DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+30359:			DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+30361:			DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+30361:			DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+30362:			DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+30362:			DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+30362:			DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+30363:			DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+30363:			DirectInputDevice の通知処理用の Event を作成... 成功
+30363:			DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+30364:			DirectInputDevice のアクセス権を取得... 成功
+30364:			検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+30364:		検出した DirectInput 対応入力装置の初期化は正常に終了しました
+30369:	DirectInput 対応ジョイパッドの列挙終了
+30369:ジョイパッドの初期化は正常に終了しました
+30376:ChangeWindowMode実行 
+30392:ChangeWindowMode実行 
+30410:ChangeWindowMode実行 
+30426:ChangeWindowMode実行 
+30453:ChangeWindowMode実行 
+30471:ChangeWindowMode実行 
+30487:ChangeWindowMode実行 
+30504:ChangeWindowMode実行 
+30521:ChangeWindowMode実行 
+30537:ChangeWindowMode実行 
+30555:ChangeWindowMode実行 
+30570:ChangeWindowMode実行 
+30587:ChangeWindowMode実行 
+30604:ChangeWindowMode実行 
+30621:ChangeWindowMode実行 
+30638:ChangeWindowMode実行 
+30655:ChangeWindowMode実行 
+30672:ChangeWindowMode実行 
+30688:ChangeWindowMode実行 
+30705:ChangeWindowMode実行 
+30724:ChangeWindowMode実行 
+30739:ChangeWindowMode実行 
+30756:ChangeWindowMode実行 
+30771:ChangeWindowMode実行 
+30789:ChangeWindowMode実行 
+30806:ChangeWindowMode実行 
+30822:ChangeWindowMode実行 
+30840:ChangeWindowMode実行 
+30856:ChangeWindowMode実行 
+30873:ChangeWindowMode実行 
+30889:ChangeWindowMode実行 
+30906:ChangeWindowMode実行 
+30924:ChangeWindowMode実行 
+30941:ChangeWindowMode実行 
+30957:ChangeWindowMode実行 
+30974:ChangeWindowMode実行 
+30991:ChangeWindowMode実行 
+31007:ChangeWindowMode実行 
+31024:ChangeWindowMode実行 
+31041:ChangeWindowMode実行 
+31058:ChangeWindowMode実行 
+31075:ChangeWindowMode実行 
+31092:ChangeWindowMode実行 
+31108:ChangeWindowMode実行 
+31126:ChangeWindowMode実行 
+31142:ChangeWindowMode実行 
+31158:ChangeWindowMode実行 
+31175:ChangeWindowMode実行 
+31194:ChangeWindowMode実行 
+31209:ChangeWindowMode実行 
+31226:ChangeWindowMode実行 
+31242:ChangeWindowMode実行 
+31259:ChangeWindowMode実行 
+31276:ChangeWindowMode実行 
+31293:ChangeWindowMode実行 
+31310:ChangeWindowMode実行 
+31327:ChangeWindowMode実行 
+31343:ChangeWindowMode実行 
+31360:ChangeWindowMode実行 
+31377:ChangeWindowMode実行 
+31394:ChangeWindowMode実行 
+31409:ChangeWindowMode実行 
+31428:ChangeWindowMode実行 
+31444:ChangeWindowMode実行 
+31462:ChangeWindowMode実行 
+31478:ChangeWindowMode実行 
+31495:ChangeWindowMode実行 
+31511:ChangeWindowMode実行 
+31528:ChangeWindowMode実行 
+31545:ChangeWindowMode実行 
+31562:ChangeWindowMode実行 
+31578:ChangeWindowMode実行 
+31594:ChangeWindowMode実行 
+31611:ChangeWindowMode実行 
+31631:ChangeWindowMode実行 
+31646:ChangeWindowMode実行 
+31662:ChangeWindowMode実行 
+31679:ChangeWindowMode実行 
+31695:ChangeWindowMode実行 
+31714:ChangeWindowMode実行 
+31730:ChangeWindowMode実行 
+31747:ChangeWindowMode実行 
+31763:ChangeWindowMode実行 
+31779:ChangeWindowMode実行 
+31796:ChangeWindowMode実行 
+31812:ChangeWindowMode実行 
+31829:ChangeWindowMode実行 
+31846:ChangeWindowMode実行 
+31863:ChangeWindowMode実行 
+31880:ChangeWindowMode実行 
+31897:ChangeWindowMode実行 
+31914:ChangeWindowMode実行 
+31931:ChangeWindowMode実行 
+31947:ChangeWindowMode実行 
+31964:ChangeWindowMode実行 
+31981:ChangeWindowMode実行 
+31998:ChangeWindowMode実行 
+32014:ChangeWindowMode実行 
+32031:ChangeWindowMode実行 
+32048:ChangeWindowMode実行 
+32065:ChangeWindowMode実行 
+32082:ChangeWindowMode実行 
+32098:ChangeWindowMode実行 
+32115:ChangeWindowMode実行 
+32132:ChangeWindowMode実行 
+32148:ChangeWindowMode実行 
+32165:ChangeWindowMode実行 
+32183:ChangeWindowMode実行 
+32197:ChangeWindowMode実行 
+32211:ChangeWindowMode実行 
+32227:ChangeWindowMode実行 
+32245:ChangeWindowMode実行 
+32261:ChangeWindowMode実行 
+32278:ChangeWindowMode実行 
+32295:ChangeWindowMode実行 
+32311:ChangeWindowMode実行 
+32329:ChangeWindowMode実行 
+32346:ChangeWindowMode実行 
+32363:ChangeWindowMode実行 
+32379:ChangeWindowMode実行 
+32397:ChangeWindowMode実行 
+32415:ChangeWindowMode実行 
+32433:ChangeWindowMode実行 
+32451:ChangeWindowMode実行 
+32467:ChangeWindowMode実行 
+32484:ChangeWindowMode実行 
+32501:ChangeWindowMode実行 
+32517:ChangeWindowMode実行 
+32534:ChangeWindowMode実行 
+32551:ChangeWindowMode実行 
+32567:ChangeWindowMode実行 
+32585:ChangeWindowMode実行 
+32599:ChangeWindowMode実行 
+32618:ChangeWindowMode実行 
+32635:ChangeWindowMode実行 
+32651:ChangeWindowMode実行 
+32669:ChangeWindowMode実行 
+32684:ChangeWindowMode実行 
+32701:ChangeWindowMode実行 
+32718:ChangeWindowMode実行 
+32735:ChangeWindowMode実行 
+32752:ChangeWindowMode実行 
+32769:ChangeWindowMode実行 
+32785:ChangeWindowMode実行 
+32801:ChangeWindowMode実行 
+32819:ChangeWindowMode実行 
+32835:ChangeWindowMode実行 
+32852:ChangeWindowMode実行 
+32870:ChangeWindowMode実行 
+32886:ChangeWindowMode実行 
+32904:ChangeWindowMode実行 
+32919:ChangeWindowMode実行 
+32937:ChangeWindowMode実行 
+32954:ChangeWindowMode実行 
+32970:ChangeWindowMode実行 
+32986:ChangeWindowMode実行 
+33004:ChangeWindowMode実行 
+33020:ChangeWindowMode実行 
+33037:ChangeWindowMode実行 
+33053:ChangeWindowMode実行 
+33070:ChangeWindowMode実行 
+33088:ChangeWindowMode実行 
+33105:ChangeWindowMode実行 
+33156:フォントの初期化を行います
+33157:フォントの初期化は正常に終了しました
+33197:d3d11.dll の解放 1
+33198:dxgi.dll の解放 1
+33198:Direct3D11 のオブジェクト数を出力
+33199:Direct3D11 のオブジェクト合計数 : 0
+33209:DirectInput 関連の終了処理... 完了
+33210:サウンド関連の終了処理... 完了
+33281:ウィンドウ関連の終了処理... ウインドウを閉じようとしています
+33286:ウインドウが破棄されようとしています
+33286:ソフトを終了する準備が整いました
+33354:完了
+33360:ＣＯＭを終了... 完了
+33361:
+33361:Alloc memory dump
+33361:	size:    104160(   101.719kb)  user size:    104000(   101.562kb)  time:27542  file:\Main\DxModel.cpp           line:31692   ID:433    addr:000001ae9cbd0310  data:[01 00 00 00 4a 81 08 c5 65 63 94 43 5b 3a 3a 46]
+33361:	Total size:104000(101.562kb)  Alloc num:1
+33361:

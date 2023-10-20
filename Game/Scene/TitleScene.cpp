@@ -9,6 +9,7 @@
 #include "../Util/SoundManager.h"
 #include "../Util/DrawFunctions.h"
 #include "../Util/StringManager.h"
+#include "../Util/Debug.h"
 #include "../common.h"
 
 namespace
@@ -112,7 +113,7 @@ void TitleScene::Draw()
 	DrawGraph(0, 0, handle_, true);
 
 	// 現在のシーンのテキスト描画
-	DrawString(0, 0, "TitleScene", 0xffffff, true);
+	Debug::Log("TitleScne");
 
 	// 項目の描画
 	auto& stringManager = StringManager::GetInstance();

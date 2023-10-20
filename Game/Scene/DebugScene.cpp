@@ -7,6 +7,7 @@
 #include "TestScene.h"
 #include "../Util/InputState.h"
 #include "../Util/Range.h"
+#include "../Util/Debug.h"
 #include "../common.h"
 
 namespace
@@ -101,7 +102,7 @@ void DebugScene::Update()
 void DebugScene::Draw()
 {
 	// 現在のシーンのテキスト表示
-	DrawString(0, 0, "DebugScene", 0xffffff, true);
+	Debug::Log("DebugScene");
 
 	// デバッグシーンから飛べるシーンの項目のテキスト表示
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::TEST_SCENE), "TestScene", 0xffffff, true);

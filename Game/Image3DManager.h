@@ -33,7 +33,7 @@ private:
 	// 3D‰æ‘œ‚ÌŽí•Ê
 	enum class Image3DType
 	{
-		LOAD,
+		ROAD,
 	};
 private:
 	std::vector<std::shared_ptr<Image3D>> pRoads_;

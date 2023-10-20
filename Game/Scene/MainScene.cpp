@@ -6,6 +6,7 @@
 #include "../Util/InputState.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
+#include "../Util/Debug.h"
 #include "../Camera.h"
 #include "../Player.h"
 #include "../SkyDome.h"
@@ -114,7 +115,7 @@ void MainScene::GameOverUpdate()
 void MainScene::Draw()
 {
 	// 現在のシーンのテキスト表示
-	DrawString(0, 0, "MainScene", 0xffffff, true);
+	Debug::Log("MainScene");
 
 	// 各クラスの描画
 //	pSkyDome_->Draw();

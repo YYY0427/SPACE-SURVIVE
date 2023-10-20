@@ -3,6 +3,7 @@
 #include <memory>
 #include "Util/DataReaderFromUnity.h"
 #include "Util/Timer.h"
+#include <deque>
 
 class Model;
 class Camera;
@@ -97,6 +98,9 @@ private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;
 	std::shared_ptr<Camera> pCamera_;
+
+	// 決められたフレーム前まで位置情報を保存しているテーブル
+	std::deque<VECTOR> posLogTable_;
 
 	// 位置情報
 	VECTOR pos_;

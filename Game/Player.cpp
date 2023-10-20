@@ -3,6 +3,7 @@
 #include "Util/InputState.h"
 #include "Util/Model.h"
 #include "Util//Effekseer3DEffectManager.h"
+#include "Util/Debug.h"
 #include <string>
 
 namespace
@@ -54,6 +55,9 @@ namespace
 
 	// HP
 	constexpr int hp = 2;
+
+	// 何フレーム前まで位置情報を保存するか
+	constexpr int log_frame = 5;
 }
 
 //  コンストラクタ
@@ -101,6 +105,13 @@ Player::~Player()
 // 更新
 void Player::Update()
 {
+	posLogTable_.push_front(pos_);
+
+	if (log_frame < static_cast<int>(posLogTable_.size()))
+	{
+		posLogTable_.push_back(pos_);
+	}
+
 	// 左スティックの入力情報の取得
 	int up = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP);
 	int down = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::DOWN);
@@ -108,7 +119,7 @@ void Player::Update()
 	int right = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::RIGHT);
 
 	// カメラが向いている方向からベクトル変換して移動情報作成
-#if true
+#if false
 	VECTOR moveForward = VScale(VNorm(VSub(pCamera_->GetTarget(), pCamera_->GetPos())), -1);
 	VECTOR moveBack = VScale(moveForward, -1);
 #else 
@@ -403,10 +414,14 @@ void Player::EnergyProcess()
 // 描画
 void Player::Draw()
 {
+	
 #ifdef _DEBUG
-	DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
-	DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
-	DrawFormatString(10, 135, 0xffffff, "hp = %d", hp_);
+	Debug::Log("playerPos", pos_);
+	Debug::Log("energyGauge", energyGauge_);
+	Debug::Log("残機", hp_);
+	//DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
+	//DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
+	//DrawFormatString(10, 135, 0xffffff, "hp = %d", hp_);
 #endif
 
 	// 無敵時間の点滅

@@ -7,6 +7,7 @@
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
 #include "../Util/DataReaderFromUnity.h"
+#include "../Util/Debug.h"
 #include "../Camera.h"
 #include "../Player.h"
 #include "../SkyDome.h"
@@ -46,7 +47,6 @@ TestScene::TestScene(SceneManager& manager) :
 	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
 	pSkyDome_ = std::make_shared<SkyDome>();
-//	LoadAsync();
 
 	// コンストラクタで渡せないポインタの設定
 	pPlayer_->SetCameraPointer(pCamera_);
@@ -60,11 +60,6 @@ TestScene::~TestScene()
 	Effekseer3DEffectManager::GetInstance().DeleteAllEffect();
 }
 
-void TestScene::LoadAsync2()
-{
-	
-}
-
 // メンバ関数ポインタの更新
 void TestScene::Update()
 {
@@ -76,17 +71,15 @@ void TestScene::Update()
 // 描画
 void TestScene::Draw()
 {
-//	DrawLoadingScreen();
-
-	// 現在のシーンのテキスト表示
-	DrawString(0, 0, "TestScene", 0xffffff, true);
-
 	// 各クラスの描画
 	pSkyDome_->Draw();
 	pImg3DManager_->Draw();
 	pRockManager_->Draw();
 	pPlanetManager_->Draw();
 	pPlayer_->Draw();
+
+	// 現在のシーンのテキスト表示
+	Debug::Log("TestScene");
 
 #ifdef _DEBUG
 	// 地面の角の位置表示
@@ -253,20 +246,12 @@ void TestScene::PlayerFallProcess()
 	// プレイヤーが道の上にいるか
 	bool isPlayerOnTheRoad = JudgePlayerOnTheRoad();
 
-	// 道からプレイヤーまでの距離が特定の距離を超えているか
-	bool isOverLimitPlayerHeight = OverLimitPlayerHeight();
-
-	// プレイヤーが道の上になかったらプレイヤーが落下
 	if (!isPlayerOnTheRoad)
 	{
-		pPlayer_->Fall(normal_player_fall_speed);
+
 	}
-	// 道からプレイヤーまでの距離が特定の距離を超えていたらプレイヤーが落下
-	if (isOverLimitPlayerHeight)
-	{
-		pPlayer_->Fall(special_player_fall_speed);
-	}
-	
+
+
 	// プレイヤーが落下死亡判定の高さまで落ちたかどうか
 	if (pPlayer_->IsDeathJudgHeight())
 	{
@@ -312,31 +297,6 @@ bool TestScene::JudgePlayerOnTheRoad()
 	if (result.HitFlag || result2.HitFlag)
 	{
 		return true;
-	}
-	return false;
-}
-
-// プレイヤーから伸ばした線とその線に当たった道までの距離が特定の距離を超えているか
-bool TestScene::OverLimitPlayerHeight()
-{
-	// プレイヤーから下に伸びる線と道の当たり判定
-	HITRESULT_LINE result{}, result2{};
-	CollisionRoadAndPlayer(result, result2);
-	
-	// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたらチェック
-	if (result.HitFlag || result2.HitFlag)
-	{
-		// プレイヤーから当たった道までの高さの距離の取得
-		float distanceFromPlayerToRoad = 0.0f;
-		(result.HitFlag) ?
-			(distanceFromPlayerToRoad = fabs((result.Position.y - pPlayer_->GetPos().y))) :
-			(distanceFromPlayerToRoad = fabs((result2.Position.y - pPlayer_->GetPos().y)));
-
-		// 高さの距離が特定の距離を超えていたらtrue
-		if (rise_possible_height < distanceFromPlayerToRoad)
-		{
-			return true;
-		}
 	}
 	return false;
 }

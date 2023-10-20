@@ -25,8 +25,6 @@ public:
 	// デストラクタ
 	virtual ~TestScene();
 
-	void LoadAsync2();
-
 	// メンバ関数ポインタの更新
 	void Update();
 
@@ -53,12 +51,6 @@ private:
 	/// </summary>
 	/// <returns>true : 道の上にいる, false : 道の上にいない</returns>
 	bool JudgePlayerOnTheRoad();
-
-	/// <summary>
-	/// プレイヤーから伸ばした線とその線に当たった道の距離が特定の距離を超えているか
-	/// </summary>
-	/// <returns>true : 特定の距離を超えている, false : 特定の距離を超えていない</returns>
-	bool OverLimitPlayerHeight();
 
 	/// <summary>
 	/// プレイヤーから下に伸びている線と道との当たり判定

@@ -248,9 +248,8 @@ void TestScene::PlayerFallProcess()
 
 	if (!isPlayerOnTheRoad)
 	{
-
+		pPlayer_->A();
 	}
-
 
 	// ƒvƒŒƒCƒ„[‚ª—Ž‰ºŽ€–S”»’è‚Ì‚‚³‚Ü‚Å—Ž‚¿‚½‚©‚Ç‚¤‚©
 	if (pPlayer_->IsDeathJudgHeight())

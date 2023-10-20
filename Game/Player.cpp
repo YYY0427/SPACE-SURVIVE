@@ -109,7 +109,7 @@ void Player::Update()
 
 	if (log_frame < static_cast<int>(posLogTable_.size()))
 	{
-		posLogTable_.push_back(pos_);
+		posLogTable_.pop_back();
 	}
 
 	// 左スティックの入力情報の取得
@@ -414,15 +414,9 @@ void Player::EnergyProcess()
 // 描画
 void Player::Draw()
 {
-	
-#ifdef _DEBUG
 	Debug::Log("playerPos", pos_);
 	Debug::Log("energyGauge", energyGauge_);
 	Debug::Log("残機", hp_);
-	//DrawFormatString(10, 80, 0xffffff, "playerPos = %.2f, %.2f, %.2f", pos_.x, pos_.y, pos_.z);
-	//DrawFormatString(10, 105, 0xffffff, "energyGauge = %.2f", energyGauge_);
-	//DrawFormatString(10, 135, 0xffffff, "hp = %d", hp_);
-#endif
 
 	// 無敵時間の点滅
 	if (IsUltimate())
@@ -472,6 +466,11 @@ void Player::OnDamage()
 
 	// 無敵時間の設定
 	ultimateTimer_ = ultimate_frames;
+}
+
+void Player::A()
+{
+	pos_ = posLogTable_[0];
 }
 
 // プレイヤーの高さが落下死亡判定の高さより小さくなったか

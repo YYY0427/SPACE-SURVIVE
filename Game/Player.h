@@ -54,6 +54,8 @@ public:
 	// プレイヤーのダメージ処理
 	void OnDamage();
 
+	void A();
+
 	/// </summary>
 	/// プレイヤーの高さが落下死亡判定の高さより小さくなったか
 	/// </summary>

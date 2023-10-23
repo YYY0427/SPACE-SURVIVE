@@ -138,6 +138,10 @@ void Player::Update()
 	// エネルギーの処理
 	EnergyProcess();
 
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	effectManager.SetEffectScale(boostEffectHandle_, boostEffectScale_);
+	effectManager.SetEffectSpeed(boostEffectHandle_, slowRate_);
+
 	// 移動情報の初期化
 	isInput_ = false;
 	moveVec_ = VGet(0, 0, 0);
@@ -241,9 +245,10 @@ bool Player::CollisionRockUpdate()
 			if (!isPlayGameOverEffect_)
 			{
 				isPlayGameOverEffect_ = true;
-				float scale = 50.0f, speed = 0.5f;
+				/*float scale = 50.0f, speed = 0.5f;
 				VECTOR rot{ 0.0f, 0.0f, 0.0f };
-				Effekseer3DEffectManager::GetInstance().PlayEffect(&playerDeadEffectHandle_, EffectID::player_dead, PlayType::NORMAL, &pos_, &scale, &speed, &rot);
+				Effekseer3DEffectManager::GetInstance().PlayEffect(&playerDeadEffectHandle_, EffectID::player_dead, PlayType::NORMAL, &pos_, &scale, &speed, &rot);*/
+				Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, 50.0f, 0.5f);
 			}
 			// エフェクトを再生し終えたらtrueを返す
 			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
@@ -287,7 +292,7 @@ void Player::BoostProcess()
 			isBoost_ = true;
 
 			// ブースト時のエフェクトを再生
-			Effekseer3DEffectManager::GetInstance().PlayEffect(&boostEffectHandle_, EffectID::player_boost, PlayType::LOOP_AND_FOLLOW, &pos_, &boostEffectScale_, &slowRate_, &effectRot_);
+			Effekseer3DEffectManager::GetInstance().PlayEffectLoopAndFollow(boostEffectHandle_, EffectID::player_boost, &pos_, boostEffectScale_, slowRate_);
 		}
 		// ブースト時の場合は通常速度に移行
 		else

@@ -37,9 +37,8 @@ void Rock::Update()
 
 	VECTOR tempVec = VScale(vec_, pPlayer_->GetSlowRate());
 
-	pos_ = VAdd(pos_, tempVec);
+//	pos_ = VAdd(pos_, tempVec);
 
-	
 	pModel_->SetPos(pos_);
 	pModel_->SetRot(rot_);
 	pModel_->Update();

@@ -27,12 +27,8 @@ Meteor::Meteor(int handle, std::shared_ptr<Player> pPlayer, UnityGameObject rock
 	pModel_->SetPos(pos_);
 	pModel_->Update();
 
-	effectScale_ = 100.0f;
-	effectSpeed_ = 1.0f;
-	effectRot_ = { 0.0f,0.0f,0.0f };
-
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	effectManager.PlayEffect(&effectDataH_, EffectID::meteor, PlayType::LOOP_AND_FOLLOW, &pos_, &effectScale_, &effectSpeed_, &effectRot_);
+	effectManager.PlayEffectLoopAndFollow(effectDataH_, EffectID::meteor, &pos_, 50.0f, 1.0f);
 }
 
 Meteor::~Meteor()

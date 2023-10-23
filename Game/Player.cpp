@@ -19,7 +19,7 @@ namespace
 	constexpr VECTOR player_vec_left = { -1, 0, 0 };
 
 	// モデルの拡大率
-	constexpr float model_scale = 0.5f;
+	constexpr float model_scale = 0.7f;
 
 	// プレイヤーの通常移動速度
 	constexpr float move_normal_speed = 1.5f;
@@ -31,7 +31,7 @@ namespace
 	constexpr float energy_recovery_amount = 10.0f;
 
 	// プレイヤーの当たり判定の半径
-	constexpr float model_collision_radius = 30.0f;
+	constexpr float model_collision_radius = 50.0f;
 
 	// 落下死亡判定の高さ
 	constexpr float death_judg_height = -1000.0f;
@@ -69,7 +69,7 @@ Player::Player(UnityGameObject data) :
 	pModel_->SetScale(VGet(model_scale, model_scale, model_scale));
 
 	// 回転率の設定
-	pModel_->SetRot(rot_);
+	pModel_->SetRot(VGet(rot_.x, rot_.y, rot_.z));
 
 	// 位置情報の設定
 	pModel_->SetPos(pos_);
@@ -161,7 +161,7 @@ void Player::Update()
 	ultimateTimer_ = (std::max)(--ultimateTimer_, 0);
 
 	// 移動ベクトルの大きさからプレイヤーの傾き具合を算出
-	rot_ = VGet(moveVec_.z * DX_PI_F / 180.0f, 0.0f, -moveVec_.x * DX_PI_F / 180.0f);
+	rot_ = VGet(-moveVec_.z * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, -moveVec_.x * DX_PI_F / 180.0f);
 
 	// 位置座標の設定
 	pModel_->SetPos(pos_);

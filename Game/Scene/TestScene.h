@@ -52,6 +52,9 @@ private:
 	/// <returns>true : 道の上にいる, false : 道の上にいない</returns>
 	bool JudgePlayerOnTheRoad();
 
+	// プレイヤーから伸ばした線とその線に当たった道までの距離が特定の距離を超えているか
+	bool OverLimitPlayerHeight();
+
 	/// <summary>
 	/// プレイヤーから下に伸びている線と道との当たり判定
 	/// 当たっている道を見つけたら処理終了

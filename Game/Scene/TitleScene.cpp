@@ -5,6 +5,7 @@
 #include "MainScene.h"
 #include "OptionScene.h"
 #include "DebugScene.h"
+#include "TestScene.h"
 #include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/DrawFunctions.h"
@@ -50,6 +51,8 @@ TitleScene::TitleScene(SceneManager& manager) :
 TitleScene::~TitleScene()
 {
 	DeleteGraph(backGroundHandle_);
+
+	SoundManager::GetInstance().StopSound("bgmTest");
 }
 
 // メンバ関数ポインタの更新
@@ -86,7 +89,7 @@ void TitleScene::NormalUpdate()
 		{
 		// ゲームスタート
 		case Item::START:
-			manager_.ChangeScene(new MainScene(manager_));
+			manager_.ChangeScene(new TestScene(manager_));
 			return;
 
 		// オプション

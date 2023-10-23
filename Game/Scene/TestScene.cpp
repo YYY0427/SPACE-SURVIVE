@@ -246,9 +246,24 @@ void TestScene::PlayerFallProcess()
 	// プレイヤーが道の上にいるか
 	bool isPlayerOnTheRoad = JudgePlayerOnTheRoad();
 
+#if false
 	if (!isPlayerOnTheRoad)
 	{
 		pPlayer_->A();
+	}
+#else
+	// 道からプレイヤーまでの距離が特定の距離を超えているか
+	bool isOverLimitPlayerHeight = OverLimitPlayerHeight();
+
+	// プレイヤーが道の上になかったらプレイヤーが落下
+	if (!isPlayerOnTheRoad)
+	{
+		pPlayer_->Fall(normal_player_fall_speed);
+	}
+	// 道からプレイヤーまでの距離が特定の距離を超えていたらプレイヤーが落下
+	if (isOverLimitPlayerHeight)
+	{
+		pPlayer_->Fall(special_player_fall_speed);
 	}
 
 	// プレイヤーが落下死亡判定の高さまで落ちたかどうか
@@ -258,6 +273,7 @@ void TestScene::PlayerFallProcess()
 		updateFunc_ = &TestScene::DeathFallPlayerUpdate;
 		return;
 	}
+#endif
 }
 
 // 地面の線の描画
@@ -283,6 +299,31 @@ void TestScene::GroundLineDraw()
 		pos1.z += lineAreaSize / lineNum;
 		pos2.z += lineAreaSize / lineNum;
 	}
+}
+
+// プレイヤーから伸ばした線とその線に当たった道までの距離が特定の距離を超えているか
+bool TestScene::OverLimitPlayerHeight()
+{
+	// プレイヤーから下に伸びる線と道の当たり判定
+	HITRESULT_LINE result{}, result2{};
+	CollisionRoadAndPlayer(result, result2);
+
+	// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたらチェック
+	if (result.HitFlag || result2.HitFlag)
+	{
+		// プレイヤーから当たった道までの高さの距離の取得
+		float distanceFromPlayerToRoad = 0.0f;
+		(result.HitFlag) ?
+			(distanceFromPlayerToRoad = fabs((result.Position.y - pPlayer_->GetPos().y))) :
+			(distanceFromPlayerToRoad = fabs((result2.Position.y - pPlayer_->GetPos().y)));
+
+		// 高さの距離が特定の距離を超えていたらtrue
+		if (rise_possible_height < distanceFromPlayerToRoad)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 // プレイヤーが道の上にいるか判定

@@ -24,6 +24,7 @@ public:
 private:
 	// 通常状態の更新
 	void NormalUpdate();
+
 private:
 	// フェード設定データ
 	struct FadeData
@@ -48,7 +49,8 @@ private:
 	void (TitleScene::* updateFunc_)();
 
 	// 画像ハンドル
-	int handle_;
+	int backGroundHandle_;
+	int titleLogoHandle_;
 
 	// フェード設定のデータテーブル
 	std::array<FadeData, static_cast<int>(Item::TOTAL_VALUE)> fadeDataTable_;

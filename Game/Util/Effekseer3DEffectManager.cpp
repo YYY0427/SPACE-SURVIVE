@@ -69,7 +69,7 @@ void Effekseer3DEffectManager::Update()
 		if (IsPlayingEffect(*effect.playingEffectHandle)) continue;
 
 		// エフェクトの再再生
-		PlayEffectLoop(effect.playingEffectHandle, effect.effectFileName);
+		PlayEffectLoop(*effect.playingEffectHandle, effect.effectFileName);
 
 		// エフェクトのパラメーターの設定
 		SetEffectAllParam(*effect.playingEffectHandle, effect.pos, effect.scale, effect.speed, effect.rot);
@@ -86,7 +86,7 @@ void Effekseer3DEffectManager::Update()
 		if (isLoop && !isPlay)
 		{
 			// エフェクトの再再生
-			PlayEffectLoop(effect.playingEffectHandle, effect.effectFileName);
+			PlayEffectLoop(*effect.playingEffectHandle, effect.effectFileName);
 		}
 
 		// 再生中の場合エフェクトのパラメーターの更新
@@ -156,13 +156,13 @@ void Effekseer3DEffectManager::LoadEffectFile(std::string fileName)
 }
 
 // ループエフェクトの再生
-void Effekseer3DEffectManager::PlayEffectLoop(int* playingEffectHandle, std::string fileName)
+void Effekseer3DEffectManager::PlayEffectLoop(int& playingEffectHandle, std::string fileName)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
 
 	// エフェクトの再再生
-	*playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
+	playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandleTable_[fileName]);
 }
 
 // 指定のエフェクトの再生

@@ -14,6 +14,12 @@
 
 namespace
 {
+	// タイトルの背景画像のファイルパス
+	const std::string background_file_path = "Data/Image/Background.png";
+
+	// タイトルロゴの画像のファイルパス
+	const std::string title_logo_file_path = "Data/Image/TitleLogo.png";
+
 	// 表示するテキストの全体の位置
 	constexpr int draw_text_pos_y = common::screen_height / 2 + 100;
 
@@ -28,7 +34,8 @@ TitleScene::TitleScene(SceneManager& manager) :
 	currentSelectItem_(0)
 {
 	// 画像のロード
-	handle_ = my::MyLoadGraph("Data/Image/title.png");
+	backGroundHandle_ = my::MyLoadGraph(background_file_path.c_str());
+	titleLogoHandle_ = my::MyLoadGraph(title_logo_file_path.c_str());
 
 	// フェードの設定
 	fadeDataTable_[static_cast<int>(Item::START)] = { 255, 8, true, true };
@@ -42,7 +49,7 @@ TitleScene::TitleScene(SceneManager& manager) :
 // デストラクタ
 TitleScene::~TitleScene()
 {
-	DeleteGraph(handle_);
+	DeleteGraph(backGroundHandle_);
 }
 
 // メンバ関数ポインタの更新
@@ -110,7 +117,11 @@ void TitleScene::NormalUpdate()
 // 描画
 void TitleScene::Draw()
 {
-	DrawGraph(0, 0, handle_, true);
+	// 背景の描画
+	DrawRotaGraph(common::screen_width / 2, common::screen_height / 2, 1.0, 0.0, backGroundHandle_, true);
+
+	// タイトルのロゴの描画
+	DrawRotaGraph(common::screen_width / 2, common::screen_height / 2 - 150, 0.3, 0.0, titleLogoHandle_, true);
 
 	// 現在のシーンのテキスト描画
 	Debug::Log("TitleScne");

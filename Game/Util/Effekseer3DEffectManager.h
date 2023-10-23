@@ -171,7 +171,7 @@ private:
 	/// </summary>
 	/// <param name="playingEffectHandle">エフェクトのハンドル</param>
 	/// <param name="fileName">再再生するエフェクトのファイル名(拡張子は含まない)</param>
-	void PlayEffectLoop(int* playingEffectHandle, std::string fileName);
+	void PlayEffectLoop(int& playingEffectHandle, std::string fileName);
 
 private:
 	// エフェクトの再生タイプ

@@ -12,7 +12,7 @@ namespace common
 #endif
 
 	// Windowñº
-	const char* const title_text = "SPACE SURVIVE";
+	const char* const title_text = "SPACE REFLECT";
 
 	// WindowÉTÉCÉY
 	constexpr int screen_width = 1280;

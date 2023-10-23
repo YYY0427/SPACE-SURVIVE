@@ -65,7 +65,7 @@ void PauseScene::Update()
 	// É|Å[ÉYâÊñ Ç©ÇÁñﬂÇÈ
 	if (InputState::IsTriggered(InputType::BACK) || InputState::IsTriggered(InputType::PAUSE))
 	{
-		manager_.PopScene();
+		manager_.PopScene(); 
 		return;
 	}
 

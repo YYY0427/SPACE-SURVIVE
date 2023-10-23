@@ -11,7 +11,7 @@ namespace
 	std::string meteor_data_file_path = "Data/Model/MV1/Meteor.mv1";
 }
 
-RockManager::RockManager(std::vector<UnityGameObject> rockData, std::vector<UnityGameObject> meteorData, std::shared_ptr<Player> pPlayer)
+RockManager::RockManager(std::vector<UnityGameObject> rockData, std::vector<UnityGameObject> meteorData)
 {
 	// ÉÇÉfÉãÇÃÉçÅ[Éh
 	handleTable_[RockType::ROCK] = MV1LoadModel(rock_data_file_path.c_str());
@@ -25,11 +25,11 @@ RockManager::RockManager(std::vector<UnityGameObject> rockData, std::vector<Unit
 
 	for (auto& data : rockData)
 	{
-		pRocks_.push_back(std::make_shared<Rock>(handleTable_[RockType::ROCK], pPlayer, data));
+		pRocks_.push_back(std::make_shared<Rock>(handleTable_[RockType::ROCK], data));
 	}
 	for (auto& data : meteorData)
 	{
-		pRocks_.push_back(std::make_shared<Meteor>(handleTable_[RockType::METEOR], pPlayer, data));
+		pRocks_.push_back(std::make_shared<Meteor>(handleTable_[RockType::METEOR], data));
 	}
 }
 

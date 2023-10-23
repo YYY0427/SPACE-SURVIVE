@@ -11,7 +11,7 @@ class Player;
 class RockManager
 {
 public:
-	RockManager(std::vector<UnityGameObject> rockData, std::vector<UnityGameObject> meteorData, std::shared_ptr<Player> pPlayer);
+	RockManager(std::vector<UnityGameObject> rockData, std::vector<UnityGameObject> meteorData);
 	virtual ~RockManager();
 
 	void Update();

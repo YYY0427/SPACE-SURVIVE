@@ -3,8 +3,7 @@
 #include "../Util/Model.h"
 #include <string>
 
-Rock::Rock(int handle, std::shared_ptr<Player> pPlayer, UnityGameObject rockData) :
-	pPlayer_(pPlayer)
+Rock::Rock(int handle, UnityGameObject rockData) 
 {
 	isEnabled_ = true;
 	pos_ = rockData.pos;
@@ -27,18 +26,6 @@ Rock::~Rock()
 
 void Rock::Update()
 {
-	// ƒJƒƒ‰‚ÌFar‚©‚çŠO‚ê‚½‚çÁ‚·
-	VECTOR toPlayer = VSub(pPlayer_->GetPos(), pos_);
-	float distance = VSize(toPlayer);
-	if (pPlayer_->GetCameraFar() < distance)
-	{
-		isEnabled_ = false;
-	}
-
-	VECTOR tempVec = VScale(vec_, pPlayer_->GetSlowRate());
-
-//	pos_ = VAdd(pos_, tempVec);
-
 	pModel_->SetPos(pos_);
 	pModel_->SetRot(rot_);
 	pModel_->Update();

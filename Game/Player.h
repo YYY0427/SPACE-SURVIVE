@@ -30,12 +30,6 @@ public:
 	/// <returns>処理が終了したか true : 処理終了, false : 処理途中</returns>
 	bool CollisionRockUpdate();
 
-	// ブーストの処理
-	void BoostProcess();
-
-	// スローモーションの処理
-	void SlowProcess();
-
 	// エネルギーの処理
 	void EnergyProcess();
 
@@ -77,15 +71,6 @@ public:
 	// 位置情報の取得
 	VECTOR GetPos() const;			
 
-	/// <summary>
-	/// ブースト状態かの取得
-	/// </summary>
-	/// <returns>true : ブースト状態、false : 通常状態</returns>
-	bool GetIsBoost() const;			
-
-	// スローモーションのレートの取得
-	float GetSlowRate() const;		
-
 	// プレイヤーの当たり判定の半径の取得
 	float GetCollsionRadius() const;	
 
@@ -103,6 +88,10 @@ private:
 
 	// 決められたフレーム前まで位置情報を保存しているテーブル
 	std::deque<VECTOR> posLogTable_;
+
+	// エフェクトハンドル
+	int boostEffectHandle_;
+	int playerDeadEffectHandle_;
 
 	// 位置情報
 	VECTOR pos_;
@@ -125,26 +114,12 @@ private:
 	// エネルギーゲージ
 	float energyGauge_;
 
-	// スローモーションのレート
-	float slowRate_;
-
 	// 移動ベクトルを反転したか
 	bool isReverseMoveVec_;
-
-	// スローモーション状態かどうか
-	bool isSlow_;
-
-	// ブースト状態かどうか
-	bool isBoost_;
 
 	// 左スティックが入力されたか
 	bool isInput_;
 
 	// ゲームオーバーエフェクトを再生したか
 	bool isPlayGameOverEffect_;
-
-	VECTOR effectRot_;
-	float boostEffectScale_;
-	int boostEffectHandle_;
-	int playerDeadEffectHandle_;
 };

@@ -42,8 +42,8 @@ TestScene::TestScene(SceneManager& manager) :
 
 	// 読み込んだ配置データからオブジェクトのインスタンスの生成
 	pImg3DManager_ = std::make_shared<Image3DManager>(pDataReader_->GetDataType("Stage"));
-	pPlayer_ = std::make_shared<Player>(pDataReader_->GetDataType("Player").front());
-	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"), pPlayer_);
+	pPlayer_ = std::make_shared<Player>(pDataReader_->GetDataType("TestPlayer").front());
+	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"));
 	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
 	pSkyDome_ = std::make_shared<SkyDome>();

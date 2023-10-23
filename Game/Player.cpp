@@ -9,7 +9,8 @@
 namespace
 {
 	// プレイヤーモデルのファイルのパス
-	std::string model_file_path = "Data/Model/MV1/Player.mv1";
+	std::string model_file_path = "Data/Model/MV1/";
+	std::string model_file_extension = ".mv1";
 
 	// プレイヤーの移動量
 	constexpr VECTOR player_vec_up = { 0, 0, -1 };
@@ -22,21 +23,6 @@ namespace
 
 	// プレイヤーの通常移動速度
 	constexpr float move_normal_speed = 1.5f;
-
-	// プレイヤーのブースト時移動速度
-	constexpr float move_boost_speed = 3.0f;
-
-	// プレイヤーの上昇、下降スピード
-	constexpr float move_y_speed = 5.0f;
-
-	// スローモーションのレート
-	constexpr float slow_rate = 0.1f;
-
-	// スローモーション時のエネルギー消費量
-	constexpr float slow_energy_cost = 3.0f;
-
-	// ブースト時のエネルギー消費量
-	constexpr float boost_energy_cost = 1.0f;
 
 	// エネルギーゲージ
 	constexpr float energy_gauge_total_amount = 1000.0f;
@@ -65,22 +51,18 @@ Player::Player(UnityGameObject data) :
 	pos_(data.pos),
 	rot_(data.rot),
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
-	effectRot_({0, 0, 0}),
 	hp_(hp),
 	ultimateTimer_(0),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),
 	energyGauge_(energy_gauge_total_amount),
-	slowRate_(1.0f),
-	boostEffectScale_(50.0f), 
 	playerDeadEffectHandle_(-1),
 	isPlayGameOverEffect_(false),
-	isBoost_(false),
-	isSlow_(false),
 	isReverseMoveVec_(false)
 {
 	// プレイヤーモデルのインスタンスの作成
-	pModel_ = std::make_shared<Model>(model_file_path.c_str());
+	std::string path = model_file_path + data.name + model_file_extension;
+	pModel_ = std::make_shared<Model>(path.c_str());
 
 	// モデルの拡大率の設定
 //	pModel_->SetScale(data.scale);
@@ -129,18 +111,8 @@ void Player::Update()
 	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw()));
 	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw()));
 
-	// スローモーションの処理
-	SlowProcess();
-
-	// ブーストの処理
-	BoostProcess();
-	
 	// エネルギーの処理
 	EnergyProcess();
-
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	effectManager.SetEffectScale(boostEffectHandle_, boostEffectScale_);
-	effectManager.SetEffectSpeed(boostEffectHandle_, slowRate_);
 
 	// 移動情報の初期化
 	isInput_ = false;
@@ -180,19 +152,8 @@ void Player::Update()
 		// プレイヤーのスピードを掛ける
 		moveVec_ = VScale(moveVec_, moveSpeed_);
 
-		// スローモーションのレートを掛ける
-		moveVec_ = VScale(moveVec_, slowRate_);
-
 		// 作成した移動ベクトルで座標の移動
 		pos_ = VAdd(pos_, moveVec_);
-	}
-	else
-	{
-		// 動いてない場合かつスローモーションじゃない場合は通常スピードに切り替える
-		if (!isSlow_)
-		{
-			isBoost_ = false;
-		}
 	}
 
 	// 無敵時間のタイマーの更新
@@ -200,7 +161,7 @@ void Player::Update()
 	ultimateTimer_ = (std::max)(--ultimateTimer_, 0);
 
 	// 移動ベクトルの大きさからプレイヤーの傾き具合を算出
-	rot_ = VGet(moveVec_.z * DX_PI_F / 180.0f / slowRate_, 0.0f, -moveVec_.x * DX_PI_F / 180.0f / slowRate_);
+	rot_ = VGet(moveVec_.z * DX_PI_F / 180.0f, 0.0f, -moveVec_.x * DX_PI_F / 180.0f);
 
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
@@ -245,9 +206,6 @@ bool Player::CollisionRockUpdate()
 			if (!isPlayGameOverEffect_)
 			{
 				isPlayGameOverEffect_ = true;
-				/*float scale = 50.0f, speed = 0.5f;
-				VECTOR rot{ 0.0f, 0.0f, 0.0f };
-				Effekseer3DEffectManager::GetInstance().PlayEffect(&playerDeadEffectHandle_, EffectID::player_dead, PlayType::NORMAL, &pos_, &scale, &speed, &rot);*/
 				Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, 50.0f, 0.5f);
 			}
 			// エフェクトを再生し終えたらtrueを返す
@@ -280,139 +238,15 @@ bool Player::CollisionRockUpdate()
 	return false;
 }
 
-// ブーストの処理
-void Player::BoostProcess()
-{
-	// ブースト切り替え
-	if (InputState::IsTriggered(InputType::BOOST))
-	{
-		// 非ブースト時かつエネルギーゲージの残量があった場合ブーストに移行
-		if (!isBoost_ && energyGauge_ > 0)
-		{
-			isBoost_ = true;
-
-			// ブースト時のエフェクトを再生
-			Effekseer3DEffectManager::GetInstance().PlayEffectLoopAndFollow(boostEffectHandle_, EffectID::player_boost, &pos_, boostEffectScale_, slowRate_);
-		}
-		// ブースト時の場合は通常速度に移行
-		else
-		{
-			isBoost_ = false;
-		}
-	}
-	// ブースト時
-	if (isBoost_)
-	{
-		// スローモーション時はブーストのエフェクトの大きさを小さくする
-		// 通常時は通常のエフェクトの大きさ
-		(isSlow_) ?
-			(boostEffectScale_ = 25.0f) :
-			(boostEffectScale_ = 40.0f);
-
-		// 徐々に加速
-		moveSpeed_ += 1.0f;
-
-		// 特定のスピードより大きくならない
-		if (moveSpeed_ > move_boost_speed)
-		{
-			moveSpeed_ = move_boost_speed;
-		}
-	}
-	// 非ブースト時
-	else
-	{
-		// ブースト時のエフェクトの再生をストップ
-		Effekseer3DEffectManager::GetInstance().DeleteEffect(boostEffectHandle_);
-			
-		// 徐々に減速
-		moveSpeed_ -= 1.0f;
-
-		// 特定のスピードより小さくならない
-		if (moveSpeed_ < move_normal_speed)
-		{
-			moveSpeed_ = move_normal_speed;
-		}
-	}
-}
-
-// スローモーションの処理
-void Player::SlowProcess()
-{
-	// スローモーション切り替え
-	if (InputState::IsTriggered(InputType::SLOW))
-	{
-		// スローモーションじゃないかつエネルギーゲージの残量があったらスローモーションに移行
-		if (!isSlow_ && energyGauge_ > 0)
-		{
-			isSlow_ = true;
-		}
-		// スローモーション時は通常に移行
-		else
-		{
-			isSlow_ = false;
-		}
-	}
-	// フラグが立っていたらスローモーションに切り替え
-	if (isSlow_)
-	{
-		// 徐々にスローにしていく
-		slowRate_ -= 0.1f;
-
-		// 特定の値よりは小さくならない
-		if (slowRate_ < slow_rate)
-		{
-			slowRate_ = slow_rate;
-		}
-	}
-	else
-	{
-		// 徐々に速くしていく
-		slowRate_ += 0.1f;
-
-		// 特定の値よりは大きくならない
-		if (slowRate_ >= 1.0f)
-		{
-			slowRate_ = 1.0f;
-		}
-	}
-}
-
 // エネルギー処理
 void Player::EnergyProcess()
 {
-	// ブースト時はエネルギーが減り続ける
-	// スローモーション時はブースト時のエネルギーは減らない
-	if (isBoost_ && !isSlow_)
-	{
-		energyGauge_ -= boost_energy_cost;
+	energyGauge_ += energy_recovery_amount;
 
-		// エネルギーがなくなったら通常速度に移行
-		if (energyGauge_ <= 0)
-		{
-			isBoost_ = false;
-		}
-	}
-	// スローモーション時はエネルギーが減り続ける
-	else if (isSlow_)
+	// エネルギー上限に達したら回復を止める
+	if (energyGauge_ > energy_gauge_total_amount)
 	{
-		energyGauge_ -= slow_energy_cost;
-
-		// エネルギーがなくなったら通常に移行
-		if (energyGauge_ <= 0)
-		{
-			isSlow_ = false;
-		}
-	}
-	// 非ブースト時かつ非スローモーション時はエネルギーは回復
-	else
-	{
-		energyGauge_ += energy_recovery_amount;
-
-		// エネルギー上限に達したら回復を止める
-		if (energyGauge_ > energy_gauge_total_amount)
-		{
-			energyGauge_ = energy_gauge_total_amount;
-		}
+		energyGauge_ = energy_gauge_total_amount;
 	}
 }
 
@@ -446,7 +280,7 @@ void Player::Draw()
 void Player::Fall(float fallSpeed)
 {
 	// 落下
-	pos_.y -= (fallSpeed * slowRate_);
+	pos_.y -= fallSpeed;
 }
 
 // プレイヤーのリスポーン処理
@@ -499,18 +333,6 @@ bool Player::IsLive() const
 VECTOR Player::GetPos() const
 {
 	return pos_;
-}
-
-// ブースト状態かの取得
-bool Player::GetIsBoost() const
-{
-	return isBoost_;
-}
-
-// スローモーションのレートの取得
-float Player::GetSlowRate() const
-{
-	return slowRate_;
 }
 
 // プレイヤーの当たり判定の半径の取得

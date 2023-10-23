@@ -73,27 +73,6 @@ void Camera::Update()
 		cameraPitch_ = -80.0f * DX_PI_F / 180.0f;
 	}
 
-	// プレイヤーブースト状態の場合視野角を徐々に大きく
-	// ブースト状態の視野角より大きくしない
-	if (pPlayer_->GetIsBoost())
-	{
-		perspective_ += 2;
-		if (perspective_ > boosting_perspective)
-		{
-			perspective_ = boosting_perspective;
-		}
-	}
-	// プレイヤー通常状態の場合視野角を徐々に小さく
-	// 通常状態の視野角より小さくはしない
-	else
-	{
-		perspective_ -= 2;
-		if (perspective_ < normal_perspective)
-		{
-			perspective_ = normal_perspective;
-		}
-	}
-
 	// 平行行列の作成
 	MATRIX playerTransMtx = MGetTranslate(VScale(pPlayer_->GetPos(), 1.0f));
 
@@ -117,11 +96,6 @@ void Camera::Update()
 
 	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
 	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
-
-	if (InputState::IsPressed(InputType::CAMERA_INVERSION))
-	{
-		// 進んできた道の座標をカメラのターゲットにする
-	}
 
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);

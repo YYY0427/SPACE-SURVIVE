@@ -7,6 +7,7 @@
 
 class Model;
 class Camera;
+class Shield;
 
 // プレイヤークラス
 class Player
@@ -85,6 +86,7 @@ private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;
 	std::shared_ptr<Camera> pCamera_;
+	std::shared_ptr<Shield> pShield_;
 
 	// 決められたフレーム前まで位置情報を保存しているテーブル
 	std::deque<VECTOR> posLogTable_;

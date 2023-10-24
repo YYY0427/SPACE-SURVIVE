@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Camera.h"
+#include "Shield.h"
 #include "Util/InputState.h"
 #include "Util/Model.h"
 #include "Util//Effekseer3DEffectManager.h"
@@ -60,9 +61,12 @@ Player::Player(UnityGameObject data) :
 	isPlayGameOverEffect_(false),
 	isReverseMoveVec_(false)
 {
-	// プレイヤーモデルのインスタンスの作成
+	// プレイヤーモデルのインスタンスの生成
 	std::string path = model_file_path + data.name + model_file_extension;
 	pModel_ = std::make_shared<Model>(path.c_str());
+
+	// シールドのインスタンスの生成
+	pShield_ = std::make_shared<Shield>(*this);
 
 	// モデルの拡大率の設定
 //	pModel_->SetScale(data.scale);
@@ -171,6 +175,9 @@ void Player::Update()
 
 	// アニメーションを進める
 	pModel_->Update();
+
+	// シールドの更新
+	pShield_->Update();
 }
 
 // 岩との衝突時の更新
@@ -274,6 +281,7 @@ void Player::Draw()
 		DrawSphere3D(pos_, model_collision_radius, 8, 0xff0000, 0xff0000, false);
 #endif 
 	}
+	pShield_->Draw();
 }
 
 // プレイヤーの落下処理

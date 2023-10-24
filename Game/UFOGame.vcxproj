@@ -157,6 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Util\Debug.cpp" />
     <ClCompile Include="Image3DManager.cpp" />
     <ClCompile Include="Image3D.cpp" />
@@ -193,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Shield.h" />
     <ClInclude Include="Util\Debug.h" />
     <ClInclude Include="Image3DManager.h" />
     <ClInclude Include="Image3D.h" />

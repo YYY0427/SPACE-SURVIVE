@@ -132,16 +132,19 @@
     <ClCompile Include="Planet\Earth.cpp">
       <Filter>ソース ファイル\Planet</Filter>
     </ClCompile>
-    <ClCompile Include="Image3D.cpp">
+    <ClCompile Include="Road.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Image3DManager.cpp">
+    <ClCompile Include="RoadManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Util\Debug.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="Shield.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Image3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,10 +245,10 @@
     <ClInclude Include="Planet\Earth.h">
       <Filter>ヘッダー ファイル\Planet</Filter>
     </ClInclude>
-    <ClInclude Include="Image3D.h">
+    <ClInclude Include="Road.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Image3DManager.h">
+    <ClInclude Include="RoadManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -255,6 +258,9 @@
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="Shield.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Image3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

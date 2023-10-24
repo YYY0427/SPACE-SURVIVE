@@ -50,7 +50,8 @@ void Shield::Update()
 	int x = (right + -left) * 10;
 	VECTOR vec = { x, 0.0f, z };
 
-	float rot = atan2f(z, x) * 180.0f / DX_PI_F;
+	float rot = atan2f(z, x);
+	Debug::Log("角度", rot * 180.0f / DX_PI_F);
 
 	// プレイヤーの平行移動行列の取得
 	MATRIX playerMtx = MGetTranslate(player_.GetPos());

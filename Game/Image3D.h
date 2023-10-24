@@ -1,22 +1,31 @@
 #pragma once
-#include <DxLib.h>
+#include <string>
 #include <array>
-#include "Util/DataReaderFromUnity.h"
+#include <DxLib.h>
 
 class Image3D
 {
 public:
-	Image3D(int imgHandle, UnityGameObject data);
+	Image3D(std::string filePath);
+	Image3D(int imgHandle);
+
 	virtual ~Image3D();
 
+	void Update();
 	void Draw();
 
+	int GetModelHandle() const;
 	VECTOR GetPos() const;
-	VECTOR GetRot() const;
 	float GetImgWidth() const;
 	float GetImgHeight() const;
-	int GetImgHandle() const;
 	std::array<VERTEX3D, 6> GetVertex() const;
+
+	void SetPos(VECTOR pos);
+	void SetRot(VECTOR rot);
+	void SetImgWidth(float width);
+	void SetImgHeight(float height);
+	void SetImgDafualtScale();
+
 private:
 	std::array<VERTEX3D, 6> vectex_;
 	VECTOR pos_;

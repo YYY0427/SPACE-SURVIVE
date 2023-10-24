@@ -15,8 +15,8 @@
 #include "../Rock/RockBase.h"
 #include "../Planet/PlanetManager.h"
 #include "../Planet/PlanetBase.h"
-#include "../Image3D.h"
-#include "../Image3DManager.h"
+#include "../Road.h"
+#include "../RoadManager.h"
 #include "../common.h"
 
 namespace
@@ -41,7 +41,7 @@ TestScene::TestScene(SceneManager& manager) :
 	pDataReader_->LoadUnityGameObjectData();
 
 	// 読み込んだ配置データからオブジェクトのインスタンスの生成
-	pImg3DManager_ = std::make_shared<Image3DManager>(pDataReader_->GetDataType("Stage"));
+	pImg3DManager_ = std::make_shared<RoadManager>(pDataReader_->GetDataType("Stage"));
 	pPlayer_ = std::make_shared<Player>(pDataReader_->GetDataType("Player2").front());
 	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"));
 	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
@@ -85,10 +85,10 @@ void TestScene::Draw()
 	// 地面の角の位置表示
 	for (auto& road : pImg3DManager_->GetRoads())
 	{
-		VECTOR leftTop = road->GetVertex()[0].pos;
-		VECTOR rightTop = road->GetVertex()[1].pos;
-		VECTOR leftBottom = road->GetVertex()[2].pos;
-		VECTOR rightBottom = road->GetVertex()[3].pos;
+		VECTOR leftTop = road->GetImage3D()->GetVertex()[0].pos;
+		VECTOR rightTop = road->GetImage3D()->GetVertex()[1].pos;
+		VECTOR leftBottom = road->GetImage3D()->GetVertex()[2].pos;
+		VECTOR rightBottom = road->GetImage3D()->GetVertex()[3].pos;
 
 		DrawSphere3D(leftTop, 32, 8, 0xff0000, 0xff0000, 0xff0000);
 		DrawSphere3D(rightTop, 32, 8, 0xff0000, 0xff0000, 0xff0000);
@@ -348,10 +348,10 @@ void TestScene::CollisionRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& r
 	for (auto& road : pImg3DManager_->GetRoads())
 	{
 		// プレイヤーの現在位置から下方向に線を伸ばして地面のポリゴンと当たっているか確かめる
-		VECTOR leftTop = road->GetVertex()[0].pos;
-		VECTOR rightTop = road->GetVertex()[1].pos;
-		VECTOR leftBottom = road->GetVertex()[2].pos;
-		VECTOR rightBottom = road->GetVertex()[3].pos;
+		VECTOR leftTop = road->GetImage3D()->GetVertex()[0].pos;
+		VECTOR rightTop = road->GetImage3D()->GetVertex()[1].pos;
+		VECTOR leftBottom = road->GetImage3D()->GetVertex()[2].pos;
+		VECTOR rightBottom = road->GetImage3D()->GetVertex()[3].pos;
 
 		// ラインを伸ばす開始位置
 		VECTOR startLinePos = pPlayer_->GetPos();

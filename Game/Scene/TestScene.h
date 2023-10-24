@@ -9,7 +9,7 @@ class SkyDome;
 class Camera;
 class Player;
 class DataReaderFromUnity;
-class Image3DManager;
+class RoadManager;
 
 // テストシーン
 // 色々試すようのシーン
@@ -75,6 +75,6 @@ private:
 	std::shared_ptr<SkyDome> pSkyDome_;
 	std::shared_ptr<DataReaderFromUnity> pDataReader_;
 	std::shared_ptr<PlanetManager> pPlanetManager_;
-	std::shared_ptr<Image3DManager> pImg3DManager_;
+	std::shared_ptr<RoadManager> pImg3DManager_;
 };
 

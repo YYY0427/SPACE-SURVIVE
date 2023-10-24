@@ -1,25 +1,35 @@
 #include "Image3D.h"
 #include "Util/DrawFunctions.h"
-#include <string>
+#include <cassert>
 
-namespace
+Image3D::Image3D(std::string filePath):
+	pos_({}),
+	rot_({}),
+	imgWidth_(0),
+	imgHeight_(0),
+	vectex_({})
 {
+	imgHandle_ = my::MyLoadGraph(filePath.c_str());
 }
 
-Image3D::Image3D(int imgHandle, UnityGameObject data)
+Image3D::Image3D(int imgHandle):
+	imgHandle_(imgHandle),
+	pos_({}),
+	rot_({}),
+	imgWidth_(0),
+	imgHeight_(0),
+	vectex_({})
 {
-	pos_ = data.pos;
-	rot_ = VGet(data.rot.x + (DX_PI_F * 90.0f / 180.0f), data.rot.y, data.rot.z);
-	imgHandle_ = imgHandle;
-#if false
-	// 画像の大きさどおり画像を描画する
-	GetGraphSizeF(imgHandle_, &imgWidth_, &imgHeight_);
-#else
-	// Unityでの表示どおりに画像を描画する
-	imgWidth_ = 500.0f * data.scale.x;
-	imgHeight_ = 500.0f * data.scale.z;
-#endif
+	assert(imgHandle_ != -1);
+}
 
+Image3D::~Image3D()
+{
+	DeleteGraph(imgHandle_);
+}
+
+void Image3D::Update()
+{
 	vectex_[0].dif = GetColorU8(255, 255, 255, 255);
 	vectex_[0].spc = GetColorU8(0, 0, 0, 0);
 	vectex_[0].u = 0.0f;
@@ -76,10 +86,6 @@ Image3D::Image3D(int imgHandle, UnityGameObject data)
 	vectex_[5].norm = vectex_[0].norm;
 }
 
-Image3D::~Image3D()
-{
-}
-
 void Image3D::Draw()
 {
 	// ライティングは行わない
@@ -92,14 +98,14 @@ void Image3D::Draw()
 	SetUseLighting(TRUE);
 }
 
+int Image3D::GetModelHandle() const
+{
+	return imgHandle_;
+}
+
 VECTOR Image3D::GetPos() const
 {
 	return pos_;
-}
-
-VECTOR Image3D::GetRot() const
-{
-	return rot_;
 }
 
 float Image3D::GetImgWidth() const
@@ -112,12 +118,33 @@ float Image3D::GetImgHeight() const
 	return imgHeight_;
 }
 
-int Image3D::GetImgHandle() const
-{
-	return imgHandle_;
-}
-
 std::array<VERTEX3D, 6> Image3D::GetVertex() const
 {
 	return vectex_;
+}
+
+void Image3D::SetPos(VECTOR pos)
+{
+	pos_ = pos;
+}
+
+void Image3D::SetRot(VECTOR rot)
+{
+	rot_ = rot;
+}
+
+void Image3D::SetImgWidth(float width)
+{
+	imgWidth_ = width;
+}
+
+void Image3D::SetImgHeight(float height)
+{
+	imgHeight_ = height;
+}
+
+void Image3D::SetImgDafualtScale()
+{
+	// 画像の大きさどおり画像を描画する
+	GetGraphSizeF(imgHandle_, &imgWidth_, &imgHeight_);
 }

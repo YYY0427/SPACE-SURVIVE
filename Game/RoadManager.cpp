@@ -1,39 +1,24 @@
-#include "Image3DManager.h"
-#include "Image3D.h"
+#include "RoadManager.h"
+#include "Road.h"
 #include "Util/DrawFunctions.h"
 #include <string>
 
-namespace
-{
-	// 道の画像のファイルパス
-	const std::string load_img_file_path = "Data/Image/Road.png";
-}
-
 // コンストラクタ
-Image3DManager::Image3DManager(std::vector<UnityGameObject> roadsData)
+RoadManager::RoadManager(std::vector<UnityGameObject> roadsData)
 {
-	// 画像のロード
-	handleTable_[Image3DType::ROAD] = my::MyLoadGraph(load_img_file_path.c_str());
-
 	// 受けっとったデータの数インスタンスの作成
 	for (auto& roadData : roadsData)
 	{
-		pRoads_.push_back(std::make_shared<Image3D>(handleTable_[Image3DType::ROAD], roadData));
+		pRoads_.push_back(std::make_shared<Road>(roadData));
 	}
 }
 
 // デストラクタ
-Image3DManager::~Image3DManager()
+RoadManager::~RoadManager()
 {
-	// 画像をすべて削除
-	for (auto& handle : handleTable_)
-	{
-		DeleteGraph(handle.second);
-	}
 }
-
 // 描画
-void Image3DManager::Draw()
+void RoadManager::Draw()
 {
 	// 道の描画
 	for (auto& road : pRoads_)
@@ -43,13 +28,13 @@ void Image3DManager::Draw()
 }
 
 // 全ての道の取得
-std::vector<std::shared_ptr<Image3D>> Image3DManager::GetRoads() const
+std::vector<std::shared_ptr<Road>> RoadManager::GetRoads() const
 {
 	return pRoads_;
 }
 
 // Y軸成分を除いた全ての道の中から受けっとった位置情報に1番近い道の座標の取得
-VECTOR Image3DManager::GetClosestRoadPos(VECTOR targetPos)
+VECTOR RoadManager::GetClosestRoadPos(VECTOR targetPos)
 {
 	// 1番ターゲットまで近い道
 	VECTOR closestPos = VGet(0.0f, 0.0f, 0.0f);
@@ -64,7 +49,7 @@ VECTOR Image3DManager::GetClosestRoadPos(VECTOR targetPos)
 	{
 		// Y軸成分を除く
 		targetPos = VGet(targetPos.x, 0.0f, targetPos.z);
-		VECTOR roadPos = VGet(road->GetPos().x, 0.0f, road->GetPos().z);
+		VECTOR roadPos = VGet(road->GetImage3D()->GetPos().x, 0.0f, road->GetImage3D()->GetPos().z);
 
 		// 道からターゲットまでの距離の大きさを求める
 		float distanceSize = VSize(VSub(roadPos, targetPos));
@@ -81,7 +66,7 @@ VECTOR Image3DManager::GetClosestRoadPos(VECTOR targetPos)
 			nearDistanceSize = distanceSize;
 
 			// 1番ターゲットまで近い道の更新
-			closestPos = VGet(road->GetPos().x, road->GetPos().y, road->GetPos().z);
+			closestPos = VGet(road->GetImage3D()->GetPos().x, road->GetImage3D()->GetPos().y, road->GetImage3D()->GetPos().z);
 		}
 	}
 	return closestPos;

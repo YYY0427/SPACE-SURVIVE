@@ -127,17 +127,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// Windowモード設定
 		ChangeWindowMode(saveData.GetSaveData().windowMode);
 
-#ifdef _DEBUG
-		// FPS(Frame Per Second)の取得と描画
+		// FPS(Frame Per Second)の取得
 		auto fps = GetFPS();
 		Debug::Log("FPS", fps);
-	//	DrawFormatString(10, 30, 0xffffff, "FPS = %2.2f", fps);
 
-		// 描画命令数の取得と描画
+		// 描画命令数の取得
 		auto drawcall = GetDrawCallCount();
 		Debug::Log("DC", drawcall);
-	//	DrawFormatString(10, 60, 0xffffff, "DC = %d", drawcall);
-#endif
+
+		// デバッグログの描画
+		// すべての描画後に描画
+		Debug::DrawLog();
+
 		// 裏画面を表画面を入れ替える
 		ScreenFlip();
 

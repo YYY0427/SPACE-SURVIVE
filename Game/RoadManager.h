@@ -5,26 +5,26 @@
 #include "Util/DataReaderFromUnity.h"
 
 // プロトタイプ宣言
-class Image3D;
+class Road;
 
 // 3D画像の管理クラス
-class Image3DManager
+class RoadManager
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="roadsData">Unityから読み込んだ道のデータのテーブル</param>
-	Image3DManager(std::vector<UnityGameObject> roadsData);
+	RoadManager(std::vector<UnityGameObject> roadsData);
 
 	// デストラクタ
-	virtual ~Image3DManager();
+	virtual ~RoadManager();
 
 	// 描画
 	void Draw();
 
-	// 全ての道の取得
-	std::vector<std::shared_ptr<Image3D>> GetRoads() const;
+	// 道の取得
+	std::vector<std::shared_ptr<Road>> GetRoads() const;
 
 	// Y軸成分を除いた全ての道の中から受けっとった位置情報に1番近い道の座標の取得
 	VECTOR GetClosestRoadPos(VECTOR targetPos);
@@ -36,8 +36,5 @@ private:
 		ROAD,
 	};
 private:
-	std::vector<std::shared_ptr<Image3D>> pRoads_;
-
-	// 画像のハンドルを格納するテーブル
-	std::map<Image3DType, int> handleTable_;
+	std::vector<std::shared_ptr<Road>> pRoads_;
 };

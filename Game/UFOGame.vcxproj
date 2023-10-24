@@ -157,10 +157,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Image3D.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Util\Debug.cpp" />
-    <ClCompile Include="Image3DManager.cpp" />
-    <ClCompile Include="Image3D.cpp" />
+    <ClCompile Include="RoadManager.cpp" />
+    <ClCompile Include="Road.cpp" />
     <ClCompile Include="Planet\Earth.cpp" />
     <ClCompile Include="Planet\PlanetManager.cpp" />
     <ClCompile Include="Planet\PlanetBase.cpp" />
@@ -194,10 +195,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Image3D.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Util\Debug.h" />
-    <ClInclude Include="Image3DManager.h" />
-    <ClInclude Include="Image3D.h" />
+    <ClInclude Include="RoadManager.h" />
+    <ClInclude Include="Road.h" />
     <ClInclude Include="Planet\Earth.h" />
     <ClInclude Include="Planet\PlanetManager.h" />
     <ClInclude Include="Planet\PlanetBase.h" />

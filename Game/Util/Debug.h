@@ -9,4 +9,5 @@ namespace Debug
 	void Log(const TCHAR* string, float num);
 	void Log(const TCHAR* string, VECTOR num);
 	void ClearLog();
+	void DrawLog();
 }

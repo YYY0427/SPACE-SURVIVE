@@ -4,6 +4,7 @@
 #include "Util/Model.h"
 #include "Util/InputState.h"
 #include "Util/Debug.h"
+#include "Util/Geometry.h"
 #include <string>
 
 namespace
@@ -31,52 +32,39 @@ Shield::~Shield()
 void Shield::Update()
 {
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	effectManager.DeleteEffect(effectHandle_);
+	isShield_ = false;
 
 	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
 	int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
 	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
 	int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
 
-	isShield_ = false;
-	effectManager.DeleteEffect(effectHandle_);
-	if (up > 0)
+	// 入力されたか
+	if (up > 5 || down > 5 || right > 5 || left > 5)
 	{
-		relativePosToPlayer_ = { 0.0f, 0.0f, -100.0f };
-		rot_ = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };
 		isShield_ = true;
 	}
-	if (down > 0)
-	{
-		relativePosToPlayer_ = { 0.0f, 0.0f, 100.0f };
-		rot_ = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };
-		isShield_ = true;
-	}
-	if (right > 0)
-	{
-		relativePosToPlayer_ = { 100.0f, 0.0f, 0.0f };
-		rot_ = { 0.0f, 0.0f, 0.0f };
-		isShield_ = true;
-	}
-	if (left > 0)
-	{
-		relativePosToPlayer_ = { -100.0f, 0.0f, 0.0f};
-		rot_ = { 0.0f, 0.0f, 0.0f };
-		isShield_ = true;
-	}
+
+	int z = (-up + down) * 10;
+	int x = (right + -left) * 10;
+	VECTOR vec = { x, 0.0f, z };
+
+	float rot = atan2f(z, x) * 180.0f / DX_PI_F;
 
 	// プレイヤーの平行移動行列の取得
 	MATRIX playerMtx = MGetTranslate(player_.GetPos());
 
 	// シールドの相対位置とプレイヤーの平行行列から位置情報を作成
-	pos_ = VTransform(relativePosToPlayer_, playerMtx);
+	pos_ = VTransform(vec, playerMtx);
 
 	if (isShield_)
 	{
-		effectManager.PlayEffect(effectHandle_, EffectID::player_shield, { pos_.x, pos_.y - 50.0f, pos_.z }, effect_scale, 1.0f, rot_);
+		effectManager.PlayEffect(effectHandle_, EffectID::player_shield, { pos_.x, pos_.y - 100.0f, pos_.z }, effect_scale, 1.0f, {0.0f, rot, 0.0f});
 	}
 
 	pModel_->SetPos(pos_);
-	pModel_->SetRot(rot_);
+	pModel_->SetRot({0.0f, rot, 0.0f});
 	pModel_->Update();
 }
 

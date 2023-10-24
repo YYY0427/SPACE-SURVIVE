@@ -107,13 +107,13 @@ namespace InputState
 		float x, y;
 		if (stick == PadLR::LEFT)
 		{
-			// padStateから取得した値を-1.0~1.0に変換
+			// padStateから取得した値を-10.0~10.0に変換
 			x = static_cast<float>(padState.ThumbLX / 32767.0f * 10);
 			y = static_cast<float>(padState.ThumbLY / 32767.0f * 10);
 		}
 		else
 		{
-			// padStateから取得した値を-1.0~1.0に変換
+			// padStateから取得した値を-10.0~10.0に変換
 			x = static_cast<float>(padState.ThumbRX / 32767.0f * 10);
 			y = static_cast<float>(padState.ThumbRY / 32767.0f * 10);
 		}

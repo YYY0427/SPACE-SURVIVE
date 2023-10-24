@@ -8,7 +8,7 @@
 namespace
 {
 	// エフェクトのファイルパス
-	const std::string data_file_path = "Data/Effect/";
+	const std::string data_file_path = "Data/Effect/AfterData/";
 
 	// エフェクトの拡張子
 	const std::string data_extension = ".efk";
@@ -52,9 +52,7 @@ void Effekseer3DEffectManager::Init()
 
 	// ここから↓でEffectをロードする
 	LoadEffectFile(EffectID::player_dead.c_str());	
-	LoadEffectFile(EffectID::player_boost.c_str());		
-	LoadEffectFile(EffectID::player_acceleration.c_str());	
-	LoadEffectFile(EffectID::meteor.c_str());		
+	LoadEffectFile(EffectID::player_shield.c_str());
 }
 
 // 更新

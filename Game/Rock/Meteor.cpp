@@ -21,9 +21,6 @@ Meteor::Meteor(int handle, UnityGameObject rockData)
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update();
-
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	effectManager.PlayEffectLoopAndFollow(effectDataH_, EffectID::meteor, &pos_, 50.0f, 1.0f);
 }
 
 Meteor::~Meteor()

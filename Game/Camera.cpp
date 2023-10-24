@@ -58,8 +58,8 @@ void Camera::Update()
 	if (padStickReversY)	y *= -1;
 
 	// “ü—Íî•ñ‚©‚çƒJƒƒ‰‚ð‰ñ“]
-	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f) * x;
-	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f) * y;
+//	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f) * x;
+//	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f) * y;
 	
 	// c‰ñ“]‚Ì‰ñ“]Šp“x‚Ì§ŒÀ
 	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f)

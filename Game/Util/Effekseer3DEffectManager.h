@@ -7,10 +7,8 @@
 // エフェクトのファイルパス
 namespace EffectID
 {
-	const std::string player_dead = "explosion2";				// プレイヤー死亡時に出すエフェクト
-	const std::string player_boost = "starFire";				// プレイヤーブースト時に継続的に出すエフェクト
-	const std::string player_acceleration = "acceleration";		// プレイヤーブースト時に一度だけ出すエフェクト
-	const std::string meteor = "boost";							// 隕石用エフェクト
+	const std::string player_dead = "Explosion";		// プレイヤー死亡時に出すエフェクト
+	const std::string player_shield = "MagicShield";		// プレイヤーのシールド		
 }
 
 // Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス

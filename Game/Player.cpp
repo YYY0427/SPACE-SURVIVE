@@ -19,7 +19,7 @@ namespace
 	constexpr VECTOR player_vec_left = { -1, 0, 0 };
 
 	// モデルの拡大率
-	constexpr float model_scale = 0.7f;
+	constexpr float model_scale = 0.5f;
 
 	// プレイヤーの通常移動速度
 	constexpr float move_normal_speed = 1.5f;
@@ -31,7 +31,7 @@ namespace
 	constexpr float energy_recovery_amount = 10.0f;
 
 	// プレイヤーの当たり判定の半径
-	constexpr float model_collision_radius = 50.0f;
+	constexpr float model_collision_radius = 30.0f;
 
 	// 落下死亡判定の高さ
 	constexpr float death_judg_height = -1000.0f;
@@ -81,7 +81,7 @@ Player::Player(UnityGameObject data) :
 //  デストラクタ
 Player::~Player()
 {
-	// 処理なし
+
 }
 
 // 更新

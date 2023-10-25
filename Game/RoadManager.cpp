@@ -17,6 +17,15 @@ RoadManager::RoadManager(std::vector<UnityGameObject> roadsData)
 RoadManager::~RoadManager()
 {
 }
+
+void RoadManager::Update(VECTOR playerPos)
+{
+	for (auto& road : pRoads_)
+	{
+		road->Update(playerPos);
+	}
+}
+
 // 描画
 void RoadManager::Draw()
 {
@@ -49,7 +58,7 @@ VECTOR RoadManager::GetClosestRoadPos(VECTOR targetPos)
 	{
 		// Y軸成分を除く
 		targetPos = VGet(targetPos.x, 0.0f, targetPos.z);
-		VECTOR roadPos = VGet(road->GetImage3D()->GetPos().x, 0.0f, road->GetImage3D()->GetPos().z);
+		VECTOR roadPos = VGet(road->GetPos().x, 0.0f, road->GetPos().z);
 
 		// 道からターゲットまでの距離の大きさを求める
 		float distanceSize = VSize(VSub(roadPos, targetPos));
@@ -66,7 +75,7 @@ VECTOR RoadManager::GetClosestRoadPos(VECTOR targetPos)
 			nearDistanceSize = distanceSize;
 
 			// 1番ターゲットまで近い道の更新
-			closestPos = VGet(road->GetImage3D()->GetPos().x, road->GetImage3D()->GetPos().y, road->GetImage3D()->GetPos().z);
+			closestPos = VGet(road->GetPos().x, road->GetPos().y, road->GetPos().z);
 		}
 	}
 	return closestPos;

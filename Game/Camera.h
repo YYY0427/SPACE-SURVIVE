@@ -2,25 +2,23 @@
 #include <DxLib.h>
 #include <memory>
 
-class Player;
-
 /// <summary>
 /// カメラの管理クラス
 /// </summary>
 class Camera
 {
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="pPlayer">プレイヤーのポインタ</param>
-	Camera(std::shared_ptr<Player> pPlayer);
+	// コンストラクタ
+	Camera();
 
 	// デストラクタ
 	virtual ~Camera();
 
-	// 更新
-	void Update();
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="playerPos">プレイヤーの位置座標</param>
+	void Update(VECTOR playerPos);
 
 	// 描画
 	void Draw();
@@ -37,9 +35,6 @@ public:
 	VECTOR GetTarget();
 
 private:
-	// ポインタ
-	std::shared_ptr<Player> pPlayer_;
-
 	// カメラの位置
 	VECTOR cameraPos_;
 

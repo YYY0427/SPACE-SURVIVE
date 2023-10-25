@@ -6,7 +6,6 @@
 #include <deque>
 
 class Model;
-class Camera;
 class Shield;
 
 // プレイヤークラス
@@ -23,7 +22,7 @@ public:
 	virtual ~Player();
 
 	// 通常の更新
-	void Update();
+	void Update(float cameraYaw);
 
 	/// <summary>
 	/// 岩との衝突時の更新
@@ -78,14 +77,9 @@ public:
 	// プレイヤーモデルのハンドルの取得
 	int GetModelHandle() const; 
 
-	// カメラクラスのポインタの設定
-	void SetCameraPointer(std::shared_ptr<Camera> pCamera);
-
-	float GetCameraFar() const;
 private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;
-	std::shared_ptr<Camera> pCamera_;
 	std::shared_ptr<Shield> pShield_;
 
 	// 決められたフレーム前まで位置情報を保存しているテーブル
@@ -103,6 +97,12 @@ private:
 
 	// 移動ベクトル
 	VECTOR moveVec_;
+
+	// ブーストエフェクトの拡大率
+	float boostEffectScale_;
+
+	// ブーストエフェクトの再生速度
+	float boostEffectSpeed_;
 
 	// 命
 	int hp_;

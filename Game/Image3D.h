@@ -14,10 +14,7 @@ public:
 	void Update();
 	void Draw();
 
-	int GetModelHandle() const;
-	VECTOR GetPos() const;
-	float GetImgWidth() const;
-	float GetImgHeight() const;
+	int GetImageHandle() const;
 	std::array<VERTEX3D, 6> GetVertex() const;
 
 	void SetPos(VECTOR pos);

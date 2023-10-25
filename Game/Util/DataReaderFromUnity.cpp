@@ -79,5 +79,12 @@ float DataReaderFromUnity::RadianFromDegree(float degree)
 
 std::vector<UnityGameObject> DataReaderFromUnity::GetDataType(std::string objectName) const
 {
-	return data_.find(objectName)->second;
+	// データが見つかったか
+	if (data_.find(objectName) != data_.end())
+	{
+		return data_.find(objectName)->second;
+	}
+
+	// 見つからなかったら空のデータを返す
+	return std::vector<UnityGameObject>();
 }

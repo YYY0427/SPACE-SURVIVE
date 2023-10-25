@@ -125,11 +125,11 @@ namespace InputState
 		{
 			return abs(static_cast<int>(x));
 		}
-		if (type == PadStickInputType::UP && y < -0.1f)
+		if (type == PadStickInputType::UP && y > 0.1f)
 		{
 			return abs(static_cast<int>(y));
 		}
-		if (type == PadStickInputType::DOWN && y > 0.1f)
+		if (type == PadStickInputType::DOWN && y < -0.1f)
 		{
 			return abs(static_cast<int>(y));
 		}

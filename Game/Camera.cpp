@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include "Player.h"
 #include "Util/InputState.h"
 #include "Util/SaveData.h"
 
@@ -21,10 +20,9 @@ namespace
 }
 
 // コンストラクタ
-Camera::Camera(std::shared_ptr<Player> pPlayer) :
+Camera::Camera() :
 	cameraPos_(camera_init_pos),
 	cameraTarget_(camera_init_target),
-	pPlayer_(pPlayer),
 	cameraYaw_(0.0f), 
 	cameraPitch_(0.0f),
 	perspective_(normal_perspective)
@@ -37,7 +35,7 @@ Camera::~Camera()
 }
 
 // 更新
-void Camera::Update()
+void Camera::Update(VECTOR playerPos)
 {
 	// 右スティックの入力情報の取得
 	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
@@ -74,7 +72,7 @@ void Camera::Update()
 	}
 
 	// 平行行列の作成
-	MATRIX playerTransMtx = MGetTranslate(VScale(pPlayer_->GetPos(), 1.0f));
+	MATRIX playerTransMtx = MGetTranslate(playerPos);
 
 	// カメラの横回転行列の作成
 	MATRIX cameraRotMtxSide = MGetRotY(cameraYaw_);

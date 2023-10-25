@@ -20,6 +20,12 @@ public:
 	// デストラクタ
 	virtual ~RoadManager();
 
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="playerPos">プレイヤーの座標</param>
+	void Update(VECTOR playerPos);
+
 	// 描画
 	void Draw();
 

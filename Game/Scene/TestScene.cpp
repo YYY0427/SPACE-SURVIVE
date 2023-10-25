@@ -34,23 +34,20 @@ namespace
 // コンストラクタ
 TestScene::TestScene(SceneManager& manager) :
 	SceneBase(manager),
-	updateFunc_(&TestScene::NormalUpdate)
+	updateFunc_(&TestScene::NormalUpdate),
+	nextRoad_(1)
 {
 	// オブジェクトの配置データの読み込み
 	pDataReader_ = std::make_shared<DataReaderFromUnity>();
 	pDataReader_->LoadUnityGameObjectData();
 
 	// 読み込んだ配置データからオブジェクトのインスタンスの生成
-	pImg3DManager_ = std::make_shared<RoadManager>(pDataReader_->GetDataType("Stage"));
+	pRoadManager_ = std::make_shared<RoadManager>(pDataReader_->GetDataType("Stage"));
 	pPlayer_ = std::make_shared<Player>(pDataReader_->GetDataType("Player2").front());
 	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"));
 	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
-	pCamera_ = std::make_shared<Camera>(pPlayer_);
+	pCamera_ = std::make_shared<Camera>();
 	pSkyDome_ = std::make_shared<SkyDome>();
-
-	// コンストラクタで渡せないポインタの設定
-	pPlayer_->SetCameraPointer(pCamera_);
-
 }
 
 //  デストラクタ
@@ -73,7 +70,7 @@ void TestScene::Draw()
 {
 	// 各クラスの描画
 	pSkyDome_->Draw();
-	pImg3DManager_->Draw();
+	pRoadManager_->Draw();
 	pRockManager_->Draw();
 	pPlanetManager_->Draw();
 	pPlayer_->Draw();
@@ -83,12 +80,12 @@ void TestScene::Draw()
 
 #ifdef _DEBUG
 	// 地面の角の位置表示
-	for (auto& road : pImg3DManager_->GetRoads())
+	for (auto& road : pRoadManager_->GetRoads())
 	{
-		VECTOR leftTop = road->GetImage3D()->GetVertex()[0].pos;
-		VECTOR rightTop = road->GetImage3D()->GetVertex()[1].pos;
-		VECTOR leftBottom = road->GetImage3D()->GetVertex()[2].pos;
-		VECTOR rightBottom = road->GetImage3D()->GetVertex()[3].pos;
+		VECTOR leftTop = road->GetVertex()[0].pos;
+		VECTOR rightTop = road->GetVertex()[1].pos;
+		VECTOR leftBottom = road->GetVertex()[2].pos;
+		VECTOR rightBottom = road->GetVertex()[3].pos;
 
 		DrawSphere3D(leftTop, 32, 8, 0xff0000, 0xff0000, 0xff0000);
 		DrawSphere3D(rightTop, 32, 8, 0xff0000, 0xff0000, 0xff0000);
@@ -109,8 +106,9 @@ void TestScene::NormalUpdate()
 {
 	// 各クラスの更新
 	pSkyDome_->Update(pPlayer_->GetPos());
-	pCamera_->Update();
-	pPlayer_->Update();
+	pRoadManager_->Update(pPlayer_->GetPos());
+	pCamera_->Update(pPlayer_->GetPos());
+	pPlayer_->Update(pCamera_->GetCameraYaw());
 	pRockManager_->Update();
 	pPlanetManager_->Update();
 
@@ -171,7 +169,7 @@ void TestScene::CollisionRockUpdate()
 	}
 
 	// カメラの更新
-	pCamera_->Update();
+	pCamera_->Update(pPlayer_->GetPos());
 
 	if (pPlayer_->CollisionRockUpdate() && !IsFadeing())
 	{
@@ -210,7 +208,7 @@ void TestScene::DeathFallPlayerUpdate()
 		if (pPlayer_->IsLive())
 		{
 			// プレイヤーから1番近い道の座標の取得
-			VECTOR restartPos = pImg3DManager_->GetClosestRoadPos(pPlayer_->GetPos());
+			VECTOR restartPos = pRoadManager_->GetClosestRoadPos(pPlayer_->GetPos());
 
 			// プレイヤーのリスポーン処理
 			pPlayer_->Respawn(restartPos);
@@ -243,6 +241,37 @@ void TestScene::DeathFallPlayerUpdate()
 // プレイヤーの落下処理をまとめたもの
 void TestScene::PlayerFallProcess()
 {
+	// プレイヤーから下に伸びる線と道の当たり判定
+	HITRESULT_LINE firstRoadResult{}, firstRoadResult2{};
+	HITRESULT_LINE secondRoadResult{}, secondRoadResult2{};
+
+	auto firstRoad = pRoadManager_->GetRoads()[0];
+	auto secondRoad = pRoadManager_->GetRoads()[1];
+
+	float imgHeight = firstRoad->GetImageHeight();
+	float imgWidth = firstRoad->GetImageWidth();
+	VECTOR firstRoadPos = firstRoad->GetPos();
+	VECTOR secondRoadPos = secondRoad->GetPos();
+
+	CollisionRoadAndPlayer(firstRoad, firstRoadResult, firstRoadResult2);
+	CollisionRoadAndPlayer(secondRoad, secondRoadResult, secondRoadResult2);
+	
+	bool isHitFirstRoad = firstRoadResult.HitFlag || firstRoadResult2.HitFlag;
+	bool isHitSecondRoad = secondRoadResult.HitFlag || secondRoadResult2.HitFlag;
+
+	// 2つ目の道の上に乗ったら1つ目の道を2つ目の道の前に座標変更
+	// 道を無限スクロールさせるため
+	if (nextRoad_ == 1 && isHitSecondRoad)
+	{
+		firstRoad->SetPos({ secondRoadPos.x, secondRoadPos.y, secondRoad->GetPos().z + imgHeight * 2});
+		nextRoad_ = 0;
+	}
+	else if (nextRoad_ == 0 && isHitFirstRoad)
+	{
+		secondRoad->SetPos({ firstRoadPos.x, firstRoadPos.y, firstRoad->GetPos().z + imgHeight * 2});
+		nextRoad_ = 1;
+	}
+
 	// プレイヤーが道の上にいるか
 	bool isPlayerOnTheRoad = JudgePlayerOnTheRoad();
 
@@ -256,15 +285,15 @@ void TestScene::PlayerFallProcess()
 	bool isOverLimitPlayerHeight = OverLimitPlayerHeight();
 
 	// プレイヤーが道の上になかったらプレイヤーが落下
-	if (!isPlayerOnTheRoad)
-	{
-		pPlayer_->Fall(normal_player_fall_speed);
-	}
-	// 道からプレイヤーまでの距離が特定の距離を超えていたらプレイヤーが落下
-	if (isOverLimitPlayerHeight)
-	{
-		pPlayer_->Fall(special_player_fall_speed);
-	}
+	//if (!isPlayerOnTheRoad)
+	//{
+	//	pPlayer_->Fall(normal_player_fall_speed);
+	//}
+	//// 道からプレイヤーまでの距離が特定の距離を超えていたらプレイヤーが落下
+	//if (isOverLimitPlayerHeight)
+	//{
+	//	pPlayer_->Fall(special_player_fall_speed);
+	//}
 
 	// プレイヤーが落下死亡判定の高さまで落ちたかどうか
 	if (pPlayer_->IsDeathJudgHeight())
@@ -306,7 +335,7 @@ bool TestScene::OverLimitPlayerHeight()
 {
 	// プレイヤーから下に伸びる線と道の当たり判定
 	HITRESULT_LINE result{}, result2{};
-	CollisionRoadAndPlayer(result, result2);
+	CollisionAllRoadAndPlayer(result, result2);
 
 	// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたらチェック
 	if (result.HitFlag || result2.HitFlag)
@@ -331,7 +360,7 @@ bool TestScene::JudgePlayerOnTheRoad()
 {
 	// プレイヤーから下に伸びる線と道の当たり判定
 	HITRESULT_LINE result{}, result2{};
-	CollisionRoadAndPlayer(result, result2);
+	CollisionAllRoadAndPlayer(result, result2);
 
 	// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたら道の上にいる判定
 	if (result.HitFlag || result2.HitFlag)
@@ -342,26 +371,31 @@ bool TestScene::JudgePlayerOnTheRoad()
 }
 
 // プレイヤーから下に伸びている線と道との当たり判定
-void TestScene::CollisionRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2)
+void TestScene::CollisionRoadAndPlayer(std::shared_ptr<Road> pRoad, HITRESULT_LINE& result, HITRESULT_LINE& result2)
+{
+	// プレイヤーの現在位置から下方向に線を伸ばして地面のポリゴンと当たっているか確かめる
+	VECTOR leftTop = pRoad->GetVertex()[0].pos;
+	VECTOR rightTop = pRoad->GetVertex()[1].pos;
+	VECTOR leftBottom = pRoad->GetVertex()[2].pos;
+	VECTOR rightBottom = pRoad->GetVertex()[3].pos;
+
+	// ラインを伸ばす開始位置
+	VECTOR startLinePos = pPlayer_->GetPos();
+
+	// ラインの終了位置
+	VECTOR endLinePos = VGet(pPlayer_->GetPos().x, pPlayer_->GetPos().y - 10000.0f, pPlayer_->GetPos().z);
+
+	// 道は2つのポリゴンで描画しているので2つともチェック
+	result = HitCheck_Line_Triangle(startLinePos, endLinePos, leftTop, rightTop, leftBottom);
+	result2 = HitCheck_Line_Triangle(startLinePos, endLinePos, rightBottom, leftBottom, rightTop);
+}
+
+void TestScene::CollisionAllRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2)
 {
 	// 全ての道の数チェック
-	for (auto& road : pImg3DManager_->GetRoads())
+	for (auto& road : pRoadManager_->GetRoads())
 	{
-		// プレイヤーの現在位置から下方向に線を伸ばして地面のポリゴンと当たっているか確かめる
-		VECTOR leftTop = road->GetImage3D()->GetVertex()[0].pos;
-		VECTOR rightTop = road->GetImage3D()->GetVertex()[1].pos;
-		VECTOR leftBottom = road->GetImage3D()->GetVertex()[2].pos;
-		VECTOR rightBottom = road->GetImage3D()->GetVertex()[3].pos;
-
-		// ラインを伸ばす開始位置
-		VECTOR startLinePos = pPlayer_->GetPos();
-
-		// ラインの終了位置
-		VECTOR endLinePos = VGet(pPlayer_->GetPos().x, pPlayer_->GetPos().y - 10000.0f, pPlayer_->GetPos().z);
-
-		// 道は2つのポリゴンで描画しているので2つともチェック
-		result = HitCheck_Line_Triangle(startLinePos, endLinePos, leftTop, rightTop, leftBottom);
-		result2 = HitCheck_Line_Triangle(startLinePos, endLinePos, rightBottom, leftBottom, rightTop);
+		CollisionRoadAndPlayer(road, result, result2);
 
 		// 1つでもポリゴンとプレイヤーから延ばした線が当たっていたら処理終了
 		// 当たった後も処理を続けると結果が書き変わってしまうため

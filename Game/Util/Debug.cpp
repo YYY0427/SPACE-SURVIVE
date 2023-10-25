@@ -25,19 +25,16 @@ namespace Debug
 	void Log(const TCHAR* string, int num)
 	{
 		logTable_<int>[string] = num;
-	//	logTable_<int>.insert(std::make_pair(string, num));
 	};
 
 	void Log(const TCHAR* string, float num)
 	{
 		logTable_<float>[string] = num;
-	//	logTable_<float>.insert(std::make_pair(string, num));
 	};
 
 	void Log(const TCHAR* string, VECTOR num)
 	{
 		logTable_<VECTOR>[string] = num;
-	//	logTable_<VECTOR>.insert(std::make_pair(string, num));
 	}
 
 	void ClearLog()

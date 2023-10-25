@@ -98,24 +98,9 @@ void Image3D::Draw()
 	SetUseLighting(TRUE);
 }
 
-int Image3D::GetModelHandle() const
+int Image3D::GetImageHandle() const
 {
 	return imgHandle_;
-}
-
-VECTOR Image3D::GetPos() const
-{
-	return pos_;
-}
-
-float Image3D::GetImgWidth() const
-{
-	return imgWidth_;
-}
-
-float Image3D::GetImgHeight() const
-{
-	return imgHeight_;
 }
 
 std::array<VERTEX3D, 6> Image3D::GetVertex() const

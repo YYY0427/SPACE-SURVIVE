@@ -1,10 +1,10 @@
 #include "Player.h"
-#include "Camera.h"
 #include "Shield.h"
 #include "Util/InputState.h"
 #include "Util/Model.h"
 #include "Util//Effekseer3DEffectManager.h"
 #include "Util/Debug.h"
+#include "Util/Range.h"
 #include <string>
 
 namespace
@@ -14,8 +14,8 @@ namespace
 	std::string model_file_extension = ".mv1";
 
 	// プレイヤーの移動量
-	constexpr VECTOR player_vec_up = { 0, 0, -1 };
-	constexpr VECTOR player_vec_down = { 0, 0, 1 };
+	constexpr VECTOR player_vec_up = { 0, 0, 1 };
+	constexpr VECTOR player_vec_down = { 0, 0, -1 };
 	constexpr VECTOR player_vec_right = { 1, 0, 0 };
 	constexpr VECTOR player_vec_left = { -1, 0, 0 };
 
@@ -59,7 +59,9 @@ Player::Player(UnityGameObject data) :
 	energyGauge_(energy_gauge_total_amount),
 	playerDeadEffectHandle_(-1),
 	isPlayGameOverEffect_(false),
-	isReverseMoveVec_(false)
+	isReverseMoveVec_(false),
+	boostEffectScale_(20.0f),
+	boostEffectSpeed_(1.0f)
 {
 	// プレイヤーモデルのインスタンスの生成
 	std::string path = model_file_path + data.name + model_file_extension;
@@ -80,6 +82,8 @@ Player::Player(UnityGameObject data) :
 
 	// アニメーションと当たり判定の更新
 	pModel_->Update();
+
+	Effekseer3DEffectManager::GetInstance().PlayEffectLoopAndFollow(boostEffectHandle_, EffectID::player_boost, &pos_, boostEffectScale_, boostEffectSpeed_, { rot_.x, 0.0f, 0.0f });
 }
 
 //  デストラクタ
@@ -89,10 +93,11 @@ Player::~Player()
 }
 
 // 更新
-void Player::Update()
+void Player::Update(float cameraYaw)
 {
-	posLogTable_.push_front(pos_);
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
+	posLogTable_.push_front(pos_);
 	if (log_frame < static_cast<int>(posLogTable_.size()))
 	{
 		posLogTable_.pop_back();
@@ -109,11 +114,11 @@ void Player::Update()
 	VECTOR moveForward = VScale(VNorm(VSub(pCamera_->GetTarget(), pCamera_->GetPos())), -1);
 	VECTOR moveBack = VScale(moveForward, -1);
 #else 
-	VECTOR moveForward = VTransform(player_vec_up, MGetRotY(pCamera_->GetCameraYaw()));
-	VECTOR moveBack = VTransform(player_vec_down, MGetRotY(pCamera_->GetCameraYaw()));
+	VECTOR moveForward = VTransform(player_vec_up, MGetRotY(cameraYaw));
+	VECTOR moveBack = VTransform(player_vec_down, MGetRotY(cameraYaw));
 #endif
-	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(pCamera_->GetCameraYaw()));
-	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(pCamera_->GetCameraYaw()));
+	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(cameraYaw));
+	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(cameraYaw));
 
 	// エネルギーの処理
 	EnergyProcess();
@@ -130,6 +135,11 @@ void Player::Update()
 	{
 		moveVecZ = VScale(moveForward, up);
 		isInput_ = true;
+
+		// ブーストエフェクトの拡大率を大きくする
+		// 特定の大きさより大きくならない
+		boostEffectScale_++;
+		boostEffectScale_ = (std::fmin)(boostEffectScale_, 40.0f);
 	}
 	if (left > 0)
 	{
@@ -140,11 +150,31 @@ void Player::Update()
 	{
 		moveVecZ = VScale(moveBack, down);
 		isInput_ = true;
+
+		// ブーストエフェクトの拡大率を小さくする
+		// 特定の大きさより小さくならない
+		boostEffectScale_--;
+		boostEffectScale_ = (std::fmax)(boostEffectScale_, 20.0f);
 	}
 	if (right > 0)
 	{
 		moveVecX = VScale(moveRight, right);
 		isInput_ = true;
+	}
+	// 上下のパッドスティック入力がなかった場合
+	if (up <= 0 && down <= 0)
+	{
+		// ブーストエフェクトの拡大率をデフォルトの大きさに戻す
+		if (boostEffectScale_ >= 30.0f)
+		{
+			boostEffectScale_--;
+			boostEffectScale_ = (std::fmax)(boostEffectScale_, 30.0f);
+		}
+		else
+		{
+			boostEffectScale_++;
+			boostEffectScale_ = (std::fmin)(boostEffectScale_, 30.0f);
+		}
 	}
 
 	// スティックが入力されている場合のみ移動
@@ -165,7 +195,13 @@ void Player::Update()
 	ultimateTimer_ = (std::max)(--ultimateTimer_, 0);
 
 	// 移動ベクトルの大きさからプレイヤーの傾き具合を算出
-	rot_ = VGet(-moveVec_.z * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, -moveVec_.x * DX_PI_F / 180.0f);
+	// X軸回転は進んでいるように見せるように常に30度を足す
+	float rotX = 30.0f * DX_PI_F / 180.0f;
+	rot_ = { rotX + moveVec_.z * 0.01f, 0.0f, -moveVec_.x * 0.01f };
+
+	effectManager.SetEffectRot(boostEffectHandle_, { rot_.x + (180.0f * DX_PI_F / 180.0f), rot_.y, -rot_.z});
+	effectManager.SetEffectScale(boostEffectHandle_, boostEffectScale_);
+	effectManager.SetEffectSpeed(boostEffectHandle_, boostEffectSpeed_);
 
 	// 位置座標の設定
 	pModel_->SetPos(pos_);
@@ -353,15 +389,4 @@ float Player::GetCollsionRadius() const
 int Player::GetModelHandle() const
 {
 	return pModel_->GetModelHandle();
-}
-
-// カメラクラスのポインタの設定
-void Player::SetCameraPointer(std::shared_ptr<Camera> pCamera)
-{
-	pCamera_ = pCamera;
-}
-
-float Player::GetCameraFar() const
-{
-	return pCamera_->GetCameraFar();
 }

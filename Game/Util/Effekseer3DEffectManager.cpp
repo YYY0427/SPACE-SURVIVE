@@ -53,6 +53,7 @@ void Effekseer3DEffectManager::Init()
 	// ここから↓でEffectをロードする
 	LoadEffectFile(EffectID::player_dead.c_str());	
 	LoadEffectFile(EffectID::player_shield.c_str());
+	LoadEffectFile(EffectID::player_boost.c_str());
 }
 
 // 更新

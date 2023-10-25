@@ -10,6 +10,7 @@ class Camera;
 class Player;
 class DataReaderFromUnity;
 class RoadManager;
+class Road;
 
 // テストシーン
 // 色々試すようのシーン
@@ -62,8 +63,12 @@ private:
 	/// </summary>
 	/// <param name="result">線と当たったポリゴン1つ目の当たり判定結果</param>
 	/// <param name="result2">線とポリゴン2つ目の当たり判定結果</param>
-	void CollisionRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2);
+	void CollisionRoadAndPlayer(std::shared_ptr<Road> pRoad, HITRESULT_LINE& result, HITRESULT_LINE& result2);
+
+	void CollisionAllRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2);
 private:
+	int nextRoad_;
+
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成
 	void (TestScene::* updateFunc_) ();
@@ -75,6 +80,6 @@ private:
 	std::shared_ptr<SkyDome> pSkyDome_;
 	std::shared_ptr<DataReaderFromUnity> pDataReader_;
 	std::shared_ptr<PlanetManager> pPlanetManager_;
-	std::shared_ptr<RoadManager> pImg3DManager_;
+	std::shared_ptr<RoadManager> pRoadManager_;
 };
 

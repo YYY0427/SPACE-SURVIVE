@@ -8,7 +8,8 @@
 namespace EffectID
 {
 	const std::string player_dead = "Explosion";		// プレイヤー死亡時に出すエフェクト
-	const std::string player_shield = "MagicShield";		// プレイヤーのシールド		
+	const std::string player_shield = "MagicShield";	// プレイヤーのシールド	
+	const std::string player_boost = "FirePot1";				// プレイヤーに常に出すエフェクト
 }
 
 // Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス

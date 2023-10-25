@@ -14,8 +14,8 @@ namespace
 RockManager::RockManager(std::vector<UnityGameObject> rockData, std::vector<UnityGameObject> meteorData)
 {
 	// モデルのロード
-	handleTable_[RockType::ROCK] = MV1LoadModel(rock_data_file_path.c_str());
-	handleTable_[RockType::METEOR] = MV1LoadModel(meteor_data_file_path.c_str());
+//	handleTable_[RockType::ROCK] = MV1LoadModel(rock_data_file_path.c_str());
+//	handleTable_[RockType::METEOR] = MV1LoadModel(meteor_data_file_path.c_str());
 
 	// 1つでもモデルのロードに失敗したら止める
 	for (auto& handle : handleTable_)

@@ -47,6 +47,9 @@ private:
 	// 地面の線の描画
 	void GroundLineDraw();
 
+	// 道の無限スクロール
+	void RoadInfiniteScroll();
+
 	/// <summary>
 	/// プレイヤーが道の上にいるか判定
 	/// </summary>
@@ -66,6 +69,7 @@ private:
 	void CollisionRoadAndPlayer(std::shared_ptr<Road> pRoad, HITRESULT_LINE& result, HITRESULT_LINE& result2);
 
 	void CollisionAllRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2);
+
 private:
 	int nextRoad_;
 

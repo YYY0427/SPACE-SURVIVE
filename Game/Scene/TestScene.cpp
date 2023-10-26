@@ -112,6 +112,9 @@ void TestScene::NormalUpdate()
 	pRockManager_->Update();
 	pPlanetManager_->Update();
 
+	// 道の無限スクロール処理
+	RoadInfiniteScroll();
+
 	// プレイヤーの落下処理
 	PlayerFallProcess();
 
@@ -241,37 +244,6 @@ void TestScene::DeathFallPlayerUpdate()
 // プレイヤーの落下処理をまとめたもの
 void TestScene::PlayerFallProcess()
 {
-	// プレイヤーから下に伸びる線と道の当たり判定
-	HITRESULT_LINE firstRoadResult{}, firstRoadResult2{};
-	HITRESULT_LINE secondRoadResult{}, secondRoadResult2{};
-
-	auto firstRoad = pRoadManager_->GetRoads()[0];
-	auto secondRoad = pRoadManager_->GetRoads()[1];
-
-	float imgHeight = firstRoad->GetImageHeight();
-	float imgWidth = firstRoad->GetImageWidth();
-	VECTOR firstRoadPos = firstRoad->GetPos();
-	VECTOR secondRoadPos = secondRoad->GetPos();
-
-	CollisionRoadAndPlayer(firstRoad, firstRoadResult, firstRoadResult2);
-	CollisionRoadAndPlayer(secondRoad, secondRoadResult, secondRoadResult2);
-	
-	bool isHitFirstRoad = firstRoadResult.HitFlag || firstRoadResult2.HitFlag;
-	bool isHitSecondRoad = secondRoadResult.HitFlag || secondRoadResult2.HitFlag;
-
-	// 2つ目の道の上に乗ったら1つ目の道を2つ目の道の前に座標変更
-	// 道を無限スクロールさせるため
-	if (nextRoad_ == 1 && isHitSecondRoad)
-	{
-		firstRoad->SetPos({ secondRoadPos.x, secondRoadPos.y, secondRoad->GetPos().z + imgHeight * 2});
-		nextRoad_ = 0;
-	}
-	else if (nextRoad_ == 0 && isHitFirstRoad)
-	{
-		secondRoad->SetPos({ firstRoadPos.x, firstRoadPos.y, firstRoad->GetPos().z + imgHeight * 2});
-		nextRoad_ = 1;
-	}
-
 	// プレイヤーが道の上にいるか
 	bool isPlayerOnTheRoad = JudgePlayerOnTheRoad();
 
@@ -285,15 +257,15 @@ void TestScene::PlayerFallProcess()
 	bool isOverLimitPlayerHeight = OverLimitPlayerHeight();
 
 	// プレイヤーが道の上になかったらプレイヤーが落下
-	//if (!isPlayerOnTheRoad)
-	//{
-	//	pPlayer_->Fall(normal_player_fall_speed);
-	//}
-	//// 道からプレイヤーまでの距離が特定の距離を超えていたらプレイヤーが落下
-	//if (isOverLimitPlayerHeight)
-	//{
-	//	pPlayer_->Fall(special_player_fall_speed);
-	//}
+	if (!isPlayerOnTheRoad)
+	{
+		pPlayer_->Fall(normal_player_fall_speed);
+	}
+	// 道からプレイヤーまでの距離が特定の距離を超えていたらプレイヤーが落下
+	if (isOverLimitPlayerHeight)
+	{
+		pPlayer_->Fall(special_player_fall_speed);
+	}
 
 	// プレイヤーが落下死亡判定の高さまで落ちたかどうか
 	if (pPlayer_->IsDeathJudgHeight())
@@ -327,6 +299,45 @@ void TestScene::GroundLineDraw()
 		DrawLine3D(pos1, pos2, GetColor(0, 0, 0));
 		pos1.z += lineAreaSize / lineNum;
 		pos2.z += lineAreaSize / lineNum;
+	}
+}
+
+// 道の無限スクロール
+void TestScene::RoadInfiniteScroll()
+{
+	HITRESULT_LINE firstRoadResult{}, firstRoadResult2{};
+	HITRESULT_LINE secondRoadResult{}, secondRoadResult2{};
+
+	// 1つ目の道、2つ目の道のインスタンスの取得
+	auto firstRoad = pRoadManager_->GetRoads()[0];
+	auto secondRoad = pRoadManager_->GetRoads()[1];
+
+	// 画像の高さの取得
+	float imgHeight = firstRoad->GetImageHeight();
+
+	// 1つ目の道、2つ目の道の位置座標の取得
+	VECTOR firstRoadPos = firstRoad->GetPos();
+	VECTOR secondRoadPos = secondRoad->GetPos();
+
+	// プレイヤーから下に伸びる線と道の当たり判定
+	CollisionRoadAndPlayer(firstRoad, firstRoadResult, firstRoadResult2);
+	CollisionRoadAndPlayer(secondRoad, secondRoadResult, secondRoadResult2);
+
+	// 道と当たったかどうか
+	bool isHitFirstRoad = firstRoadResult.HitFlag || firstRoadResult2.HitFlag;
+	bool isHitSecondRoad = secondRoadResult.HitFlag || secondRoadResult2.HitFlag;
+
+	// 2つ目の道の上に乗ったら1つ目の道を2つ目の道の前に座標変更
+	// 道を無限スクロールさせるため
+	if (nextRoad_ == 1 && isHitSecondRoad)
+	{
+		firstRoad->SetPos({ secondRoadPos.x, secondRoadPos.y, secondRoad->GetPos().z + imgHeight * 2 });
+		nextRoad_ = 0;
+	}
+	else if (nextRoad_ == 0 && isHitFirstRoad)
+	{
+		secondRoad->SetPos({ firstRoadPos.x, firstRoadPos.y, firstRoad->GetPos().z + imgHeight * 2 });
+		nextRoad_ = 1;
 	}
 }
 

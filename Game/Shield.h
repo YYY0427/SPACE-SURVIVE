@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <DxLib.h>
+#include "Util/Timer.h"
 
 class Player;
 class Model;
@@ -20,6 +21,7 @@ private:
 	Player& player_;
 
 	int effectHandle_;
+	int enerugyGage_;
 
 	VECTOR pos_;
 	VECTOR rot_;
@@ -27,6 +29,6 @@ private:
 	// プレイヤーからの相対位置
 	VECTOR relativePosToPlayer_;
 
-	// シールドを出しているか
-	bool isShield_;
+	// 入力されたか
+	bool isInput_;
 };

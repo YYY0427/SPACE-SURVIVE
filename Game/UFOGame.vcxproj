@@ -157,7 +157,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Image3D.cpp" />
+    <ClCompile Include="Enemy\BossEnemy.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Util\Debug.cpp" />
     <ClCompile Include="RoadManager.cpp" />
@@ -195,7 +198,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Enemy\EnemyBase.h" />
+    <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Image3D.h" />
+    <ClInclude Include="Enemy\BossEnemy.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Util\Debug.h" />
     <ClInclude Include="RoadManager.h" />

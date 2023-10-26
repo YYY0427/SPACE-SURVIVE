@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-10-10" view-index="0" gantt-divider-location="570" resource-divider-location="300" version="3.2.3247" locale="ja_JP">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-10-10" view-index="0" gantt-divider-location="555" resource-divider-location="300" version="3.2.3247" locale="ja_JP">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="名前" width="316" order="0"/>
-        <field id="tpd4" name="開始日" width="119" order="1"/>
-        <field id="tpd5" name="終了日" width="119" order="2"/>
+        <field id="tpd3" name="名前" width="307" order="0"/>
+        <field id="tpd4" name="開始日" width="116" order="1"/>
+        <field id="tpd5" name="終了日" width="116" order="2"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="color.recent">
             <![CDATA[#ccffff #ccffcc #ffffcc #f4f4f4 #cccccc #cc00cc #6600cc #00cccc #ccccff #000000]]>
@@ -42,7 +42,7 @@
                 <![CDATA[予定のプロトタイプ期間]]>
             </notes>
         </task>
-        <task id="14" name="実プロトタイプ期間" meeting="false" start="2023-10-23" duration="12" complete="28" expand="true">
+        <task id="14" name="実プロトタイプ期間" meeting="false" start="2023-10-23" duration="12" complete="38" expand="true">
             <task id="43" name="プレイヤー移動処理" color="#ffffcc" meeting="false" start="2023-10-23" duration="1" complete="100" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
             <task id="44" name="カメラの処理" color="#ffffcc" meeting="false" start="2023-10-23" duration="1" complete="100" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
             <task id="45" name="シールドの回転処理" color="#ffffcc" meeting="false" start="2023-10-23" duration="1" complete="100" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
@@ -54,8 +54,8 @@
                 </notes>
             </task>
             <task id="47" name="跳ね返せないレーザーの挙動実装" color="#ffffcc" meeting="false" start="2023-10-27" duration="1" complete="0" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
-            <task id="13" name="跳ね返せないレーザーの描画処理" color="#ffffcc" meeting="false" start="2023-10-27" duration="1" complete="0" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
-            <task id="5" name="敵がレーザーを打つ処理" color="#ffffcc" meeting="false" start="2023-10-27" duration="1" complete="0" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
+            <task id="13" name="跳ね返せないレーザーの描画処理" color="#ffffcc" meeting="false" start="2023-10-27" duration="1" complete="100" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
+            <task id="5" name="敵がレーザーを打つ処理" color="#ffffcc" meeting="false" start="2023-10-27" duration="1" complete="100" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
             <task id="49" name="跳ね返せるレーザーの描画処理" color="#ffffcc" meeting="false" start="2023-10-27" duration="2" complete="0" thirdDate="2023-10-23" thirdDate-constraint="0" expand="true"/>
             <task id="48" name="跳ね返せるレーザーの挙動実装" color="#ffffcc" meeting="false" start="2023-10-28" duration="1" complete="0" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true"/>
             <task id="6" name="プレイヤーが跳ね返したレーザの当たり判定" color="#ffffcc" meeting="false" start="2023-10-30" duration="2" complete="0" thirdDate="2023-10-21" thirdDate-constraint="0" expand="true">

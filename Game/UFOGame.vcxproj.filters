@@ -43,6 +43,12 @@
     <Filter Include="ヘッダー ファイル\Enemy">
       <UniqueIdentifier>{4eacc0d9-3c2b-466c-a694-d4ba2cad23db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Lazer">
+      <UniqueIdentifier>{099a6cda-38ff-4384-95a7-3257831e92de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Lazer">
+      <UniqueIdentifier>{44df97de-a535-4595-b16d-216ded92176f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -161,6 +167,18 @@
     </ClCompile>
     <ClCompile Include="Enemy\BossEnemy.cpp">
       <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\NormalEnemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Laser\LazerBase.cpp">
+      <Filter>ソース ファイル\Lazer</Filter>
+    </ClCompile>
+    <ClCompile Include="Laser\LazerManager.cpp">
+      <Filter>ソース ファイル\Lazer</Filter>
+    </ClCompile>
+    <ClCompile Include="Laser\CubeLazer.cpp">
+      <Filter>ソース ファイル\Lazer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +304,18 @@
     </ClInclude>
     <ClInclude Include="Enemy\BossEnemy.h">
       <Filter>ヘッダー ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\NormalEnemy.h">
+      <Filter>ヘッダー ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser\LazerBase.h">
+      <Filter>ヘッダー ファイル\Lazer</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser\LazerManager.h">
+      <Filter>ヘッダー ファイル\Lazer</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser\CubeLazer.h">
+      <Filter>ヘッダー ファイル\Lazer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

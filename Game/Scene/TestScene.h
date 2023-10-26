@@ -11,6 +11,8 @@ class Player;
 class DataReaderFromUnity;
 class RoadManager;
 class Road;
+class EnemyManager;
+class LazerManager;
 
 // テストシーン
 // 色々試すようのシーン
@@ -85,5 +87,7 @@ private:
 	std::shared_ptr<DataReaderFromUnity> pDataReader_;
 	std::shared_ptr<PlanetManager> pPlanetManager_;
 	std::shared_ptr<RoadManager> pRoadManager_;
+	std::shared_ptr<EnemyManager> pEnemyManager_;
+	std::shared_ptr<LazerManager> pLazerManager_;
 };
 

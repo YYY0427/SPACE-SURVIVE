@@ -1,18 +1,16 @@
 #pragma once
 #include <list>
 #include <unordered_map>
+#include <vector>
 #include "EnemyBase.h"
 
-enum class EnemyType
-{
-	NOMAL,
-	BOSS,
-};
+class LazerManager;
+class Player;
 
 class EnemyManager
 {
 public:
-	EnemyManager();
+	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject bossEnemyData, std::vector<UnityGameObject> normalEnemyData);
 	virtual ~EnemyManager();
 
 	void Update();

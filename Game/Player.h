@@ -77,6 +77,7 @@ public:
 	// プレイヤーモデルのハンドルの取得
 	int GetModelHandle() const; 
 
+	VECTOR GetMoveVec() const;
 private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;

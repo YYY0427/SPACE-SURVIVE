@@ -1,17 +1,15 @@
 #pragma once
 #include "EnemyBase.h"
-#include <DxLib.h>
 
 class BossEnemy : public EnemyBase
 {
 public:
-	BossEnemy(int modelHandle);
+	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject data);
 	virtual ~BossEnemy();
 
 	void Update() override;
 	void Draw() override;
 
 private:
-	VECTOR pos_;
-	VECTOR rot_;
+	
 };

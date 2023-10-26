@@ -17,6 +17,8 @@
 #include "../Planet/PlanetBase.h"
 #include "../Road.h"
 #include "../RoadManager.h"
+#include "../Enemy/EnemyManager.h"
+#include "../Laser/LazerManager.h"
 #include "../common.h"
 
 namespace
@@ -43,7 +45,9 @@ TestScene::TestScene(SceneManager& manager) :
 
 	// 読み込んだ配置データからオブジェクトのインスタンスの生成
 	pRoadManager_ = std::make_shared<RoadManager>(pDataReader_->GetDataType("Stage"));
+	pLazerManager_ = std::make_shared<LazerManager>();
 	pPlayer_ = std::make_shared<Player>(pDataReader_->GetDataType("Player2").front());
+	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_, pDataReader_->GetDataType("BossEnemy").front(), pDataReader_->GetDataType("NormalEnemy"));
 	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"));
 	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
 	pCamera_ = std::make_shared<Camera>();
@@ -73,6 +77,8 @@ void TestScene::Draw()
 	pRoadManager_->Draw();
 	pRockManager_->Draw();
 	pPlanetManager_->Draw();
+	pEnemyManager_->Draw();
+	pLazerManager_->Draw();
 	pPlayer_->Draw();
 
 	// 現在のシーンのテキスト表示
@@ -108,7 +114,9 @@ void TestScene::NormalUpdate()
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());
 	pCamera_->Update(pPlayer_->GetPos());
+	pLazerManager_->Update();
 	pPlayer_->Update(pCamera_->GetCameraYaw());
+	pEnemyManager_->Update();
 	pRockManager_->Update();
 	pPlanetManager_->Update();
 

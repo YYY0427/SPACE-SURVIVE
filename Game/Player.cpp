@@ -44,7 +44,7 @@ namespace
 	constexpr int hp = 2;
 
 	// 何フレーム前まで位置情報を保存するか
-	constexpr int log_frame = 5;
+	constexpr int log_frame = 2;
 }
 
 //  コンストラクタ
@@ -389,4 +389,9 @@ float Player::GetCollsionRadius() const
 int Player::GetModelHandle() const
 {
 	return pModel_->GetModelHandle();
+}
+
+VECTOR Player::GetMoveVec() const
+{
+	return moveVec_;
 }

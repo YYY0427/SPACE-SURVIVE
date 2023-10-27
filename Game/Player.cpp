@@ -40,8 +40,8 @@ namespace
 	// 無敵時間のフレーム数
 	constexpr int ultimate_frames = 120;
 
-	// HP
-	constexpr int hp = 2;
+	// 残機数
+	constexpr int max_hp = 2;
 
 	// 何フレーム前まで位置情報を保存するか
 	constexpr int log_frame = 2;
@@ -52,7 +52,7 @@ Player::Player(UnityGameObject data) :
 	pos_(data.pos),
 	rot_(data.rot),
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
-	hp_(hp),
+	hp_(max_hp),
 	ultimateTimer_(0),
 	isInput_(false),
 	moveSpeed_(move_normal_speed),

@@ -165,6 +165,7 @@
     <ClCompile Include="Enemy\NormalEnemy.cpp" />
     <ClCompile Include="Laser\LazerBase.cpp" />
     <ClCompile Include="Laser\LazerManager.cpp" />
+    <ClCompile Include="Laser\NormalLazer.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Util\Debug.cpp" />
     <ClCompile Include="RoadManager.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Enemy\NormalEnemy.h" />
     <ClInclude Include="Laser\LazerBase.h" />
     <ClInclude Include="Laser\LazerManager.h" />
+    <ClInclude Include="Laser\NormalLazer.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Util\Debug.h" />
     <ClInclude Include="RoadManager.h" />

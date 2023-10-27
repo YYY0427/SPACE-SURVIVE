@@ -1,16 +1,15 @@
 #pragma once
 #include "LazerBase.h"
 
-class CubeLazer : public LazerBase
+class NormalLazer : public LazerBase
 {
 public:
-	CubeLazer(int modelHandle);
-	virtual ~CubeLazer();
+	NormalLazer(int modelHandle);
+	virtual ~NormalLazer();
 
 	void Update() override;
 	void Draw() override;
 
 private:
-	float deltaRot_;
 };
 

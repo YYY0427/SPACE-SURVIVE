@@ -50,7 +50,7 @@ TestScene::TestScene(SceneManager& manager) :
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_, pDataReader_->GetDataType("BossEnemy").front(), pDataReader_->GetDataType("NormalEnemy"));
 	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"));
 	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
-	pCamera_ = std::make_shared<Camera>();
+	pCamera_ = std::make_shared<Camera>(pDataReader_->GetDataType("Camera").front());
 	pSkyDome_ = std::make_shared<SkyDome>();
 }
 

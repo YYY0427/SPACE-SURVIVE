@@ -180,6 +180,9 @@
     <ClCompile Include="Laser\CubeLazer.cpp">
       <Filter>ソース ファイル\Lazer</Filter>
     </ClCompile>
+    <ClCompile Include="Laser\NormalLazer.cpp">
+      <Filter>ソース ファイル\Lazer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -315,6 +318,9 @@
       <Filter>ヘッダー ファイル\Lazer</Filter>
     </ClInclude>
     <ClInclude Include="Laser\CubeLazer.h">
+      <Filter>ヘッダー ファイル\Lazer</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser\NormalLazer.h">
       <Filter>ヘッダー ファイル\Lazer</Filter>
     </ClInclude>
   </ItemGroup>

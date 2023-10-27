@@ -1,6 +1,8 @@
 #pragma once
 #include <DxLib.h>
 #include <memory>
+#include "Util/DataReaderFromUnity.h"
+#include "Util/Range.h"
 
 /// <summary>
 /// カメラの管理クラス
@@ -9,7 +11,7 @@ class Camera
 {
 public:
 	// コンストラクタ
-	Camera();
+	Camera(UnityGameObject data);
 
 	// デストラクタ
 	virtual ~Camera();
@@ -43,6 +45,9 @@ private:
 
 	// 視野角
 	float perspective_;
+
+	// 視野角の範囲
+	Range<float> perspectiveRange_;
 
 	// 回転角度
 	float cameraYaw_;	// Y軸

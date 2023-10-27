@@ -20,12 +20,13 @@ namespace
 }
 
 // コンストラクタ
-Camera::Camera() :
-	cameraPos_(camera_init_pos),
+Camera::Camera(UnityGameObject data) :
+	cameraPos_(data.pos),
 	cameraTarget_(camera_init_target),
-	cameraYaw_(0.0f), 
+	cameraYaw_(0.0f),
 	cameraPitch_(0.0f),
-	perspective_(normal_perspective)
+	perspective_(normal_perspective),
+	perspectiveRange_({ normal_perspective, boosting_perspective })
 {
 }
 
@@ -55,6 +56,16 @@ void Camera::Update(VECTOR playerPos)
 	if (padStickReversX)	x *= -1;
 	if (padStickReversY)	y *= -1;
 
+	if (InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP))
+	{
+		perspective_ += 1.5f;
+	}
+	else
+	{
+		perspective_ -= 1.5f;
+	}
+	perspective_ = perspectiveRange_.Clamp(perspective_);
+
 	// 入力情報からカメラを回転
 //	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f) * x;
 //	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f) * y;
@@ -72,7 +83,7 @@ void Camera::Update(VECTOR playerPos)
 	}
 
 	// 平行行列の作成
-	MATRIX playerTransMtx = MGetTranslate(playerPos);
+	MATRIX playerTransMtx = MGetTranslate(VScale(playerPos, 1.0f));
 
 	// カメラの横回転行列の作成
 	MATRIX cameraRotMtxSide = MGetRotY(cameraYaw_);

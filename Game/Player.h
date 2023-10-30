@@ -78,6 +78,8 @@ public:
 	int GetModelHandle() const; 
 
 	VECTOR GetMoveVec() const;
+
+	std::shared_ptr<Shield> GetShield() const;
 private:
 	// ƒ|ƒCƒ“ƒ^
 	std::shared_ptr<Model> pModel_;

@@ -1,4 +1,5 @@
 #include "LazerBase.h"
+#include "../Util/Effekseer3DEffectManager.h"
 
 LazerBase::LazerBase():
 	pos_({}),
@@ -22,9 +23,9 @@ void LazerBase::Fire(const VECTOR pos, const VECTOR vec,const VECTOR rot)
 	isEnabled_ = true;
 }
 
-void LazerBase::Refrect()
+void LazerBase::Delete()
 {
-	vec_ = VScale(vec_, -1);
+	isEnabled_ = false;
 }
 
 bool LazerBase::GetIsEnabled() const
@@ -36,8 +37,3 @@ int LazerBase::GetModelHandle() const
 {
 	return pModel_->GetModelHandle();
 }
-
-//int LazerBase::GetModelHandle() const
-//{
-//	return pModel_->GetModelHandle();
-//}

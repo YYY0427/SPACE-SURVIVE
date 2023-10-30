@@ -11,6 +11,7 @@ public:
 	void Draw() override;
 
 	void Fire(const VECTOR pos, const VECTOR vec, const VECTOR rot) override;
+	void Refrect() override;
 
 private:
 	int lazerEffectHandle_;

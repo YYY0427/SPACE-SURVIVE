@@ -6,8 +6,7 @@
 
 namespace
 {
-//	const std::string cube_lazer_model_file_path = "Data/Model/MV1/CubeShot.mv1";
-	const std::string cube_lazer_model_file_path = "Data/Model/MV1/Rock.mv1";
+	const std::string cube_lazer_model_file_path = "Data/Model/MV1/CubeShot.mv1";
 	const std::string normal_lazer_model_file_path = "Data/Model/MV1/NormalLazer.mv1";
 }
 

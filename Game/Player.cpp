@@ -41,7 +41,7 @@ namespace
 	constexpr int ultimate_frames = 120;
 
 	// 残機数
-	constexpr int max_hp = 2;
+	constexpr int max_hp = 1000;
 
 	// 何フレーム前まで位置情報を保存するか
 	constexpr int log_frame = 2;
@@ -403,4 +403,9 @@ int Player::GetModelHandle() const
 VECTOR Player::GetMoveVec() const
 {
 	return moveVec_;
+}
+
+std::shared_ptr<Shield> Player::GetShield() const
+{
+	return pShield_;
 }

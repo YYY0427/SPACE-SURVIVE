@@ -8,13 +8,18 @@ class Model;
 
 class Shield
 {
-//	friend Player;
 public:
 	Shield(Player& player);
 	virtual ~Shield();
 
 	void Update();
 	void Draw();
+
+	VECTOR GetPos() const;
+
+	float GetCollisonRadius() const;
+
+	bool GetIsShield() const;
 
 private:
 	std::shared_ptr<Model> pModel_;

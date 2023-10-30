@@ -16,7 +16,7 @@ NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::
 	pos_ = data.pos;
 	rot_ = { data.rot.x, data.rot.y + 180.0f * DX_PI_F / 180.0f , data.rot.z};
 	pModel_->SetScale(data.scale);
-	lazerFireIntervalTimer_ = 120;
+	lazerFireIntervalTimer_ = 60 * 10;
 	lazerSpeed_ = 200.0f;
 }
 

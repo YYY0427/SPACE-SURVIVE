@@ -19,6 +19,7 @@
 #include "../RoadManager.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Laser/LazerManager.h"
+#include "../Shield.h"
 #include "../common.h"
 
 namespace
@@ -126,6 +127,27 @@ void TestScene::NormalUpdate()
 	// プレイヤーの落下処理
 	PlayerFallProcess();
 
+	// レーザーとシールドの当たり判定
+	for (auto& lazer : pLazerManager_->GetLazeres())
+	{
+		// シールドを出していなかったら判定を行わない
+		if (!pPlayer_->GetShield()->GetIsShield()) continue;
+
+		if (lazer.type != LazerType::NORMAL) continue;
+
+		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(lazer.pLazer->GetModelHandle(), -1, pPlayer_->GetShield()->GetPos(), pPlayer_->GetShield()->GetCollisonRadius());
+
+		// 1つでもポリゴンと当たっていたら
+		if (result.HitNum > 0)
+		{
+			lazer.pLazer->Refrect();
+		}
+
+		// 当たり判定情報の後始末
+		MV1CollResultPolyDimTerminate(result);
+	}
+
+	// レーザーとプレイヤーの当たり判定
 	for (auto& lazer : pLazerManager_->GetLazeres())
 	{
 		// 無敵時間中なら当たらない
@@ -137,35 +159,19 @@ void TestScene::NormalUpdate()
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0)
 		{
+			lazer.pLazer->Delete();
+
 			// Updateをゲームオーバー時のUpdateに変更
 			updateFunc_ = &TestScene::CollisionRockUpdate;
+
+			// 当たり判定情報の後始末
+			MV1CollResultPolyDimTerminate(result);
 			return;
 		}
 
-		//	// 当たり判定情報の後始末
+		// 当たり判定情報の後始末
 		MV1CollResultPolyDimTerminate(result);
 	}
-
-	// 岩とぶつかったらゲームオーバー
-	//for (auto& rocks : pRockManager_->GetRocks())
-	//{
-	//	// 無敵時間中なら当たらない
-	//	if (pPlayer_->IsUltimate()) continue;
-
-	//	// 岩とプレイヤーの当たり判定チェック
-	//	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(rocks->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
-
-	//	// 1つでもポリゴンと当たっていたら
-	//	if (result.HitNum > 0)
-	//	{
-	//		// Updateをゲームオーバー時のUpdateに変更
-	//		updateFunc_ = &TestScene::CollisionRockUpdate;
-	//		return;
-	//	}
-
-	//	// 当たり判定情報の後始末
-	//	MV1CollResultPolyDimTerminate(result);
-	//}
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))

@@ -14,7 +14,8 @@ namespace
 	const std::string model_file_path = "Data/Model/MV1/Shield.mv1";
 	constexpr float model_scale = 100.0f;
 	constexpr float effect_scale = 80.0f;
-	constexpr int max_enerugy_gage = 500;
+	constexpr int max_enerugy_gage = 100000;
+	constexpr float collision_radius = 100.0f;
 }
 
 Shield::Shield(Player& player) :
@@ -93,8 +94,24 @@ void Shield::Update()
 
 void Shield::Draw()
 {
-	if (isInput_ && enerugyGage_ > 0)
+	if (GetIsShield())
 	{
-		pModel_->Draw();
+//		pModel_->Draw();
+//		DrawSphere3D(pos_, collision_radius, 8, 0xff0000, 0xff0000, 0xff0000);
 	}
+}
+
+VECTOR Shield::GetPos() const
+{
+	return pos_;
+}
+
+float Shield::GetCollisonRadius() const
+{
+	return collision_radius;
+}
+
+bool Shield::GetIsShield() const
+{
+	return (enerugyGage_ > 0) && (isInput_);
 }

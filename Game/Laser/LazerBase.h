@@ -24,7 +24,8 @@ public:
 	/// <param name="pos">”­ËêŠ</param>
 	virtual void Fire(const VECTOR pos, const VECTOR vec, const VECTOR rot);
 
-	void Refrect();
+	void Delete();
+	virtual void Refrect(){};
 
 	bool GetIsEnabled() const;
 

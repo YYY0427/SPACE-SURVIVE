@@ -33,7 +33,7 @@ void BossEnemy::Update()
 		VECTOR vec = VSub(pPlayer_->GetPos(), pos_);
 		vec = VNorm(vec);
 		vec = VScale(vec, lazerSpeed_);
-		pLazerManager_->Create(LazerType::CUBE, { pos_.x, pos_.y, pos_.z - 3000.0f }, vec);
+		pLazerManager_->Create(LazerType::CUBE, { pos_.x, pos_.y, pos_.z - 3000.0f }, vec, {0.0f, 0.0f, 0.0f});
 		lazerFireIntervalTimer_.Reset();
 	}
 

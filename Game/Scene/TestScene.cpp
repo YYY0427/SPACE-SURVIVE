@@ -126,14 +126,13 @@ void TestScene::NormalUpdate()
 	// プレイヤーの落下処理
 	PlayerFallProcess();
 
-	// 岩とぶつかったらゲームオーバー
-	for (auto& rocks : pRockManager_->GetRocks())
+	for (auto& lazer : pLazerManager_->GetLazeres())
 	{
 		// 無敵時間中なら当たらない
 		if (pPlayer_->IsUltimate()) continue;
 
-		// 岩とプレイヤーの当たり判定チェック
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(rocks->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
+		// レーザーとプレイヤーの当たり判定
+		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(lazer.pLazer->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
 
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0)
@@ -143,9 +142,30 @@ void TestScene::NormalUpdate()
 			return;
 		}
 
-		// 当たり判定情報の後始末
+		//	// 当たり判定情報の後始末
 		MV1CollResultPolyDimTerminate(result);
 	}
+
+	// 岩とぶつかったらゲームオーバー
+	//for (auto& rocks : pRockManager_->GetRocks())
+	//{
+	//	// 無敵時間中なら当たらない
+	//	if (pPlayer_->IsUltimate()) continue;
+
+	//	// 岩とプレイヤーの当たり判定チェック
+	//	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(rocks->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
+
+	//	// 1つでもポリゴンと当たっていたら
+	//	if (result.HitNum > 0)
+	//	{
+	//		// Updateをゲームオーバー時のUpdateに変更
+	//		updateFunc_ = &TestScene::CollisionRockUpdate;
+	//		return;
+	//	}
+
+	//	// 当たり判定情報の後始末
+	//	MV1CollResultPolyDimTerminate(result);
+	//}
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))

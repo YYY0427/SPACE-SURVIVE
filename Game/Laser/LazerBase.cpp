@@ -5,8 +5,7 @@ LazerBase::LazerBase():
 	vec_({}),
 	rot_({}),
 	scale_({}),
-	isEnabled_(false),
-	modelHandle_(-1)
+	isEnabled_(false)
 {
 }
 
@@ -14,9 +13,11 @@ LazerBase::~LazerBase()
 {
 }
 
-void LazerBase::Fire(const VECTOR pos, const VECTOR vec)
+void LazerBase::Fire(const VECTOR pos, const VECTOR vec,const VECTOR rot)
 {
 	pos_ = pos;
+	firePos_ = pos;
+	rot_ = rot;
 	vec_ = vec;
 	isEnabled_ = true;
 }
@@ -30,3 +31,13 @@ bool LazerBase::GetIsEnabled() const
 {
 	return isEnabled_;
 }
+
+int LazerBase::GetModelHandle() const
+{
+	return pModel_->GetModelHandle();
+}
+
+//int LazerBase::GetModelHandle() const
+//{
+//	return pModel_->GetModelHandle();
+//}

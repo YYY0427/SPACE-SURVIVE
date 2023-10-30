@@ -4,19 +4,25 @@
 #include <memory>
 #include <unordered_map>
 
+struct LazerData
+{
+	std::shared_ptr<LazerBase> pLazer;
+	LazerType type;
+};
+
 class LazerManager
 {
 public:
 	LazerManager();
 	virtual ~LazerManager();
 
-	void Create(LazerType lazerType, const VECTOR pos, const VECTOR vec);
+	void Create(LazerType lazerType, const VECTOR pos, const VECTOR vec, const VECTOR rot);
 
 	void Update();
 	void Draw();
 
-	const std::list<std::unique_ptr<LazerBase>>& GetLazeres() const;
+	std::list<LazerData> GetLazeres() const;
 private:
-	std::list<std::unique_ptr<LazerBase>> pLazeres_;
+	std::list<LazerData> pLazeres_;
 	std::unordered_map<LazerType, int> lazerModelHanldeTable_;
 };

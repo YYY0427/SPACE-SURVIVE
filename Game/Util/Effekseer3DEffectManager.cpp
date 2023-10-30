@@ -54,6 +54,7 @@ void Effekseer3DEffectManager::Init()
 	LoadEffectFile(EffectID::player_dead.c_str());	
 	LoadEffectFile(EffectID::player_shield.c_str());
 	LoadEffectFile(EffectID::player_boost.c_str());
+	LoadEffectFile(EffectID::normal_lazer.c_str());
 }
 
 // çXêV

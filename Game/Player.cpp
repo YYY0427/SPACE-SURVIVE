@@ -177,6 +177,15 @@ void Player::Update(float cameraYaw)
 		}
 	}
 
+	if (InputState::IsPadTrigger(PadLR::LEFT))
+	{
+		pos_.y += 5;
+	}
+	if (InputState::IsPadTrigger(PadLR::RIGHT))
+	{
+		pos_.y -= 5;
+	}
+
 	// スティックが入力されている場合のみ移動
 	if (isInput_)
 	{

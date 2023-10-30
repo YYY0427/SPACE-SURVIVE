@@ -22,20 +22,22 @@ public:
 	/// ÉåÅ[ÉUÅ[Çî≠éÀ
 	/// </summary>
 	/// <param name="pos">î≠éÀèÍèä</param>
-	void Fire(const VECTOR pos, const VECTOR vec);
+	virtual void Fire(const VECTOR pos, const VECTOR vec, const VECTOR rot);
 
 	void Refrect();
 
 	bool GetIsEnabled() const;
 
+	int GetModelHandle() const;
+
 protected:
 	std::unique_ptr<Model> pModel_;
 
 	VECTOR pos_;
+	VECTOR firePos_;
 	VECTOR vec_;
 	VECTOR rot_;
 	VECTOR scale_;
 
-	int modelHandle_;
 	bool isEnabled_;
 };

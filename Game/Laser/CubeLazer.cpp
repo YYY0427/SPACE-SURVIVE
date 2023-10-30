@@ -6,9 +6,11 @@ CubeLazer::CubeLazer(int modelHandle)
 	pModel_ = std::make_unique<Model>(modelHandle);
 
 	// ƒ‚ƒfƒ‹‚ÌŠg‘å—¦‚ğ0.00`0.1‚ÌŠÔ‚Åæ“¾
-	scale_.x = static_cast<float>(GetRand(10)) * 0.01f;
+	/*scale_.x = static_cast<float>(GetRand(10)) * 0.01f;
 	scale_.y = static_cast<float>(GetRand(10)) * 0.01f;
-	scale_.z = static_cast<float>(GetRand(10)) * 0.01f;
+	scale_.z = static_cast<float>(GetRand(10)) * 0.01f;*/
+
+	scale_ = { 100.0f, 100.0f, 100.0f};
 
 	// 1ƒtƒŒ[ƒ€‚É‰ñ“]‚·‚é—Ê‚ğ0“x‚©‚ç`1“x‚ÌŠÔ‚©‚çæ“¾
 	deltaRot_ = 1.0f * (static_cast<float>(GetRand(10)) * 0.1f);

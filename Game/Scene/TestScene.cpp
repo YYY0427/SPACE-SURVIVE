@@ -135,16 +135,32 @@ void TestScene::NormalUpdate()
 
 		if (lazer.type != LazerType::NORMAL) continue;
 
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(lazer.pLazer->GetModelHandle(), -1, pPlayer_->GetShield()->GetPos(), pPlayer_->GetShield()->GetCollisonRadius());
+		VECTOR leftTop = pPlayer_->GetShield()->GetVertex()[0].pos;
+		VECTOR rightTop = pPlayer_->GetShield()->GetVertex()[1].pos;
+		VECTOR leftBottom = pPlayer_->GetShield()->GetVertex()[2].pos;
+		VECTOR rightBottom = pPlayer_->GetShield()->GetVertex()[3].pos;
+
+		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Triangle(lazer.pLazer->GetModelHandle(), -1, leftTop, rightTop, leftBottom);
+		MV1_COLL_RESULT_POLY_DIM result2 = MV1CollCheck_Triangle(lazer.pLazer->GetModelHandle(), -1, rightBottom, leftBottom, rightTop);
 
 		// 1つでもポリゴンと当たっていたら
-		if (result.HitNum > 0)
+		if (result.HitNum > 0 || result2.HitNum > 0)
 		{
 			lazer.pLazer->Refrect();
 		}
 
 		// 当たり判定情報の後始末
 		MV1CollResultPolyDimTerminate(result);
+		MV1CollResultPolyDimTerminate(result2);
+	}
+
+	// レーザーと敵の当たり判定
+	for (auto& lazer : pLazerManager_->GetLazeres())
+	{
+		if (lazer.type != LazerType::NORMAL) continue;
+		if (!lazer.pLazer->GetIsRefrect()) continue;
+
+
 	}
 
 	// レーザーとプレイヤーの当たり判定

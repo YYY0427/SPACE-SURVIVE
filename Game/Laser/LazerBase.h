@@ -31,6 +31,8 @@ public:
 
 	int GetModelHandle() const;
 
+	bool GetIsRefrect() const;
+
 protected:
 	std::unique_ptr<Model> pModel_;
 
@@ -41,4 +43,7 @@ protected:
 	VECTOR scale_;
 
 	bool isEnabled_;
+
+	// ”½ËŒã‚ÌƒŒ[ƒU[‚©
+	bool isRefrect_;
 };

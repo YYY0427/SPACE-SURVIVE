@@ -74,6 +74,8 @@ void NormalLazer::Refrect()
 {
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
+	isRefrect_ = true;
+
 	// レーザーのエフェクトをストップ
 	effectManager.DeleteEffect(lazerEffectHandle_);
 

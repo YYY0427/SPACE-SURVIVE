@@ -1,7 +1,7 @@
 #include "Shield.h"
 #include "Player.h"
 #include "Util/Effekseer3DEffectManager.h"
-#include "Util/Model.h"
+#include "Image3D.h"
 #include "Util/InputState.h"
 #include "Util/Debug.h"
 #include "Util/Geometry.h"
@@ -11,11 +11,9 @@
 
 namespace
 {
-	const std::string model_file_path = "Data/Model/MV1/Shield.mv1";
-	constexpr float model_scale = 100.0f;
+	const std::string model_file_path = "Data/Image/Shield.png";
 	constexpr float effect_scale = 80.0f;
 	constexpr int max_enerugy_gage = 100000;
-	constexpr float collision_radius = 100.0f;
 }
 
 Shield::Shield(Player& player) :
@@ -24,9 +22,10 @@ Shield::Shield(Player& player) :
 	effectHandle_(-1),
 	enerugyGage_(max_enerugy_gage)
 {
-	pModel_ = std::make_shared<Model>(model_file_path);
-	pModel_->SetPos(player_.GetPos());
-	pModel_->SetScale({ model_scale , model_scale , model_scale });
+	pShiled_ = std::make_shared<Image3D>(model_file_path);
+	pShiled_->SetPos(player_.GetPos());
+	pShiled_->SetImgWidth(100.0f);
+	pShiled_->SetImgHeight(100.0f);
 }
 
 Shield::~Shield()
@@ -87,17 +86,16 @@ void Shield::Update()
 	enerugyGage_ = enerugyGageRange.Clamp(enerugyGage_);
 	Debug::Log("エネルギーゲージ", enerugyGage_);
 
-	pModel_->SetPos(pos_);
-	pModel_->SetRot({0.0f, rot, 0.0f});
-	pModel_->Update();
+	pShiled_->SetPos(pos_);
+	pShiled_->SetRot({0.0f, rot + (90.0f * DX_PI_F / 180.0f), 0.0f});
+	pShiled_->Update();
 }
 
 void Shield::Draw()
 {
 	if (GetIsShield())
 	{
-//		pModel_->Draw();
-//		DrawSphere3D(pos_, collision_radius, 8, 0xff0000, 0xff0000, 0xff0000);
+		pShiled_->Draw();
 	}
 }
 
@@ -106,12 +104,12 @@ VECTOR Shield::GetPos() const
 	return pos_;
 }
 
-float Shield::GetCollisonRadius() const
-{
-	return collision_radius;
-}
-
 bool Shield::GetIsShield() const
 {
 	return (enerugyGage_ > 0) && (isInput_);
+}
+
+std::array<VERTEX3D, 6> Shield::GetVertex() const
+{
+	return pShiled_->GetVertex();
 }

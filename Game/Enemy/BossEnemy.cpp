@@ -27,7 +27,7 @@ BossEnemy::~BossEnemy()
 
 void BossEnemy::Update()
 {
-	lazerFireIntervalTimer_.Update(1);
+//	lazerFireIntervalTimer_.Update(1);
 	if (lazerFireIntervalTimer_.IsTimeOut())
 	{
 		VECTOR vec = VSub(pPlayer_->GetPos(), pos_);

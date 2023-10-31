@@ -16,7 +16,9 @@ public:
 	void Update();
 	void Draw();
 
+	void OnDamage(int damage);
 private:
 	std::unordered_map<EnemyType, int> modelHandleTable_;
 	std::list<std::shared_ptr<EnemyBase>> pEnemies_;
+	int hp_;
 };

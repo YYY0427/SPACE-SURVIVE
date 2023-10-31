@@ -1,10 +1,10 @@
 #pragma once
 #include <memory>
 #include <DxLib.h>
-#include "Util/Timer.h"
+#include <array>
 
 class Player;
-class Model;
+class Image3D;
 
 class Shield
 {
@@ -17,12 +17,12 @@ public:
 
 	VECTOR GetPos() const;
 
-	float GetCollisonRadius() const;
-
 	bool GetIsShield() const;
 
+	std::array<VERTEX3D, 6> GetVertex() const;
+
 private:
-	std::shared_ptr<Model> pModel_;
+	std::shared_ptr<Image3D> pShiled_;
 	Player& player_;
 
 	int effectHandle_;

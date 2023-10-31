@@ -251,29 +251,23 @@ bool Player::CollisionRockUpdate()
 		// ダメージ処理
 		OnDamage();
 
-		if (hp_ <= 0)
-		{
-			// ゲームオーバーエフェクトを再生してなかったら再生
-			// 既に再生していたら再生しない
-			if (!isPlayGameOverEffect_)
-			{
-				isPlayGameOverEffect_ = true;
-				Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, 50.0f, 0.5f);
-			}
-			// エフェクトを再生し終えたらtrueを返す
-			if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
-			{
-				// 処理終了
-				return true;
-			}
-		}
-		else
+		// エフェクトを再生し終えたらtrueを返す
+		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
 		{
 			// 初期化
 			isReverseMoveVec_ = false;
 
-			// 処理終了
+			isPlayGameOverEffect_ = false;
+
 			return true;
+		}
+
+		// ゲームオーバーエフェクトを再生してなかったら再生
+		// 既に再生していたら再生しない
+		if (!isPlayGameOverEffect_)
+		{
+			isPlayGameOverEffect_ = true;
+			Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, 50.0f, 0.5f);
 		}
 	}
 	

@@ -16,8 +16,8 @@ NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::
 	pos_ = data.pos;
 	rot_ = { data.rot.x, data.rot.y + 180.0f * DX_PI_F / 180.0f , data.rot.z};
 	pModel_->SetScale(data.scale);
-	lazerFireIntervalTimer_ = 60 * 10;
-	lazerSpeed_ = 200.0f;
+	lazerFireIntervalTimer_ = 60 * 5;
+	lazerSpeed_ = 210.0f;
 }
 
 NormalEnemy::~NormalEnemy()
@@ -54,4 +54,5 @@ void NormalEnemy::Update()
 void NormalEnemy::Draw()
 {
 	pModel_->Draw();
+	DrawSphere3D(MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos), 100.0f, 8, 0xff0000, 0xff0000, 0xff0000);
 }

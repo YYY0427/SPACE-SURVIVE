@@ -201,29 +201,41 @@ void TestScene::CollisionRockUpdate()
 	// フェードアウトが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
-		manager_.ChangeScene(new DebugScene(manager_));
-		return;
-	}
-
-	// カメラの更新
-	pCamera_->Update(pPlayer_->GetPos());
-
-	if (pPlayer_->CollisionRockUpdate() && !IsFadeing())
-	{
-		// プレイヤーが生きているか
 		if (pPlayer_->IsLive())
 		{
+			StartFadeIn();
+
 			// Updateを通常時のUpdateに変更
 			updateFunc_ = &TestScene::NormalUpdate;
 			return;
 		}
 		else
 		{
-			// ゲームオーバー
+			manager_.ChangeScene(new DebugScene(manager_));
+			return;
+		}
+	}
+
+	if (!IsFadeing())
+	{
+		bool isEnd = pPlayer_->CollisionRockUpdate();
+
+		if (isEnd)
+		{
 			// フェードアウトの開始
 			StartFadeOut(255);
 		}
 	}
+
+	// カメラの更新
+	pCamera_->Update(pPlayer_->GetPos());
+
+	pSkyDome_->Update(pPlayer_->GetPos());
+	pRoadManager_->Update(pPlayer_->GetPos());
+	pLazerManager_->Update();
+
+	// 道の無限スクロール処理
+	RoadInfiniteScroll();
 
 	// フェードの更新
 	UpdateFade();

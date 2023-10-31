@@ -1,5 +1,6 @@
 #pragma once
 #include "LazerBase.h"
+#include "../Util/Timer.h"
 
 class NormalLazer : public LazerBase
 {
@@ -15,5 +16,8 @@ public:
 
 private:
 	int lazerEffectHandle_;
+
+	// レーザーの当たり判定モデルとエフェクトの発射フレームの差を測るタイマー
+	Timer collisionAndEffectDifferenceTimer_;
 };
 

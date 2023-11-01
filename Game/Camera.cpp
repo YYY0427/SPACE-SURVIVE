@@ -106,6 +106,26 @@ void Camera::Update(VECTOR playerPos)
 	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
 	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
 
+	/*VECTOR toPlayerVec = VSub(playerPos, cameraPos_);
+	toPlayerVec.y = 0.0f;
+
+	if (VSize(toPlayerVec) > 500.0f)
+	{
+		toPlayerVec = VNorm(toPlayerVec);
+		toPlayerVec = VScale(toPlayerVec, 10.0f);
+		cameraPos_ = VAdd(cameraPos_, toPlayerVec);
+
+		cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
+	}*/
+
+	//static bool isA = false;
+	//if (!isA)
+	//{
+	//	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
+	//	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
+	//	isA = true;
+	//}
+
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
 

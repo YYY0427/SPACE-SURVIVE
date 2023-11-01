@@ -11,7 +11,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void Fire(const VECTOR pos, const VECTOR vec, const VECTOR rot) override;
+	void Fire(const VECTOR pos, const VECTOR vec) override;
 	void Refrect() override;
 
 private:

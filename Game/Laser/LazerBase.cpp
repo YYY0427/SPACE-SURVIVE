@@ -15,11 +15,10 @@ LazerBase::~LazerBase()
 {
 }
 
-void LazerBase::Fire(const VECTOR pos, const VECTOR vec,const VECTOR rot)
+void LazerBase::Fire(const VECTOR pos, const VECTOR vec)
 {
 	pos_ = pos;
 	firePos_ = pos;
-	rot_ = rot;
 	vec_ = vec;
 	isEnabled_ = true;
 }

@@ -29,7 +29,7 @@ LazerManager::~LazerManager()
 	}
 }
 
-void LazerManager::Create(LazerType lazerType, const VECTOR pos, const VECTOR vec, const VECTOR rot)
+void LazerManager::Create(LazerType lazerType, const VECTOR pos, const VECTOR vec)
 {
 	LazerData data;
 	data.type = lazerType;
@@ -48,7 +48,7 @@ void LazerManager::Create(LazerType lazerType, const VECTOR pos, const VECTOR ve
 		assert(0);
 	}
 	pLazeres_.push_back(data);
-	pLazeres_.back().pLazer->Fire(pos, vec, rot);
+	pLazeres_.back().pLazer->Fire(pos, vec);
 }
 
 void LazerManager::Update()

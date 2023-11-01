@@ -183,6 +183,9 @@
     <ClCompile Include="Laser\NormalLazer.cpp">
       <Filter>ソース ファイル\Lazer</Filter>
     </ClCompile>
+    <ClCompile Include="MathUtil.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="Laser\NormalLazer.h">
       <Filter>ヘッダー ファイル\Lazer</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtil.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

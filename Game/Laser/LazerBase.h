@@ -22,7 +22,7 @@ public:
 	/// ƒŒ[ƒU[‚ğ”­Ë
 	/// </summary>
 	/// <param name="pos">”­ËêŠ</param>
-	virtual void Fire(const VECTOR pos, const VECTOR vec, const VECTOR rot);
+	virtual void Fire(const VECTOR pos, const VECTOR vec);
 
 	void Delete();
 	virtual void Refrect(){};

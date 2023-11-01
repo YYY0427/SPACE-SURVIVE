@@ -157,18 +157,22 @@ void TestScene::NormalUpdate()
 	}
 
 	// レーザーと敵の当たり判定
-	for (auto& lazer : pLazerManager_->GetLazeres())
+	for (auto& laser : pLazerManager_->GetLazeres())
 	{
-		if (lazer.type != LazerType::NORMAL) continue;
-		if (!lazer.pLazer->GetIsRefrect()) continue;
+		// 反射可能なレーザー以外の場合は判定を行わない
+		if (laser.type != LazerType::NORMAL) continue;
+
+		// 反射前のレーザーとしか当たり判定を行わない
+		if (!laser.pLazer->GetIsRefrect()) continue;
 
 		for (auto& enemy : pEnemyManager_->GetEnemies())
 		{
-			MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(lazer.pLazer->GetModelHandle(), -1, enemy->GetPos(), enemy->GetCollisionRadius());
+			MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(laser.pLazer->GetModelHandle(), -1, enemy->GetPos(), enemy->GetCollisionRadius());
 
 			if (result.HitNum > 0)
 			{
 				pEnemyManager_->OnDamage(10);
+				laser.pLazer->Delete();
 			}
 
 			// 当たり判定情報の後始末

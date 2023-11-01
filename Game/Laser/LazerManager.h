@@ -16,7 +16,7 @@ public:
 	LazerManager();
 	virtual ~LazerManager();
 
-	void Create(LazerType lazerType, const VECTOR pos, const VECTOR vec, const VECTOR rot);
+	void Create(LazerType lazerType, const VECTOR pos, const VECTOR vec);
 
 	void Update();
 	void Draw();

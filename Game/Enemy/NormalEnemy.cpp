@@ -38,11 +38,8 @@ void NormalEnemy::Update()
 		VECTOR tempVec = VSub(pPlayer_->GetPos(), firePos);
 		VECTOR toPlayerVec = VNorm(tempVec);
 		toPlayerVec = VScale(toPlayerVec, lazerSpeed_);
-		
-		float angleY = atan2(tempVec.x, tempVec.z);
-		float angleX = atan2(tempVec.y, tempVec.z);
 
-		pLazerManager_->Create(LazerType::NORMAL, firePos, toPlayerVec, { -angleX + DX_PI_F, angleY + DX_PI_F, 0.0f });
+		pLazerManager_->Create(LazerType::NORMAL, firePos, toPlayerVec);
 		lazerFireIntervalTimer_.Reset();
 	}
 
@@ -56,6 +53,9 @@ void NormalEnemy::Update()
 void NormalEnemy::Draw()
 {
 	pModel_->Draw();
+
+#ifdef _DEBUG
 	DrawSphere3D(MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos), 100.0f, 8, 0xff0000, 0xff0000, 0xff0000);
 	DrawSphere3D(pos_, collisionRadius_, 8, 0xff0000, 0xff0000, 0xff0000);
+#endif
 }

@@ -83,6 +83,7 @@ Player::Player(UnityGameObject data) :
 	// アニメーションと当たり判定の更新
 	pModel_->Update();
 
+	// ブーストエフェクトの再生
 	Effekseer3DEffectManager::GetInstance().PlayEffectLoopAndFollow(boostEffectHandle_, EffectID::player_boost, &pos_, boostEffectScale_, boostEffectSpeed_, { rot_.x, 0.0f, 0.0f });
 }
 
@@ -177,6 +178,7 @@ void Player::Update(float cameraYaw)
 		}
 	}
 
+#ifdef _DEBUG
 	if (InputState::IsPadTrigger(PadLR::LEFT))
 	{
 		pos_.y += 5;
@@ -185,6 +187,7 @@ void Player::Update(float cameraYaw)
 	{
 		pos_.y -= 5;
 	}
+#endif
 
 	// スティックが入力されている場合のみ移動
 	if (isInput_)

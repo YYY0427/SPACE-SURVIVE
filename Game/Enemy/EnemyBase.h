@@ -24,6 +24,9 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
+	VECTOR GetPos() const;
+	float GetCollisionRadius() const;
+
 protected:
 	std::unique_ptr<Model> pModel_;
 	std::shared_ptr<LazerManager> pLazerManager_;
@@ -32,4 +35,5 @@ protected:
 	VECTOR rot_;
 	Timer lazerFireIntervalTimer_;
 	float lazerSpeed_;
+	float collisionRadius_;
 };

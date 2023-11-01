@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "BossEnemy.h"
 #include "NormalEnemy.h"
+#include "../Util/Debug.h"
 #include <string>
 #include <DxLib.h>
 #include <cassert>
@@ -53,6 +54,12 @@ void EnemyManager::Draw()
 	{
 		enemy->Draw();
 	}
+	Debug::Log("“G‚ÌHP", hp_);
+}
+
+std::list<std::shared_ptr<EnemyBase>> EnemyManager::GetEnemies() const
+{
+	return pEnemies_;
 }
 
 void EnemyManager::OnDamage(int damage)

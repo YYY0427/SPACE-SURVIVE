@@ -65,8 +65,6 @@ TestScene::~TestScene()
 // メンバ関数ポインタの更新
 void TestScene::Update()
 {
-//	UpdateLoadAsync();
-
 	(this->*updateFunc_)();
 }
 
@@ -133,7 +131,11 @@ void TestScene::NormalUpdate()
 		// シールドを出していなかったら判定を行わない
 		if (!pPlayer_->GetShield()->GetIsShield()) continue;
 
+		// 反射可能なレーザー以外の場合は判定を行わない
 		if (lazer.type != LazerType::NORMAL) continue;
+		
+		// 反射後のレーザーの場合は当たり判定を行わない
+		if (lazer.pLazer->GetIsRefrect()) continue;
 
 		VECTOR leftTop = pPlayer_->GetShield()->GetVertex()[0].pos;
 		VECTOR rightTop = pPlayer_->GetShield()->GetVertex()[1].pos;
@@ -160,22 +162,36 @@ void TestScene::NormalUpdate()
 		if (lazer.type != LazerType::NORMAL) continue;
 		if (!lazer.pLazer->GetIsRefrect()) continue;
 
+		for (auto& enemy : pEnemyManager_->GetEnemies())
+		{
+			MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(lazer.pLazer->GetModelHandle(), -1, enemy->GetPos(), enemy->GetCollisionRadius());
 
+			if (result.HitNum > 0)
+			{
+				pEnemyManager_->OnDamage(10);
+			}
+
+			// 当たり判定情報の後始末
+			MV1CollResultPolyDimTerminate(result);
+		}
 	}
 
 	// レーザーとプレイヤーの当たり判定
-	for (auto& lazer : pLazerManager_->GetLazeres())
+	for (auto& laser : pLazerManager_->GetLazeres())
 	{
 		// 無敵時間中なら当たらない
 		if (pPlayer_->IsUltimate()) continue;
 
+		// 反射後のレーザーの場合プレイヤーと当たり判定を行わない
+		if (laser.pLazer->GetIsRefrect()) continue;
+
 		// レーザーとプレイヤーの当たり判定
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(lazer.pLazer->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
+		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(laser.pLazer->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());
 
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0)
 		{
-			lazer.pLazer->Delete();
+			laser.pLazer->Delete();
 
 			// Updateをゲームオーバー時のUpdateに変更
 			updateFunc_ = &TestScene::CollisionRockUpdate;

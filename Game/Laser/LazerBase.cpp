@@ -18,7 +18,6 @@ LazerBase::~LazerBase()
 void LazerBase::Fire(const VECTOR pos, const VECTOR vec)
 {
 	pos_ = pos;
-	firePos_ = pos;
 	vec_ = vec;
 	isEnabled_ = true;
 }

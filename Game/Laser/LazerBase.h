@@ -25,7 +25,11 @@ public:
 	virtual void Fire(const VECTOR pos, const VECTOR vec);
 
 	void Delete();
-	virtual void Refrect(){};
+	virtual void Refrect(VECTOR pos){};
+
+	// ÉJÉÅÉâì‡Ç…ë∂ç›Ç∑ÇÈÇ©
+	// ë∂ç›ÇµÇ»Ç©Ç¡ÇΩÇÁçÌèúÇ∑ÇÈ
+	virtual void CheckInCamera() = 0;
 
 	bool GetIsEnabled() const;
 
@@ -37,7 +41,6 @@ protected:
 	std::unique_ptr<Model> pModel_;
 
 	VECTOR pos_;
-	VECTOR firePos_;
 	VECTOR vec_;
 	VECTOR rot_;
 	VECTOR scale_;

@@ -38,3 +38,11 @@ void CubeLazer::Draw()
 {
 	pModel_->Draw();
 }
+
+void CubeLazer::CheckInCamera()
+{
+	if (CheckCameraViewClip(pos_))
+	{
+		isEnabled_ = false;
+	}
+}

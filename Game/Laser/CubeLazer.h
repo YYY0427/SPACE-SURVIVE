@@ -9,6 +9,7 @@ public:
 
 	void Update() override;
 	void Draw() override;
+	void CheckInCamera() override;
 
 private:
 	float deltaRot_;

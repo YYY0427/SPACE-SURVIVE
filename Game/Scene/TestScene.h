@@ -71,9 +71,16 @@ private:
 	void CollisionRoadAndPlayer(std::shared_ptr<Road> pRoad, HITRESULT_LINE& result, HITRESULT_LINE& result2);
 
 	void CollisionAllRoadAndPlayer(HITRESULT_LINE& result, HITRESULT_LINE& result2);
-
+private:
+	enum class SceneItem
+	{
+		PAUSE,
+		RESULT, 
+		TITLE
+	};
 private:
 	int nextRoad_;
+	SceneItem item_;
 
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成

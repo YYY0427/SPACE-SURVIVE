@@ -14,7 +14,8 @@ namespace
 }
 
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject bossEnemyData, std::vector<UnityGameObject> normalEnemyData) :
-	hp_(max_hp)
+	hp_(max_hp),
+	isRepel_(false)
 {
 	modelHandleTable_[EnemyType::NOMAL] = MV1LoadModel(normal_enemy_model_file_path.c_str());
 	modelHandleTable_[EnemyType::BOSS] = MV1LoadModel(boss_enemy_model_file_path.c_str());
@@ -57,7 +58,7 @@ void EnemyManager::Draw()
 	Debug::Log("“G‚ÌHP", hp_);
 }
 
-std::list<std::shared_ptr<EnemyBase>> EnemyManager::GetEnemies() const
+const std::list<std::shared_ptr<EnemyBase>>& EnemyManager::GetEnemies() const
 {
 	return pEnemies_;
 }
@@ -65,4 +66,25 @@ std::list<std::shared_ptr<EnemyBase>> EnemyManager::GetEnemies() const
 void EnemyManager::OnDamage(int damage)
 {
 	hp_ -= damage;
+
+	if (hp_ <= 0)
+	{
+		int count = 0;
+		for (auto& enemy : pEnemies_)
+		{
+			if (enemy->Run())
+			{
+				count++;
+			}
+		}
+		if (count == static_cast<int>(pEnemies_.size()))
+		{
+			isRepel_ = true;
+		}
+	}
+}
+
+bool EnemyManager::GetIsRepel() const
+{
+	return isRepel_;
 }

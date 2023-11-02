@@ -27,13 +27,24 @@ public:
 	VECTOR GetPos() const;
 	float GetCollisionRadius() const;
 
+	/// <summary>
+	/// サインカーブ
+	/// </summary>
+	/// <param name="speed">サインカーブする速度</param>
+	/// <param name="swingWidth">振れ幅</param>
+	void SinWave(const float speed, const float swingWidth);
+
+	bool Run();
+
 protected:
 	std::unique_ptr<Model> pModel_;
 	std::shared_ptr<LazerManager> pLazerManager_;
 	std::shared_ptr<Player> pPlayer_;
 	VECTOR pos_;
 	VECTOR rot_;
+	VECTOR runVec_;
 	Timer lazerFireIntervalTimer_;
+	int sinWaveTimer_;
 	float lazerSpeed_;
 	float collisionRadius_;
 };

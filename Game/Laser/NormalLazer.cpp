@@ -34,20 +34,13 @@ NormalLazer::~NormalLazer()
 
 void NormalLazer::Update()
 {
-
 	collisionAndEffectDifferenceTimer_.Update(1);
-
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
 	{
 		pos_ = VAdd(pos_, vec_);
 		pModel_->SetPos(pos_);
 		pModel_->Update();
 	}
-	
-	/*if (VSize(VSub(firePos_, pos_)) > 2000.0f)
-	{
-		isEnabled_ = false;
-	}*/
 }
 
 void NormalLazer::Draw()
@@ -59,7 +52,6 @@ void NormalLazer::Draw()
 
 void NormalLazer::Fire(const VECTOR pos, const VECTOR vec)
 {
-	firePos_ = pos;
 	pos_ = pos;
 	vec_ = vec;
 	isEnabled_ = true;
@@ -77,7 +69,7 @@ void NormalLazer::Fire(const VECTOR pos, const VECTOR vec)
 	effectManager.PlayEffect(lazerEffectHandle_, EffectID::normal_lazer, pos_, effect_scale, 1.0f, rot_);
 }
 
-void NormalLazer::Refrect()
+void NormalLazer::Refrect(VECTOR pos)
 {
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
@@ -90,5 +82,13 @@ void NormalLazer::Refrect()
 	vec_ = VScale(vec_, -1);
 
 	// レーザーのエフェクトの再生
-	effectManager.PlayEffect(lazerEffectHandle_, EffectID::refrect_laser, pos_, effect_scale, 1.0f, {rot_.x, rot_.y + DX_PI_F, 0.0f});
+	effectManager.PlayEffect(lazerEffectHandle_, EffectID::refrect_laser, pos, effect_scale, 1.0f, {rot_.x, rot_.y + DX_PI_F, 0.0f});
+}
+
+void NormalLazer::CheckInCamera()
+{
+	if (CheckCameraViewClip(pos_))
+	{
+//		isEnabled_ = false;
+	}
 }

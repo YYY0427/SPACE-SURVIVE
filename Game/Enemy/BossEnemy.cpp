@@ -27,7 +27,7 @@ BossEnemy::~BossEnemy()
 
 void BossEnemy::Update()
 {
-//	lazerFireIntervalTimer_.Update(1);
+	lazerFireIntervalTimer_.Update(1);
 	if (lazerFireIntervalTimer_.IsTimeOut())
 	{
 		VECTOR vec = VSub(pPlayer_->GetPos(), pos_);
@@ -38,6 +38,8 @@ void BossEnemy::Update()
 	}
 
 	pos_.z += pPlayer_->GetMoveVec().z;
+
+	SinWave(10, 100);
 
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);

@@ -45,6 +45,10 @@ void NormalEnemy::Update()
 
 	pos_.z += pPlayer_->GetMoveVec().z;
 
+	// サインカーブ移動
+	// 浮いているように見せるため
+	SinWave(100, 10);
+
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update();

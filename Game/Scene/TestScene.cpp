@@ -1,5 +1,6 @@
 #include "TestScene.h"
 #include "SceneManager.h"
+#include "TitleScene.h"
 #include "DebugScene.h"
 #include "PauseScene.h"
 #include "../Util/DrawFunctions.h"
@@ -148,7 +149,12 @@ void TestScene::NormalUpdate()
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0 || result2.HitNum > 0)
 		{
-			lazer.pLazer->Refrect();
+			VECTOR firePos{};
+			result.HitNum > 0 ? 
+				firePos = result.Dim->HitPosition : 
+				firePos = result2.Dim->HitPosition;
+
+			lazer.pLazer->Refrect(pPlayer_->GetShield()->GetPos());
 		}
 
 		// 当たり判定情報の後始末
@@ -195,8 +201,6 @@ void TestScene::NormalUpdate()
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0)
 		{
-			laser.pLazer->Delete();
-
 			// Updateをゲームオーバー時のUpdateに変更
 			updateFunc_ = &TestScene::CollisionRockUpdate;
 
@@ -214,16 +218,37 @@ void TestScene::NormalUpdate()
 	{
 		// フェードアウト開始
 		StartFadeOut(200, 64);
+		item_ = SceneItem::PAUSE;
+	}
+
+	// 
+	if (pEnemyManager_->GetIsRepel())
+	{
+		// フェードアウト開始
+		StartFadeOut(200, 64);
+		item_ = SceneItem::TITLE;
 	}
 
 	// フェードが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
 	{
+		switch (item_)
+		{
+			// ポーズシーンに遷移
+		case SceneItem::PAUSE:
+			manager_.PushScene(new PauseScene(manager_));
+			break;
+
+		case SceneItem::TITLE:
+#ifdef _DEBUG
+			manager_.ChangeScene(new DebugScene(manager_));
+#else
+			manager_.ChangeScene(new TitleScene(manager_));
+#endif
+			return;
+		}
 		// PushSceneするのでシーンが残るためフェードインの設定
 		StartFadeIn();
-
-		// ポーズシーンに遷移
-		manager_.PushScene(new PauseScene(manager_));
 		return;
 	}
 

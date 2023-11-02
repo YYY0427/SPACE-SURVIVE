@@ -4,7 +4,6 @@
 #include "Image3D.h"
 #include "Util/InputState.h"
 #include "Util/Debug.h"
-#include "Util/Geometry.h"
 #include "Util/Range.h"
 #include "Util/Timer.h"
 #include <string>

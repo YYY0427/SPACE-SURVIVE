@@ -189,7 +189,6 @@
     <ClCompile Include="Util\StringManager.cpp" />
     <ClCompile Include="Util\SaveData.cpp" />
     <ClCompile Include="Util\DrawFunctions.cpp" />
-    <ClCompile Include="Util\Geometry.cpp" />
     <ClCompile Include="Util\InputState.cpp" />
     <ClCompile Include="Util\Model.cpp" />
     <ClCompile Include="main.cpp" />
@@ -201,6 +200,7 @@
     <ClCompile Include="Util\SoundManager.cpp" />
     <ClCompile Include="Scene\OptionScene.cpp" />
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -239,7 +239,6 @@
     <ClInclude Include="Util\SaveData.h" />
     <ClInclude Include="Util\DrawFunctions.h" />
     <ClInclude Include="common.h" />
-    <ClInclude Include="Util\Geometry.h" />
     <ClInclude Include="Util\InputState.h" />
     <ClInclude Include="Util\Model.h" />
     <ClInclude Include="Scene\PauseScene.h" />
@@ -250,6 +249,7 @@
     <ClInclude Include="Util\SoundManager.h" />
     <ClInclude Include="Scene\OptionScene.h" />
     <ClInclude Include="Util\Effekseer3DEffectManager.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UFOGame.rc" />

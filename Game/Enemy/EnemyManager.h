@@ -19,6 +19,7 @@ public:
 	const std::list<std::shared_ptr<EnemyBase>>& GetEnemies() const;
 	void OnDamage(int damage);
 	bool GetIsRepel() const;
+	void Run();
 private:
 	std::unordered_map<EnemyType, int> modelHandleTable_;
 	std::list<std::shared_ptr<EnemyBase>> pEnemies_;

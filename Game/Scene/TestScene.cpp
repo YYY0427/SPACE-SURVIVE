@@ -225,7 +225,7 @@ void TestScene::NormalUpdate()
 	if (pEnemyManager_->GetIsRepel())
 	{
 		// フェードアウト開始
-		StartFadeOut(200, 64);
+		StartFadeOut(255, 10);
 		item_ = SceneItem::TITLE;
 	}
 

@@ -10,7 +10,7 @@ namespace
 {
 	const std::string normal_enemy_model_file_path = "Data/Model/MV1/SpaceBattleship.mv1";
 	const std::string boss_enemy_model_file_path = "Data/Model/MV1/SpaceBattleship.mv1";
-	constexpr int max_hp = 100;
+	constexpr int max_hp = 10;
 }
 
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject bossEnemyData, std::vector<UnityGameObject> normalEnemyData) :
@@ -47,6 +47,7 @@ void EnemyManager::Update()
 	{
 		enemy->Update();
 	}
+	Run();
 }
 
 void EnemyManager::Draw()
@@ -66,7 +67,15 @@ const std::list<std::shared_ptr<EnemyBase>>& EnemyManager::GetEnemies() const
 void EnemyManager::OnDamage(int damage)
 {
 	hp_ -= damage;
+}
 
+bool EnemyManager::GetIsRepel() const
+{
+	return isRepel_;
+}
+
+void EnemyManager::Run()
+{
 	if (hp_ <= 0)
 	{
 		int count = 0;
@@ -82,9 +91,4 @@ void EnemyManager::OnDamage(int damage)
 			isRepel_ = true;
 		}
 	}
-}
-
-bool EnemyManager::GetIsRepel() const
-{
-	return isRepel_;
 }

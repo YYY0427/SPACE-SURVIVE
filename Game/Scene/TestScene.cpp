@@ -110,6 +110,30 @@ void TestScene::Draw()
 // 通常の更新
 void TestScene::NormalUpdate()
 {
+	// フェードが終わり次第シーン遷移
+	if (IsStartFadeOutAfterFadingOut())
+	{
+		switch (item_)
+		{
+			// ポーズシーンに遷移
+		case SceneItem::PAUSE:
+			manager_.PushScene(new PauseScene(manager_));
+			break;
+
+		case SceneItem::TITLE:
+#ifdef _DEBUG
+			manager_.ChangeScene(new DebugScene(manager_));
+#else
+			manager_.ChangeScene(new TitleScene(manager_));
+#endif
+			return;
+		}
+		// PushSceneするのでシーンが残るためフェードインの設定
+		StartFadeIn();
+		return;
+	}
+
+
 	// 各クラスの更新
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());
@@ -227,29 +251,6 @@ void TestScene::NormalUpdate()
 		// フェードアウト開始
 		StartFadeOut(255, 10);
 		item_ = SceneItem::TITLE;
-	}
-
-	// フェードが終わり次第シーン遷移
-	if (IsStartFadeOutAfterFadingOut())
-	{
-		switch (item_)
-		{
-			// ポーズシーンに遷移
-		case SceneItem::PAUSE:
-			manager_.PushScene(new PauseScene(manager_));
-			break;
-
-		case SceneItem::TITLE:
-#ifdef _DEBUG
-			manager_.ChangeScene(new DebugScene(manager_));
-#else
-			manager_.ChangeScene(new TitleScene(manager_));
-#endif
-			return;
-		}
-		// PushSceneするのでシーンが残るためフェードインの設定
-		StartFadeIn();
-		return;
 	}
 
 	// フェードの更新

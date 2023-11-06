@@ -34,7 +34,7 @@ public:
 	/// <param name="swingWidth">êUÇÍïù</param>
 	void SinWave(const float speed, const float swingWidth);
 
-	bool Run();
+	virtual bool Run();
 
 protected:
 	std::unique_ptr<Model> pModel_;
@@ -42,7 +42,6 @@ protected:
 	std::shared_ptr<Player> pPlayer_;
 	VECTOR pos_;
 	VECTOR rot_;
-	VECTOR runVec_;
 	Timer lazerFireIntervalTimer_;
 	int sinWaveTimer_;
 	float lazerSpeed_;

@@ -47,7 +47,7 @@ void EnemyManager::Update()
 	{
 		enemy->Update();
 	}
-	Run();
+	CheckRunAllEnemy();
 }
 
 void EnemyManager::Draw()
@@ -74,7 +74,7 @@ bool EnemyManager::GetIsRepel() const
 	return isRepel_;
 }
 
-void EnemyManager::Run()
+void EnemyManager::CheckRunAllEnemy()
 {
 	if (hp_ <= 0)
 	{

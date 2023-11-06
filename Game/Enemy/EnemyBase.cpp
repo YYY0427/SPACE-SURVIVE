@@ -10,8 +10,7 @@ EnemyBase::EnemyBase() :
 	lazerFireIntervalTimer_({}),
 	lazerSpeed_(0.0f),
 	collisionRadius_(0.0f),
-	sinWaveTimer_(0),
-	runVec_({})
+	sinWaveTimer_(0)
 {
 }
 
@@ -51,22 +50,16 @@ bool EnemyBase::Run()
 		num.x_ = (std::min)(right, left);
 		num.y_ = (std::min)(up, down);
 
-		if (num.x_ > num.y_)
-		{
-			num.x_ = 0.0f;
-		}
-		else
-		{
-			num.y_ = 0.0f;
-		}
+		(num.x_ > num.y_) ? (num.x_ = 0.0f) : (num.y_ = 0.0f);
+
 		num.Normalize();
 
 		num *= 10.0f;
 
-		runVec_ = {num.x_, num.y_, 0.0f};
+		VECTOR runVec = { num.x_, num.y_, 0.0f };
 
 		// ‰æ–ÊŠO‚ÉˆÚ“®‚·‚éˆ—
-		pos_ = VAdd(pos_, runVec_);
+		pos_ = VAdd(pos_, runVec);
 	}
 	else
 	{

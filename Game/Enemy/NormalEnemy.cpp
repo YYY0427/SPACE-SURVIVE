@@ -2,6 +2,8 @@
 #include "../Util/Model.h"
 #include "../Laser/LazerManager.h"
 #include "../Player.h"
+#include "../common.h"
+#include "../Vector2.h"
 
 namespace
 {
@@ -62,4 +64,31 @@ void NormalEnemy::Draw()
 	DrawSphere3D(MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos), 100.0f, 8, 0xff0000, 0xff0000, 0xff0000);
 	DrawSphere3D(pos_, collisionRadius_, 8, 0xff0000, 0xff0000, 0xff0000);
 #endif
+}
+
+bool NormalEnemy::Run()
+{
+	// ƒJƒƒ‰‚Ì‹–ì“à‚É‚¢‚½‚ç
+	if (!CheckCameraViewClip(pos_))
+	{
+		VECTOR screenPos = ConvWorldPosToScreenPos(pos_);
+
+		float right = fabs(common::screen_width - screenPos.x);
+		float left = fabs(0 - screenPos.x);
+
+		Vector2 num;
+		num.x_ = (std::min)(right, left);
+
+		num.Normalize();
+
+		num *= 10.0f;
+
+		// ‰æ–ÊŠO‚ÉˆÚ“®‚·‚éˆ—
+		pos_.x += num.x_;
+	}
+	else
+	{
+		return true;
+	}
+	return false;
 }

@@ -20,21 +20,19 @@ public:
 	/// 更新
 	/// </summary>
 	/// <param name="playerPos">プレイヤーの位置座標</param>
-	void Update(VECTOR playerPos);
+	void Update(VECTOR playerPos, VECTOR playerVec);
 
 	// 描画
 	void Draw();
 
 	// カメラの回転情報の取得
-	float GetCameraYaw();	// Y軸
-
-	float GetCameraFar() const;
+	float GetCameraYaw() const;// Y軸
 
 	// カメラの位置の取得
-	VECTOR GetPos();
+	VECTOR GetPos() const;
 
 	// カメラの注視点の取得
-	VECTOR GetTarget();
+	VECTOR GetTarget() const;
 
 private:
 	// カメラの位置

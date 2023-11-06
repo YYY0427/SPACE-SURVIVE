@@ -36,7 +36,7 @@ Camera::~Camera()
 }
 
 // 更新
-void Camera::Update(VECTOR playerPos)
+void Camera::Update(VECTOR playerPos, VECTOR playerVec)
 {
 	// 右スティックの入力情報の取得
 	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
@@ -101,30 +101,28 @@ void Camera::Update(VECTOR playerPos)
 	MATRIX cameraMtxTarget = MMult(cameraRotMtx, playerTransMtx);
 
 	// カメラの位置行列とカメラの初期位置からカメラの位置の作成
-	cameraPos_ = VTransform(camera_init_pos, cameraMtxPos);
+//	cameraPos_ = VTransform(camera_init_pos, cameraMtxPos);
 
 	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
-	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
+//	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
 
-	/*VECTOR toPlayerVec = VSub(playerPos, cameraPos_);
+	VECTOR toPlayerVec = VSub(playerPos, cameraPos_);
 	toPlayerVec.y = 0.0f;
 
-	if (VSize(toPlayerVec) > 500.0f)
+	if (VSize(toPlayerVec) > 500.0f && 
+		InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP))
 	{
-		toPlayerVec = VNorm(toPlayerVec);
-		toPlayerVec = VScale(toPlayerVec, 10.0f);
-		cameraPos_ = VAdd(cameraPos_, toPlayerVec);
+		playerVec.x = 0.0f;
+		cameraTarget_ = VAdd(cameraTarget_, playerVec);
+	}
 
+	static bool isA = false;
+	if (!isA)
+	{
+		// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
 		cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
-	}*/
-
-	//static bool isA = false;
-	//if (!isA)
-	//{
-	//	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
-	//	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
-	//	isA = true;
-	//}
+		isA = true;
+	}
 
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
@@ -142,24 +140,19 @@ void Camera::Draw()
 }
 
 // カメラのY軸回転情報の取得
-float Camera::GetCameraYaw()
+float Camera::GetCameraYaw() const 
 {
 	return cameraYaw_;
 }
 
-float Camera::GetCameraFar() const
-{
-	return far_distance;
-}
-
 // カメラの位置の取得
-VECTOR Camera::GetPos()
+VECTOR Camera::GetPos() const 
 {
 	return cameraPos_;
 }
 
 // カメラの注視点の取得
-VECTOR Camera::GetTarget()
+VECTOR Camera::GetTarget() const 
 {
 	return cameraTarget_;
 }

@@ -98,6 +98,7 @@ private:
 	/// <param name="fileName">ロードしたいサウンドファイル名(拡張子なし)</param>
 	/// <param name="extension">ロードしたサウンドの拡張子</param>
 	void LoadSoundFile3D(std::string fileName, std::string ext);
+
 private:
 	// サウンドの種類
 	enum class SoundType
@@ -114,6 +115,7 @@ private:
 		SOUND_TYPE,
 		VOLUM_RATE,
 	};
+
 private:
 	// サウンドのデータ
 	struct SoundData
@@ -123,6 +125,7 @@ private:
 		float volumeRate;		// ボリューム調整
 		int handle;				// ハンドル
 	};
+
 private:
 	// ロードしたサウンドのファイル名をIDとしたサウンドデータのテーブル
 	std::unordered_map<std::string, SoundData> soundDataTable_;

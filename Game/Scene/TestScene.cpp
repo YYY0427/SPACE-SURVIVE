@@ -137,7 +137,7 @@ void TestScene::NormalUpdate()
 	// 各クラスの更新
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());
-	pCamera_->Update(pPlayer_->GetPos());
+	pCamera_->Update(pPlayer_->GetPos(), pPlayer_->GetMoveVec());
 	pLazerManager_->Update();
 	pPlayer_->Update(pCamera_->GetCameraYaw());
 	pEnemyManager_->Update();
@@ -290,7 +290,7 @@ void TestScene::CollisionRockUpdate()
 	}
 
 	// カメラの更新
-	pCamera_->Update(pPlayer_->GetPos());
+	pCamera_->Update(pPlayer_->GetPos(), pPlayer_->GetMoveVec());
 
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());

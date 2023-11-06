@@ -48,7 +48,7 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		assert(result != -1);
 
 		// Unityとの座標データを合わせるために100倍
-		data.pos = VScale(data.pos, 100);
+		data.pos = VScale(data.pos, 100.0f);
 
 		// 回転データxyzを読む
 		result = FileRead_read(&data.rot, sizeof(data.rot), dataHandle);

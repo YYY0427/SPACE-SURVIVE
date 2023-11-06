@@ -10,7 +10,8 @@ namespace
 	{
 		"Data/Font/Makinas-4-Flat.otf",
 		"Data/Font/Makinas-4-Square.otf",
-		"Data/Font/azuki.ttf"
+		"Data/Font/azuki.ttf",
+		"Data/Font/Abel-Regular.ttf"
 	};
 }
 

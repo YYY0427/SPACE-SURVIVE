@@ -4,6 +4,8 @@
 #include "Util/DataReaderFromUnity.h"
 #include "Util/Range.h"
 
+class Player;
+
 /// <summary>
 /// カメラの管理クラス
 /// </summary>
@@ -11,7 +13,7 @@ class Camera
 {
 public:
 	// コンストラクタ
-	Camera(UnityGameObject data);
+	Camera(std::shared_ptr<Player> pPlayer, UnityGameObject data);
 
 	// デストラクタ
 	virtual ~Camera();
@@ -20,7 +22,7 @@ public:
 	/// 更新
 	/// </summary>
 	/// <param name="playerPos">プレイヤーの位置座標</param>
-	void Update(VECTOR playerPos, VECTOR playerVec);
+	void Update();
 
 	// 描画
 	void Draw();
@@ -35,6 +37,8 @@ public:
 	VECTOR GetTarget() const;
 
 private:
+	std::shared_ptr<Player> pPlayer_;
+
 	// カメラの位置
 	VECTOR cameraPos_;
 

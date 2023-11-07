@@ -1,12 +1,10 @@
 #include "Camera.h"
+#include "Player.h"
 #include "Util/InputState.h"
 #include "Util/SaveData.h"
 
 namespace
 {
-	// カメラの初期位置
-	constexpr VECTOR camera_init_pos = { 0, 100, -250 };
-
 	// カメラの初期注視点
 	constexpr VECTOR camera_init_target = { 0, 0, 0 };
 
@@ -20,70 +18,17 @@ namespace
 }
 
 // コンストラクタ
-Camera::Camera(UnityGameObject data) :
+Camera::Camera(std::shared_ptr<Player> pPlayer, UnityGameObject data) :
 	cameraPos_(data.pos),
 	cameraTarget_(camera_init_target),
 	cameraYaw_(0.0f),
 	cameraPitch_(0.0f),
 	perspective_(normal_perspective),
-	perspectiveRange_({ normal_perspective, boosting_perspective })
+	perspectiveRange_({ normal_perspective, boosting_perspective }),
+	pPlayer_(pPlayer)
 {
-}
-
-// デストラクタ
-Camera::~Camera()
-{
-}
-
-// 更新
-void Camera::Update(VECTOR playerPos, VECTOR playerVec)
-{
-	// 右スティックの入力情報の取得
-	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
-	int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
-	int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
-	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
-
-	// セーブデータの感度情報の取得
-	int padStickSensX = SaveData::GetInstance().GetSaveData().padStickSensitivityX;
-	int padStickSensY = SaveData::GetInstance().GetSaveData().padStickSensitivityY;
-
-	// セーブデータのリバース情報の取得
-	bool padStickReversX = SaveData::GetInstance().GetSaveData().padStickReverseX;
-	bool padStickReversY = SaveData::GetInstance().GetSaveData().padStickReverseY;
-
-	int x = 1, y = 1;
-	if (padStickReversX)	x *= -1;
-	if (padStickReversY)	y *= -1;
-
-	if (InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP))
-	{
-		perspective_ += 1.5f;
-	}
-	else
-	{
-		perspective_ -= 1.5f;
-	}
-	perspective_ = perspectiveRange_.Clamp(perspective_);
-
-	// 入力情報からカメラを回転
-//	cameraYaw_ += (-left + right) * (padStickSensX * 0.002f) * x;
-//	cameraPitch_ += (up + -down) * (padStickSensY * 0.002f) * y;
-	
-	// 縦回転の回転角度の制限
-	if (cameraPitch_ >= 60 * DX_PI_F / 180.0f)
-	{
-		// 上方向の回転角度の制限
-		cameraPitch_ = 60.0f * DX_PI_F / 180.0f;
-	}
-	if (cameraPitch_ <= -80 * DX_PI_F / 180.0f)
-	{
-		// 下方向の回転角度の制限
-		cameraPitch_ = -80.0f * DX_PI_F / 180.0f;
-	}
-
 	// 平行行列の作成
-	MATRIX playerTransMtx = MGetTranslate(VScale(playerPos, 1.0f));
+	MATRIX playerTransMtx = MGetTranslate(VScale(pPlayer_->GetPos(), 1.0f));
 
 	// カメラの横回転行列の作成
 	MATRIX cameraRotMtxSide = MGetRotY(cameraYaw_);
@@ -100,28 +45,46 @@ void Camera::Update(VECTOR playerPos, VECTOR playerVec)
 	// カメラの回転行列とプレイヤーの平行行列からカメラの注視点行列の作成
 	MATRIX cameraMtxTarget = MMult(cameraRotMtx, playerTransMtx);
 
-	// カメラの位置行列とカメラの初期位置からカメラの位置の作成
-//	cameraPos_ = VTransform(camera_init_pos, cameraMtxPos);
-
 	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
-//	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
+	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
+}
+
+// デストラクタ
+Camera::~Camera()
+{
+}
+
+// 更新
+void Camera::Update()
+{
+	// 右スティックの入力情報の取得
+	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
+	int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
+	int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
+	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
+
+	if (InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP))
+	{
+//		perspective_ += 1.5f;
+	}
+	else
+	{
+//		perspective_ -= 1.5f;
+	}
+	perspective_ = perspectiveRange_.Clamp(perspective_);
+
+	VECTOR playerPos = pPlayer_->GetPos();
+	VECTOR playerVec = pPlayer_->GetMoveVec();
 
 	VECTOR toPlayerVec = VSub(playerPos, cameraPos_);
 	toPlayerVec.y = 0.0f;
 
-	if (VSize(toPlayerVec) > 500.0f && 
+	if (VSize(toPlayerVec) > 1000.0f && 
 		InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP))
 	{
 		playerVec.x = 0.0f;
+		cameraPos_ = VAdd(cameraPos_, playerVec);
 		cameraTarget_ = VAdd(cameraTarget_, playerVec);
-	}
-
-	static bool isA = false;
-	if (!isA)
-	{
-		// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
-		cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
-		isA = true;
 	}
 
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定

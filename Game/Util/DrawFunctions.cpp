@@ -14,4 +14,14 @@ namespace my
 
 		return handle;
 	}
+
+	int MyLoadModel(const TCHAR* path)
+	{
+		int handle = MV1LoadModel(path);
+
+		// -1ˆÈŠO‚¶‚á‚È‚©‚Á‚½‚çŽ~‚ß‚é
+		assert(handle != -1);
+
+		return handle;
+	}
 }

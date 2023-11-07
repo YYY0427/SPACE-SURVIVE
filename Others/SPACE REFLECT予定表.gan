@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-10-18" view-index="0" gantt-divider-location="802" resource-divider-location="300" version="3.2.3247" locale="ja_JP">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-10-24" view-index="0" gantt-divider-location="787" resource-divider-location="300" version="3.2.3247" locale="ja_JP">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="名前" width="448" order="0"/>
-        <field id="tpd4" name="開始日" width="168" order="1"/>
-        <field id="tpd5" name="終了日" width="170" order="2"/>
+        <field id="tpd3" name="名前" width="439" order="0"/>
+        <field id="tpd4" name="開始日" width="165" order="1"/>
+        <field id="tpd5" name="終了日" width="167" order="2"/>
         <option id="filter.completedTasks" value="false"/>
         <timeline>
             <![CDATA[20]]>
@@ -41,7 +41,7 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
         <task id="0" name="予定プロトタイプ期間" color="#cccc00" meeting="false" start="2023-10-23" duration="14" complete="0" thirdDate="2023-10-27" thirdDate-constraint="0" expand="true"/>
-        <task id="1" name="実プロトタイプ期間" color="#ffff99" meeting="false" start="2023-10-23" duration="10" complete="94" thirdDate="2023-10-18" thirdDate-constraint="0" expand="true">
+        <task id="1" name="実プロトタイプ期間" color="#ffff99" meeting="false" start="2023-10-23" duration="10" complete="100" thirdDate="2023-10-18" thirdDate-constraint="0" expand="false">
             <task id="2" name="プレイヤーの移動処理" color="#ffff99" meeting="false" start="2023-10-23" duration="1" complete="100" thirdDate="2023-10-18" thirdDate-constraint="0" expand="true"/>
             <task id="3" name="カメラの処理" color="#ffff99" meeting="false" start="2023-10-23" duration="1" complete="100" thirdDate="2023-10-18" thirdDate-constraint="0" expand="true"/>
             <task id="4" name="シールドの実装" color="#ffff99" meeting="false" start="2023-10-23" duration="1" complete="100" thirdDate="2023-10-18" thirdDate-constraint="0" expand="true">
@@ -87,15 +87,15 @@
                     </notes>
                 </task>
             </task>
-            <task id="23" name="シーン遷移" color="#ffff99" meeting="false" start="2023-11-01" duration="1" complete="0" thirdDate="2023-10-15" thirdDate-constraint="0" expand="true">
-                <task id="24" name="敵のHPがなくなったらシーン遷移の項目を出して選択したシーンに飛ぶ処理" color="#ffff99" meeting="false" start="2023-11-01" duration="1" complete="0" thirdDate="2023-10-15" thirdDate-constraint="0" expand="true"/>
+            <task id="23" name="シーン遷移" color="#ffff99" meeting="false" start="2023-11-01" duration="1" complete="100" thirdDate="2023-10-15" thirdDate-constraint="0" expand="true">
+                <task id="24" name="敵のHPがなくなったらシーン遷移の項目を出して選択したシーンに飛ぶ処理" color="#ffff99" meeting="false" start="2023-11-01" duration="1" complete="100" thirdDate="2023-10-15" thirdDate-constraint="0" expand="true"/>
             </task>
         </task>
         <task id="28" name="予定アルファ期間" color="#009900" meeting="false" start="2023-11-06" duration="21" complete="0" thirdDate="2023-10-15" thirdDate-constraint="0" expand="true"/>
-        <task id="29" name="実アルファ期間" color="#33ff33" meeting="false" start="2023-11-06" duration="21" complete="0" thirdDate="2023-10-25" thirdDate-constraint="0" expand="false">
+        <task id="29" name="実アルファ期間" color="#33ff33" meeting="false" start="2023-11-06" duration="21" complete="8" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true">
             <task id="30" name="敵のモデルの選定とモデルの入れ替え" color="#33ff33" meeting="false" start="2023-11-06" duration="1" complete="0" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
-            <task id="31" name="敵のHPのUI実装" color="#33ff33" meeting="false" start="2023-11-06" duration="2" complete="0" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
-            <task id="32" name="シールドのゲージのUI実装" color="#33ff33" meeting="false" start="2023-11-07" duration="2" complete="0" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
+            <task id="31" name="敵のHPのUI実装" color="#33ff33" meeting="false" start="2023-11-06" duration="2" complete="100" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
+            <task id="32" name="シールドのゲージのUI実装" color="#33ff33" meeting="false" start="2023-11-07" duration="2" complete="100" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
             <task id="33" name="プレイヤーがダメージを受けた時の演出" color="#33ff33" meeting="false" start="2023-11-09" duration="1" complete="0" thirdDate="2023-11-01" thirdDate-constraint="0" expand="true"/>
             <task id="34" name="敵が跳ね返ってきたレーザーを受けた時の演出" color="#33ff33" meeting="false" start="2023-11-09" duration="1" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
             <task id="40" name="ウェーブの実装" color="#33ff33" meeting="false" start="2023-11-10" duration="2" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true">

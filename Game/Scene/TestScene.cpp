@@ -52,7 +52,7 @@ TestScene::TestScene(SceneManager& manager) :
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_, pDataReader_->GetDataType("BossEnemy").front(), pDataReader_->GetDataType("NormalEnemy"));
 	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"));
 	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
-	pCamera_ = std::make_shared<Camera>(pDataReader_->GetDataType("Camera").front());
+	pCamera_ = std::make_shared<Camera>(pPlayer_, pDataReader_->GetDataType("Camera").front());
 	pSkyDome_ = std::make_shared<SkyDome>();
 }
 
@@ -137,12 +137,12 @@ void TestScene::NormalUpdate()
 	// 各クラスの更新
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());
-	pCamera_->Update(pPlayer_->GetPos(), pPlayer_->GetMoveVec());
-	pLazerManager_->Update();
 	pPlayer_->Update(pCamera_->GetCameraYaw());
+	pLazerManager_->Update();
 	pEnemyManager_->Update();
 	pRockManager_->Update();
 	pPlanetManager_->Update();
+	pCamera_->Update();
 
 	// 道の無限スクロール処理
 	RoadInfiniteScroll();
@@ -201,7 +201,7 @@ void TestScene::NormalUpdate()
 
 			if (result.HitNum > 0)
 			{
-				pEnemyManager_->OnDamage(10);
+				pEnemyManager_->OnDamage(10.0f);
 				laser.pLazer->Delete();
 			}
 
@@ -245,8 +245,15 @@ void TestScene::NormalUpdate()
 		item_ = SceneItem::PAUSE;
 	}
 
-	// 
+	// ゲームクリア
 	if (pEnemyManager_->GetIsRepel())
+	{
+		// フェードアウト開始
+		StartFadeOut(255, 10);
+		item_ = SceneItem::TITLE;
+	}
+	// ゲームオーバー
+	else if (!pPlayer_->IsLive())
 	{
 		// フェードアウト開始
 		StartFadeOut(255, 10);
@@ -271,11 +278,6 @@ void TestScene::CollisionRockUpdate()
 			updateFunc_ = &TestScene::NormalUpdate;
 			return;
 		}
-		else
-		{
-			manager_.ChangeScene(new DebugScene(manager_));
-			return;
-		}
 	}
 
 	if (!IsFadeing())
@@ -290,7 +292,7 @@ void TestScene::CollisionRockUpdate()
 	}
 
 	// カメラの更新
-	pCamera_->Update(pPlayer_->GetPos(), pPlayer_->GetMoveVec());
+	pCamera_->Update();
 
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());

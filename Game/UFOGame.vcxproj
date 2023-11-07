@@ -157,6 +157,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="UI\EnergyGage.cpp" />
+    <ClCompile Include="UI\HpBar.cpp" />
     <ClCompile Include="Laser\CubeLazer.cpp" />
     <ClCompile Include="Enemy\EnemyBase.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
@@ -204,6 +206,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="UI\EnergyGage.h" />
+    <ClInclude Include="UI\HpBar.h" />
     <ClInclude Include="Laser\CubeLazer.h" />
     <ClInclude Include="Enemy\EnemyBase.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />

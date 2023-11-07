@@ -10,4 +10,6 @@ namespace my
 	/// <param name="path">パス文字列</param>
 	/// <returns>画像のハンドル</returns>
 	int MyLoadGraph(const TCHAR* path);
+
+	int MyLoadModel(const TCHAR* path);
 }

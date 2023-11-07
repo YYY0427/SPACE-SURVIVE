@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Util/Effekseer3DEffectManager.h"
 #include "Image3D.h"
+#include "UI/EnergyGage.h"
 #include "Util/InputState.h"
 #include "Util/Debug.h"
 #include "Util/Range.h"
@@ -12,7 +13,7 @@ namespace
 {
 	const std::string model_file_path = "Data/Image/Shield.png";
 	constexpr float effect_scale = 80.0f;
-	constexpr int max_enerugy_gage = 100000;
+	constexpr int max_enerugy_gage = 100;
 }
 
 Shield::Shield(Player& player) :
@@ -22,6 +23,7 @@ Shield::Shield(Player& player) :
 	enerugyGage_(max_enerugy_gage)
 {
 	pShiled_ = std::make_shared<Image3D>(model_file_path);
+	pEnergyGage_ = std::make_unique<EnergyGage>(max_enerugy_gage);
 	pShiled_->SetPos(player_.GetPos());
 	pShiled_->SetImgWidth(100.0f);
 	pShiled_->SetImgHeight(100.0f);
@@ -85,6 +87,8 @@ void Shield::Update()
 	enerugyGage_ = enerugyGageRange.Clamp(enerugyGage_);
 	Debug::Log("エネルギーゲージ", enerugyGage_);
 
+	pEnergyGage_->Update();
+
 	pShiled_->SetPos(pos_);
 	pShiled_->SetRot({0.0f, rot + (90.0f * DX_PI_F / 180.0f), 0.0f});
 	pShiled_->Update();
@@ -96,6 +100,10 @@ void Shield::Draw()
 	{
 		pShiled_->Draw();
 	}
+
+	VECTOR screenPlayerPos = ConvWorldPosToScreenPos(player_.GetPos());
+
+	pEnergyGage_->Draw(screenPlayerPos.x, screenPlayerPos.y - 40, enerugyGage_);
 }
 
 VECTOR Shield::GetPos() const

@@ -5,6 +5,7 @@
 
 class Player;
 class Image3D;
+class EnergyGage;
 
 class Shield
 {
@@ -23,6 +24,7 @@ public:
 
 private:
 	std::shared_ptr<Image3D> pShiled_;
+	std::unique_ptr<EnergyGage> pEnergyGage_;
 	Player& player_;
 
 	int effectHandle_;

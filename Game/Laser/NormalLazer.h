@@ -12,7 +12,7 @@ public:
 	void Draw() override;
 
 	void Fire(const VECTOR pos, const VECTOR vec) override;
-	void Refrect(VECTOR pos) override;
+	void Refrect(const VECTOR pos, const VECTOR norm) override;
 	void CheckInCamera() override;
 
 private:

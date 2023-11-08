@@ -17,16 +17,26 @@ public:
 	void Update();
 	void Draw();
 
-	const std::list<std::shared_ptr<EnemyBase>>& GetEnemies() const;
 	void OnDamage(float damage);
-	bool GetIsRepel() const;
+
+	// 全ての敵が画面外まで逃げたか確認
 	void CheckRunAllEnemy();
+
+	// ゲッター
+	bool GetIsRepel() const;	// 撃退されたか
+	const std::list<std::shared_ptr<EnemyBase>>& GetEnemies() const;	
+
 private:
-	std::unordered_map<EnemyType, int> modelHandleTable_;
+	// 敵
 	std::list<std::shared_ptr<EnemyBase>> pEnemies_;
-	std::unique_ptr<HpBar> pHpBar_;
-	bool isRepel_;
+
+	// モデルハンドルテーブル
+	std::unordered_map<EnemyType, int> modelHandleTable_;
 
 	// HP
-	float hp_;
+	std::unique_ptr<HpBar> pHpBar_;		// HPバー
+	float hp_;							// HP
+
+	// 撃退されたか
+	bool isRepel_;
 };

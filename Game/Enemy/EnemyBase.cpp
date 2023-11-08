@@ -1,6 +1,7 @@
 #include "EnemyBase.h"
 #include "../Util/Model.h"
 #include "../Util/Timer.h"
+#include "../Util/Effekseer3DEffectManager.h"
 #include "../common.h"
 #include "../Vector2.h"
 
@@ -10,7 +11,8 @@ EnemyBase::EnemyBase() :
 	lazerFireIntervalTimer_({}),
 	lazerSpeed_(0.0f),
 	collisionRadius_(0.0f),
-	sinWaveTimer_(0)
+	sinWaveTimer_(0),
+	onDamageEffectHandle_(-1)
 {
 }
 
@@ -32,6 +34,16 @@ void EnemyBase::SinWave(const float speed, const float swingWidth)
 {
 	sinWaveTimer_++;
 	pos_.y = pos_.y + sinf(DX_PI_F * 2 / speed * sinWaveTimer_) * swingWidth;
+}
+
+void EnemyBase::OnDamage(VECTOR pos)
+{
+	Effekseer3DEffectManager::GetInstance().PlayEffect(
+		onDamageEffectHandle_, 
+		EffectID::enemy_on_damage,
+		pos,
+		200.0f,
+		0.5f);
 }
 
 bool EnemyBase::Run()

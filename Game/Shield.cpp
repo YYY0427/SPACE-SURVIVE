@@ -87,8 +87,6 @@ void Shield::Update()
 	enerugyGage_ = enerugyGageRange.Clamp(enerugyGage_);
 	Debug::Log("エネルギーゲージ", enerugyGage_);
 
-	pEnergyGage_->Update();
-
 	pShiled_->SetPos(pos_);
 	pShiled_->SetRot({0.0f, rot + (90.0f * DX_PI_F / 180.0f), 0.0f});
 	pShiled_->Update();
@@ -98,7 +96,9 @@ void Shield::Draw()
 {
 	if (GetIsShield())
 	{
+#ifdef _DEBUG
 		pShiled_->Draw();
+#endif
 	}
 
 	VECTOR screenPlayerPos = ConvWorldPosToScreenPos(player_.GetPos());

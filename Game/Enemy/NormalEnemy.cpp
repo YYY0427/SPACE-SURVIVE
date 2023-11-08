@@ -8,7 +8,7 @@
 namespace
 {
 	constexpr int lazer_fire_frame_pos = 1374;
-	constexpr float collision_radius = 2000.0f;
+	constexpr float collision_radius = 3000.0f;
 }
 
 NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject data)
@@ -62,7 +62,7 @@ void NormalEnemy::Draw()
 
 #ifdef _DEBUG
 	DrawSphere3D(MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos), 100.0f, 8, 0xff0000, 0xff0000, 0xff0000);
-	DrawSphere3D(pos_, collisionRadius_, 8, 0xff0000, 0xff0000, 0xff0000);
+//	DrawSphere3D(pos_, collisionRadius_, 8, 0xff0000, 0xff0000, 0xff0000);
 #endif
 }
 

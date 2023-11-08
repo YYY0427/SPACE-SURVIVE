@@ -47,6 +47,9 @@ Camera::Camera(std::shared_ptr<Player> pPlayer, UnityGameObject data) :
 
 	// カメラの注視点行列とカメラの初期注視点からカメラの注視点の作成
 	cameraTarget_ = VTransform(camera_init_target, cameraMtxTarget);
+//	cameraPos_ = pPlayer_->GetPos();
+//	cameraPos_.y += 100.0f;
+//	cameraPos_.z -= 300.0f;
 }
 
 // デストラクタ

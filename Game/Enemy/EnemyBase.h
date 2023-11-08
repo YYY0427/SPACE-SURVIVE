@@ -34,6 +34,8 @@ public:
 	/// <param name="swingWidth">êUÇÍïù</param>
 	void SinWave(const float speed, const float swingWidth);
 
+	void OnDamage(VECTOR pos);
+
 	virtual bool Run();
 
 protected:
@@ -44,6 +46,7 @@ protected:
 	VECTOR rot_;
 	Timer lazerFireIntervalTimer_;
 	int sinWaveTimer_;
+	int onDamageEffectHandle_;
 	float lazerSpeed_;
 	float collisionRadius_;
 };

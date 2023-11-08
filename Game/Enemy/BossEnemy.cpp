@@ -39,7 +39,7 @@ void BossEnemy::Update()
 
 	pos_.z += pPlayer_->GetMoveVec().z;
 
-	SinWave(10, 100);
+	SinWave(500, 5);
 
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);

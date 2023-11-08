@@ -134,7 +134,7 @@ void TestScene::NormalUpdate()
 	}
 
 
-	// 各クラスの更新
+	// 更新
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());
 	pPlayer_->Update(pCamera_->GetCameraYaw());
@@ -167,18 +167,18 @@ void TestScene::NormalUpdate()
 		VECTOR leftBottom = pPlayer_->GetShield()->GetVertex()[2].pos;
 		VECTOR rightBottom = pPlayer_->GetShield()->GetVertex()[3].pos;
 
+		// シールドは二つのポリゴンからできてるので二つのポリゴンともチェック
 		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Triangle(lazer.pLazer->GetModelHandle(), -1, leftTop, rightTop, leftBottom);
 		MV1_COLL_RESULT_POLY_DIM result2 = MV1CollCheck_Triangle(lazer.pLazer->GetModelHandle(), -1, rightBottom, leftBottom, rightTop);
 
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0 || result2.HitNum > 0)
 		{
-			VECTOR firePos{};
-			result.HitNum > 0 ? 
-				firePos = result.Dim->HitPosition : 
-				firePos = result2.Dim->HitPosition;
+			// シールドの法線情報
+			VECTOR shieldNorm = pPlayer_->GetShield()->GetVertex()[0].norm;
 
-			lazer.pLazer->Refrect(pPlayer_->GetShield()->GetPos());
+			// レーザーを反射
+			lazer.pLazer->Refrect(pPlayer_->GetShield()->GetPos(), shieldNorm);
 		}
 
 		// 当たり判定情報の後始末
@@ -192,16 +192,25 @@ void TestScene::NormalUpdate()
 		// 反射可能なレーザー以外の場合は判定を行わない
 		if (laser.type != LazerType::NORMAL) continue;
 
-		// 反射前のレーザーとしか当たり判定を行わない
+		// 反射後のレーザーとしか当たり判定を行わない
 		if (!laser.pLazer->GetIsRefrect()) continue;
 
+		// 全ての敵をチェック
 		for (auto& enemy : pEnemyManager_->GetEnemies())
 		{
+			// レーザーのモデルと敵を球体にみたてて当たり判定
 			MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(laser.pLazer->GetModelHandle(), -1, enemy->GetPos(), enemy->GetCollisionRadius());
 
+			// ポリゴン一つにでも当たっていたら
 			if (result.HitNum > 0)
 			{
+				// 敵にダメージを与える
 				pEnemyManager_->OnDamage(10.0f);
+
+				// ダメージを受けた時のエフェクト
+				enemy->OnDamage(result.Dim->HitPosition);
+
+				// 何回も当たるのを防ぐため一回当たったらレーザーを削除
 				laser.pLazer->Delete();
 			}
 
@@ -291,9 +300,8 @@ void TestScene::CollisionRockUpdate()
 		}
 	}
 
-	// カメラの更新
+	// 更新
 	pCamera_->Update();
-
 	pSkyDome_->Update(pPlayer_->GetPos());
 	pRoadManager_->Update(pPlayer_->GetPos());
 	pLazerManager_->Update();

@@ -1,8 +1,12 @@
 #include "CubeLazer.h"
 #include "../Util/Debug.h"
 
-CubeLazer::CubeLazer(int modelHandle)
+CubeLazer::CubeLazer(int modelHandle, VECTOR pos, VECTOR vec)
 {
+	pos_ = pos;
+	vec_ = vec;
+	isEnabled_ = true;
+
 	pModel_ = std::make_unique<Model>(modelHandle);
 
 	pModel_->SetUseCollision(true);
@@ -12,11 +16,12 @@ CubeLazer::CubeLazer(int modelHandle)
 	scale_.y = static_cast<float>(GetRand(10)) * 0.01f;
 	scale_.z = static_cast<float>(GetRand(10)) * 0.01f;
 
-//	scale_ = { 100.0f, 100.0f, 100.0f};
-
 	// 1フレームに回転する量を0度から～1度の間から取得
 	deltaRot_ = 1.0f * (static_cast<float>(GetRand(10)) * 0.1f);
 	deltaRot_ = deltaRot_ * DX_PI_F / 180.0f;
+
+	pModel_->SetPos(pos_);
+	pModel_->Update();
 }
 
 CubeLazer::~CubeLazer()

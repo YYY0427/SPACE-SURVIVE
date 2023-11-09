@@ -19,12 +19,6 @@ public:
 	virtual void Draw() = 0;
 
 	/// <summary>
-	/// レーザーを発射
-	/// </summary>
-	/// <param name="pos">発射場所</param>
-	virtual void Fire(const VECTOR pos, const VECTOR vec);
-
-	/// <summary>
 	/// レーザーを反射
 	/// </summary>
 	/// <param name="pos">反射するレーザーを発射する位置</param>
@@ -41,6 +35,8 @@ public:
 	int GetModelHandle() const;
 
 	bool GetIsRefrect() const;
+
+	VECTOR GetPos() const { return pos_; }
 
 protected:
 	std::unique_ptr<Model> pModel_;

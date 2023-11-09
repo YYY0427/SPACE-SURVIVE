@@ -17,7 +17,7 @@ NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::
 	pLazerManager_ = pLazerManager;
 	pModel_ = std::make_unique<Model>(modelHandle);
 	pos_ = data.pos;
-	rot_ = { data.rot.x, data.rot.y + 180.0f * DX_PI_F / 180.0f , data.rot.z};
+	rot_ = { data.rot.x, data.rot.y + DX_PI_F, data.rot.z};
 	pModel_->SetScale(data.scale);
 	lazerFireIntervalTimer_ = 60 * 5;
 	lazerSpeed_ = 210.0f;
@@ -44,8 +44,6 @@ void NormalEnemy::Update()
 		pLazerManager_->Create(LazerType::NORMAL, firePos, toPlayerVec);
 		lazerFireIntervalTimer_.Reset();
 	}
-
-	pos_.z += pPlayer_->GetMoveVec().z;
 
 	// サインカーブ移動
 	// 浮いているように見せるため
@@ -81,7 +79,7 @@ bool NormalEnemy::Run()
 
 		num.Normalize();
 
-		num *= 10.0f;
+		num *= 100.0f;
 
 		// 画面外に移動する処理
 		pos_.x += num.x_;

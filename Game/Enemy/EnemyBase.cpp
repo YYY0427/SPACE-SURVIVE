@@ -66,7 +66,7 @@ bool EnemyBase::Run()
 
 		num.Normalize();
 
-		num *= 10.0f;
+		num *= 100.0f;
 
 		VECTOR runVec = { num.x_, num.y_, 0.0f };
 

@@ -171,8 +171,6 @@
     <ClCompile Include="MathUtil.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Util\Debug.cpp" />
-    <ClCompile Include="RoadManager.cpp" />
-    <ClCompile Include="Road.cpp" />
     <ClCompile Include="Planet\Earth.cpp" />
     <ClCompile Include="Planet\PlanetManager.cpp" />
     <ClCompile Include="Planet\PlanetBase.cpp" />

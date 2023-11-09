@@ -147,12 +147,6 @@
     <ClCompile Include="Planet\Earth.cpp">
       <Filter>ソース ファイル\Planet</Filter>
     </ClCompile>
-    <ClCompile Include="Road.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="RoadManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Util\Debug.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>

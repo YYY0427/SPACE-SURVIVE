@@ -5,6 +5,7 @@
 #include "Util//Effekseer3DEffectManager.h"
 #include "Util/Debug.h"
 #include "Util/Range.h"
+#include "common.h"
 #include <string>
 
 namespace
@@ -14,8 +15,8 @@ namespace
 	std::string model_file_extension = ".mv1";
 
 	// プレイヤーの移動量
-	constexpr VECTOR player_vec_up = { 0, 0, 1 };
-	constexpr VECTOR player_vec_down = { 0, 0, -1 };
+	constexpr VECTOR player_vec_up = { 0, 1, 0 };
+	constexpr VECTOR player_vec_down = { 0, -1, 0 };
 	constexpr VECTOR player_vec_right = { 1, 0, 0 };
 	constexpr VECTOR player_vec_left = { -1, 0, 0 };
 
@@ -33,9 +34,6 @@ namespace
 
 	// プレイヤーの当たり判定の半径
 	constexpr float model_collision_radius = 30.0f;
-
-	// 落下死亡判定の高さ
-	constexpr float death_judg_height = -1000.0f;
 
 	// 無敵時間のフレーム数
 	constexpr int ultimate_frames = 120;
@@ -71,7 +69,6 @@ Player::Player(UnityGameObject data) :
 	pShield_ = std::make_shared<Shield>(*this);
 
 	// モデルの拡大率の設定
-//	pModel_->SetScale(data.scale);
 	pModel_->SetScale(VGet(model_scale, model_scale, model_scale));
 
 	// 回転率の設定
@@ -90,7 +87,6 @@ Player::Player(UnityGameObject data) :
 //  デストラクタ
 Player::~Player()
 {
-
 }
 
 // 更新
@@ -98,26 +94,14 @@ void Player::Update(float cameraYaw)
 {
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
-	posLogTable_.push_front(pos_);
-	if (log_frame < static_cast<int>(posLogTable_.size()))
-	{
-		posLogTable_.pop_back();
-	}
-
 	// 左スティックの入力情報の取得
 	int up = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::UP);
 	int down = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::DOWN);
 	int left = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::LEFT);
 	int right = InputState::IsPadStick(PadLR::LEFT, PadStickInputType::RIGHT);
 
-	// カメラが向いている方向からベクトル変換して移動情報作成
-#if false
-	VECTOR moveForward = VScale(VNorm(VSub(pCamera_->GetTarget(), pCamera_->GetPos())), -1);
-	VECTOR moveBack = VScale(moveForward, -1);
-#else 
-	VECTOR moveForward = VTransform(player_vec_up, MGetRotY(cameraYaw));
-	VECTOR moveBack = VTransform(player_vec_down, MGetRotY(cameraYaw));
-#endif
+	VECTOR moveUp = VTransform(player_vec_up, MGetRotY(cameraYaw));
+	VECTOR moveDown = VTransform(player_vec_down, MGetRotY(cameraYaw));
 	VECTOR moveRight = VTransform(player_vec_right, MGetRotY(cameraYaw));
 	VECTOR moveLeft = VTransform(player_vec_left, MGetRotY(cameraYaw));
 
@@ -128,19 +112,14 @@ void Player::Update(float cameraYaw)
 	isInput_ = false;
 	moveVec_ = VGet(0, 0, 0);
 	VECTOR moveVecX = VGet(0, 0, 0);
-	VECTOR moveVecZ = VGet(0, 0, 0);
+	VECTOR moveVecY {0, 0, 0};
 
 	// スティックが入力されていたら移動ベクトルにスティックが傾いている方向のベクトルを代入
 	// スティックの傾きぐわいによってベクトルが大きくなる
 	if (up > 0)
 	{
-		moveVecZ = VScale(moveForward, up);
+		moveVecY = VScale(moveUp, up);
 		isInput_ = true;
-
-		// ブーストエフェクトの拡大率を大きくする
-		// 特定の大きさより大きくならない
-		boostEffectScale_++;
-		boostEffectScale_ = (std::fmin)(boostEffectScale_, 40.0f);
 	}
 	if (left > 0)
 	{
@@ -149,57 +128,63 @@ void Player::Update(float cameraYaw)
 	}
 	if (down > 0)
 	{
-		moveVecZ = VScale(moveBack, down);
+		moveVecY = VScale(moveDown, down);
 		isInput_ = true;
-
-		// ブーストエフェクトの拡大率を小さくする
-		// 特定の大きさより小さくならない
-		boostEffectScale_--;
-		boostEffectScale_ = (std::fmax)(boostEffectScale_, 20.0f);
 	}
 	if (right > 0)
 	{
 		moveVecX = VScale(moveRight, right);
 		isInput_ = true;
 	}
-	// 上下のパッドスティック入力がなかった場合
-	if (up <= 0 && down <= 0)
-	{
-		// ブーストエフェクトの拡大率をデフォルトの大きさに戻す
-		if (boostEffectScale_ >= 30.0f)
-		{
-			boostEffectScale_--;
-			boostEffectScale_ = (std::fmax)(boostEffectScale_, 30.0f);
-		}
-		else
-		{
-			boostEffectScale_++;
-			boostEffectScale_ = (std::fmin)(boostEffectScale_, 30.0f);
-		}
-	}
-
-#ifdef _DEBUG
-	if (InputState::IsPadTrigger(PadLR::LEFT))
-	{
-		pos_.y += 5;
-	}
-	if (InputState::IsPadTrigger(PadLR::RIGHT))
-	{
-		pos_.y -= 5;
-	}
-#endif
 
 	// スティックが入力されている場合のみ移動
 	if (isInput_)
 	{
 		// プレイヤーから見てx方向とz方向のベクトルを足して移動ベクトルを作成する
-		moveVec_ = VAdd(moveVecZ, moveVecX);
+		moveVec_ = VAdd(moveVecY, moveVecX);
 
 		// プレイヤーのスピードを掛ける
 		moveVec_ = VScale(moveVec_, moveSpeed_);
 
 		// 作成した移動ベクトルで座標の移動
-		pos_ = VAdd(pos_, moveVec_);
+		VECTOR tempPos = VAdd(pos_, moveVec_);
+
+		// ワールド座標をスクリーン座標に変換
+		VECTOR screenPos = ConvWorldPosToScreenPos(tempPos);
+
+		if (screenPos.x > common::screen_width)
+		{
+			screenPos.x = common::screen_width;
+			VECTOR a = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = a.x;
+			pos_.y = a.y;
+		}
+		else if (screenPos.x < 0)
+		{
+			screenPos.x = 0;
+			VECTOR a = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = a.x;
+			pos_.y = a.y;
+		}
+		else if (screenPos.y > common::screen_height)
+		{
+			screenPos.y = common::screen_height;
+			VECTOR a = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = a.x;
+			pos_.y = a.y;
+
+		}
+		else if (screenPos.y < 0)
+		{
+			screenPos.y = 0;
+			VECTOR a = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = a.x;
+			pos_.y = a.y;
+		}
+		else
+		{
+			pos_ = tempPos;
+		}
 	}
 
 	// 無敵時間のタイマーの更新
@@ -355,17 +340,6 @@ void Player::OnDamage()
 
 	// 無敵時間の設定
 	ultimateTimer_ = ultimate_frames;
-}
-
-void Player::A()
-{
-	pos_ = posLogTable_[0];
-}
-
-// プレイヤーの高さが落下死亡判定の高さより小さくなったか
-bool Player::IsDeathJudgHeight() const
-{
-	return (pos_.y < death_judg_height) ? true : false;
 }
 
 // プレイヤーが無敵時間中か

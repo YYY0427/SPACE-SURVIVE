@@ -1,6 +1,8 @@
 #include "LazerManager.h"
 #include "CubeLazer.h"
 #include "NormalLazer.h"
+#include "../Util/DrawFunctions.h"
+#include "../Util/Debug.h"
 #include <string>
 #include <cassert>
 
@@ -12,13 +14,8 @@ namespace
 
 LazerManager::LazerManager()
 {
-	lazerModelHanldeTable_[LazerType::CUBE] = MV1LoadModel(cube_lazer_model_file_path.c_str());
-	lazerModelHanldeTable_[LazerType::NORMAL] = MV1LoadModel(normal_lazer_model_file_path.c_str());
-
-	for (auto& lazerModelHandle : lazerModelHanldeTable_)
-	{
-		assert(lazerModelHandle.second != -1);
-	}
+	lazerModelHanldeTable_[LazerType::CUBE] = my::MyLoadModel(cube_lazer_model_file_path.c_str());
+	lazerModelHanldeTable_[LazerType::NORMAL] = my::MyLoadModel(normal_lazer_model_file_path.c_str());
 }
 
 LazerManager::~LazerManager()
@@ -37,18 +34,17 @@ void LazerManager::Create(LazerType lazerType, const VECTOR pos, const VECTOR ve
 	switch (lazerType)
 	{
 	case LazerType::CUBE:
-		data.pLazer = std::make_shared<CubeLazer>(lazerModelHanldeTable_[lazerType]);
+		data.pLazer = std::make_shared<CubeLazer>(lazerModelHanldeTable_[lazerType], pos, vec);
 		break;
 
 	case LazerType::NORMAL:
-		data.pLazer = std::make_shared<NormalLazer>(lazerModelHanldeTable_[lazerType]);
+		data.pLazer = std::make_shared<NormalLazer>(lazerModelHanldeTable_[lazerType], pos, vec);
 		break;
 
 	default:
 		assert(0);
 	}
 	pLazeres_.push_back(data);
-	pLazeres_.back().pLazer->Fire(pos, vec);
 }
 
 void LazerManager::Update()

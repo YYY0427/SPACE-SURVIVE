@@ -10,16 +10,13 @@ class SkyDome
 {
 public:
 	// コンストラクタ
-	SkyDome();
+	SkyDome(VECTOR initPos);
 
 	// デストラクタ
 	virtual ~SkyDome();
 
-	/// <summary>
-	/// 更新
-	/// </summary>
-	/// <param name="playerPos">プレイヤーの位置情報</param>
-	void Update(VECTOR playerPos);
+	// 更新
+	void Update();
 
 	// 描画
 	void Draw();

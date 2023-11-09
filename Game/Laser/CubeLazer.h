@@ -4,7 +4,7 @@
 class CubeLazer : public LazerBase
 {
 public:
-	CubeLazer(int modelHandle);
+	CubeLazer(int modelHandle, VECTOR pos, VECTOR vec);
 	virtual ~CubeLazer();
 
 	void Update() override;

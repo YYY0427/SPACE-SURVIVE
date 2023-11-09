@@ -5,13 +5,13 @@
 class NormalLazer : public LazerBase
 {
 public:
-	NormalLazer(int modelHandle);
+	NormalLazer(int modelHandle, VECTOR pos, VECTOR vec);
 	virtual ~NormalLazer();
 
 	void Update() override;
 	void Draw() override;
 
-	void Fire(const VECTOR pos, const VECTOR vec) override;
+	void Fire(const VECTOR pos, const VECTOR vec);
 	void Refrect(const VECTOR pos, const VECTOR norm) override;
 	void CheckInCamera() override;
 

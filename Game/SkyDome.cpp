@@ -13,13 +13,16 @@ namespace
 }
 
 // コンストラクタ
-SkyDome::SkyDome()
+SkyDome::SkyDome(VECTOR initPos)
 {
 	// インスタンスの作成
 	pModel_ = std::make_shared<Model>(model_file_path);
 
 	// モデルの拡大率の設定
 	pModel_->SetScale(VGet(model_scale, model_scale, model_scale));
+
+	// 位置情報の設定
+	pModel_->SetPos(initPos);
 }
 
 // デストラクタ
@@ -28,10 +31,8 @@ SkyDome::~SkyDome()
 }
 
 // 更新
-void SkyDome::Update(VECTOR playerPos)
+void SkyDome::Update()
 {
-	// 位置情報の設定
-	pModel_->SetPos(playerPos);
 }
 
 // 描画

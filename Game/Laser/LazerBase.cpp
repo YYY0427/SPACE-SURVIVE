@@ -15,13 +15,6 @@ LazerBase::~LazerBase()
 {
 }
 
-void LazerBase::Fire(const VECTOR pos, const VECTOR vec)
-{
-	pos_ = pos;
-	vec_ = vec;
-	isEnabled_ = true;
-}
-
 void LazerBase::Delete()
 {
 	isEnabled_ = false;

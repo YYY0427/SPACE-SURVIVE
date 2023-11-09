@@ -14,7 +14,7 @@ namespace
 	constexpr int collision_and_effect_difference_frame = 120;
 }
 
-NormalLazer::NormalLazer(int modelHandle) :
+NormalLazer::NormalLazer(int modelHandle, VECTOR pos, VECTOR vec) :
 	collisionAndEffectDifferenceTimer_(collision_and_effect_difference_frame)
 {
 	// モデルのインスタンスの作成
@@ -26,6 +26,7 @@ NormalLazer::NormalLazer(int modelHandle) :
 	// モデルの拡大率の設定
 	pModel_->SetScale(model_scale);
 
+	Fire(pos, vec);
 }
 
 NormalLazer::~NormalLazer()

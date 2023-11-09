@@ -56,6 +56,7 @@ void Effekseer3DEffectManager::Init()
 	LoadEffectFile(EffectID::player_boost.c_str());
 	LoadEffectFile(EffectID::normal_lazer.c_str());
 	LoadEffectFile(EffectID::refrect_laser.c_str());
+	LoadEffectFile(EffectID::wind.c_str());
 }
 
 // çXêV

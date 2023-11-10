@@ -1,12 +1,6 @@
 #include "DataReaderFromUnity.h"
 #include <cassert>
 
-namespace
-{
-	// ファイルのパス
-	const std::string data_file_path = "Data/ObjectData.dat";
-}
-
 // コンストラクタ
 DataReaderFromUnity::DataReaderFromUnity() 
 {
@@ -17,11 +11,20 @@ DataReaderFromUnity::~DataReaderFromUnity()
 {
 }
 
+DataReaderFromUnity& DataReaderFromUnity::GetInstance()
+{
+	// 唯一の実態
+	static DataReaderFromUnity instance;
+
+	// 唯一の実態参照を返す
+	return instance;
+}
+
 // Unityで配置したオブジェクトのデータを読み取る
-void DataReaderFromUnity::LoadUnityGameObjectData()
+void DataReaderFromUnity::LoadUnityGameObjectData(const TCHAR* fileName)
 {
 	// ファイルにアクセス
-	auto dataHandle = FileRead_open(data_file_path.c_str());
+	auto dataHandle = FileRead_open(fileName);
 
 	// データ数を得る
 	int dataNum = 0;
@@ -59,6 +62,9 @@ void DataReaderFromUnity::LoadUnityGameObjectData()
 		data.rot.y = RadianFromDegree(data.rot.y);
 		data.rot.z = RadianFromDegree(data.rot.z);
 
+		// UnityとDxLibでは回転がずれるため合わせる
+		data.rot.y += DX_PI_F;
+
 		// 拡大データxyzを読む
 		result = FileRead_read(&data.scale, sizeof(data.scale), dataHandle);
 		assert(result != -1);
@@ -77,7 +83,7 @@ float DataReaderFromUnity::RadianFromDegree(float degree)
 	return DX_PI_F * degree / 180.0f;
 }
 
-std::vector<UnityGameObject> DataReaderFromUnity::GetDataType(std::string objectName) const
+std::vector<UnityGameObject> DataReaderFromUnity::GetData(std::string objectName) const
 {
 	// データが見つかったか
 	if (data_.find(objectName) != data_.end())

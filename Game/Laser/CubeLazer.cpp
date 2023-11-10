@@ -28,7 +28,7 @@ CubeLazer::~CubeLazer()
 {
 }
 
-void CubeLazer::Update()
+void CubeLazer::Update(VECTOR scrollVec)
 {
 	rot_ = VAdd(rot_, { deltaRot_, deltaRot_, deltaRot_ });
 	pos_ = VAdd(pos_, vec_);

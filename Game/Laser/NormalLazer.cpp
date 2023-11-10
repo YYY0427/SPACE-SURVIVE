@@ -14,8 +14,9 @@ namespace
 	constexpr int collision_and_effect_difference_frame = 120;
 }
 
-NormalLazer::NormalLazer(int modelHandle, VECTOR pos, VECTOR vec) :
-	collisionAndEffectDifferenceTimer_(collision_and_effect_difference_frame)
+NormalLazer::NormalLazer(int modelHandle, VECTOR* pos, VECTOR vec) :
+	collisionAndEffectDifferenceTimer_(collision_and_effect_difference_frame),
+	effectPos_({})
 {
 	// モデルのインスタンスの作成
 	pModel_ = std::make_unique<Model>(modelHandle);
@@ -26,34 +27,8 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR pos, VECTOR vec) :
 	// モデルの拡大率の設定
 	pModel_->SetScale(model_scale);
 
-	Fire(pos, vec);
-}
-
-NormalLazer::~NormalLazer()
-{
-}
-
-void NormalLazer::Update()
-{
-	collisionAndEffectDifferenceTimer_.Update(1);
-	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
-	{
-		pos_ = VAdd(pos_, vec_);
-		pModel_->SetPos(pos_);
-		pModel_->Update();
-	}
-}
-
-void NormalLazer::Draw()
-{
-#ifdef _DEBUG
-//	pModel_->Draw();
-#endif
-}
-
-void NormalLazer::Fire(const VECTOR pos, const VECTOR vec)
-{
-	pos_ = pos;
+	firePos_ = pos;
+	pos_ = *pos;
 	vec_ = vec;
 	isEnabled_ = true;
 
@@ -68,9 +43,35 @@ void NormalLazer::Fire(const VECTOR pos, const VECTOR vec)
 
 	// レーザーのエフェクトの再生
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	effectManager.PlayEffect(lazerEffectHandle_, EffectID::normal_lazer, pos_, effect_scale, 1.0f, effectRot);
+	effectManager.PlayEffectFollow(lazerEffectHandle_, EffectID::normal_lazer, firePos_, effect_scale, 1.0f, effectRot);
+
+	pModel_->SetPos(pos_);
 
 	pModel_->Update();
+}
+
+NormalLazer::~NormalLazer()
+{
+}
+
+void NormalLazer::Update(VECTOR scrollVec)
+{
+	pos_ = VAdd(pos_, scrollVec);
+	effectPos_ = VAdd(effectPos_, scrollVec);
+	collisionAndEffectDifferenceTimer_.Update(1);
+	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
+	{
+		pos_ = VAdd(pos_, vec_);
+		pModel_->SetPos(pos_);
+		pModel_->Update();
+	}
+}
+
+void NormalLazer::Draw()
+{
+#ifdef _DEBUG
+	pModel_->Draw();
+#endif
 }
 
 void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
@@ -81,9 +82,10 @@ void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
 
 	isRefrect_ = true;
 	pos_ = pos;
+	effectPos_ = pos;
 	pModel_->SetPos(pos);
 
-#if false
+#if true
 	// 反射ベクトルの作成
 	VECTOR inversionVec = VScale(vec_, -1);
 	float dot = VDot(inversionVec, norm);
@@ -106,7 +108,7 @@ void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
 	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 
 	// レーザーのエフェクトの再生
-	effectManager.PlayEffect(lazerEffectHandle_, EffectID::refrect_laser, pos, effect_scale, 1.0f, effectRot);
+	effectManager.PlayEffectFollow(lazerEffectHandle_, EffectID::refrect_laser, &effectPos_, effect_scale, 1.0f, effectRot);
 
 	pModel_->Update();
 }

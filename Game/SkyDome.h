@@ -16,11 +16,14 @@ public:
 	virtual ~SkyDome();
 
 	// XV
-	void Update();
+	void Update(VECTOR pos);
 
 	// •`‰æ
 	void Draw();
+
 private:
 	// ƒ‚ƒfƒ‹
 	std::shared_ptr<Model> pModel_;
+
+	VECTOR pos_;
 };

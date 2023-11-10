@@ -3,21 +3,20 @@
 #include <vector>
 #include <memory>
 #include <map>
-#include "../Util/DataReaderFromUnity.h"
 
 class PlanetBase;
 
 class PlanetManager
 {
 public:
-	PlanetManager(std::vector<UnityGameObject> sunData, std::vector<UnityGameObject> earthData);
+	PlanetManager();
 	virtual ~PlanetManager();
 
 	void Update();
 
 	void Draw();
 
-	std::list<std::shared_ptr<PlanetBase>> GetPlanets() const;
+	const std::list<std::shared_ptr<PlanetBase>>& GetPlanets() const;
 private:
 	enum class PlanetType
 	{

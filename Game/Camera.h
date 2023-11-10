@@ -1,7 +1,6 @@
 #pragma once
 #include <DxLib.h>
 #include <memory>
-#include "Util/DataReaderFromUnity.h"
 #include "Util/Range.h"
 
 class Player;
@@ -13,7 +12,7 @@ class Camera
 {
 public:
 	// コンストラクタ
-	Camera(std::shared_ptr<Player> pPlayer, UnityGameObject data);
+	Camera(std::shared_ptr<Player> pPlayer);
 
 	// デストラクタ
 	virtual ~Camera();
@@ -40,10 +39,10 @@ private:
 	std::shared_ptr<Player> pPlayer_;
 
 	// カメラの位置
-	VECTOR cameraPos_;
+	VECTOR pos_;
 
 	// カメラの注視点
-	VECTOR cameraTarget_;
+	VECTOR target_;
 
 	// 視野角
 	float perspective_;

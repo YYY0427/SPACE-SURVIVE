@@ -16,12 +16,12 @@ public:
 	LazerManager();
 	virtual ~LazerManager();
 
-	void Create(LazerType lazerType, const VECTOR pos, const VECTOR vec);
+	void Create(LazerType lazerType, VECTOR* pos, VECTOR vec);
 
-	void Update();
+	void Update(VECTOR scrollVec);
 	void Draw();
 
-	std::list<LazerData> GetLazeres() const;
+	const std::list<LazerData>& GetLazeres() const;
 private:
 	std::list<LazerData> pLazeres_;
 	std::unordered_map<LazerType, int> lazerModelHanldeTable_;

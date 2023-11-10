@@ -1,6 +1,8 @@
 #pragma once
 #include "EnemyBase.h"
 
+class HpBar;
+
 class BossEnemy : public EnemyBase
 {
 public:
@@ -10,6 +12,8 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	void OnDamage(int damage, VECTOR pos) override;
 private:
-	
+	// HP
+	std::unique_ptr<HpBar> pHpBar_;		// HPÉoÅ[
 };

@@ -9,7 +9,6 @@ public:
 
 	void Update() override;
 	void Draw() override;
-	bool Run() override;
 
 private:
 };

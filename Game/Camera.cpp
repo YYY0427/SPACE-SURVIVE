@@ -2,9 +2,12 @@
 #include "Player.h"
 #include "Util/InputState.h"
 #include "Util/SaveData.h"
+#include "Util/DataReaderFromUnity.h"
 
 namespace
 {
+	const std::string object_name = "Camera";
+
 	// カメラの初期注視点
 	constexpr VECTOR camera_init_target = { 0, 0, 1 };
 
@@ -18,15 +21,17 @@ namespace
 }
 
 // コンストラクタ
-Camera::Camera(std::shared_ptr<Player> pPlayer, UnityGameObject data) :
-	cameraPos_(data.pos),
+Camera::Camera(std::shared_ptr<Player> pPlayer) :
 	cameraYaw_(0.0f),
 	cameraPitch_(0.0f),
 	perspective_(normal_perspective),
 	perspectiveRange_({ normal_perspective, boosting_perspective }),
 	pPlayer_(pPlayer)
 {
-	cameraTarget_ = camera_init_target;
+	auto data = DataReaderFromUnity::GetInstance().GetData(object_name);
+
+	pos_ = data.front().pos;
+	target_ = camera_init_target;
 }
 
 // デストラクタ
@@ -37,11 +42,8 @@ Camera::~Camera()
 // 更新
 void Camera::Update()
 {
-	// 右スティックの入力情報の取得
-	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
-	int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
-	int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
-	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
+	pos_ = VAdd(pos_, pPlayer_->GetMoveVecZ());
+	target_ = VAdd(target_, pPlayer_->GetMoveVecZ());
 
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
@@ -50,7 +52,7 @@ void Camera::Update()
 	SetupCamera_Perspective(perspective_ * DX_PI_F / 180.0f);
 
 	// カメラの位置、どこを見ているかを設定する
-	SetCameraPositionAndTargetAndUpVec(cameraPos_, cameraTarget_, VGet(0, 1, 0));
+	SetCameraPositionAndTargetAndUpVec(pos_, target_, VGet(0, 1, 0));
 }
 
 // 描画
@@ -67,11 +69,11 @@ float Camera::GetCameraYaw() const
 // カメラの位置の取得
 VECTOR Camera::GetPos() const 
 {
-	return cameraPos_;
+	return pos_;
 }
 
 // カメラの注視点の取得
 VECTOR Camera::GetTarget() const 
 {
-	return cameraTarget_;
+	return target_;
 }

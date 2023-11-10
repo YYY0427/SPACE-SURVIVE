@@ -15,7 +15,7 @@ public:
 	LazerBase();
 	virtual ~LazerBase();
 
-	virtual void Update() = 0;
+	virtual void Update(VECTOR scrollVec) = 0;
 	virtual void Draw() = 0;
 
 	/// <summary>
@@ -36,12 +36,11 @@ public:
 
 	bool GetIsRefrect() const;
 
-	VECTOR GetPos() const { return pos_; }
-
 protected:
 	std::unique_ptr<Model> pModel_;
 
 	VECTOR pos_;
+	VECTOR* firePos_;
 	VECTOR vec_;
 	VECTOR rot_;
 	VECTOR scale_;

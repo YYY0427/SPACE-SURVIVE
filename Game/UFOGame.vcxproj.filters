@@ -25,12 +25,6 @@
     <Filter Include="ヘッダー ファイル\Util">
       <UniqueIdentifier>{c103c3e9-4cea-4ec3-8ac6-a29c1c74c5c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Rock">
-      <UniqueIdentifier>{4fee6865-234c-4d3e-8957-c74d04a16943}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Rock">
-      <UniqueIdentifier>{fd766e07-65cd-4eaa-bdeb-d1c4602a0500}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Planet">
       <UniqueIdentifier>{9686814b-b0d9-4532-b9ff-c5fd818d3027}</UniqueIdentifier>
     </Filter>
@@ -122,18 +116,6 @@
     </ClCompile>
     <ClCompile Include="Util\DataReaderFromUnity.cpp">
       <Filter>ソース ファイル\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Rock\RockManager.cpp">
-      <Filter>ソース ファイル\Rock</Filter>
-    </ClCompile>
-    <ClCompile Include="Rock\Rock.cpp">
-      <Filter>ソース ファイル\Rock</Filter>
-    </ClCompile>
-    <ClCompile Include="Rock\RockBase.cpp">
-      <Filter>ソース ファイル\Rock</Filter>
-    </ClCompile>
-    <ClCompile Include="Rock\Meteor.cpp">
-      <Filter>ソース ファイル\Rock</Filter>
     </ClCompile>
     <ClCompile Include="Planet\PlanetBase.cpp">
       <Filter>ソース ファイル\Planet</Filter>
@@ -262,18 +244,6 @@
     </ClInclude>
     <ClInclude Include="Util\DataReaderFromUnity.h">
       <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Rock\RockManager.h">
-      <Filter>ヘッダー ファイル\Rock</Filter>
-    </ClInclude>
-    <ClInclude Include="Rock\RockBase.h">
-      <Filter>ヘッダー ファイル\Rock</Filter>
-    </ClInclude>
-    <ClInclude Include="Rock\Rock.h">
-      <Filter>ヘッダー ファイル\Rock</Filter>
-    </ClInclude>
-    <ClInclude Include="Rock\Meteor.h">
-      <Filter>ヘッダー ファイル\Rock</Filter>
     </ClInclude>
     <ClInclude Include="Planet\PlanetBase.h">
       <Filter>ヘッダー ファイル\Planet</Filter>

@@ -3,6 +3,7 @@
 #include "Util/InputState.h"
 #include "Util/Model.h"
 #include "Util//Effekseer3DEffectManager.h"
+#include "Util/DataReaderFromUnity.h"
 #include "Util/Debug.h"
 #include "Util/Range.h"
 #include "common.h"
@@ -11,14 +12,17 @@
 namespace
 {
 	// プレイヤーモデルのファイルのパス
-	std::string model_file_path = "Data/Model/MV1/";
-	std::string model_file_extension = ".mv1";
+	const std::string model_file_hierarchy = "Data/Model/MV1/";
+	const std::string model_file_name = "Player";
+	const std::string model_file_extension = ".mv1";
 
 	// プレイヤーの移動量
 	constexpr VECTOR player_vec_up = { 0, 1, 0 };
 	constexpr VECTOR player_vec_down = { 0, -1, 0 };
 	constexpr VECTOR player_vec_right = { 1, 0, 0 };
 	constexpr VECTOR player_vec_left = { -1, 0, 0 };
+
+	constexpr VECTOR move_z_speed = { 0, 0, 10 };
 
 	// モデルの拡大率
 	constexpr float model_scale = 0.5f;
@@ -46,9 +50,7 @@ namespace
 }
 
 //  コンストラクタ
-Player::Player(UnityGameObject data) :
-	pos_(data.pos),
-	rot_(data.rot),
+Player::Player() :
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
 	hp_(max_hp),
 	ultimateTimer_(0),
@@ -61,9 +63,14 @@ Player::Player(UnityGameObject data) :
 	boostEffectScale_(20.0f),
 	boostEffectSpeed_(1.0f)
 {
+	auto data = DataReaderFromUnity::GetInstance().GetData(model_file_name);
+
+	pos_ = data.front().pos;
+	rot_ = data.front().rot;
+
 	// プレイヤーモデルのインスタンスの生成
-	std::string path = model_file_path + data.name + model_file_extension;
-	pModel_ = std::make_shared<Model>(path.c_str());
+	std::string filePath = model_file_hierarchy + model_file_name + model_file_extension;
+	pModel_ = std::make_shared<Model>(filePath.c_str());
 
 	// シールドのインスタンスの生成
 	pShield_ = std::make_shared<Shield>(*this);
@@ -187,6 +194,8 @@ void Player::Update(float cameraYaw)
 		}
 	}
 
+	Scroll();
+
 	// 無敵時間のタイマーの更新
 	// 0以下にはならない
 	ultimateTimer_ = (std::max)(--ultimateTimer_, 0);
@@ -196,7 +205,7 @@ void Player::Update(float cameraYaw)
 	float rotX = 30.0f * DX_PI_F / 180.0f;
 	rot_ = { rotX + moveVec_.z * 0.01f, 0.0f, -moveVec_.x * 0.01f };
 
-	effectManager.SetEffectRot(boostEffectHandle_, { rot_.x + (180.0f * DX_PI_F / 180.0f), rot_.y, -rot_.z});
+	effectManager.SetEffectRot(boostEffectHandle_, { rot_.x + DX_PI_F, rot_.y, -rot_.z});
 	effectManager.SetEffectScale(boostEffectHandle_, boostEffectScale_);
 	effectManager.SetEffectSpeed(boostEffectHandle_, boostEffectSpeed_);
 
@@ -213,8 +222,13 @@ void Player::Update(float cameraYaw)
 	pShield_->Update();
 }
 
-// 岩との衝突時の更新
-bool Player::CollisionRockUpdate()
+void Player::Scroll()
+{
+	pos_ = VAdd(pos_, move_z_speed);
+}
+
+// 衝突時の更新
+bool Player::OnDamageUpdate()
 {
 	// ブースト時のエフェクトの再生のストップ
 	Effekseer3DEffectManager::GetInstance().DeleteEffect(boostEffectHandle_);
@@ -311,13 +325,6 @@ void Player::Draw()
 	pShield_->Draw();
 }
 
-// プレイヤーの落下処理
-void Player::Fall(float fallSpeed)
-{
-	// 落下
-	pos_.y -= fallSpeed;
-}
-
 // プレイヤーのリスポーン処理
 void Player::Respawn(VECTOR restartPos)
 {
@@ -371,9 +378,9 @@ int Player::GetModelHandle() const
 	return pModel_->GetModelHandle();
 }
 
-VECTOR Player::GetMoveVec() const
+VECTOR Player::GetMoveVecZ() const
 {
-	return moveVec_;
+	return move_z_speed;
 }
 
 std::shared_ptr<Shield> Player::GetShield() const

@@ -102,7 +102,7 @@ void MainScene::GameOverUpdate()
 //	pCamera_->Update();
 
 	// プレイヤーのゲームオーバー時の更新が終了かつフェードしてなかったらフェードアウト開始
-	if (pPlayer_->CollisionRockUpdate() && !IsFadeing())
+	if (pPlayer_->OnDamageUpdate() && !IsFadeing())
 	{
 		// フェードアウトの開始
 		StartFadeOut(255);

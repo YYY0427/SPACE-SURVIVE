@@ -5,27 +5,32 @@
 #include <cassert>
 #include "Sun.h"
 #include "Earth.h"
+#include "../Util/DrawFunctions.h"
+#include "../Util/DataReaderFromUnity.h"
 
 namespace
 {
-	const std::string sun_model_file_path = "Data/Model/MV1/Sun.mv1";
-	const std::string earth_model_file_path = "Data/Model/MV1/Earth.mv1";
+	const std::string model_file_hierarchy = "Data/Model/MV1/";
+	const std::string model_file_extension = ".mv1";
+
+	const std::string sun_model_file_name = "Sun";
+	const std::string earth_model_file_name = "Earth";
 }
 
-PlanetManager::PlanetManager(std::vector<UnityGameObject> sunData, std::vector<UnityGameObject> earthData)
+PlanetManager::PlanetManager()
 {
+	auto sunData = DataReaderFromUnity::GetInstance().GetData(sun_model_file_name);
+	auto earthData = DataReaderFromUnity::GetInstance().GetData(earth_model_file_name);
+
 	// モデルのロード
-	handleTable_[PlanetType::SUN] = MV1LoadModel(sun_model_file_path.c_str());
-	handleTable_[PlanetType::EARTH] = MV1LoadModel(earth_model_file_path.c_str());
+	std::string sunFilePath = model_file_hierarchy + sun_model_file_name + model_file_extension;
+	handleTable_[PlanetType::SUN] = my::MyLoadModel(sunFilePath.c_str());
 
-	// 1つでもモデルのロードに失敗したら止める
-	for (auto& handle : handleTable_)
-	{
-		assert(handle.second != -1);
-	}
+	std::string earthFilePath = model_file_hierarchy + earth_model_file_name + model_file_extension;
+	handleTable_[PlanetType::EARTH] = my::MyLoadModel(earthFilePath.c_str());
 
-	pPlanets_.push_back(std::make_shared<Sun>(handleTable_[PlanetType::SUN], sunData.front()));
-	pPlanets_.push_back(std::make_shared<Earth>(handleTable_[PlanetType::EARTH], earthData.front()));
+//	pPlanets_.push_back(std::make_shared<Sun>(handleTable_[PlanetType::SUN], sunData.front()));
+//	pPlanets_.push_back(std::make_shared<Earth>(handleTable_[PlanetType::EARTH], earthData.front()));
 }
 
 PlanetManager::~PlanetManager()
@@ -52,7 +57,7 @@ void PlanetManager::Draw()
 	}
 }
 
-std::list<std::shared_ptr<PlanetBase>> PlanetManager::GetPlanets() const
+const std::list<std::shared_ptr<PlanetBase>>& PlanetManager::GetPlanets() const
 {
 	return pPlanets_;
 }

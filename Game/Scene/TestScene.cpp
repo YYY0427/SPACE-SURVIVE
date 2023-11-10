@@ -12,8 +12,6 @@
 #include "../Camera.h"
 #include "../Player.h"
 #include "../SkyDome.h"
-#include "../Rock/RockManager.h"
-#include "../Rock/RockBase.h"
 #include "../Planet/PlanetManager.h"
 #include "../Planet/PlanetBase.h"
 #include "../Enemy/EnemyManager.h"
@@ -39,25 +37,23 @@ TestScene::TestScene(SceneManager& manager) :
 	updateFunc_(&TestScene::NormalUpdate)
 {
 	// オブジェクトの配置データの読み込み
-	pDataReader_ = std::make_shared<DataReaderFromUnity>();
-	pDataReader_->LoadUnityGameObjectData();
+	DataReaderFromUnity::GetInstance().LoadUnityGameObjectData("Data/ObjectData.dat");
 
 	// 読み込んだ配置データからオブジェクトのインスタンスの生成
 	pLazerManager_ = std::make_shared<LazerManager>();
-	pPlayer_ = std::make_shared<Player>(pDataReader_->GetDataType("Player2").front());
-	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_, pDataReader_->GetDataType("BossEnemy").front(), pDataReader_->GetDataType("NormalEnemy"));
-	pRockManager_ = std::make_shared<RockManager>(pDataReader_->GetDataType("Rock"), pDataReader_->GetDataType("Meteor"));
-	pPlanetManager_ = std::make_shared<PlanetManager>(pDataReader_->GetDataType("Sun"), pDataReader_->GetDataType("Earth"));
-	pCamera_ = std::make_shared<Camera>(pPlayer_, pDataReader_->GetDataType("Camera").front());
+	pPlayer_ = std::make_shared<Player>();
+	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_);
+	pPlanetManager_ = std::make_shared<PlanetManager>();
+	pCamera_ = std::make_shared<Camera>(pPlayer_);
 	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_->GetPos());
 
-	Effekseer3DEffectManager::GetInstance().PlayEffectLoop(
+	/*Effekseer3DEffectManager::GetInstance().PlayEffectLoop(
 		windEffectH_, 
 		EffectID::wind, 
 		{ pPlayer_->GetPos().x, pPlayer_->GetPos().y, pPlayer_->GetPos().z + 500.0f},
 		200.0f,
 		0.7f,
-		{ 0.0f, -DX_PI_F / 2, 0.0f});
+		{ 0.0f, -DX_PI_F / 2, 0.0f});*/
 }
 
 //  デストラクタ
@@ -78,7 +74,6 @@ void TestScene::Draw()
 {
 	// 各クラスの描画
 	pSkyDome_->Draw();
-	pRockManager_->Draw();
 	pPlanetManager_->Draw();
 	pEnemyManager_->Draw();
 	pLazerManager_->Draw();
@@ -120,13 +115,11 @@ void TestScene::NormalUpdate()
 		return;
 	}
 
-
 	// 更新
-	pSkyDome_->Update();
+	pSkyDome_->Update(pPlayer_->GetMoveVecZ());
 	pPlayer_->Update(pCamera_->GetCameraYaw());
 	pEnemyManager_->Update();
-	pLazerManager_->Update();
-	pRockManager_->Update();
+	pLazerManager_->Update(pPlayer_->GetMoveVecZ());
 	pPlanetManager_->Update();
 	pCamera_->Update();
 
@@ -184,11 +177,7 @@ void TestScene::NormalUpdate()
 			// ポリゴン一つにでも当たっていたら
 			if (result.HitNum > 0)
 			{
-				// 敵にダメージを与える
-				pEnemyManager_->OnDamage(10.0f);
-
-				// ダメージを受けた時のエフェクト
-				enemy->OnDamage(result.Dim->HitPosition);
+				enemy->OnDamage(10.0f, result.Dim->HitPosition);
 
 				// 何回も当たるのを防ぐため一回当たったらレーザーを削除
 				laser.pLazer->Delete();
@@ -234,15 +223,10 @@ void TestScene::NormalUpdate()
 		item_ = SceneItem::PAUSE;
 	}
 
-	// ゲームクリア
-	if (pEnemyManager_->GetIsRepel())
-	{
-		// フェードアウト開始
-		StartFadeOut(255, 10);
-		item_ = SceneItem::TITLE;
-	}
+	
+
 	// ゲームオーバー
-	else if (!pPlayer_->IsLive())
+	if (!pPlayer_->IsLive())
 	{
 		// フェードアウト開始
 		StartFadeOut(255, 10);
@@ -253,7 +237,6 @@ void TestScene::NormalUpdate()
 	UpdateFade();
 }
 
-// 岩と衝突時の更新
 void TestScene::CollisionRockUpdate()
 {
 	// フェードアウトが終わり次第シーン遷移
@@ -271,7 +254,7 @@ void TestScene::CollisionRockUpdate()
 
 	if (!IsFadeing())
 	{
-		bool isEnd = pPlayer_->CollisionRockUpdate();
+		bool isEnd = pPlayer_->OnDamageUpdate();
 
 		if (isEnd)
 		{
@@ -281,9 +264,11 @@ void TestScene::CollisionRockUpdate()
 	}
 
 	// 更新
+	pPlayer_->Scroll();
 	pCamera_->Update();
-	pSkyDome_->Update();
-	pLazerManager_->Update();
+	pSkyDome_->Update(pPlayer_->GetMoveVecZ());
+	pLazerManager_->Update(pPlayer_->GetMoveVecZ());
+	pEnemyManager_->Update();
 
 	// フェードの更新
 	UpdateFade();

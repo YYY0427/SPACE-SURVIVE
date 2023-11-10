@@ -174,12 +174,8 @@
     <ClCompile Include="Planet\Earth.cpp" />
     <ClCompile Include="Planet\PlanetManager.cpp" />
     <ClCompile Include="Planet\PlanetBase.cpp" />
-    <ClCompile Include="Rock\Meteor.cpp" />
-    <ClCompile Include="Rock\RockBase.cpp" />
     <ClCompile Include="Planet\Sun.cpp" />
     <ClCompile Include="Util\DataReaderFromUnity.cpp" />
-    <ClCompile Include="Rock\Rock.cpp" />
-    <ClCompile Include="Rock\RockManager.cpp" />
     <ClCompile Include="Scene\PadSettingScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\DebugScene.cpp" />
@@ -224,12 +220,8 @@
     <ClInclude Include="Planet\PlanetManager.h" />
     <ClInclude Include="Planet\PlanetBase.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Rock\Meteor.h" />
-    <ClInclude Include="Rock\RockBase.h" />
     <ClInclude Include="Planet\Sun.h" />
     <ClInclude Include="Util\DataReaderFromUnity.h" />
-    <ClInclude Include="Rock\Rock.h" />
-    <ClInclude Include="Rock\RockManager.h" />
     <ClInclude Include="Scene\PadSettingScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Util\Timer.h" />

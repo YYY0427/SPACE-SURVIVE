@@ -7,7 +7,7 @@ public:
 	CubeLazer(int modelHandle, VECTOR pos, VECTOR vec);
 	virtual ~CubeLazer();
 
-	void Update() override;
+	void Update(VECTOR scrollVec) override;
 	void Draw() override;
 	void CheckInCamera() override;
 

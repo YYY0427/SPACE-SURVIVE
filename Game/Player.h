@@ -1,7 +1,6 @@
 #pragma once
 #include <DxLib.h>
 #include <memory>
-#include "Util/DataReaderFromUnity.h"
 #include "Util/Timer.h"
 #include <deque>
 
@@ -12,11 +11,8 @@ class Shield;
 class Player
 {
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="data"></param>
-	Player(UnityGameObject data);
+	// コンストラクタ
+	Player();
 
 	// デストラクタ
 	virtual ~Player();
@@ -24,11 +20,14 @@ public:
 	// 通常の更新
 	void Update(float cameraYaw);
 
+	// Zスクロール
+	void Scroll();
+
 	/// <summary>
-	/// 岩との衝突時の更新
+	/// 衝突時の更新
 	/// </summary>
 	/// <returns>処理が終了したか true : 処理終了, false : 処理途中</returns>
-	bool CollisionRockUpdate();
+	bool OnDamageUpdate();
 
 	// エネルギーの処理
 	void EnergyProcess();
@@ -36,23 +35,11 @@ public:
 	// 描画
 	void Draw();
 
-	/// <summary>
-	/// プレイヤーの落下処理 
-	/// </summary>
-	/// <param name="fallSpeed">落下スピード</param>
-	void Fall(float fallSpeed);
-
 	// プレイヤーのリスポーン処理
 	void Respawn(VECTOR restartPos);
 
 	// プレイヤーのダメージ処理
 	void OnDamage();
-
-	/// </summary>
-	/// プレイヤーの高さが落下死亡判定の高さより小さくなったか
-	/// </summary>
-	/// <returns>true : 小さくなった, false : 小さくなってない</returns>
-	bool IsDeathJudgHeight() const;
 
 	/// <summary>
 	/// プレイヤーが無敵時間中か
@@ -75,7 +62,7 @@ public:
 	// プレイヤーモデルのハンドルの取得
 	int GetModelHandle() const; 
 
-	VECTOR GetMoveVec() const;
+	VECTOR GetMoveVecZ() const;
 
 	std::shared_ptr<Shield> GetShield() const;
 private:

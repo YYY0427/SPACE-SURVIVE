@@ -26,7 +26,7 @@ LazerManager::~LazerManager()
 	}
 }
 
-void LazerManager::Create(LazerType lazerType, const VECTOR pos, const VECTOR vec)
+void LazerManager::Create(LazerType lazerType, VECTOR* pos, VECTOR vec)
 {
 	LazerData data;
 	data.type = lazerType;
@@ -34,7 +34,7 @@ void LazerManager::Create(LazerType lazerType, const VECTOR pos, const VECTOR ve
 	switch (lazerType)
 	{
 	case LazerType::CUBE:
-		data.pLazer = std::make_shared<CubeLazer>(lazerModelHanldeTable_[lazerType], pos, vec);
+		data.pLazer = std::make_shared<CubeLazer>(lazerModelHanldeTable_[lazerType], *pos, vec);
 		break;
 
 	case LazerType::NORMAL:
@@ -47,7 +47,7 @@ void LazerManager::Create(LazerType lazerType, const VECTOR pos, const VECTOR ve
 	pLazeres_.push_back(data);
 }
 
-void LazerManager::Update()
+void LazerManager::Update(VECTOR scrollVec)
 {
 	// 不要になったレーザーの削除
 	auto rmIt = std::remove_if(pLazeres_.begin(), pLazeres_.end(), [](const LazerData lazer)
@@ -59,7 +59,7 @@ void LazerManager::Update()
 	for (auto& lazer : pLazeres_)
 	{
 		lazer.pLazer->CheckInCamera();
-		lazer.pLazer->Update();
+		lazer.pLazer->Update(scrollVec);
 	}
 }
 
@@ -71,7 +71,7 @@ void LazerManager::Draw()
 	}
 }
 
-std::list<LazerData> LazerManager::GetLazeres() const
+const std::list<LazerData>& LazerManager::GetLazeres() const
 {
 	return pLazeres_;
 }

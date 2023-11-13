@@ -70,6 +70,10 @@ void NormalEnemy::Update()
 	moveVec_.z = pPlayer_->GetMoveVecZ().z;
 	pos_ = VAdd(pos_, moveVec_);
 
+
+	float angle = atan2f(tempVec.x, tempVec.z);
+	rot_.y = angle + DX_PI_F;
+
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update();

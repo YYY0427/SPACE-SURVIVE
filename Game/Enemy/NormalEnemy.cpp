@@ -18,8 +18,10 @@ namespace
 
 NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject data)
 {
+	toTargetVec_ = {};
 	pPlayer_ = pPlayer;
 	pLazerManager_ = pLazerManager;
+	moveVec_.x = 10;
 	pos_ = data.pos;
 	rot_ = { data.rot.x, data.rot.y, data.rot.z};
 	lazerFireIntervalTimer_ = (GetRand(10) + 1) * 60;
@@ -44,24 +46,29 @@ void NormalEnemy::Update()
 	// 追従させるために毎フレーム取得
 	firePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos);
 
+	// プレイヤーに向かうベクトルを作成
+	VECTOR tempVec = VSub(pPlayer_->GetPos(), firePos_);
+	toTargetVec_ = VNorm(tempVec);
+	toTargetVec_ = VScale(toTargetVec_, lazerSpeed_);
+
 	lazerFireIntervalTimer_.Update(1);
 	if (lazerFireIntervalTimer_.IsTimeOut())
 	{
-		// プレイヤーに向かうベクトルを作成
-		VECTOR tempVec = VSub(pPlayer_->GetPos(), firePos_);
-		VECTOR toPlayerVec = VNorm(tempVec);
-		toPlayerVec = VScale(toPlayerVec, lazerSpeed_);
-
 		// レーザーを発射
-		pLazerManager_->Create(LazerType::NORMAL, &firePos_, toPlayerVec);
+		pLazerManager_->Create(LazerType::NORMAL, &firePos_, &toTargetVec_, &moveVec_);
 		lazerFireIntervalTimer_.Reset();
 	}
 
 	// サインカーブ移動
 	// 浮いているように見せるため
-//	SinWave(100, 10);
+	SinWave(100, 10);
 
-	pos_ = VAdd(pos_, pPlayer_->GetMoveVecZ());
+	VECTOR screenPos = ConvWorldPosToScreenPos(pos_);
+	if (screenPos.x > common::screen_width || screenPos.x < 0)
+		moveVec_.x *= -1;
+
+	moveVec_.z = pPlayer_->GetMoveVecZ().z;
+	pos_ = VAdd(pos_, moveVec_);
 
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);

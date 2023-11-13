@@ -15,7 +15,8 @@ EnemyBase::EnemyBase() :
 	sinWaveTimer_(0),
 	onDamageEffectHandle_(-1),
 	hp_(0.0f),
-	isEnabled_(true)
+	isEnabled_(true),
+	moveVec_({})
 {
 }
 
@@ -36,7 +37,7 @@ float EnemyBase::GetCollisionRadius() const
 void EnemyBase::SinWave(const float speed, const float swingWidth)
 {
 	sinWaveTimer_++;
-	pos_.y = pos_.y + sinf(DX_PI_F * 2 / speed * sinWaveTimer_) * swingWidth;
+	moveVec_.y = sinf(DX_PI_F * 2 / speed * sinWaveTimer_) * swingWidth;
 }
 
 void EnemyBase::OnDamage(int damage, VECTOR pos)

@@ -44,6 +44,7 @@ protected:
 	VECTOR pos_;
 	VECTOR firePos_;
 	VECTOR rot_;
+	VECTOR moveVec_;
 	Timer lazerFireIntervalTimer_;
 	int sinWaveTimer_;
 	int onDamageEffectHandle_;

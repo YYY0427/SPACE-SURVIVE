@@ -54,7 +54,7 @@ void EnemyManager::Update()
 	for (auto& enemy : pEnemies_)
 	{
 		// ƒJƒƒ‰“à‚É‘¶Ý‚µ‚½‚ç
-		if (!CheckCameraViewClip(enemy->GetPos()))
+	//	if (!CheckCameraViewClip(enemy->GetPos()))
 		{
 			enemy->Update();
 		}

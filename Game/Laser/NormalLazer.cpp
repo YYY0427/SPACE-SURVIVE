@@ -14,7 +14,7 @@ namespace
 	constexpr int collision_and_effect_difference_frame = 120;
 }
 
-NormalLazer::NormalLazer(int modelHandle, VECTOR* pos, VECTOR vec) :
+NormalLazer::NormalLazer(int modelHandle, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec) :
 	collisionAndEffectDifferenceTimer_(collision_and_effect_difference_frame),
 	effectPos_({})
 {
@@ -31,13 +31,14 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* pos, VECTOR vec) :
 	pos_ = *pos;
 	vec_ = vec;
 	isEnabled_ = true;
+	enemyMoveVec_ = enemyMoveVec;
 
 	// ベクトル方向の回転行列をモデルに設定
-	MATRIX rotMtx = MGetRotVec2(init_model_direction, vec_);
+	MATRIX rotMtx = MGetRotVec2(init_model_direction, *vec_);
 	MV1SetRotationMatrix(pModel_->GetModelHandle(), rotMtx);
 
 	// ベクトル方向の回転行列からオイラー角を出力
-	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, vec_);
+	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
 	bool isGimbalLock = false;
 	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 
@@ -56,15 +57,33 @@ NormalLazer::~NormalLazer()
 
 void NormalLazer::Update(VECTOR scrollVec)
 {
-	pos_ = VAdd(pos_, scrollVec);
+	pos_ = VAdd(pos_, *enemyMoveVec_);
 	effectPos_ = VAdd(effectPos_, scrollVec);
+
 	collisionAndEffectDifferenceTimer_.Update(1);
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
 	{
-		pos_ = VAdd(pos_, vec_);
-		pModel_->SetPos(pos_);
-		pModel_->Update();
+		pos_ = VAdd(pos_, a_);
 	}
+	else
+	{
+		a_ = *vec_;
+
+		// ベクトル方向の回転行列をモデルに設定
+		MATRIX rotMtx = MGetRotVec2(init_model_direction, *vec_);
+		MV1SetRotationMatrix(pModel_->GetModelHandle(), rotMtx);
+
+		// ベクトル方向の回転行列からオイラー角を出力
+		MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
+		bool isGimbalLock = false;
+		VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
+
+		auto& effectManager = Effekseer3DEffectManager::GetInstance();
+		effectManager.SetEffectRot(lazerEffectHandle_, effectRot);
+	}
+
+	pModel_->SetPos(pos_);
+	pModel_->Update();
 }
 
 void NormalLazer::Draw()
@@ -87,23 +106,23 @@ void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
 
 #if true
 	// 反射ベクトルの作成
-	VECTOR inversionVec = VScale(vec_, -1);
+	VECTOR inversionVec = VScale(*vec_, -1);
 	float dot = VDot(inversionVec, norm);
 	dot *= 2.0f;
 	VECTOR normVec = VScale(norm, dot);
-	vec_ = VAdd(vec_, normVec);
-	vec_ = VNorm(vec_);
-	vec_ = VScale(vec_, 300.0f);
+	*vec_ = VAdd(*vec_, normVec);
+	*vec_ = VNorm(*vec_);
+	*vec_ = VScale(*vec_, 300.0f);
 #else
 	vec_ = VScale(vec_, -1);
 #endif
 
 	// ベクトル方向の回転行列をモデルに設定
-	MATRIX rotModelMtx = MGetRotVec2(init_model_direction, vec_);
+	MATRIX rotModelMtx = MGetRotVec2(init_model_direction, *vec_);
 	MV1SetRotationMatrix(pModel_->GetModelHandle(), rotModelMtx);
 
 	// ベクトル方向の回転行列からオイラー角を出力
-	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, vec_);
+	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
 	bool isGimbalLock = false;
 	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 

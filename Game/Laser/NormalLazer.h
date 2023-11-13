@@ -5,7 +5,7 @@
 class NormalLazer : public LazerBase
 {
 public:
-	NormalLazer(int modelHandle, VECTOR* pos, VECTOR vec);
+	NormalLazer(int modelHandle, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec);
 	virtual ~NormalLazer();
 
 	void Update(VECTOR scrollVec) override;
@@ -15,6 +15,9 @@ public:
 	void CheckInCamera() override;
 
 private:
+	VECTOR* vec_;
+	VECTOR a_;
+	VECTOR* enemyMoveVec_;
 	VECTOR effectPos_;
 	int lazerEffectHandle_;
 

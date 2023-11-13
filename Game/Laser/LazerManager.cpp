@@ -26,7 +26,7 @@ LazerManager::~LazerManager()
 	}
 }
 
-void LazerManager::Create(LazerType lazerType, VECTOR* pos, VECTOR vec)
+void LazerManager::Create(LazerType lazerType, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec)
 {
 	LazerData data;
 	data.type = lazerType;
@@ -34,11 +34,11 @@ void LazerManager::Create(LazerType lazerType, VECTOR* pos, VECTOR vec)
 	switch (lazerType)
 	{
 	case LazerType::CUBE:
-		data.pLazer = std::make_shared<CubeLazer>(lazerModelHanldeTable_[lazerType], *pos, vec);
+		data.pLazer = std::make_shared<CubeLazer>(lazerModelHanldeTable_[lazerType], *pos, *vec);
 		break;
 
 	case LazerType::NORMAL:
-		data.pLazer = std::make_shared<NormalLazer>(lazerModelHanldeTable_[lazerType], pos, vec);
+		data.pLazer = std::make_shared<NormalLazer>(lazerModelHanldeTable_[lazerType], pos, vec, enemyMoveVec);
 		break;
 
 	default:

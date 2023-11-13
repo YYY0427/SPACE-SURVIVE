@@ -16,7 +16,7 @@ public:
 	LazerManager();
 	virtual ~LazerManager();
 
-	void Create(LazerType lazerType, VECTOR* pos, VECTOR vec);
+	void Create(LazerType lazerType, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec);
 
 	void Update(VECTOR scrollVec);
 	void Draw();

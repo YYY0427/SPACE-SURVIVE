@@ -3,7 +3,6 @@
 #include "TitleScene.h"
 #include "DebugScene.h"
 #include "PauseScene.h"
-#include "../Util/DrawFunctions.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
@@ -11,24 +10,16 @@
 #include "../Util/Debug.h"
 #include "../Camera.h"
 #include "../Player.h"
-#include "../SkyDome.h"
 #include "../Planet/PlanetManager.h"
 #include "../Planet/PlanetBase.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Laser/LazerManager.h"
+#include "../Background.h"
 #include "../Shield.h"
 #include "../common.h"
 
 namespace
 {
-	// 道からどのくらいの高さまでプレイヤーが上昇できるか
-	constexpr float rise_possible_height = 2000.0f;
-
-	// 通常のプレイヤーの落下速度
-	constexpr float normal_player_fall_speed = 20.0f;
-
-	// プレイヤーの高さが特定の高さよりも高くなった時の落下速度
-	constexpr float special_player_fall_speed = 40.0f;
 }
 
 // コンストラクタ
@@ -40,12 +31,12 @@ TestScene::TestScene(SceneManager& manager) :
 	DataReaderFromUnity::GetInstance().LoadUnityGameObjectData("Data/ObjectData.dat");
 
 	// 読み込んだ配置データからオブジェクトのインスタンスの生成
+	pBackground_ = std::make_shared<Background>();
 	pLazerManager_ = std::make_shared<LazerManager>();
 	pPlayer_ = std::make_shared<Player>();
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_);
 	pPlanetManager_ = std::make_shared<PlanetManager>();
 	pCamera_ = std::make_shared<Camera>(pPlayer_);
-	pSkyDome_ = std::make_shared<SkyDome>(pPlayer_->GetPos());
 
 	/*Effekseer3DEffectManager::GetInstance().PlayEffectLoop(
 		windEffectH_, 
@@ -53,7 +44,8 @@ TestScene::TestScene(SceneManager& manager) :
 		{ pPlayer_->GetPos().x, pPlayer_->GetPos().y, pPlayer_->GetPos().z + 500.0f},
 		200.0f,
 		0.7f,
-		{ 0.0f, -DX_PI_F / 2, 0.0f});*/
+		{ 0.0f, -DX_PI_F / 2, 0.0f});
+	*/
 }
 
 //  デストラクタ
@@ -73,7 +65,7 @@ void TestScene::Update()
 void TestScene::Draw()
 {
 	// 各クラスの描画
-	pSkyDome_->Draw();
+	pBackground_->Draw();
 	pPlanetManager_->Draw();
 	pEnemyManager_->Draw();
 	pLazerManager_->Draw();
@@ -116,7 +108,6 @@ void TestScene::NormalUpdate()
 	}
 
 	// 更新
-	pSkyDome_->Update(pPlayer_->GetMoveVecZ());
 	pPlayer_->Update(pCamera_->GetCameraYaw());
 	pEnemyManager_->Update();
 	pLazerManager_->Update(pPlayer_->GetMoveVecZ());
@@ -223,8 +214,6 @@ void TestScene::NormalUpdate()
 		item_ = SceneItem::PAUSE;
 	}
 
-	
-
 	// ゲームオーバー
 	if (!pPlayer_->IsLive())
 	{
@@ -266,7 +255,6 @@ void TestScene::CollisionRockUpdate()
 	// 更新
 	pPlayer_->Scroll();
 	pCamera_->Update();
-	pSkyDome_->Update(pPlayer_->GetMoveVecZ());
 	pLazerManager_->Update(pPlayer_->GetMoveVecZ());
 	pEnemyManager_->Update();
 

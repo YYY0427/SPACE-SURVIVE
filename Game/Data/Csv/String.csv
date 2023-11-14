@@ -29,3 +29,4 @@ PauseItemOption,OPTION,Abel,20,3
 PauseItemTitle,TITLE,Abel,20,3
 PausetemSelectBarRight,[,Abel,20,3
 PausetemSelectBarLeft,],Abel,20,3
+WarningUI,WARNING!!,Abel,50,5

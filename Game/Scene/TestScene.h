@@ -5,12 +5,12 @@
 // プロトタイプ宣言
 class RockManager;
 class PlanetManager;
-class SkyDome;
 class Camera;
 class Player;
 class DataReaderFromUnity;
 class EnemyManager;
 class LazerManager;
+class Background;
 
 // テストシーン
 // 色々試すようのシーン
@@ -47,6 +47,7 @@ private:
 	};
 private:
 	int windEffectH_;
+	int backGroundH_;
 	SceneItem item_;
 
 	// メンバ関数ポインタ
@@ -54,10 +55,10 @@ private:
 	void (TestScene::* updateFunc_) ();
 
 	// ポインタ
+	std::shared_ptr<Background> pBackground_;
 	std::shared_ptr<Camera> pCamera_;
 	std::shared_ptr<Player> pPlayer_;
 	std::shared_ptr<RockManager> pRockManager_;
-	std::shared_ptr<SkyDome> pSkyDome_;
 	std::shared_ptr<DataReaderFromUnity> pDataReader_;
 	std::shared_ptr<PlanetManager> pPlanetManager_;
 	std::shared_ptr<EnemyManager> pEnemyManager_;

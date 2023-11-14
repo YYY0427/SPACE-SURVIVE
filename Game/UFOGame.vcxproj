@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="UI\EnergyGage.cpp" />
     <ClCompile Include="UI\HpBar.cpp" />
@@ -180,7 +181,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\DebugScene.cpp" />
     <ClCompile Include="Scene\TestScene.cpp" />
-    <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="Util\Timer.cpp" />
     <ClCompile Include="Util\StringManager.cpp" />
     <ClCompile Include="Util\SaveData.cpp" />
@@ -199,6 +199,7 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="UI\EnergyGage.h" />
     <ClInclude Include="UI\HpBar.h" />
@@ -228,7 +229,6 @@
     <ClInclude Include="Util\Range.h" />
     <ClInclude Include="Scene\DebugScene.h" />
     <ClInclude Include="Scene\TestScene.h" />
-    <ClInclude Include="SkyDome.h" />
     <ClInclude Include="Util\StringManager.h" />
     <ClInclude Include="Util\SaveData.h" />
     <ClInclude Include="Util\DrawFunctions.h" />

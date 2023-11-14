@@ -9,7 +9,6 @@
 #include "../Util/Debug.h"
 #include "../Camera.h"
 #include "../Player.h"
-#include "../SkyDome.h"
 #include "../Rock/RockManager.h"
 #include "../Rock/RockBase.h"
 #include <DxLib.h>

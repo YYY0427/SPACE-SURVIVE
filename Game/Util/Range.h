@@ -23,25 +23,52 @@ public:
 	}
 
 	/// <summary>
-	/// 値が設定した下限値と上限値の範囲内かどうか
+	/// 値が設定した上限値の範囲内かどうか
 	/// </summary>
 	/// <param name="value">範囲内か調べたい値</param>
-	/// <returns>true : 範囲内, false : 範囲内じゃない</returns>
-	bool IsInside(T value) const
+	/// <returns> true : 範囲内, false : 範囲内じゃない </returns>
+	bool IsUpperLimit(T value) const
 	{
-		return (min_ <= value) && (value <= max_);
+		return (value <= max_);
 	}
 
 	/// <summary>
-	/// 値を設定した範囲内にクランプする
+	/// 値が設定した下限値の範囲内かどうか
 	/// </summary>
-	/// <param name="value">クランプしたい値</param>
-	/// <returns>クランプ後の値</returns>
+	/// <param name="value">範囲内か調べたい値</param>
+	/// <returns> true : 範囲内, false : 範囲内じゃない </returns>
+	bool IsLowerLimit(T value) const
+	{
+		return (min_ <= value);
+	}
+
+	/// <summary>
+	/// 値が設定した下限値と上限値の範囲内かどうか
+	/// </summary>
+	/// <param name="value">範囲内か調べたい値</param>
+	/// <returns> true : 範囲内, false : 範囲内じゃない </returns>
+	bool IsInside(T value) const
+	{
+		return IsLowerLimit(value) && IsUpperLimit(value);
+	}
+
+	/// <summary>
+	/// 値が下限値を下回った場合、値を下限値に変更
+	/// 値が上限値を上回った場合、値を上限値に変更
+	/// </summary>
+	/// <param name="value">変更したい値</param>
+	/// <returns>変更後の値</returns>
 	T Clamp(T value) const
 	{
 		return  std::clamp(value, min_, max_);
 	}
 
+	/// <summary>
+	/// 値が下限値を下回った場合、値を上限値に変更
+	/// 値が上限値を上回った場合、値を下限値に変更
+	/// </summary>
+	/// <param name="value">変更したい値</param>
+	/// <returns>変更後の値</returns>
 	T Wrap(T value) const
 	{
 		const float n = std::fmod(value - min_, max_ - min_);

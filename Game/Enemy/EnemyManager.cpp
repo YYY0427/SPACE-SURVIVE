@@ -21,14 +21,17 @@ namespace
 
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager)
 {
+	// モデルのロード
 	std::string normalEnemyFilePath = model_file_hierarchy + normal_enemy_model_file_name + model_file_extension;
 	modelHandleTable_[EnemyType::NOMAL] = my::MyLoadModel(normalEnemyFilePath.c_str());
 
 	std::string bossEnemyFilePath = model_file_hierarchy + boss_enemy_model_file_name + model_file_extension;
 	modelHandleTable_[EnemyType::BOSS] = my::MyLoadModel(bossEnemyFilePath.c_str());
 
-//	pEnemies_.push_back(std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS], pPlayer, pLazerManager, bossEnemyData));
-	for (auto& enemyData : DataReaderFromUnity::GetInstance().GetData(normal_enemy_model_file_name))
+	// インスタンスの作成
+	auto& data = DataReaderFromUnity::GetInstance();
+	pEnemies_.push_back(std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS], pPlayer, pLazerManager, data.GetData(boss_enemy_model_file_name).front()));
+	for (auto& enemyData : data.GetData(normal_enemy_model_file_name))
 	{
 		pEnemies_.push_back(std::make_shared<NormalEnemy>(modelHandleTable_[EnemyType::NOMAL], pPlayer, pLazerManager, enemyData));
 	}
@@ -44,7 +47,7 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Update()
 {
-	// 不要になったレーザーの削除
+	// 不要になった敵の削除
 	auto rmIt = std::remove_if(pEnemies_.begin(), pEnemies_.end(), [](const std::shared_ptr<EnemyBase> enemy)
 		{
 			return !enemy->GetIsEnabled();

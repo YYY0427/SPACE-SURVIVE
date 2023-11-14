@@ -142,9 +142,10 @@ void StringManager::DrawStringCenter(std::string id, int x, int y, unsigned int 
 	std::string string = stringDataTable_[id].string;
 	int fontHandle = stringDataTable_[id].fontHandle;
 	int width = GetDrawStringWidthToHandle(string.c_str(), static_cast<int>(strlen(string.c_str())), fontHandle);
+	int height = GetFontSizeToHandle(fontHandle);
 
 	// 取得した文字列の横幅から文字列を横中央位置に表示
-	DrawStringToHandle(x - width / 2, y, string.c_str(), color, fontHandle);
+	DrawStringToHandle(x - width / 2, y - height / 2, string.c_str(), color, fontHandle);
 }
 
 // フォントを使った数字を指定した座標を中心として表示

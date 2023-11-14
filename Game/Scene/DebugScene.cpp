@@ -1,10 +1,10 @@
 #include "DebugScene.h"
 #include "SceneManager.h"
 #include "TitleScene.h"
-#include "MainScene.h"
+#include "TestScene.h"
 #include "PauseScene.h"
 #include "OptionScene.h"
-#include "TestScene.h"
+#include "GameMainScene.h"
 #include "../Util/InputState.h"
 #include "../Util/Range.h"
 #include "../Util/Debug.h"
@@ -60,8 +60,8 @@ void DebugScene::Update()
 		switch (static_cast<Item>(currentSelectItem_))
 		{
 		// テストシーン
-		case Item::TEST_SCENE:
-			manager_.ChangeScene(new TestScene(manager_));
+		case Item::GEME_MAIN_SCENE:
+			manager_.ChangeScene(new GameMainScene(manager_));
 			return;
 
 		// タイトルシーン
@@ -70,8 +70,8 @@ void DebugScene::Update()
 			return;
 
 		// メインシーン
-		case Item::MAIN_SCENE:
-			manager_.ChangeScene(new MainScene(manager_));
+		case Item::TEST_SCENE:
+			manager_.ChangeScene(new TestScene(manager_));
 			return;
 
 		// オプションシーン
@@ -105,9 +105,9 @@ void DebugScene::Draw()
 	Debug::Log("DebugScene");
 
 	// デバッグシーンから飛べるシーンの項目のテキスト表示
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::TEST_SCENE), "TestScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::GEME_MAIN_SCENE), "GameMainScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::TITLE_SCENE), "TitleScene", 0xffffff, true);
-	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::MAIN_SCENE), "MainScene", 0xffffff, true);
+	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::TEST_SCENE), "TestScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::OPTION_SCENE), "ConfigScene", 0xffffff, true);
 	DrawString(draw_text_pos_x, draw_text_pos_y + text_space_y * static_cast<int>(Item::PAUSE_SCENE), "PauseScene", 0xffffff, true);
 

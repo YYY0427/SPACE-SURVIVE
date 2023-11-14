@@ -27,9 +27,9 @@ private:
 	// デバッグシーンから飛べるシーンの項目
 	enum class Item
 	{
-		TEST_SCENE,			// テストシーン
+		GEME_MAIN_SCENE,			// テストシーン
 		TITLE_SCENE,		// タイトルシーン
-		MAIN_SCENE,			// メインシーン
+		TEST_SCENE,			// メインシーン
 		OPTION_SCENE,		// 設定シーン
 		PAUSE_SCENE,		// ポーズシーン
 		TOTAL_VALUE			// 項目の合計値

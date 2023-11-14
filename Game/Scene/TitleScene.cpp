@@ -2,10 +2,9 @@
 #include <cassert>
 #include "TitleScene.h"
 #include "SceneManager.h"
-#include "MainScene.h"
 #include "OptionScene.h"
 #include "DebugScene.h"
-#include "TestScene.h"
+#include "GameMainScene.h"
 #include "../Util/InputState.h"
 #include "../Util/SoundManager.h"
 #include "../Util/DrawFunctions.h"
@@ -89,7 +88,7 @@ void TitleScene::NormalUpdate()
 		{
 		// ゲームスタート
 		case Item::START:
-			manager_.ChangeScene(new TestScene(manager_));
+			manager_.ChangeScene(new GameMainScene(manager_));
 			return;
 
 		// オプション
@@ -99,7 +98,12 @@ void TitleScene::NormalUpdate()
 
 		// ゲーム終了
 		case Item::END:
+#ifdef _DEBUG
+			manager_.ChangeScene(new DebugScene(manager_));
+			return;
+#else 
 			manager_.SetIsGameEnd(true);
+#endif
 			return;
 
 		// ありえないので止める

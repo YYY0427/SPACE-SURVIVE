@@ -16,23 +16,26 @@ public:
 private:
 	struct Data
 	{
-		int imgH_;
-		Vector2 pos_;
+		int imgH;
+		Vector2 pos;
+		int scrollDir;
 		int imgWidth;
-		int imgHeight_;
+		int imgHeight;
 	};
 
 private:
 	enum class ID
 	{
 		CENTER,
+		UP,
 		DOWN,
-		UP
 	};
 
 private:
-	std::map<ID, std::array<Data, 2>> uiDataTable_;
+	std::array<Data, 3> uiDataTable_;
 	int alphaParam_;
 	int addAlphaValue_;
 	Range<int> alphaParamRange_;
+
+	int scroll_;
 };

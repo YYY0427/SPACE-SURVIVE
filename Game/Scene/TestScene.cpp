@@ -9,13 +9,14 @@
 #include "../Util/Debug.h"
 #include "../Camera.h"
 #include "../UI/Warning.h"
+#include "../UI/HpBar.h"
 #include <DxLib.h>
 
 // コンストラクタ
 TestScene::TestScene(SceneManager& manager) :
 	SceneBase(manager)
 {
-	pWarning_ = std::make_shared<Warning>();
+	pHpBar_ = std::make_shared<HpBar>(50);
 }
 
 // デストラクタ
@@ -28,7 +29,7 @@ TestScene::~TestScene()
 void TestScene::Update()
 {
 	// 各クラスの更新
-	pWarning_->Update();
+	pHpBar_->Update(30);
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
@@ -62,7 +63,7 @@ void TestScene::Draw()
 	Debug::Log("TestScene");
 
 	// 各クラスの描画
-	pWarning_->Draw();
+	pHpBar_->Draw(50, 20, 50);
 
 	// フェードの描画
 	DrawFade(true);

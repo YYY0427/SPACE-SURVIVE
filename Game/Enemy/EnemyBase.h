@@ -35,7 +35,9 @@ public:
 
 	virtual void OnDamage(int damage, VECTOR pos);
 
-	bool GetIsEnabled() const;
+	void Delete();
+
+	bool IsEnabled() const;
 
 protected:
 	std::unique_ptr<Model> pModel_;

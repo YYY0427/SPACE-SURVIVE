@@ -57,7 +57,12 @@ void EnemyBase::OnDamage(int damage, VECTOR pos)
 	}
 }
 
-bool EnemyBase::GetIsEnabled() const
+void EnemyBase::Delete()
+{
+	isEnabled_ = false;
+}
+
+bool EnemyBase::IsEnabled() const
 {
 	return isEnabled_;
 }

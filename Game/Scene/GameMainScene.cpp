@@ -48,7 +48,7 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 	*/
 }
 
-//  デストラクタ
+// デストラクタ
 GameMainScene::~GameMainScene()
 {
 	// 全てのエフェクトの削除
@@ -67,9 +67,9 @@ void GameMainScene::Draw()
 	// 各クラスの描画
 	pBackground_->Draw();
 	pPlanetManager_->Draw();
+	pPlayer_->Draw();
 	pEnemyManager_->Draw();
 	pLazerManager_->Draw();
-	pPlayer_->Draw();
 
 	// 現在のシーンのテキスト表示
 	Debug::Log("GameMainScene");

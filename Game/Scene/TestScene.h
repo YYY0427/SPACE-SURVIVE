@@ -5,6 +5,7 @@
 // プロトタイプ宣言
 class Camera;
 class Warning;
+class HpBar;
 
 // テストシーン
 // 色々試すようのシーン
@@ -30,4 +31,5 @@ private:
 	// ポインタ
 	std::shared_ptr<Camera> pCamera_;
 	std::shared_ptr<Warning> pWarning_;
+	std::shared_ptr<HpBar> pHpBar_;
 };

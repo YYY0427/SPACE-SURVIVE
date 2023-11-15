@@ -10,6 +10,12 @@ public:
 	void OnDamage(float afterHp);
 
 private:
+	void NormalUpdate(const float aimHpSpeed);
+	void FirstDirectionUpdate(const float aimHpSpeed);
+
+private:
+	void(HpBar::*updateFunc_)(const float aimHpSpeed);
+
 	int hpFrameImgH_;
 	int hpImgH_;
 	int hpBackImgH_;

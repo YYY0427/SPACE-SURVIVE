@@ -15,13 +15,24 @@ namespace
 
 	// 文字のフェードの速度
 	constexpr int string_fade_speed = 5;
+
+	// 上下のバーのスクロール速度
+	constexpr int scroll_speed = 10;
+
+	// 全体のフェード速度
+	constexpr int fade_speed = 5;
 }
 
-Warning::Warning() :
-	alphaParam_(255),
-	addAlphaValue_(string_fade_speed),
-	alphaParamRange_(10, 255),
-	scroll_(0)
+Warning::Warning(int drawFrame) :
+	stringAlphaParam_(255),
+	addStringAlphaValue_(string_fade_speed),
+	stringAlphaParamRange_(10, 255),
+	scroll_(0),
+	imgAlphaParam_(0),
+	addImgAlphaValue_(fade_speed),
+	imgAlphaParamRange_(0, 255),
+	drawFrameTimer_(drawFrame),
+	isEnd_(false)
 {
 	// 画像のロード
 	uiDataTable_[static_cast<int>(ID::CENTER)].imgH = my::MyLoadGraph(center_img_file_path.c_str());
@@ -53,17 +64,39 @@ Warning::~Warning()
 	}
 }
 
+bool Warning::IsEnd() const
+{
+	return (isEnd_) && (imgAlphaParam_ <= 0);
+}
+
 void Warning::Update()
 {
-	alphaParam_ += addAlphaValue_;
-	Debug::Log("alpha", alphaParam_);
-	if (!alphaParamRange_.IsInside(alphaParam_))
+	// 描画時間のカウント
+	drawFrameTimer_.Update(1);
+	if (drawFrameTimer_.IsTimeOut() && !isEnd_)
 	{
-		addAlphaValue_ *= -1;
-		alphaParamRange_.Clamp(alphaParam_);
+		isEnd_ = true;
+		addImgAlphaValue_ *= -1;
+		addStringAlphaValue_ = -fade_speed;
+	}
+	else if(!drawFrameTimer_.IsTimeOut())
+	{
+		if (!stringAlphaParamRange_.IsInside(stringAlphaParam_))
+		{
+			addStringAlphaValue_ *= -1;
+			stringAlphaParam_ = stringAlphaParamRange_.Clamp(stringAlphaParam_);
+		}
 	}
 
-	scroll_ += 10;
+	// 文字のフェード
+	stringAlphaParam_ += addStringAlphaValue_;
+
+	// 上下のバーのスクロール
+	scroll_ += scroll_speed;
+
+	// 画像のフェード
+	imgAlphaParam_ += addImgAlphaValue_;
+	imgAlphaParam_ = imgAlphaParamRange_.Clamp(imgAlphaParam_);
 }
 
 void Warning::Draw()
@@ -74,6 +107,7 @@ void Warning::Draw()
 
 		if (data.scrollDir != 0)
 		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, imgAlphaParam_);
 			DrawRotaGraph(
 				(data.imgWidth * 0.5) + scroll,
 				data.pos.y_,
@@ -83,17 +117,26 @@ void Warning::Draw()
 				(data.imgWidth * (1 * -data.scrollDir + 0.5)) + scroll,
 				data.pos.y_,
 				1.0f, 0.0f, data.imgH, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 		else
 		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, imgAlphaParam_);
 			DrawRotaGraph(
 				data.pos.x_,
 				data.pos.y_,
 				1.0f, 0.0f, data.imgH, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 	}
 
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alphaParam_);
+	float ratio;
+	(!isEnd_) ?
+		(ratio = (static_cast<float>(stringAlphaParam_) / static_cast<float>(imgAlphaParam_) * 255.0f)) :
+		(ratio = stringAlphaParam_);
+	Debug::Log("ratio", stringAlphaParam_);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA,  ratio);
 	StringManager::GetInstance().DrawStringCenter("WarningUI", common::screen_width / 2, common::screen_height / 2, 0xffffff);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

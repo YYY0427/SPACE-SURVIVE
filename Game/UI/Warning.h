@@ -12,6 +12,13 @@ public:
 
 	void Update();
 	void Draw();
+private:
+	enum class ID
+	{
+		CENTER,
+		UP,
+		DOWN,
+	};
 
 private:
 	struct Data
@@ -21,14 +28,6 @@ private:
 		int scrollDir;
 		int imgWidth;
 		int imgHeight;
-	};
-
-private:
-	enum class ID
-	{
-		CENTER,
-		UP,
-		DOWN,
 	};
 
 private:

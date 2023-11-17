@@ -20,20 +20,17 @@
 
 namespace
 {
-	// スクロールのベクトル
-	constexpr VECTOR scroll_vec = { 0, 0, 10 };
 }
 
 // コンストラクタ
 GameMainScene::GameMainScene(SceneManager& manager) :
 	SceneBase(manager),
-	updateFunc_(&GameMainScene::NormalUpdate),
-	scroll_({0, 0, 0})
+	updateFunc_(&GameMainScene::NormalUpdate)
 {
 	// オブジェクトの配置データの読み込み
 	DataReaderFromUnity::GetInstance().LoadUnityGameObjectData("Data/ObjectData.dat");
 
-	// 読み込んだ配置データからオブジェクトのインスタンスの生成
+	// インスタンス生成
 	pBackground_ = std::make_shared<Background>();
 	pLazerManager_ = std::make_shared<LazerManager>();
 	pPlayer_ = std::make_shared<Player>();
@@ -61,6 +58,8 @@ GameMainScene::~GameMainScene()
 // メンバ関数ポインタの更新
 void GameMainScene::Update()
 {
+	timer_.Update(1);
+	
 	(this->*updateFunc_)();
 }
 
@@ -70,8 +69,8 @@ void GameMainScene::Draw()
 	// 各クラスの描画
 	pBackground_->Draw();
 	pPlanetManager_->Draw();
-	pPlayer_->Draw();
 	pEnemyManager_->Draw();
+	pPlayer_->Draw();
 	pLazerManager_->Draw();
 
 	// 現在のシーンのテキスト表示
@@ -110,13 +109,10 @@ void GameMainScene::NormalUpdate()
 		return;
 	}
 
-	// スクロール
-	scroll_ = VAdd(scroll_, scroll_vec);
-
 	// 更新
-	pPlayer_->Update(pCamera_->GetCameraYaw(), scroll_);
-	pEnemyManager_->Update();
-	pLazerManager_->Update(pPlayer_->GetMoveVecZ());
+	pPlayer_->Update(pCamera_->GetCameraYaw());
+	pEnemyManager_->Update(timer_.GetTime());
+	pLazerManager_->Update();
 	pPlanetManager_->Update();
 	pCamera_->Update();
 
@@ -259,10 +255,9 @@ void GameMainScene::CollisionRockUpdate()
 	}
 
 	// 更新
-	pPlayer_->Scroll();
 	pCamera_->Update();
-	pLazerManager_->Update(pPlayer_->GetMoveVecZ());
-	pEnemyManager_->Update();
+	pLazerManager_->Update();
+	pEnemyManager_->Update(timer_.GetTime());
 
 	// フェードの更新
 	UpdateFade();

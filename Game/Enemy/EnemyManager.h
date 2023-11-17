@@ -14,7 +14,7 @@ public:
 	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager);
 	virtual ~EnemyManager();
 
-	void Update();
+	void Update(int time);
 	void Draw();
 
 	const std::list<std::shared_ptr<EnemyBase>>& GetEnemies() const;	

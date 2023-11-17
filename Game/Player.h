@@ -18,10 +18,7 @@ public:
 	virtual ~Player();
 
 	// 更新
-	void Update(float cameraYaw, VECTOR scroll);
-
-	// Zスクロール
-	void Scroll();
+	void Update(float cameraYaw);
 
 	/// <summary>
 	/// 衝突時の更新
@@ -61,8 +58,6 @@ public:
 
 	// プレイヤーモデルのハンドルの取得
 	int GetModelHandle() const; 
-
-	VECTOR GetMoveVecZ() const;
 
 	std::shared_ptr<Shield> GetShield() const;
 private:

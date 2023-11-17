@@ -16,7 +16,8 @@
 TestScene::TestScene(SceneManager& manager) :
 	SceneBase(manager)
 {
-	pHpBar_ = std::make_shared<HpBar>(50);
+	pWarning_ = std::make_shared<Warning>(600);
+//	pHpBar_ = std::make_shared<HpBar>(50);
 }
 
 // デストラクタ
@@ -29,7 +30,8 @@ TestScene::~TestScene()
 void TestScene::Update()
 {
 	// 各クラスの更新
-	pHpBar_->Update(30);
+//	pHpBar_->Update(30);
+	pWarning_->Update();
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
@@ -63,7 +65,8 @@ void TestScene::Draw()
 	Debug::Log("TestScene");
 
 	// 各クラスの描画
-	pHpBar_->Draw(50, 20, 50);
+	pWarning_->Draw();
+//	pHpBar_->Draw(50, 20, 50);
 
 	// フェードの描画
 	DrawFade(true);

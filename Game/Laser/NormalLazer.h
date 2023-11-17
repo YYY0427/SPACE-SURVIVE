@@ -8,7 +8,7 @@ public:
 	NormalLazer(int modelHandle, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec);
 	virtual ~NormalLazer();
 
-	void Update(VECTOR scrollVec) override;
+	void Update() override;
 	void Draw() override;
 
 	void Refrect(const VECTOR pos, const VECTOR norm) override;
@@ -16,12 +16,12 @@ public:
 
 private:
 	VECTOR* vec_;
-	VECTOR a_;
 	VECTOR* enemyMoveVec_;
+	VECTOR a_;
 	VECTOR effectPos_;
 	int lazerEffectHandle_;
 
 	// レーザーの当たり判定モデルとエフェクトの発射フレームの差を測るタイマー
-	Timer collisionAndEffectDifferenceTimer_;
+	Timer<int> collisionAndEffectDifferenceTimer_;
 };
 

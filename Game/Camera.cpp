@@ -8,8 +8,11 @@ namespace
 {
 	const std::string object_name = "Camera";
 
+	// カメラの初期位置
+	constexpr VECTOR camera_pos = { 0, 0, -300 };
+
 	// カメラの初期注視点
-	constexpr VECTOR camera_init_target = { 0, 0, 1 };
+	constexpr VECTOR camera_init_target = { 0, 0, 0 };
 
 	// 視野角
 	constexpr float normal_perspective = 90.0f;		// 通常時
@@ -30,7 +33,8 @@ Camera::Camera(std::shared_ptr<Player> pPlayer) :
 {
 	auto data = DataReaderFromUnity::GetInstance().GetData(object_name);
 
-	pos_ = data.front().pos;
+//	pos_ = data.front().pos;
+	pos_ = camera_pos;
 	target_ = camera_init_target;
 }
 
@@ -42,9 +46,6 @@ Camera::~Camera()
 // 更新
 void Camera::Update()
 {
-	pos_ = VAdd(pos_, pPlayer_->GetMoveVecZ());
-	target_ = VAdd(target_, pPlayer_->GetMoveVecZ());
-
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
 

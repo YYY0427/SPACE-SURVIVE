@@ -55,10 +55,9 @@ NormalLazer::~NormalLazer()
 {
 }
 
-void NormalLazer::Update(VECTOR scrollVec)
+void NormalLazer::Update()
 {
 	pos_ = VAdd(pos_, *enemyMoveVec_);
-	effectPos_ = VAdd(effectPos_, scrollVec);
 
 	collisionAndEffectDifferenceTimer_.Update(1);
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())

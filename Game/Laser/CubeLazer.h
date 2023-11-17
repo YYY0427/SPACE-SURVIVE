@@ -7,11 +7,12 @@ public:
 	CubeLazer(int modelHandle, VECTOR pos, VECTOR vec);
 	virtual ~CubeLazer();
 
-	void Update(VECTOR scrollVec) override;
+	void Update() override;
 	void Draw() override;
 	void CheckInCamera() override;
 
 private:
 	float deltaRot_;
+	VECTOR endScale_;
 };
 

@@ -24,7 +24,7 @@ NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::
 	moveVec_.x = 10;
 	pos_ = data.pos;
 	rot_ = { data.rot.x, data.rot.y, data.rot.z};
-	lazerFireIntervalTimer_ = (GetRand(10) + 1) * 60;
+	normalLaserFireIntervalTimer_ = (GetRand(10) + 1) * 60;
 	lazerSpeed_ = 210.0f;
 	collisionRadius_ = collision_radius;
 
@@ -51,12 +51,12 @@ void NormalEnemy::Update()
 	toTargetVec_ = VNorm(tempVec);
 	toTargetVec_ = VScale(toTargetVec_, lazerSpeed_);
 
-	lazerFireIntervalTimer_.Update(1);
-	if (lazerFireIntervalTimer_.IsTimeOut())
+	normalLaserFireIntervalTimer_.Update(1);
+	if (normalLaserFireIntervalTimer_.IsTimeOut())
 	{
 		// レーザーを発射
 		pLazerManager_->Create(LazerType::NORMAL, &firePos_, &toTargetVec_, &moveVec_);
-		lazerFireIntervalTimer_.Reset();
+		normalLaserFireIntervalTimer_.Reset();
 	}
 
 	// サインカーブ移動
@@ -67,9 +67,7 @@ void NormalEnemy::Update()
 	if (screenPos.x > common::screen_width || screenPos.x < 0)
 		moveVec_.x *= -1;
 
-	moveVec_.z = pPlayer_->GetMoveVecZ().z;
 	pos_ = VAdd(pos_, moveVec_);
-
 
 	float angle = atan2f(tempVec.x, tempVec.z);
 	rot_.y = angle + DX_PI_F;

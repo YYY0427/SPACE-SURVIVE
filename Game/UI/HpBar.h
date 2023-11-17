@@ -9,6 +9,12 @@ public:
 	void Draw(const int hpBarSideSpace, const int hpBarStartY, const int hpBarHeight);
 	void OnDamage(float afterHp);
 
+	/// <summary>
+	/// HPが増えていく演出が終わったか
+	/// </summary>
+	/// <returns> true : 終了、false : 途中 </returns>
+	bool IsEndFirstDirection() const;
+
 private:
 	void NormalUpdate(const float aimHpSpeed);
 	void FirstDirectionUpdate(const float aimHpSpeed);

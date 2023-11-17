@@ -18,7 +18,7 @@ public:
 
 	void Create(LazerType lazerType, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec);
 
-	void Update(VECTOR scrollVec);
+	void Update();
 	void Draw();
 
 	const std::list<LazerData>& GetLazeres() const;

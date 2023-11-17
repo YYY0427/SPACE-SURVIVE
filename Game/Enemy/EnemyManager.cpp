@@ -14,14 +14,21 @@
 
 namespace
 {
+	// ファイルの階層
 	const std::string model_file_hierarchy = "Data/Model/MV1/";
+
+	// ファイルの拡張子
 	const std::string model_file_extension = ".mv1";
 
+	// ファイル名
 	const std::string normal_enemy_model_file_name = "NormalEnemy2";
 	const std::string boss_enemy_model_file_name = "BossEnemy";
 
 	// 何フレーム間、ボス出現のWARNING!!を描画するか
 	constexpr int warning_ui_draw_frame = 60 * 6;
+
+	// ゲーム開始から何フレーム経過したらボスを出現させるか
+	constexpr int boss_create_frame = 60 * 3;
 }
 
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :
@@ -38,7 +45,7 @@ EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<Laze
 	std::string bossEnemyFilePath = model_file_hierarchy + boss_enemy_model_file_name + model_file_extension;
 	modelHandleTable_[EnemyType::BOSS] = my::MyLoadModel(bossEnemyFilePath.c_str());
 
-	// インスタンスの作成
+	// 雑魚敵のインスタンスの作成
 	auto& data = DataReaderFromUnity::GetInstance();
 	for (auto& enemyData : data.GetData(normal_enemy_model_file_name))
 	{
@@ -54,15 +61,13 @@ EnemyManager::~EnemyManager()
 	}
 }
 
-void EnemyManager::Update()
+void EnemyManager::Update(int time)
 {
 	// 存在していない敵の削除
 	DeleteNotEnabledEnemy();
 
-	auto& data = DataReaderFromUnity::GetInstance();
-	VECTOR toPlayerVec = VSub(pPlayer_->GetPos(), data.GetData(boss_enemy_model_file_name).front().pos);
-	float distance = VSize(toPlayerVec);
-	if (distance < 5000.0f && !isCreateBossEnemy_)
+	if (boss_create_frame < time &&
+		!isCreateBossEnemy_)
 	{
 		// ボスまで到着したので敵をすべて削除
 		for (auto& enemy : pEnemies_)
@@ -78,7 +83,27 @@ void EnemyManager::Update()
 		updateFunc_ = &EnemyManager::CreateBossEnemyUpdate;
 	}
 
-	Debug::Log("distance", distance);
+	//auto& data = DataReaderFromUnity::GetInstance();
+	//VECTOR toPlayerVec = VSub(pPlayer_->GetPos(), data.GetData(boss_enemy_model_file_name).front().pos);
+	//float distance = VSize(toPlayerVec);
+	//if (distance < 5000.0f && !isCreateBossEnemy_)
+	//{
+	//	// ボスまで到着したので敵をすべて削除
+	//	for (auto& enemy : pEnemies_)
+	//	{
+	//		enemy->Delete();
+	//	}
+
+	//	isCreateBossEnemy_ = true;
+
+	//	pWarning_ = std::make_unique<Warning>(warning_ui_draw_frame);
+
+	//	// updateをボス登場のupdateに切り替え
+	//	updateFunc_ = &EnemyManager::CreateBossEnemyUpdate;
+	//}
+
+	//Debug::Log("distance", distance);
+	Debug::Log("time", time / 60);
 
 	(this->*updateFunc_)();
 }	
@@ -120,8 +145,7 @@ void EnemyManager::CreateBossEnemyUpdate()
 		pEnemies_.push_back(
 			std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS],
 				pPlayer_,
-				pLazerManager_,
-				data.GetData(boss_enemy_model_file_name).front()));
+				pLazerManager_));
 
 		updateFunc_ = &EnemyManager::NormalUpdate;
 	}

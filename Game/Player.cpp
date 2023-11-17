@@ -22,10 +22,14 @@ namespace
 	constexpr VECTOR player_vec_right = { 1, 0, 0 };
 	constexpr VECTOR player_vec_left = { -1, 0, 0 };
 
-	constexpr VECTOR move_z_speed = { 0, 0, 10 };
+	// 初期位置
+	constexpr VECTOR init_pos = { 0, 0, 0 };
+
+	// モデルの回転率
+	constexpr VECTOR init_rot = { 0, 0, 0 };
 
 	// モデルの拡大率
-	constexpr float model_scale = 0.5f;
+	constexpr VECTOR model_scale = { 0.5f, 0.5f, 0.5f };
 
 	// プレイヤーの通常移動速度
 	constexpr float move_normal_speed = 1.5f;
@@ -63,10 +67,8 @@ Player::Player() :
 	boostEffectScale_(20.0f),
 	boostEffectSpeed_(1.0f)
 {
-	auto data = DataReaderFromUnity::GetInstance().GetData(model_file_name);
-
-	pos_ = data.front().pos;
-	rot_ = data.front().rot;
+	pos_ = init_pos;
+	rot_ = init_rot;
 
 	// プレイヤーモデルのインスタンスの生成
 	std::string filePath = model_file_hierarchy + model_file_name + model_file_extension;
@@ -76,7 +78,7 @@ Player::Player() :
 	pShield_ = std::make_shared<Shield>(*this);
 
 	// モデルの拡大率の設定
-	pModel_->SetScale(VGet(model_scale, model_scale, model_scale));
+	pModel_->SetScale(model_scale);
 
 	// 回転率の設定
 	pModel_->SetRot(VGet(rot_.x, rot_.y, rot_.z));
@@ -97,7 +99,7 @@ Player::~Player()
 }
 
 // 更新
-void Player::Update(float cameraYaw, VECTOR scroll)
+void Player::Update(float cameraYaw)
 {
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
@@ -194,9 +196,6 @@ void Player::Update(float cameraYaw, VECTOR scroll)
 		}
 	}
 
-	// スクロール
-	pos_ = VAdd(pos_, scroll);
-
 	// 無敵時間のタイマーの更新
 	// 0以下にはならない
 	ultimateTimer_ = (std::max)(--ultimateTimer_, 0);
@@ -221,11 +220,6 @@ void Player::Update(float cameraYaw, VECTOR scroll)
 
 	// シールドの更新
 	pShield_->Update();
-}
-
-void Player::Scroll()
-{
-	pos_ = VAdd(pos_, move_z_speed);
 }
 
 // 衝突時の更新
@@ -377,11 +371,6 @@ float Player::GetCollsionRadius() const
 int Player::GetModelHandle() const
 {
 	return pModel_->GetModelHandle();
-}
-
-VECTOR Player::GetMoveVecZ() const
-{
-	return move_z_speed;
 }
 
 std::shared_ptr<Shield> Player::GetShield() const

@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.h"
+#include "../Util/Timer.h"
 #include <memory>
 
 // プロトタイプ宣言
@@ -49,8 +50,8 @@ private:
 private:
 	int windEffectH_;
 	int backGroundH_;
-	VECTOR scroll_;
 	SceneItem item_;
+	Timer<int> timer_;
 
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成

@@ -108,9 +108,6 @@
     <ClCompile Include="Scene\PadSettingScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Util\Timer.cpp">
-      <Filter>ソース ファイル\Util</Filter>
-    </ClCompile>
     <ClCompile Include="Util\DataReaderFromUnity.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
@@ -175,6 +172,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="UI\Warning.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIManager.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -309,6 +309,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="UI\Warning.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIManager.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>

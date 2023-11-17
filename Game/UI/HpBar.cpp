@@ -69,6 +69,11 @@ void HpBar::OnDamage(float afterHp)
 	aimHp_ = afterHp;
 }
 
+bool HpBar::IsEndFirstDirection() const
+{
+	return (updateFunc_ != &HpBar::FirstDirectionUpdate);
+}
+
 void HpBar::NormalUpdate(const float aimHpSpeed)
 {
 	hp_ = aimHp_;

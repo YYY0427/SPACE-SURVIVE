@@ -9,7 +9,7 @@ EnemyBase::EnemyBase() :
 	pos_({}),
 	firePos_({}),
 	rot_({}),
-	lazerFireIntervalTimer_({}),
+	normalLaserFireIntervalTimer_({}),
 	lazerSpeed_(0.0f),
 	collisionRadius_(0.0f),
 	sinWaveTimer_(0),

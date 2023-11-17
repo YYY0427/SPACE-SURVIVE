@@ -8,29 +8,58 @@
 
 namespace
 {
+	// HP
 	constexpr int hp_bar_side_space = 300;
 	constexpr int hp_bar_start_y = 50;
 	constexpr int hp_bar_height = 30;
 	constexpr float aim_hp_speed = 0.09f;
 	constexpr float max_hp = 100.0f;
 
-	// レーザーの発射位置フレーム
-	constexpr int lazer_fire_frame_pos = 1374;
+	// 通常レーザーの発射位置フレーム
+	constexpr int normal_laser_fire_frame = 3;
+
+	// キューブレーザーの発射位置フレーム
+	constexpr int cube_laser_fire_frame_1 = 4;
+	constexpr int cube_laser_fire_frame_2 = 5;
+
+	// 初期位置
+	constexpr VECTOR init_pos = { 0, 0, 5000 };
+
+	// 拡大率
+	constexpr VECTOR scale = { 5, 5, 5 };
+
+	// 回転率
+	constexpr VECTOR rot = { 0, DX_PI_F, 0 };
+
+	// アニメーション番号
+	constexpr int idle_anim_no = 0;					// 待機
+	constexpr int normal_laser_fire_anim_no = 1;	// 通常レーザーの発射時
+	constexpr int cube_laser_fire_anim_no = 3;		// キューブレーザーの発射時
+
+	// レーザーの発射間隔
+	constexpr int cube_laser_interval_frame = 60 * 2;
+	constexpr int normal_laser_interval_frame = 60 * 10;
 }
 
-BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject data) 
+BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) 
 {
+	pModel_ = std::make_unique<Model>(modelHandle);
+	pModel_->SetScale(scale);
+	pModel_->SetAnimation(idle_anim_no, true, false);
+	pHpBar_ = std::make_unique<HpBar>(max_hp);
+
 	pPlayer_ = pPlayer;
 	pLazerManager_ = pLazerManager;
-	pModel_ = std::make_unique<Model>(modelHandle);
-	pos_ = data.pos;
-	rot_ = { data.rot.x, data.rot.y, data.rot.z };
-	lazerFireIntervalTimer_ = 120;
-	pModel_->SetScale(data.scale);
+	normalLaserFireIntervalTimer_ = normal_laser_interval_frame;
+	cubeLaserFireIntervalTimer_ = cube_laser_interval_frame;
+	pos_ = init_pos;
+	rot_ = rot;
 	lazerSpeed_ = 20.0f;
-
 	hp_ = max_hp;
-	pHpBar_ = std::make_unique<HpBar>(max_hp);
+
+	pModel_->SetRot(rot_);
+	pModel_->SetPos(pos_);
+	pModel_->Update();
 }
 
 BossEnemy::~BossEnemy()
@@ -39,20 +68,22 @@ BossEnemy::~BossEnemy()
 
 void BossEnemy::Update()
 {
-	lazerFireIntervalTimer_.Update(1);
-	if (lazerFireIntervalTimer_.IsTimeOut())
+	// HPバーの演出が終わった場合
+	if (pHpBar_->IsEndFirstDirection())
 	{
-		// レーザーの発射位置のフレーム座標の取得
-		VECTOR firePos = MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos);
+		cubeLaserFireIntervalTimer_.Update(1);
+		if (cubeLaserFireIntervalTimer_.IsTimeOut())
+		{
+			// レーザーの発射位置のフレーム座標の取得
+			VECTOR firePos = MV1GetFramePosition(pModel_->GetModelHandle(), cube_laser_fire_frame_1);
 
-		VECTOR vec = VSub(pPlayer_->GetPos(), pos_);
-		vec = VNorm(vec);
-		vec = VScale(vec, lazerSpeed_);
-		pLazerManager_->Create(LazerType::CUBE, &firePos, &vec, {});
-		lazerFireIntervalTimer_.Reset();
+			VECTOR vec = VSub(pPlayer_->GetPos(), firePos);
+			vec = VNorm(vec);
+			vec = VScale(vec, lazerSpeed_);
+			pLazerManager_->Create(LazerType::CUBE, &firePos, &vec, {});
+			cubeLaserFireIntervalTimer_.Reset();
+		}
 	}
-
-	SinWave(500, 5);
 
 	pHpBar_->Update(aim_hp_speed);
 

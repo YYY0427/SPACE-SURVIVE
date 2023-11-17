@@ -17,12 +17,6 @@ public:
 	// デストラクタ
 	virtual ~SceneBase();
 
-	// 非同期読み込み
-	void LoadAsync();
-	virtual void LoadAsync2();
-	void UpdateLoadAsync();
-	void DrawLoadingScreen();
-
 	// 更新
 	virtual void Update() = 0;
 
@@ -83,9 +77,11 @@ public:
 	/// </summary>
 	/// <param name="fadeBright">設定したい明るさの値</param>
 	void SetFadeBright(int fadeBright);
+
 protected:
 	// シーンマネーシャーの参照
 	SceneManager& manager_;
+
 private:
 	// フェードの色
 	unsigned int fadeColor_;		

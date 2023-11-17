@@ -46,6 +46,6 @@ private:
 	Range<int> imgAlphaParamRange_;
 
 	int scroll_;
-	Timer drawFrameTimer_;
+	Timer<int> drawFrameTimer_;
 	bool isEnd_;
 };

@@ -47,7 +47,7 @@ void LazerManager::Create(LazerType lazerType, VECTOR* pos, VECTOR* vec, VECTOR*
 	pLazeres_.push_back(data);
 }
 
-void LazerManager::Update(VECTOR scrollVec)
+void LazerManager::Update()
 {
 	// 不要になったレーザーの削除
 	auto rmIt = std::remove_if(pLazeres_.begin(), pLazeres_.end(), [](const LazerData lazer)
@@ -59,7 +59,7 @@ void LazerManager::Update(VECTOR scrollVec)
 	for (auto& lazer : pLazeres_)
 	{
 		lazer.pLazer->CheckInCamera();
-		lazer.pLazer->Update(scrollVec);
+		lazer.pLazer->Update();
 	}
 }
 

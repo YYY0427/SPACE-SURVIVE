@@ -20,12 +20,15 @@
 
 namespace
 {
+	// スクロールのベクトル
+	constexpr VECTOR scroll_vec = { 0, 0, 10 };
 }
 
 // コンストラクタ
 GameMainScene::GameMainScene(SceneManager& manager) :
 	SceneBase(manager),
-	updateFunc_(&GameMainScene::NormalUpdate)
+	updateFunc_(&GameMainScene::NormalUpdate),
+	scroll_({0, 0, 0})
 {
 	// オブジェクトの配置データの読み込み
 	DataReaderFromUnity::GetInstance().LoadUnityGameObjectData("Data/ObjectData.dat");
@@ -107,8 +110,11 @@ void GameMainScene::NormalUpdate()
 		return;
 	}
 
+	// スクロール
+	scroll_ = VAdd(scroll_, scroll_vec);
+
 	// 更新
-	pPlayer_->Update(pCamera_->GetCameraYaw());
+	pPlayer_->Update(pCamera_->GetCameraYaw(), scroll_);
 	pEnemyManager_->Update();
 	pLazerManager_->Update(pPlayer_->GetMoveVecZ());
 	pPlanetManager_->Update();

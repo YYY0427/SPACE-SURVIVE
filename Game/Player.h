@@ -17,8 +17,8 @@ public:
 	// デストラクタ
 	virtual ~Player();
 
-	// 通常の更新
-	void Update(float cameraYaw);
+	// 更新
+	void Update(float cameraYaw, VECTOR scroll);
 
 	// Zスクロール
 	void Scroll();

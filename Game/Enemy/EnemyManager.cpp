@@ -18,7 +18,7 @@ namespace
 	const std::string model_file_extension = ".mv1";
 
 	const std::string normal_enemy_model_file_name = "NormalEnemy2";
-	const std::string boss_enemy_model_file_name = "SpaceBattleship";
+	const std::string boss_enemy_model_file_name = "BossEnemy";
 
 	// 何フレーム間、ボス出現のWARNING!!を描画するか
 	constexpr int warning_ui_draw_frame = 60 * 6;

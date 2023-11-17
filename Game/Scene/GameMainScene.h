@@ -49,6 +49,7 @@ private:
 private:
 	int windEffectH_;
 	int backGroundH_;
+	VECTOR scroll_;
 	SceneItem item_;
 
 	// メンバ関数ポインタ

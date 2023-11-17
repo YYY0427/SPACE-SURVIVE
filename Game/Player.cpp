@@ -97,7 +97,7 @@ Player::~Player()
 }
 
 // 更新
-void Player::Update(float cameraYaw)
+void Player::Update(float cameraYaw, VECTOR scroll)
 {
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 
@@ -194,7 +194,8 @@ void Player::Update(float cameraYaw)
 		}
 	}
 
-	Scroll();
+	// スクロール
+	pos_ = VAdd(pos_, scroll);
 
 	// 無敵時間のタイマーの更新
 	// 0以下にはならない

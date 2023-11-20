@@ -70,6 +70,12 @@ public:
 	/// <returns>ƒ^ƒCƒ€</returns>
 	T GetTime() const { return time_; }
 
+	/// <summary>
+	/// §ŒÀŠÔ‚Ìİ’è
+	/// </summary>
+	/// <param name="limitTime">§ŒÀŠÔ</param>
+	void SetLimitTime(T limitTime) { limitTime_ = limitTime; }
+
 private:
 	// Œ»İ‚ÌŠÔ
 	T time_;

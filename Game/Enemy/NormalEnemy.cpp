@@ -25,7 +25,7 @@ NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::
 	pos_ = data.pos;
 	rot_ = { data.rot.x, data.rot.y, data.rot.z};
 	normalLaserFireIntervalTimer_ = (GetRand(10) + 1) * 60;
-	lazerSpeed_ = 210.0f;
+	normalLaserSpeed_ = 210.0f;
 	collisionRadius_ = collision_radius;
 
 	pModel_ = std::make_unique<Model>(modelHandle);
@@ -49,7 +49,7 @@ void NormalEnemy::Update()
 	// プレイヤーに向かうベクトルを作成
 	VECTOR tempVec = VSub(pPlayer_->GetPos(), firePos_);
 	toTargetVec_ = VNorm(tempVec);
-	toTargetVec_ = VScale(toTargetVec_, lazerSpeed_);
+	toTargetVec_ = VScale(toTargetVec_, normalLaserSpeed_);
 
 	normalLaserFireIntervalTimer_.Update(1);
 	if (normalLaserFireIntervalTimer_.IsTimeOut())

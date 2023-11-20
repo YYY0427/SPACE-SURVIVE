@@ -50,7 +50,7 @@ protected:
 	Timer<int> normalLaserFireIntervalTimer_;
 	int sinWaveTimer_;
 	int onDamageEffectHandle_;
-	float lazerSpeed_;
+	float normalLaserSpeed_;
 	float collisionRadius_;
 	float hp_;				
 	bool isEnabled_;

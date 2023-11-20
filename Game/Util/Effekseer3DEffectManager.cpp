@@ -50,13 +50,11 @@ void Effekseer3DEffectManager::Init()
 	// 画像のロード
 	imgHandle_ = my::MyLoadGraph("Data/Effect/background.png");
 
-	// ここから↓でEffectをロードする
-	LoadEffectFile(EffectID::player_dead.c_str());	
-	LoadEffectFile(EffectID::player_shield.c_str());
-	LoadEffectFile(EffectID::player_boost.c_str());
-	LoadEffectFile(EffectID::normal_lazer.c_str());
-	LoadEffectFile(EffectID::refrect_laser.c_str());
-	LoadEffectFile(EffectID::wind.c_str());
+	// Effectのロード
+	for (auto& filePath : EffectID::effect_file_path)
+	{
+		LoadEffectFile(filePath.c_str());
+	}
 }
 
 // 更新

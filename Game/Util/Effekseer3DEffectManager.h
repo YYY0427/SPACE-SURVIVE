@@ -12,8 +12,21 @@ namespace EffectID
 	const std::string player_boost = "FirePot1";		// プレイヤーに常に出すエフェクト
 	const std::string normal_lazer = "blue_lazer";		// 敵の通常レーザーのエフェクト
 	const std::string refrect_laser = "RefrectLaser";	// 敵のレーザーを反射したレーザー
-	const std::string enemy_on_damage = "Explosion";	// 敵がダメージを受けた時のエフェクト
+	const std::string enemy_died = "Explosion";			// 敵の死亡時のエフェクト
+	const std::string enemy_boss_entry = "EnemyBossEntry";	// 敵のボスが出現するときのエフェクト
 	const std::string wind = "Wind";
+
+	const std::string effect_file_path[] =
+	{
+		player_dead,
+		player_shield,
+		player_boost,
+		normal_lazer,
+		refrect_laser,
+		enemy_died,
+		enemy_boss_entry,
+		wind,
+	};
 }
 
 // Effekseerを使った3Dエフェクトの管理を行うシングルトンクラス

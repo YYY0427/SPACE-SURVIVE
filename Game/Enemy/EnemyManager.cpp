@@ -25,7 +25,7 @@ namespace
 	const std::string boss_enemy_model_file_name = "BossEnemy";
 
 	// 何フレーム間、ボス出現のWARNING!!を描画するか
-	constexpr int warning_ui_draw_frame = 60 * 6;
+	constexpr int warning_ui_draw_frame = 60 * 1;
 
 	// ゲーム開始から何フレーム経過したらボスを出現させるか
 	constexpr int boss_create_frame = 60 * 3;
@@ -83,26 +83,6 @@ void EnemyManager::Update(int time)
 		updateFunc_ = &EnemyManager::CreateBossEnemyUpdate;
 	}
 
-	//auto& data = DataReaderFromUnity::GetInstance();
-	//VECTOR toPlayerVec = VSub(pPlayer_->GetPos(), data.GetData(boss_enemy_model_file_name).front().pos);
-	//float distance = VSize(toPlayerVec);
-	//if (distance < 5000.0f && !isCreateBossEnemy_)
-	//{
-	//	// ボスまで到着したので敵をすべて削除
-	//	for (auto& enemy : pEnemies_)
-	//	{
-	//		enemy->Delete();
-	//	}
-
-	//	isCreateBossEnemy_ = true;
-
-	//	pWarning_ = std::make_unique<Warning>(warning_ui_draw_frame);
-
-	//	// updateをボス登場のupdateに切り替え
-	//	updateFunc_ = &EnemyManager::CreateBossEnemyUpdate;
-	//}
-
-	//Debug::Log("distance", distance);
 	Debug::Log("time", time / 60);
 
 	(this->*updateFunc_)();

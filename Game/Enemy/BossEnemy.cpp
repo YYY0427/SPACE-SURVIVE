@@ -15,21 +15,22 @@ namespace
 	constexpr float aim_hp_speed = 0.09f;
 	constexpr float max_hp = 100.0f;
 
-	// 通常レーザーの発射位置フレーム
-	constexpr int normal_laser_fire_frame = 3;
-
 	// キューブレーザーの発射位置フレーム
 	constexpr int cube_laser_fire_frame_1 = 4;
 	constexpr int cube_laser_fire_frame_2 = 5;
 
+	// 通常レーザーの発射位置フレーム
+	constexpr int normal_laser_fire_frame = 2;
+
 	// 初期位置
-	constexpr VECTOR init_pos = { 0, 0, 5000 };
+	constexpr VECTOR start_init_pos = { 0, 300, 1100 };
+	constexpr VECTOR goal_init_pos = { 0, 300, 800 };
 
 	// 拡大率
-	constexpr VECTOR scale = { 5, 5, 5 };
+	constexpr VECTOR scale = { 1, 1, 1 };
 
 	// 回転率
-	constexpr VECTOR rot = { 0, DX_PI_F, 0 };
+	constexpr VECTOR rot = { 20 * DX_PI_F / 180.0f, DX_PI_F, 0 };
 
 	// アニメーション番号
 	constexpr int idle_anim_no = 0;					// 待機
@@ -37,26 +38,35 @@ namespace
 	constexpr int cube_laser_fire_anim_no = 3;		// キューブレーザーの発射時
 
 	// レーザーの発射間隔
-	constexpr int cube_laser_interval_frame = 60 * 2;
+	constexpr int cube_laser_interval_frame = 30;
 	constexpr int normal_laser_interval_frame = 60 * 10;
+
+	// レーザーの速度
+	constexpr float cube_laser_speed = 20.0f;	
+	constexpr float normal_laser_speed = 20.0f;
 }
 
-BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) 
+BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :
+	updateFunc_(&BossEnemy::EntryUpdate),
+	entryEffectH_(-1)
 {
-	pModel_ = std::make_unique<Model>(modelHandle);
-	pModel_->SetScale(scale);
-	pModel_->SetAnimation(idle_anim_no, true, false);
-	pHpBar_ = std::make_unique<HpBar>(max_hp);
-
 	pPlayer_ = pPlayer;
 	pLazerManager_ = pLazerManager;
 	normalLaserFireIntervalTimer_ = normal_laser_interval_frame;
 	cubeLaserFireIntervalTimer_ = cube_laser_interval_frame;
-	pos_ = init_pos;
+	pos_ = start_init_pos;
 	rot_ = rot;
-	lazerSpeed_ = 20.0f;
+	cubeLaserSpeed_ = cube_laser_speed;
+	normalLaserSpeed_ = normal_laser_speed;
 	hp_ = max_hp;
+	opacity = 0.0f;
+	moveVec_ = { 0, 0, 0 };
 
+	pModel_ = std::make_unique<Model>(modelHandle);
+	pHpBar_ = std::make_unique<HpBar>(max_hp);
+
+	MV1SetOpacityRate(pModel_->GetModelHandle(), opacity);
+	pModel_->SetScale(scale);
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update();
@@ -68,28 +78,93 @@ BossEnemy::~BossEnemy()
 
 void BossEnemy::Update()
 {
-	// HPバーの演出が終わった場合
-	if (pHpBar_->IsEndFirstDirection())
+	(this->*updateFunc_)();
+
+	VECTOR toPlayerVec = VSub(pos_, pPlayer_->GetPos());
+//	rot_.y = atan2(toPlayerVec.x, toPlayerVec.z) + DX_PI_F;
+
+	pos_ = VAdd(pos_, moveVec_);
+	pHpBar_->Update(aim_hp_speed);
+	MV1SetOpacityRate(pModel_->GetModelHandle(), opacity);
+	pModel_->SetRot(rot_);
+	pModel_->SetPos(pos_);
+	pModel_->Update();
+}
+
+void BossEnemy::EntryUpdate()
+{
+	opacity += 0.005f;
+
+	if (pos_.z >= goal_init_pos.z)
 	{
-		cubeLaserFireIntervalTimer_.Update(1);
-		if (cubeLaserFireIntervalTimer_.IsTimeOut())
+		pos_.z -= 1.5f;
+	}
+	else
+	{
+		pModel_->SetAnimation(idle_anim_no, true, false);
+	}
+
+	// HPバーの演出が終わった場合
+	if (pHpBar_->IsEndFirstDirection() && pos_.z <= goal_init_pos.z)
+	{
+		updateFunc_ = &BossEnemy::NormalLaserAttackUpdate;
+	}
+}
+
+void BossEnemy::CubeLaserAttackUpdate()
+{
+	// 一定間隔でキューブレーザーの発射
+	cubeLaserFireIntervalTimer_.Update(1);
+	if (cubeLaserFireIntervalTimer_.IsTimeOut())
+	{
+		pModel_->ChangeAnimation(cube_laser_fire_anim_no, false, false, 8);
+
+		if (!pModel_->IsAnimEnd())
 		{
 			// レーザーの発射位置のフレーム座標の取得
 			VECTOR firePos = MV1GetFramePosition(pModel_->GetModelHandle(), cube_laser_fire_frame_1);
 
+			// プレイヤーに向かうベクトルの作成
 			VECTOR vec = VSub(pPlayer_->GetPos(), firePos);
 			vec = VNorm(vec);
-			vec = VScale(vec, lazerSpeed_);
+			vec = VScale(vec, normalLaserSpeed_);
+
+			// レーザーの発射
 			pLazerManager_->Create(LazerType::CUBE, &firePos, &vec, {});
+
+			// タイマーの初期化
 			cubeLaserFireIntervalTimer_.Reset();
 		}
 	}
+}
 
-	pHpBar_->Update(aim_hp_speed);
+void BossEnemy::NormalLaserAttackUpdate()
+{
+	pModel_->ChangeAnimation(normal_laser_fire_anim_no, false, false, 8);
 
-	pModel_->SetRot(rot_);
-	pModel_->SetPos(pos_);
-	pModel_->Update();
+	// レーザーの発射位置のフレーム座標の取得
+	firePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), normal_laser_fire_frame);
+
+	// プレイヤーに向かうベクトルの作成
+	toPlayerVec_ = VSub(pPlayer_->GetPos(), firePos_);
+	toPlayerVec_ = VNorm(toPlayerVec_);
+	toPlayerVec_ = VScale(toPlayerVec_, normalLaserSpeed_);
+
+	// キューブレーザーの発射
+//	normalLaserFireIntervalTimer_.Update(1);
+//	if (normalLaserFireIntervalTimer_.IsTimeOut())
+	{
+		if (pModel_->IsAnimEnd())
+		{
+			// レーザーの発射
+			pLazerManager_->Create(LazerType::NORMAL, &firePos_, &toPlayerVec_, &moveVec_);
+
+			// タイマーの初期化
+			normalLaserFireIntervalTimer_.Reset();
+
+			updateFunc_ = &BossEnemy::CubeLaserAttackUpdate;
+		}
+	}
 }
 
 void BossEnemy::Draw()
@@ -107,7 +182,7 @@ void BossEnemy::OnDamage(int damage, VECTOR pos)
 
 	Effekseer3DEffectManager::GetInstance().PlayEffect(
 		onDamageEffectHandle_,
-		EffectID::enemy_on_damage,
+		EffectID::enemy_died,
 		pos,
 		200.0f,
 		0.5f);

@@ -10,7 +10,7 @@ EnemyBase::EnemyBase() :
 	firePos_({}),
 	rot_({}),
 	normalLaserFireIntervalTimer_({}),
-	lazerSpeed_(0.0f),
+	normalLaserSpeed_(0.0f),
 	collisionRadius_(0.0f),
 	sinWaveTimer_(0),
 	onDamageEffectHandle_(-1),
@@ -37,7 +37,10 @@ float EnemyBase::GetCollisionRadius() const
 void EnemyBase::SinWave(const float speed, const float swingWidth)
 {
 	sinWaveTimer_++;
-	moveVec_.y = sinf(DX_PI_F * 2 / speed * sinWaveTimer_) * swingWidth;
+	if (speed > 0)
+	{
+		moveVec_.y = sinf(DX_PI_F * 2 / speed * sinWaveTimer_) * swingWidth;
+	}
 }
 
 void EnemyBase::OnDamage(int damage, VECTOR pos)
@@ -46,7 +49,7 @@ void EnemyBase::OnDamage(int damage, VECTOR pos)
 
 	Effekseer3DEffectManager::GetInstance().PlayEffect(
 		onDamageEffectHandle_, 
-		EffectID::enemy_on_damage,
+		EffectID::enemy_died,
 		pos,
 		200.0f,
 		0.5f);

@@ -31,7 +31,7 @@ void TestScene::Update()
 {
 	// 各クラスの更新
 //	pHpBar_->Update(30);
-	pWarning_->Update();
+//	pWarning_->Update();
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
@@ -65,7 +65,7 @@ void TestScene::Draw()
 	Debug::Log("TestScene");
 
 	// 各クラスの描画
-	pWarning_->Draw();
+//	pWarning_->Draw();
 //	pHpBar_->Draw(50, 20, 50);
 
 	// フェードの描画

@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
 #include <DxLib.h>
-#include "../Util/DataReaderFromUnity.h"
 
 class Model;
 

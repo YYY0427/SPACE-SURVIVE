@@ -44,7 +44,7 @@ public:
 	/// <param name="animNo">変更先アニメーション番号</param>
 	/// <param name="isLoop">アニメーションをループさせるか</param>
 	///	<param name="isForceChange">すでに指定されたアニメが再生されている場合も変更するか</param>
-	void SetAnimation(int animNo, bool isLoop, bool isForceChange);
+	void SetAnimation(int animNo, bool isLoop, bool isForceChange, float animPlaySpeed = 1.0f);
 
 	/// <summary>
 	/// アニメーションを変化させる(数フレームかけて切り替える)
@@ -53,7 +53,7 @@ public:
 	/// <param name="isLoop">アニメーションをループさせるか</param>
 	/// <param name="isForceChange">すでに指定されたアニメが再生されている場合も変更するか</param>
 	/// <param name="changeFrame">何フレームかけてアニメーションを変更させるか</param>
-	void ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int changeFrame);
+	void ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int changeFrame, float animPlaySpeed = 1.0f);
 
 	/// <summary>
 	/// 現在のアニメーションが終了しているかどうかを取得する
@@ -70,6 +70,7 @@ public:
 	void SetPos(VECTOR pos);			// 表示位置の設定
 	void SetRot(VECTOR rot);			// 回転状態の設定
 	void SetScale(VECTOR scale);		// 拡大率の設定
+	void SetOpacity(float opacity);		// 不透明度の設定(0.0~1.0)
 
 private:
 	// アニメーション情報
@@ -78,6 +79,7 @@ private:
 		int animNo;			// アニメーション番号
 		int attachNo;		// アタッチ番号
 		float totalTime;	// アニメーションの総再生時間
+		float playSpeed;	// アニメーションの再生速度
 		bool isLoop;		// アニメーションがループするか
 	};
 
@@ -92,8 +94,7 @@ private:
 	/// アニメーションの更新
 	/// </summary>
 	/// <param name="anim">アニメーションのアタッチ番号</param>
-	/// <param name="dt"></param>
-	void UpdateAnim(AnimData anim, float dt = 1.0f);
+	void UpdateAnim(AnimData anim);
 
 	// 現在のアニメーション切り替わり情報からアニメーションのブレンド率を設定する
 	void UpdateAnimBlendRate();

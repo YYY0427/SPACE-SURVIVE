@@ -3,7 +3,8 @@
 
 namespace
 {
-	constexpr float expansion_speed = 0.0001f;
+	// Šg‘å‘¬“x
+	constexpr float expansion_speed = 0.0002f;
 }
 
 CubeLazer::CubeLazer(int modelHandle, VECTOR pos, VECTOR vec)
@@ -13,13 +14,12 @@ CubeLazer::CubeLazer(int modelHandle, VECTOR pos, VECTOR vec)
 	isEnabled_ = true;
 
 	pModel_ = std::make_unique<Model>(modelHandle);
-
 	pModel_->SetUseCollision(true);
 
-	// ƒ‚ƒfƒ‹‚ÌŠg‘å—¦‚ğ0.00`0.1‚ÌŠÔ‚Åæ“¾
-	endScale_.x = static_cast<float>(GetRand(10)) * 0.01f;
-	endScale_.y = static_cast<float>(GetRand(10)) * 0.01f;
-	endScale_.z = static_cast<float>(GetRand(10)) * 0.01f;
+	// ƒ‚ƒfƒ‹‚ÌŠg‘å—¦‚ğ0.05`0.51‚ÌŠÔ‚Åæ“¾
+	endScale_.x = static_cast<float>(GetRand(50) + 5) * 0.01f;
+	endScale_.y = static_cast<float>(GetRand(50) + 5) * 0.01f;
+	endScale_.z = static_cast<float>(GetRand(50) + 5) * 0.01f;
 
 	// 1ƒtƒŒ[ƒ€‚É‰ñ“]‚·‚é—Ê‚ğ0“x‚©‚ç`1“x‚ÌŠÔ‚©‚çæ“¾
 	deltaRot_ = 1.0f * (static_cast<float>(GetRand(10)) * 0.1f);
@@ -62,7 +62,7 @@ void CubeLazer::Draw()
 	pModel_->Draw();
 }
 
-void CubeLazer::CheckInCamera()
+void CubeLazer::ConfirmDelete()
 {
 	if (CheckCameraViewClip(pos_))
 	{

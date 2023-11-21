@@ -2,7 +2,6 @@
 #include <memory>
 #include <DxLib.h>
 #include "../Util/Timer.h"
-#include "../Util/DataReaderFromUnity.h"
 
 class Model;
 class LazerManager;
@@ -47,10 +46,10 @@ protected:
 	VECTOR firePos_;
 	VECTOR rot_;
 	VECTOR moveVec_;
+	VECTOR toTargetVec_;
 	Timer<int> normalLaserFireIntervalTimer_;
 	int sinWaveTimer_;
 	int onDamageEffectHandle_;
-	float normalLaserSpeed_;
 	float collisionRadius_;
 	float hp_;				
 	bool isEnabled_;

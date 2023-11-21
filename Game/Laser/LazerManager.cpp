@@ -58,7 +58,7 @@ void LazerManager::Update()
 
 	for (auto& lazer : pLazeres_)
 	{
-		lazer.pLazer->CheckInCamera();
+		lazer.pLazer->ConfirmDelete();
 		lazer.pLazer->Update();
 	}
 }

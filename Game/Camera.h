@@ -3,8 +3,6 @@
 #include <memory>
 #include "Util/Range.h"
 
-class Player;
-
 /// <summary>
 /// カメラの管理クラス
 /// </summary>
@@ -12,7 +10,7 @@ class Camera
 {
 public:
 	// コンストラクタ
-	Camera(std::shared_ptr<Player> pPlayer);
+	Camera();
 
 	// デストラクタ
 	virtual ~Camera();
@@ -36,8 +34,6 @@ public:
 	VECTOR GetTarget() const;
 
 private:
-	std::shared_ptr<Player> pPlayer_;
-
 	// カメラの位置
 	VECTOR pos_;
 

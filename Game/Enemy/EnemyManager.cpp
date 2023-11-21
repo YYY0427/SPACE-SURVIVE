@@ -6,7 +6,6 @@
 #include "../common.h"
 #include "../Util/Debug.h"
 #include "../Util/DrawFunctions.h"
-#include "../Util/DataReaderFromUnity.h"
 #include "../UI/Warning.h"
 #include <string>
 #include <DxLib.h>
@@ -28,7 +27,7 @@ namespace
 	constexpr int warning_ui_draw_frame = 60 * 1;
 
 	// ゲーム開始から何フレーム経過したらボスを出現させるか
-	constexpr int boss_create_frame = 60 * 3;
+	constexpr int boss_create_frame = 60 * 10;
 }
 
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :
@@ -46,11 +45,7 @@ EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<Laze
 	modelHandleTable_[EnemyType::BOSS] = my::MyLoadModel(bossEnemyFilePath.c_str());
 
 	// 雑魚敵のインスタンスの作成
-	auto& data = DataReaderFromUnity::GetInstance();
-	for (auto& enemyData : data.GetData(normal_enemy_model_file_name))
-	{
-		pEnemies_.push_back(std::make_shared<NormalEnemy>(modelHandleTable_[EnemyType::NOMAL], pPlayer, pLazerManager, enemyData));
-	}
+	pEnemies_.push_back(std::make_shared<NormalEnemy>(modelHandleTable_[EnemyType::NOMAL], pPlayer, pLazerManager));
 }
 
 EnemyManager::~EnemyManager()
@@ -121,7 +116,6 @@ void EnemyManager::CreateBossEnemyUpdate()
 	if (pWarning_->IsEnd())
 	{
 		// 敵ボスのインスタンス生成
-		auto& data = DataReaderFromUnity::GetInstance();
 		pEnemies_.push_back(
 			std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS],
 				pPlayer_,

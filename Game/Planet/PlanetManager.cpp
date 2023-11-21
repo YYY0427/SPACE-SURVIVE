@@ -6,7 +6,6 @@
 #include "Sun.h"
 #include "Earth.h"
 #include "../Util/DrawFunctions.h"
-#include "../Util/DataReaderFromUnity.h"
 
 namespace
 {
@@ -19,9 +18,6 @@ namespace
 
 PlanetManager::PlanetManager()
 {
-	auto sunData = DataReaderFromUnity::GetInstance().GetData(sun_model_file_name);
-	auto earthData = DataReaderFromUnity::GetInstance().GetData(earth_model_file_name);
-
 	// ÉÇÉfÉãÇÃÉçÅ[Éh
 	std::string sunFilePath = model_file_hierarchy + sun_model_file_name + model_file_extension;
 	handleTable_[PlanetType::SUN] = my::MyLoadModel(sunFilePath.c_str());

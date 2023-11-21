@@ -4,7 +4,7 @@
 class Earth : public PlanetBase
 {
 public:
-	Earth(int handle, UnityGameObject data);
+	Earth(int handle);
 	virtual ~Earth();
 
 	void Update();

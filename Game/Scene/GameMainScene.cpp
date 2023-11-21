@@ -6,7 +6,6 @@
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/SoundManager.h"
 #include "../Util/InputState.h"
-#include "../Util/DataReaderFromUnity.h"
 #include "../Util/Debug.h"
 #include "../Camera.h"
 #include "../Player.h"
@@ -27,16 +26,13 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 	SceneBase(manager),
 	updateFunc_(&GameMainScene::NormalUpdate)
 {
-	// オブジェクトの配置データの読み込み
-	DataReaderFromUnity::GetInstance().LoadUnityGameObjectData("Data/ObjectData.dat");
-
 	// インスタンス生成
 	pBackground_ = std::make_shared<Background>();
 	pLazerManager_ = std::make_shared<LazerManager>();
 	pPlayer_ = std::make_shared<Player>();
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_);
 	pPlanetManager_ = std::make_shared<PlanetManager>();
-	pCamera_ = std::make_shared<Camera>(pPlayer_);
+	pCamera_ = std::make_shared<Camera>();
 
 	/*Effekseer3DEffectManager::GetInstance().PlayEffectLoop(
 		windEffectH_, 

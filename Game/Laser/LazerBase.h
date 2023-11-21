@@ -24,11 +24,13 @@ public:
 	/// <param name="pos">反射するレーザーを発射する位置</param>
 	/// <param name="norm">シールドの法線情報</param>
 	virtual void Refrect(const VECTOR pos, const VECTOR normal){};
+
+
 	void Delete();
 
 	// カメラ内に存在するか
 	// 存在しなかったら削除する
-	virtual void CheckInCamera() = 0;
+	virtual void ConfirmDelete() = 0;
 
 	bool GetIsEnabled() const;
 

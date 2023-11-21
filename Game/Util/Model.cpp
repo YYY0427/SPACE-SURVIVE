@@ -142,8 +142,14 @@ void Model::SetScale(VECTOR scale)
 	MV1SetScale(modelHandle_, scale);
 }
 
+// モデルの不透明度の設定
+void Model::SetOpacity(float opacity)
+{
+	MV1SetOpacityRate(modelHandle_, opacity);
+}
+
 // アニメーションを設定する(ぱっと切り替える)
-void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange)
+void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange, float animPlaySpeed)
 {
 	if (!isForceChange)
 	{
@@ -165,6 +171,7 @@ void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange)
 
 	// 新しくアニメーションを設定
 	animNext_.animNo = animNo;
+	animNext_.playSpeed = animPlaySpeed;
 	animNext_.attachNo = MV1AttachAnim(modelHandle_, animNo, -1, false);
 	animNext_.totalTime = MV1GetAttachAnimTotalTime(modelHandle_, animNext_.attachNo);
 	animNext_.isLoop = isLoop;
@@ -174,7 +181,7 @@ void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange)
 }
 
 // アニメーションを変化させる(数フレームかけて切り替える)
-void Model::ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int changeFrame)
+void Model::ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int changeFrame, float animPlaySpeed)
 {
 	if (!isForceChange)
 	{
@@ -194,6 +201,7 @@ void Model::ChangeAnimation(int animNo, bool isLoop, bool isForceChange, int cha
 
 	// 新しくアニメーションを設定
 	animNext_.animNo = animNo;
+	animNext_.playSpeed = animPlaySpeed;
 	animNext_.attachNo = MV1AttachAnim(modelHandle_, animNo, -1, false);
 	animNext_.totalTime = MV1GetAttachAnimTotalTime(modelHandle_, animNext_.attachNo);
 	animNext_.isLoop = isLoop;
@@ -245,18 +253,20 @@ void Model::InitAnimData(AnimData& anim)
 	anim.animNo = -1;
 	anim.attachNo = -1;
 	anim.totalTime = 0.0f;
+	anim.playSpeed = 1.0f;
 	anim.isLoop = false;
 }
 
 // アニメーションの更新
-void Model::UpdateAnim(AnimData anim, float dt)
+void Model::UpdateAnim(AnimData anim)
 {
 	// アニメーションが設定されていない場合は何もしない
 	if (anim.attachNo == -1) return;
 
 	// アニメーションの更新
 	float time = MV1GetAttachAnimTime(modelHandle_, anim.attachNo);
-	time += dt;
+	time += anim.playSpeed;
+
 	if (time > anim.totalTime)
 	{
 		if (anim.isLoop)

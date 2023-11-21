@@ -11,8 +11,11 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	// レーザーの反射
 	void Refrect(const VECTOR pos, const VECTOR norm) override;
-	void CheckInCamera() override;
+
+	// レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
+	void ConfirmDelete() override;
 
 private:
 	VECTOR* vec_;

@@ -4,7 +4,7 @@
 class Sun : public PlanetBase
 {
 public:
-	Sun(int handle, UnityGameObject data);
+	Sun(int handle);
 	virtual ~Sun();
 
 	void Update();

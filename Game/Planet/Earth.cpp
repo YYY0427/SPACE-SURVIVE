@@ -1,14 +1,14 @@
 #include "Earth.h"
 #include "../Util/Model.h"
 
-Earth::Earth(int handle, UnityGameObject data)
+Earth::Earth(int handle)
 {
-	pos_ = data.pos;
-	rot_ = data.rot;
+//	pos_ = data.pos;
+//	rot_ = data.rot;
 
 	pModel_ = std::make_shared<Model>(handle);
 	pModel_->SetUseCollision(true);
-	pModel_->SetScale(VGet(data.scale.x, data.scale.y, data.scale.z));
+//	pModel_->SetScale(VGet(data.scale.x, data.scale.y, data.scale.z));
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update(); 

@@ -11,27 +11,29 @@ namespace
 	constexpr int lazer_fire_frame_pos = 37;
 
 	// 当たり判定の半径
-	constexpr float collision_radius = 300.0f;
+	constexpr float collision_radius = 48.0f;
 
 	constexpr int anim_frame = 1;
+
+	constexpr VECTOR init_pos = { 60, 0, 800 };
+	constexpr VECTOR model_scale = { 0.7, 0.7, 0.7 };
+	constexpr VECTOR model_rot = { 0, 0, 0 };
 }
 
-NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager, UnityGameObject data)
+NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager)
 {
-	toTargetVec_ = {};
 	pPlayer_ = pPlayer;
 	pLazerManager_ = pLazerManager;
 	moveVec_.x = 10;
-	pos_ = data.pos;
-	rot_ = { data.rot.x, data.rot.y, data.rot.z};
+	pos_ = init_pos;
+	rot_ = model_rot;
 	normalLaserFireIntervalTimer_ = (GetRand(10) + 1) * 60;
-	normalLaserSpeed_ = 210.0f;
 	collisionRadius_ = collision_radius;
 
 	pModel_ = std::make_unique<Model>(modelHandle);
 	pModel_->SetPos(pos_);
 	pModel_->SetRot(rot_);
-	pModel_->SetScale(data.scale);
+	pModel_->SetScale(model_scale);
 	pModel_->ChangeAnimation(anim_frame, true, false, 8);
 	pModel_->Update();
 }
@@ -47,9 +49,8 @@ void NormalEnemy::Update()
 	firePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos);
 
 	// プレイヤーに向かうベクトルを作成
-	VECTOR tempVec = VSub(pPlayer_->GetPos(), firePos_);
-	toTargetVec_ = VNorm(tempVec);
-	toTargetVec_ = VScale(toTargetVec_, normalLaserSpeed_);
+	toTargetVec_ = VSub(pPlayer_->GetPos(), firePos_);
+	toTargetVec_ = VNorm(toTargetVec_);
 
 	normalLaserFireIntervalTimer_.Update(1);
 	if (normalLaserFireIntervalTimer_.IsTimeOut())
@@ -69,9 +70,6 @@ void NormalEnemy::Update()
 
 	pos_ = VAdd(pos_, moveVec_);
 
-	float angle = atan2f(tempVec.x, tempVec.z);
-	rot_.y = angle + DX_PI_F;
-
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
 	pModel_->Update();
@@ -82,7 +80,7 @@ void NormalEnemy::Draw()
 	pModel_->Draw();
 
 #ifdef _DEBUG
-//	DrawSphere3D(MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos), 100.0f, 8, 0xff0000, 0xff0000, 0xff0000);
+//	DrawSphere3D(MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos), 10, 8, 0xff0000, 0xff0000, 0xff0000);
 //	DrawSphere3D(pos_, collisionRadius_, 8, 0xff0000, 0xff0000, 0xff0000);
 #endif
 }

@@ -2,12 +2,9 @@
 #include "Player.h"
 #include "Util/InputState.h"
 #include "Util/SaveData.h"
-#include "Util/DataReaderFromUnity.h"
 
 namespace
 {
-	const std::string object_name = "Camera";
-
 	// カメラの初期位置
 	constexpr VECTOR camera_pos = { 0, 0, -300 };
 
@@ -24,16 +21,12 @@ namespace
 }
 
 // コンストラクタ
-Camera::Camera(std::shared_ptr<Player> pPlayer) :
+Camera::Camera() :
 	cameraYaw_(0.0f),
 	cameraPitch_(0.0f),
 	perspective_(normal_perspective),
-	perspectiveRange_({ normal_perspective, boosting_perspective }),
-	pPlayer_(pPlayer)
+	perspectiveRange_({ normal_perspective, boosting_perspective })
 {
-	auto data = DataReaderFromUnity::GetInstance().GetData(object_name);
-
-//	pos_ = data.front().pos;
 	pos_ = camera_pos;
 	target_ = camera_init_target;
 }

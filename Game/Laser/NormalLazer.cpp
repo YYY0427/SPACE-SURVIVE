@@ -1,17 +1,18 @@
 #include "NormalLazer.h"
-#include "../Util/DataReaderFromUnity.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/Debug.h"
 #include "../MathUtil.h"
 
 namespace
 {
-	constexpr VECTOR model_scale = { 7.0f, 0.5f, 0.5f };
+	constexpr VECTOR model_scale = { 1.12f, 0.1f, 0.1f };
 	constexpr VECTOR init_model_direction{ 1, 0, 0 };
 	constexpr VECTOR init_effect_direction{ 0, 0, -1 };
-	constexpr float effect_scale = 150.0f;
+	constexpr float effect_scale = 24.0f;
 
 	constexpr int collision_and_effect_difference_frame = 120;
+
+	constexpr float move_speed = 33.0f;
 }
 
 NormalLazer::NormalLazer(int modelHandle, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec) :
@@ -47,7 +48,6 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* pos, VECTOR* vec, VECTOR* enem
 	effectManager.PlayEffectFollow(lazerEffectHandle_, EffectID::normal_lazer, firePos_, effect_scale, 1.0f, effectRot);
 
 	pModel_->SetPos(pos_);
-
 	pModel_->Update();
 }
 
@@ -57,16 +57,17 @@ NormalLazer::~NormalLazer()
 
 void NormalLazer::Update()
 {
-	pos_ = VAdd(pos_, *enemyMoveVec_);
-
 	collisionAndEffectDifferenceTimer_.Update(1);
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
 	{
+		pos_ = VAdd(pos_, *enemyMoveVec_);
+
 		pos_ = VAdd(pos_, a_);
 	}
 	else
 	{
-		a_ = *vec_;
+		a_ = VScale(*vec_, move_speed);
+		pos_ = *firePos_;
 
 		// ベクトル方向の回転行列をモデルに設定
 		MATRIX rotMtx = MGetRotVec2(init_model_direction, *vec_);
@@ -109,19 +110,18 @@ void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
 	float dot = VDot(inversionVec, norm);
 	dot *= 2.0f;
 	VECTOR normVec = VScale(norm, dot);
-	*vec_ = VAdd(*vec_, normVec);
-	*vec_ = VNorm(*vec_);
-	*vec_ = VScale(*vec_, 300.0f);
+	a_ = VAdd(*vec_, normVec);
+	a_ = VScale(a_, 48.0f);
 #else
 	vec_ = VScale(vec_, -1);
 #endif
 
 	// ベクトル方向の回転行列をモデルに設定
-	MATRIX rotModelMtx = MGetRotVec2(init_model_direction, *vec_);
+	MATRIX rotModelMtx = MGetRotVec2(init_model_direction, a_);
 	MV1SetRotationMatrix(pModel_->GetModelHandle(), rotModelMtx);
 
 	// ベクトル方向の回転行列からオイラー角を出力
-	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
+	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, a_);
 	bool isGimbalLock = false;
 	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 
@@ -131,10 +131,12 @@ void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
 	pModel_->Update();
 }
 
-void NormalLazer::CheckInCamera()
+// レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
+void NormalLazer::ConfirmDelete()
 {
-	if (CheckCameraViewClip(pos_))
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	if (!effectManager.IsPlayingEffect(lazerEffectHandle_))
 	{
-//		isEnabled_ = false;
+		isEnabled_ = false;
 	}
 }

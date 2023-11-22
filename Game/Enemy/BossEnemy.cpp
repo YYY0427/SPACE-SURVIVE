@@ -349,13 +349,6 @@ void BossEnemy::CubeLaserAttack()
 	pLazerManager_->Create(LaserType::CUBE, &firePos, &vec, {});
 }
 
-// 通常レーザーの攻撃の処理
-void BossEnemy::NormalLaserAttack()
-{
-	// 通常レーザーの発射
-	pLazerManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
-}
-
 ////// Entar //////
 
 void BossEnemy::EntarEntry()
@@ -409,7 +402,7 @@ void BossEnemy::EntarStopNormalLaserAttack()
 	pModel_->ChangeAnimation(normal_laser_fire_anim_no, false, false, 8);
 
 	// 通常レーザーの発射
-	NormalLaserAttack();
+	pLazerManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
 }
 
 void BossEnemy::EntarMoveCubeLaserAttack()
@@ -425,6 +418,9 @@ void BossEnemy::EntarMoveNormalLaserAttack()
 {
 	// 通常レーザー発射用のアニメーションに変更
 	pModel_->ChangeAnimation(normal_laser_fire_anim_no, false, false, 8);
+
+	// 継続レーザーの発射
+	pLazerManager_->Create(LaserType::CONTINUE_NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
 
 	// 初期化
 	InitMove();
@@ -553,7 +549,11 @@ void BossEnemy::UpdateMoveNormalLaserAttack()
 	// 移動
 	Move();
 
-	// TODO : 継続レーザーの処理をここに書く
+	// 移動が終了したらステート変更
+	if (isMoveEnd_)
+	{
+		stateMachine_.SetState(State::IDLE);
+	}
 }
 
 ////// Exit ////// 
@@ -604,4 +604,8 @@ void BossEnemy::ExitMoveNormalLaserAttack()
 {
 	// 初期化
 	isMoveEnd_ = false;
+
+	// TODO : レーザーエフェクトの削除
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+
 }

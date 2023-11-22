@@ -47,6 +47,7 @@ protected:
 	VECTOR vec_;
 	VECTOR rot_;
 	VECTOR scale_;
+	VECTOR endScale_;
 
 	bool isEnabled_;
 

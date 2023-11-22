@@ -5,25 +5,28 @@
 
 namespace
 {
-	constexpr VECTOR model_scale = { 1.12f, 0.1f, 0.1f };
+	constexpr VECTOR model_scale = { 0.1f, 0.1f, 0.1f };
 	constexpr VECTOR init_model_direction{ 1, 0, 0 };
 	constexpr VECTOR init_effect_direction{ 0, 0, -1 };
 	constexpr VECTOR effect_scale = { 24.0f, 24.0f, 24.0f };
 
-	constexpr int collision_and_effect_difference_frame = 120;
+	// エフェクトのチャージ時間フレーム
+	constexpr int effect_charge_frame = 120;
 
 	constexpr float move_speed = 33.0f;
 }
 
 NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* fireObjectMoveVec, bool isContinue) :
-	collisionAndEffectDifferenceTimer_(collision_and_effect_difference_frame),
+	collisionAndEffectDifferenceTimer_(effect_charge_frame),
 	effectPos_({})
 {
-	// TODO : 継続レーザーの処理を書く
-	// エフェクトの再生時間によってモデルのxの拡大率を伸ばす
-	// 今のエフェクトの再生時間と今のモデルの拡大率から割合だしてやってね
-	// がんばれ
-
+	// TODO : レーザーがプレイヤーを追従するようにする
+	// エフェクトとモデルの角度を変えたらいけそう
+	// ただしモデルはフレーム追加して移動処理から変えなきゃいけなそう
+	
+	// TODO : レーザーの反射処理の変更
+	// 今の反射だと反射とは言えない
+	// エフェクトを盾に当たった地点で止める処理が問題だけどエフェクトの拡大率をうまく調整すればいけるからがんばれ
 
 
 	firePos_ = firePos;
@@ -41,9 +44,17 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* 
 	bool isGimbalLock = false;
 	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 
-	// レーザーのエフェクトの再生
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::normal_laser, firePos_, effect_scale, 1.0f, effectRot);
+	if (!isContinue)
+	{
+		// レーザーのエフェクトの再生
+		effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::normal_laser, firePos_, effect_scale, 1.0f, effectRot);
+	}
+	else
+	{
+		// 継続レーザーのエフェクトの再生
+		effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::continue_laser, firePos_, effect_scale, 1.0f, effectRot);
+	}
 
 	// 当たり判定に使用するモデルの設定
 	pModel_ = std::make_unique<Model>(modelHandle);	// インスタンス生成
@@ -60,6 +71,7 @@ NormalLazer::~NormalLazer()
 
 void NormalLazer::Update()
 {
+	// エフェクトのチャージが終了したら発射
 	collisionAndEffectDifferenceTimer_.Update(1);
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
 	{
@@ -69,6 +81,7 @@ void NormalLazer::Update()
 		}
 
 		pos_ = VAdd(pos_, actualVec_);
+		scale_.x += 0.05f;
 	}
 	else
 	{

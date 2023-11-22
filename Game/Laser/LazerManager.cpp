@@ -42,7 +42,7 @@ void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, VECTOR*
 		break;
 
 	case LaserType::CONTINUE_NORMAL:
-		data.pLazer = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, fireObjectMoveVec, true);
+		data.pLazer = std::make_shared<NormalLazer>(laserModelHanldeTable_[LaserType::NORMAL], pos, vec, fireObjectMoveVec, true);
 		break;
 
 	default:

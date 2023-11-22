@@ -13,6 +13,5 @@ public:
 
 private:
 	float deltaRot_;
-	VECTOR endScale_;
 };
 

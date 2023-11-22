@@ -49,6 +49,9 @@ private:
 	// キューブレーザーの発射インターバル用タイマー
 	Timer<int> cubeLaserFireIntervalTimer_;
 
+	// 次の行動に移すまでの休憩時間用タイマー
+	Timer<int> nextUpdateIdleTimer_;
+
 	float cubeLaserSpeed_;
 
 	float opacity_;

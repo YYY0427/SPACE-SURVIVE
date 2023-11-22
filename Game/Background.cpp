@@ -10,7 +10,7 @@ namespace
 	const std::string movie_file_path = "Data/Movie/star.mp4";
 
 	// “®‰æ‚ÌÄ¶‘¬“x
-	constexpr double playback_speed = 5.0;
+	constexpr double playback_speed = 20.0;
 }
 
 Background::Background()

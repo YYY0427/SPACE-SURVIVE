@@ -1,7 +1,7 @@
 #include "Warning.h"
 #include "../Util/DrawFunctions.h"
 #include "../Util/StringManager.h"
-#include "Common.h"
+#include "../common.h"
 #include "../Util/Debug.h"
 #include <string>
 #include <DxLib.h>

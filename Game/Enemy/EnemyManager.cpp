@@ -27,7 +27,7 @@ namespace
 	constexpr int warning_ui_draw_frame = 60 * 1;
 
 	// ゲーム開始から何フレーム経過したらボスを出現させるか
-	constexpr int boss_create_frame = 60 * 10;
+	constexpr int boss_create_frame = 60 * 1;
 }
 
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :

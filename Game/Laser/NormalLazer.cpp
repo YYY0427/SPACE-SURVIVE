@@ -57,10 +57,21 @@ NormalLazer::~NormalLazer()
 
 void NormalLazer::Update()
 {
+	// ベクトル方向の回転行列からオイラー角を出力
+	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
+	bool isGimbalLock = false;
+	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
+
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	effectManager.SetEffectRot(lazerEffectHandle_, VScale(effectRot, 1.0f));
+
 	collisionAndEffectDifferenceTimer_.Update(1);
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
 	{
-		pos_ = VAdd(pos_, *enemyMoveVec_);
+		if (!isRefrect_)
+		{
+			pos_ = VAdd(pos_, *enemyMoveVec_);
+		}
 
 		pos_ = VAdd(pos_, a_);
 	}
@@ -73,13 +84,13 @@ void NormalLazer::Update()
 		MATRIX rotMtx = MGetRotVec2(init_model_direction, *vec_);
 		MV1SetRotationMatrix(pModel_->GetModelHandle(), rotMtx);
 
-		// ベクトル方向の回転行列からオイラー角を出力
-		MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
-		bool isGimbalLock = false;
-		VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
+		//// ベクトル方向の回転行列からオイラー角を出力
+		//MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
+		//bool isGimbalLock = false;
+		//VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 
-		auto& effectManager = Effekseer3DEffectManager::GetInstance();
-		effectManager.SetEffectRot(lazerEffectHandle_, effectRot);
+		//auto& effectManager = Effekseer3DEffectManager::GetInstance();
+		//effectManager.SetEffectRot(lazerEffectHandle_, effectRot);
 	}
 
 	pModel_->SetPos(pos_);

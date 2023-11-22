@@ -88,6 +88,7 @@ BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shar
 	pLazerManager_ = pLazerManager;
 	normalLaserFireIntervalTimer_ = normal_laser_interval_frame;
 	cubeLaserFireIntervalTimer_ = cube_laser_interval_frame;
+	nextUpdateIdleTimer_ = 180;
 	pos_ = start_init_pos;
 	rot_ = rot;
 	cubeLaserSpeed_ = cube_laser_speed;
@@ -165,24 +166,32 @@ void BossEnemy::EntryUpdate()
 	// HPバーの演出が終わった場合
 	if (pHpBar_->IsEndFirstDirection() && pos_.z <= goal_init_pos.z)
 	{
-		updateFunc_ = &BossEnemy::CubeLaserAttackUpdate;
+		updateFunc_ = &BossEnemy::IdleUpdate;
 	}
 }
 
 void BossEnemy::IdleUpdate()
 {
 	pModel_->ChangeAnimation(idle_anim_no, true, false, 8);
+
+	nextUpdateIdleTimer_.Update(1);
+	if (nextUpdateIdleTimer_.IsTimeOut())
+	{
+		updateFunc_ = &BossEnemy::MoveUpdate;
+
+		nextUpdateIdleTimer_.Reset();
+	}
 }
 
 void BossEnemy::CubeLaserAttackUpdate()
 {
 	// 一定間隔でキューブレーザーの発射
-	cubeLaserFireIntervalTimer_.Update(1);
-	if (cubeLaserFireIntervalTimer_.IsTimeOut())
+//	cubeLaserFireIntervalTimer_.Update(1);
+//	if (cubeLaserFireIntervalTimer_.IsTimeOut())
 	{
-		pModel_->ChangeAnimation(cube_laser_fire_anim_no, false, false, 8, 0.5f);
+		pModel_->ChangeAnimation(cube_laser_fire_anim_no, true, false, 8, 0.5f);
 
-		if (!pModel_->IsAnimEnd())
+	//	if (!pModel_->IsAnimEnd())
 		{
 			// レーザーの発射位置のフレーム座標の取得
 			VECTOR firePos = MV1GetFramePosition(pModel_->GetModelHandle(), cube_laser_fire_frame_1);
@@ -258,6 +267,9 @@ void BossEnemy::MoveUpdate()
 
 			// 目標地点の更新
 			movePoint_++;
+
+			// レーザー発射
+			CubeLaserAttackUpdate();
 
 			// 全ての地点を移動したか
 			if (static_cast<int>(movePointTable_.size()) <= movePoint_)

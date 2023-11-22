@@ -11,7 +11,7 @@ namespace
 	const std::string hp1_img_file_path = "Data/Image/HP.png";
 	const std::string hp2_img_file_path = "Data/Image/HPBack.png";
 
-	constexpr float add_speed = 30.0f;
+	constexpr float add_speed = 50.0f;
 }
 
 HpBar::HpBar(float maxHp) :

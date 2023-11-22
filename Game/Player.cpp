@@ -148,6 +148,15 @@ void Player::Update(float cameraYaw)
 	// スティックが入力されている場合のみ移動
 	if (isInput_)
 	{
+		// 移動している場合ログに追加
+		posLogTable_.push_front(pos_);
+
+		// 保存可能な数を超えていたら末尾から消す
+		if (posLogTable_.size() > log_frame)
+		{
+			posLogTable_.pop_back();
+		}
+
 		// プレイヤーから見てx方向とz方向のベクトルを足して移動ベクトルを作成する
 		moveVec_ = VAdd(moveVecY, moveVecX);
 
@@ -380,4 +389,9 @@ int Player::GetModelHandle() const
 std::shared_ptr<Shield> Player::GetShield() const
 {
 	return pShield_;
+}
+
+std::deque<VECTOR> Player::GetMovingPosLogTable() const
+{
+	return posLogTable_;
 }

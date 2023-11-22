@@ -182,6 +182,9 @@ void BossEnemy::Update()
 	// 通常レーザーの発射位置のフレーム座標の取得
 	normalLaserFirePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), normal_laser_fire_frame);
 
+	// TODO :　プレイヤーに向かうベクトルを下を使って実装する
+	pPlayer_->GetMovingPosLogTable();
+
 	// 通常レーザがプレイヤーに向かうベクトルの作成
 	toTargetVec_ = VSub(pPlayer_->GetPos(), normalLaserFirePos_);
 	toTargetVec_ = VNorm(toTargetVec_);
@@ -461,7 +464,7 @@ void BossEnemy::UpdateIdle()
 	// 制限時間を超えたらステートの変更
 	if (utilTimerTable_["idleStateContinue"].IsTimeOut())
 	{
-		stateMachine_.SetState(State::STOP_ATTACK_NORMAL_LASER);
+		stateMachine_.SetState(State::MOVE_ATTACK_NORMAL_LASER);
 	}
 }
 

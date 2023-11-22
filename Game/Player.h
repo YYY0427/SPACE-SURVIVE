@@ -60,7 +60,12 @@ public:
 	// プレイヤーモデルのハンドルの取得
 	int GetModelHandle() const; 
 
+	// シールドのインスタンスの取得
 	std::shared_ptr<Shield> GetShield() const;
+
+	// 移動中のみ位置情報を保存するテーブルの取得
+	std::deque<VECTOR> GetMovingPosLogTable() const;
+
 private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;

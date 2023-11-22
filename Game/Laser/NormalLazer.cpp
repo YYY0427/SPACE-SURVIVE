@@ -11,9 +11,7 @@ namespace
 	constexpr VECTOR effect_scale = { 24.0f, 24.0f, 24.0f };
 
 	// エフェクトのチャージ時間フレーム
-	constexpr int effect_charge_frame = 120;
-
-	constexpr float move_speed = 33.0f;
+	constexpr int effect_charge_frame = 150;
 }
 
 NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* fireObjectMoveVec, bool isContinue) :
@@ -35,6 +33,7 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* 
 	vec_ = vec;
 	isEnabled_ = true;
 	fireObjectMoveVec_ = fireObjectMoveVec;
+	isRefrect_ = false;
 
 	// ベクトル方向の回転行列を作成
 	rotMtx_ = MGetRotVec2(init_model_direction, *vec_);
@@ -71,35 +70,29 @@ NormalLazer::~NormalLazer()
 
 void NormalLazer::Update()
 {
+	// 常に発射位置に追従する
+	pos_ = *firePos_;
+
+	// ベクトル方向の回転行列をモデルに設定
+	rotMtx_ = MGetRotVec2(init_model_direction, *vec_);
+
+	// ベクトル方向の回転行列からオイラー角を出力
+	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
+	bool isGimbalLock = false;
+	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
+
+	// エフェクトの回転率の設定
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	effectManager.SetEffectRot(laserEffectHandle_, effectRot);
+
 	// エフェクトのチャージが終了したら発射
 	collisionAndEffectDifferenceTimer_.Update(1);
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
 	{
-		if (!isRefrect_)
-		{
-			pos_ = VAdd(pos_, *fireObjectMoveVec_);
-		}
-
-		pos_ = VAdd(pos_, actualVec_);
-		scale_.x += 0.05f;
-	}
-	else
-	{
-		actualVec_ = VScale(*vec_, move_speed);
-		pos_ = *firePos_;
-
-		// ベクトル方向の回転行列をモデルに設定
-		rotMtx_ = MGetRotVec2(init_model_direction, *vec_);
-
-		// ベクトル方向の回転行列からオイラー角を出力
-		MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, *vec_);
-		bool isGimbalLock = false;
-		VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
-
-		auto& effectManager = Effekseer3DEffectManager::GetInstance();
-		effectManager.SetEffectRot(laserEffectHandle_, effectRot);
+		scale_.x = -1.0f;
 	}
 
+	// モデルの設定
 	pModel_->SetRotMtx(rotMtx_);
 	pModel_->SetScale(scale_);
 	pModel_->SetPos(pos_);

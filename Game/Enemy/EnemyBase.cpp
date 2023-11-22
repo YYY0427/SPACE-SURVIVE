@@ -9,14 +9,14 @@ EnemyBase::EnemyBase() :
 	pos_({}),
 	firePos_({}),
 	rot_({}),
-	normalLaserFireIntervalTimer_({}),
 	collisionRadius_(0.0f),
 	sinWaveTimer_(0),
 	onDamageEffectHandle_(-1),
 	hp_(0.0f),
 	isEnabled_(true),
 	moveVec_({}),
-	toTargetVec_({})
+	toTargetVec_({}),
+	opacity_(1.0f)
 {
 }
 
@@ -55,7 +55,7 @@ void EnemyBase::OnDamage(int damage, VECTOR pos)
 			onDamageEffectHandle_,
 			EffectID::enemy_died,
 			pos,
-			200.0f,
+			{ 200.0f, 200.0f, 200.0f },
 			0.5f);
 	}
 }

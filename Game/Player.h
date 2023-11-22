@@ -20,6 +20,10 @@ public:
 	// 更新
 	void Update(float cameraYaw);
 
+	// 描画
+	void Draw();
+	void DrawUI();
+
 	/// <summary>
 	/// 衝突時の更新
 	/// </summary>
@@ -28,9 +32,6 @@ public:
 
 	// エネルギーの処理
 	void EnergyProcess();
-
-	// 描画
-	void Draw();
 
 	// プレイヤーのリスポーン処理
 	void Respawn(VECTOR restartPos);
@@ -82,7 +83,7 @@ private:
 	VECTOR moveVec_;
 
 	// ブーストエフェクトの拡大率
-	float boostEffectScale_;
+	VECTOR boostEffectScale_;
 
 	// ブーストエフェクトの再生速度
 	float boostEffectSpeed_;

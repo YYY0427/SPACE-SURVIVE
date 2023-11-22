@@ -5,10 +5,23 @@
 class NormalLazer : public LazerBase
 {
 public:
-	NormalLazer(int modelHandle, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec);
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="modelHandle">モデルハンドル</param>
+	/// <param name="firePos">発射位置</param>
+	/// <param name="vec">ベクトル(正規化されてる)</param>
+	/// <param name="fireObjectMoveVec">発射元の移動ベクトル</param>
+	/// <param name="isContinue">継続発射のレーザーかどうか</param>
+	NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* fireObjectMoveVec, bool isContinue);
+
+	// デストラクタ
 	virtual ~NormalLazer();
 
+	// 更新
 	void Update() override;
+
+	// 描画
 	void Draw() override;
 
 	// レーザーの反射
@@ -18,11 +31,23 @@ public:
 	void ConfirmDelete() override;
 
 private:
+	// 回転行列
+	MATRIX rotMtx_;
+
+	// 発射元のベクトルを保存
 	VECTOR* vec_;
-	VECTOR* enemyMoveVec_;
-	VECTOR a_;
+
+	// 発射元の移動ベクトルを保存
+	VECTOR* fireObjectMoveVec_;
+
+	// 実際に使用するベクトル
+	VECTOR actualVec_;
+
+	// エフェクトの位置
 	VECTOR effectPos_;
-	int lazerEffectHandle_;
+
+	// レーザーのエフェクトのハンドル
+	int laserEffectHandle_;
 
 	// レーザーの当たり判定モデルとエフェクトの発射フレームの差を測るタイマー
 	Timer<int> collisionAndEffectDifferenceTimer_;

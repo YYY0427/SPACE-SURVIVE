@@ -89,6 +89,14 @@ void EnemyManager::Draw()
 	{
 		enemy->Draw();
 	}
+}
+
+void EnemyManager::DrawUI()
+{
+	for (auto& enemy : pEnemies_)
+	{
+		enemy->DrawUI();
+	}
 
 	if (pWarning_)
 	{

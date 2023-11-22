@@ -136,6 +136,12 @@ void Model::SetRot(VECTOR rot)
 	MV1SetRotationXYZ(modelHandle_, rot);
 }
 
+// ƒ‚ƒfƒ‹‚Ì‰ñ“]s—ñ‚Ìİ’è
+void Model::SetRotMtx(MATRIX mtx)
+{
+	MV1SetRotationMatrix(modelHandle_, mtx);
+}
+
 // ƒ‚ƒfƒ‹‚ÌŠg‘å—¦‚Ìİ’è
 void Model::SetScale(VECTOR scale)
 {

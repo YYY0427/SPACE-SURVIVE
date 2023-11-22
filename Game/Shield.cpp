@@ -12,7 +12,7 @@
 namespace
 {
 	const std::string model_file_path = "Data/Image/Shield.png";
-	constexpr float effect_scale = 80.0f;
+	constexpr VECTOR effect_scale = { 80.0f,  80.0f, 80.0f, };
 	constexpr int max_enerugy_gage = 100;
 }
 
@@ -100,9 +100,11 @@ void Shield::Draw()
 		pShiled_->Draw();
 #endif
 	}
+}
 
+void Shield::DrawUI()
+{
 	VECTOR screenPlayerPos = ConvWorldPosToScreenPos(player_.GetPos());
-
 	pEnergyGage_->Draw(screenPlayerPos.x, screenPlayerPos.y - 40, enerugyGage_);
 }
 

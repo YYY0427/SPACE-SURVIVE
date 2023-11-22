@@ -33,15 +33,6 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_);
 	pPlanetManager_ = std::make_shared<PlanetManager>();
 	pCamera_ = std::make_shared<Camera>();
-
-	/*Effekseer3DEffectManager::GetInstance().PlayEffectLoop(
-		windEffectH_, 
-		EffectID::wind, 
-		{ pPlayer_->GetPos().x, pPlayer_->GetPos().y, pPlayer_->GetPos().z + 500.0f},
-		200.0f,
-		0.7f,
-		{ 0.0f, -DX_PI_F / 2, 0.0f});
-	*/
 }
 
 // デストラクタ
@@ -68,6 +59,10 @@ void GameMainScene::Draw()
 	pEnemyManager_->Draw();
 	pPlayer_->Draw();
 	pLazerManager_->Draw();
+
+	// 各クラスのUIの描画
+	pPlayer_->DrawUI();
+	pEnemyManager_->DrawUI();
 
 	// 現在のシーンのテキスト表示
 	Debug::Log("GameMainScene");
@@ -119,7 +114,7 @@ void GameMainScene::NormalUpdate()
 		if (!pPlayer_->GetShield()->GetIsShield()) continue;
 
 		// 反射可能なレーザー以外の場合は判定を行わない
-		if (lazer.type != LazerType::NORMAL) continue;
+		if (lazer.type != LaserType::NORMAL) continue;
 		
 		// 反射後のレーザーの場合は当たり判定を行わない
 		if (lazer.pLazer->GetIsRefrect()) continue;
@@ -152,7 +147,7 @@ void GameMainScene::NormalUpdate()
 	for (auto& laser : pLazerManager_->GetLazeres())
 	{
 		// 反射可能なレーザー以外の場合は判定を行わない
-		if (laser.type != LazerType::NORMAL) continue;
+		if (laser.type != LaserType::NORMAL) continue;
 
 		// 反射後のレーザーとしか当たり判定を行わない
 		if (!laser.pLazer->GetIsRefrect()) continue;

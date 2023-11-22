@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -158,7 +158,6 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="UI\UIManager.cpp" />
     <ClCompile Include="UI\EnergyGage.cpp" />
     <ClCompile Include="UI\HpBar.cpp" />
     <ClCompile Include="Laser\CubeLazer.cpp" />
@@ -170,7 +169,7 @@
     <ClCompile Include="Laser\LazerBase.cpp" />
     <ClCompile Include="Laser\LazerManager.cpp" />
     <ClCompile Include="Laser\NormalLazer.cpp" />
-    <ClCompile Include="MathUtil.cpp" />
+    <ClCompile Include="Util\MathUtil.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Util\Debug.cpp" />
     <ClCompile Include="Planet\Earth.cpp" />
@@ -202,7 +201,7 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="UI\UIManager.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="UI\EnergyGage.h" />
     <ClInclude Include="UI\HpBar.h" />
     <ClInclude Include="Laser\CubeLazer.h" />
@@ -214,7 +213,7 @@
     <ClInclude Include="Laser\LazerBase.h" />
     <ClInclude Include="Laser\LazerManager.h" />
     <ClInclude Include="Laser\NormalLazer.h" />
-    <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="Util\MathUtil.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Util\Debug.h" />
     <ClInclude Include="Planet\Earth.h" />

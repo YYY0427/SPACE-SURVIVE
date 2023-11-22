@@ -27,7 +27,7 @@ NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::
 	moveVec_.x = 10;
 	pos_ = init_pos;
 	rot_ = model_rot;
-	normalLaserFireIntervalTimer_ = (GetRand(10) + 1) * 60;
+	utilTimerTable_["normalLaserFireInterval"] = (GetRand(10) + 1) * 60;
 	collisionRadius_ = collision_radius;
 
 	pModel_ = std::make_unique<Model>(modelHandle);
@@ -52,17 +52,17 @@ void NormalEnemy::Update()
 	toTargetVec_ = VSub(pPlayer_->GetPos(), firePos_);
 	toTargetVec_ = VNorm(toTargetVec_);
 
-	normalLaserFireIntervalTimer_.Update(1);
-	if (normalLaserFireIntervalTimer_.IsTimeOut())
+	utilTimerTable_["normalLaserFireInterval"].Update(1);
+	if (utilTimerTable_["normalLaserFireInterval"].IsTimeOut())
 	{
 		// レーザーを発射
-		pLazerManager_->Create(LazerType::NORMAL, &firePos_, &toTargetVec_, &moveVec_);
-		normalLaserFireIntervalTimer_.Reset();
+		pLazerManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_, &moveVec_);
+		utilTimerTable_["normalLaserFireInterval"].Reset();
 	}
 
 	// サインカーブ移動
 	// 浮いているように見せるため
-	SinWave(100, 10);
+	SinWave(50, 5);
 
 	VECTOR screenPos = ConvWorldPosToScreenPos(pos_);
 	if (screenPos.x > common::screen_width || screenPos.x < 0)

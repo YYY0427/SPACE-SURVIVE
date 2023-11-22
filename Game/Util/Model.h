@@ -69,6 +69,7 @@ public:
 	// セッター
 	void SetPos(VECTOR pos);			// 表示位置の設定
 	void SetRot(VECTOR rot);			// 回転状態の設定
+	void SetRotMtx(MATRIX mtx);			// 回転行列の設定
 	void SetScale(VECTOR scale);		// 拡大率の設定
 	void SetOpacity(float opacity);		// 不透明度の設定(0.0~1.0)
 

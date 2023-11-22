@@ -14,31 +14,35 @@ namespace
 
 LazerManager::LazerManager()
 {
-	lazerModelHanldeTable_[LazerType::CUBE] = my::MyLoadModel(cube_lazer_model_file_path.c_str());
-	lazerModelHanldeTable_[LazerType::NORMAL] = my::MyLoadModel(normal_lazer_model_file_path.c_str());
+	laserModelHanldeTable_[LaserType::CUBE] = my::MyLoadModel(cube_lazer_model_file_path.c_str());
+	laserModelHanldeTable_[LaserType::NORMAL] = my::MyLoadModel(normal_lazer_model_file_path.c_str());
 }
 
 LazerManager::~LazerManager()
 {
-	for (auto& lazerModelHandle : lazerModelHanldeTable_)
+	for (auto& lazerModelHandle : laserModelHanldeTable_)
 	{
 		MV1DeleteModel(lazerModelHandle.second);
 	}
 }
 
-void LazerManager::Create(LazerType lazerType, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec)
+void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, VECTOR* fireObjectMoveVec)
 {
-	LazerData data;
-	data.type = lazerType;
+	LaserData data;
+	data.type = laserType;
 
-	switch (lazerType)
+	switch (laserType)
 	{
-	case LazerType::CUBE:
-		data.pLazer = std::make_shared<CubeLazer>(lazerModelHanldeTable_[lazerType], *pos, *vec);
+	case LaserType::CUBE:
+		data.pLazer = std::make_shared<CubeLazer>(laserModelHanldeTable_[laserType], *pos, *vec);
 		break;
 
-	case LazerType::NORMAL:
-		data.pLazer = std::make_shared<NormalLazer>(lazerModelHanldeTable_[lazerType], pos, vec, enemyMoveVec);
+	case LaserType::NORMAL:
+		data.pLazer = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, fireObjectMoveVec, false);
+		break;
+
+	case LaserType::CONTINUE_NORMAL:
+		data.pLazer = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, fireObjectMoveVec, true);
 		break;
 
 	default:
@@ -50,7 +54,7 @@ void LazerManager::Create(LazerType lazerType, VECTOR* pos, VECTOR* vec, VECTOR*
 void LazerManager::Update()
 {
 	// 不要になったレーザーの削除
-	auto rmIt = std::remove_if(pLazeres_.begin(), pLazeres_.end(), [](const LazerData lazer)
+	auto rmIt = std::remove_if(pLazeres_.begin(), pLazeres_.end(), [](const LaserData lazer)
 		{
 			return !lazer.pLazer->GetIsEnabled();
 		});
@@ -71,7 +75,7 @@ void LazerManager::Draw()
 	}
 }
 
-const std::list<LazerData>& LazerManager::GetLazeres() const
+const std::list<LaserData>& LazerManager::GetLazeres() const
 {
 	return pLazeres_;
 }

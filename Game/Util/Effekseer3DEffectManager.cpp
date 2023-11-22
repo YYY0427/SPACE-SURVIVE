@@ -166,7 +166,7 @@ void Effekseer3DEffectManager::PlayEffectLoop(int& playingEffectHandle, std::str
 }
 
 // 指定のエフェクトの再生
-void Effekseer3DEffectManager::PlayEffect(int& playingEffectHandle, std::string fileName, VECTOR pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffect(int& playingEffectHandle, std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
@@ -185,7 +185,7 @@ void Effekseer3DEffectManager::PlayEffect(int& playingEffectHandle, std::string 
 }
 
 // 指定のエフェクトのループ再生
-void Effekseer3DEffectManager::PlayEffectLoop(int& playingEffectHandle, std::string fileName, VECTOR pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffectLoop(int& playingEffectHandle, std::string fileName, VECTOR pos, VECTOR scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
@@ -209,7 +209,7 @@ void Effekseer3DEffectManager::PlayEffectLoop(int& playingEffectHandle, std::str
 }
 
 // 指定のエフェクトの追従再生
-void Effekseer3DEffectManager::PlayEffectFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffectFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, VECTOR scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
@@ -233,7 +233,7 @@ void Effekseer3DEffectManager::PlayEffectFollow(int& playingEffectHandle, std::s
 }
 
 // 指定のエフェクトの追従とループ再生
-void Effekseer3DEffectManager::PlayEffectLoopAndFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::PlayEffectLoopAndFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, VECTOR scale, float speed, VECTOR rot)
 {
 	// エフェクトリソースに指定したエフェクトがロードされていない場合止める
 	assert(effectResourceHandleTable_.find(fileName) != effectResourceHandleTable_.end());
@@ -257,7 +257,7 @@ void Effekseer3DEffectManager::PlayEffectLoopAndFollow(int& playingEffectHandle,
 }
 
 // エフェクトの全ての値の変更
-void Effekseer3DEffectManager::SetEffectAllParam(int playingEffectHandle, VECTOR pos, float scale, float speed, VECTOR rot)
+void Effekseer3DEffectManager::SetEffectAllParam(int playingEffectHandle, VECTOR pos, VECTOR scale, float speed, VECTOR rot)
 {
 	// 再生速度
 	SetEffectSpeed(playingEffectHandle, speed);
@@ -273,10 +273,10 @@ void Effekseer3DEffectManager::SetEffectAllParam(int playingEffectHandle, VECTOR
 }
 
 // エフェクトの拡大率の変更
-void Effekseer3DEffectManager::SetEffectScale(int playingEffectHandle, float scale)
+void Effekseer3DEffectManager::SetEffectScale(int playingEffectHandle, VECTOR scale)
 {
 	// エフェクトの拡大率の設定
-	int result = SetScalePlayingEffekseer3DEffect(playingEffectHandle, scale, scale, scale);
+	int result = SetScalePlayingEffekseer3DEffect(playingEffectHandle, scale.x, scale.y, scale.z);
 
 	// 失敗したら止める
 	assert(result != -1);

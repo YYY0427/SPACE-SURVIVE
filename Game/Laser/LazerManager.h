@@ -4,10 +4,10 @@
 #include <memory>
 #include <unordered_map>
 
-struct LazerData
+struct LaserData
 {
 	std::shared_ptr<LazerBase> pLazer;
-	LazerType type;
+	LaserType type;
 };
 
 class LazerManager
@@ -16,13 +16,13 @@ public:
 	LazerManager();
 	virtual ~LazerManager();
 
-	void Create(LazerType lazerType, VECTOR* pos, VECTOR* vec, VECTOR* enemyMoveVec);
+	void Create(LaserType laserType, VECTOR* pos, VECTOR* vec, VECTOR* fireObjectMoveVec);
 
 	void Update();
 	void Draw();
 
-	const std::list<LazerData>& GetLazeres() const;
+	const std::list<LaserData>& GetLazeres() const;
 private:
-	std::list<LazerData> pLazeres_;
-	std::unordered_map<LazerType, int> lazerModelHanldeTable_;
+	std::list<LaserData> pLazeres_;
+	std::unordered_map<LaserType, int> laserModelHanldeTable_;
 };

@@ -16,6 +16,7 @@ public:
 
 	void Update(int time);
 	void Draw();
+	void DrawUI();
 
 	const std::list<std::shared_ptr<EnemyBase>>& GetEnemies() const;	
 

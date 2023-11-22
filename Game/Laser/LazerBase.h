@@ -3,9 +3,10 @@
 #include <memory>
 #include "../Util/Model.h"
 
-enum class LazerType
+enum class LaserType
 {
 	NORMAL, 
+	CONTINUE_NORMAL,
 	CUBE,
 };
 

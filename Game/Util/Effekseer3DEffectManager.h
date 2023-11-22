@@ -10,7 +10,8 @@ namespace EffectID
 	const std::string player_dead = "Explosion";		// プレイヤー死亡時に出すエフェクト
 	const std::string player_shield = "MagicShield";	// プレイヤーのシールド	
 	const std::string player_boost = "FirePot1";		// プレイヤーに常に出すエフェクト
-	const std::string normal_lazer = "blue_lazer";		// 敵の通常レーザーのエフェクト
+	const std::string normal_laser = "Laser";			// 敵の通常レーザーのエフェクト
+	const std::string continue_laser = "ContinueLaser";	// 敵の継続通常レーザーエフェクト
 	const std::string refrect_laser = "RefrectLaser";	// 敵のレーザーを反射したレーザー
 	const std::string enemy_died = "Explosion";			// 敵の死亡時のエフェクト
 	const std::string enemy_boss_entry = "EnemyBossEntry";	// 敵のボスが出現するときのエフェクト
@@ -21,11 +22,12 @@ namespace EffectID
 		player_dead,
 		player_shield,
 		player_boost,
-		normal_lazer,
+		normal_laser,
 		refrect_laser,
 		enemy_died,
 		enemy_boss_entry,
 		wind,
+		continue_laser,
 	};
 }
 
@@ -64,7 +66,7 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転率</param>
-	void PlayEffect(int& playingEffectHandle, std::string fileName, VECTOR pos, float scale = 1.0f, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
+	void PlayEffect(int& playingEffectHandle, std::string fileName, VECTOR pos, VECTOR scale = { 1.0f, 1.0f, 1.0f }, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
 
 	/// <summary>
 	/// 指定のエフェクトのループ再生
@@ -75,7 +77,7 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転率</param>
-	void PlayEffectLoop(int& playingEffectHandle, std::string fileName, VECTOR pos, float scale = 1.0f, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
+	void PlayEffectLoop(int& playingEffectHandle, std::string fileName, VECTOR pos, VECTOR scale = { 1.0f, 1.0f, 1.0f }, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
 
 	/// <summary>
 	/// 指定のエフェクトの追従再生
@@ -86,7 +88,7 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転率</param>
-	void PlayEffectFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, float scale = 1.0f, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
+	void PlayEffectFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, VECTOR scale = { 1.0f, 1.0f, 1.0f }, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
 
 	/// <summary>
 	/// 指定のエフェクトの追従とループ再生
@@ -97,7 +99,7 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転率</param>
-	void PlayEffectLoopAndFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, float scale = 1.0f, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
+	void PlayEffectLoopAndFollow(int& playingEffectHandle, std::string fileName, VECTOR* pos, VECTOR scale = { 1.0f, 1.0f, 1.0f }, float speed = 1.0f, VECTOR rot = { 0.0f, 0.0f, 0.0f });
 
 	/// <summary>
 	/// エフェクトの全ての値の変更
@@ -107,14 +109,14 @@ public:
 	/// <param name="scale">拡大率</param>
 	/// <param name="speed">再生速度</param>
 	/// <param name="rot">回転率</param>
-	void SetEffectAllParam(int playingEffectHandle, VECTOR pos, float scale, float speed, VECTOR rot);
+	void SetEffectAllParam(int playingEffectHandle, VECTOR pos, VECTOR scale, float speed, VECTOR rot);
 
 	/// <summary>
 	/// エフェクトの拡大率の変更
 	/// </summary>
 	/// <param name="playingEffectHandle">エフェクトのハンドル</param>
 	/// <param name="scale">拡大率</param>
-	void SetEffectScale(int playingEffectHandle, float scale);
+	void SetEffectScale(int playingEffectHandle, VECTOR scale);
 
 	/// <summary>
 	/// エフェクトの再生速度の変更
@@ -208,7 +210,7 @@ private:
 		PlayType type;
 		VECTOR pos;
 		VECTOR rot;
-		float scale;
+		VECTOR scale;
 		float speed;
 	};
 
@@ -220,7 +222,7 @@ private:
 		PlayType type;
 		VECTOR* pos;
 		VECTOR rot;
-		float scale;
+		VECTOR scale;
 		float speed;
 	};
 

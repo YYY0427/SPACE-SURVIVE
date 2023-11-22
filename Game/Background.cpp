@@ -25,6 +25,15 @@ Background::Background()
 	// ”wŒi‚Ì“®‰æ‚ÌÄ¶‚ðŠJŽn
 	result = PlayMovieToGraph(backgroundMovieH_, DX_PLAYTYPE_LOOP);
 	assert(result != -1);
+
+	/*Effekseer3DEffectManager::GetInstance().PlayEffectLoop(
+		windEffectH_,
+		EffectID::wind,
+		{ pPlayer_->GetPos().x, pPlayer_->GetPos().y, pPlayer_->GetPos().z + 500.0f},
+		200.0f,
+		0.7f,
+		{ 0.0f, -DX_PI_F / 2, 0.0f});
+	*/
 }
 
 Background::~Background()

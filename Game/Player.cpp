@@ -63,7 +63,7 @@ Player::Player() :
 	playerDeadEffectHandle_(-1),
 	isPlayGameOverEffect_(false),
 	isReverseMoveVec_(false),
-	boostEffectScale_(20.0f),
+	boostEffectScale_({ 20.0f, 20.0f, 20.0f }),
 	boostEffectSpeed_(1.0f)
 {
 	pos_ = init_pos;
@@ -263,7 +263,7 @@ bool Player::OnDamageUpdate()
 		if (!isPlayGameOverEffect_)
 		{
 			isPlayGameOverEffect_ = true;
-			Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, 50.0f, 0.5f);
+			Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, { 50.0f, 50.0f, 50.0f }, 0.5f);
 		}
 	}
 	
@@ -317,6 +317,11 @@ void Player::Draw()
 #endif 
 	}
 	pShield_->Draw();
+}
+
+void Player::DrawUI()
+{
+	pShield_->DrawUI();
 }
 
 // プレイヤーのリスポーン処理

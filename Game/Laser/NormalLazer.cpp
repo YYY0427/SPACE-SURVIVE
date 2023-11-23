@@ -9,16 +9,14 @@ namespace
 	constexpr VECTOR init_model_direction{ 1, 0, 0 };
 	constexpr VECTOR init_effect_direction{ 0, 0, -1 };
 	constexpr VECTOR effect_scale = { 24.0f, 24.0f, 24.0f };
-	constexpr VECTOR refrect_effect_scale = { 24.0f, 24.0f, 1.0f };
 
 	// エフェクトのチャージ時間フレーム
 	constexpr int effect_charge_frame = 150;
 }
 
-NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* fireObjectMoveVec, bool isContinue) :
+NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, bool isContinue) :
 	collisionAndEffectDifferenceTimer_(effect_charge_frame),
-	effectPos_({}),
-	effectScale_({})
+	effectPos_({})
 {
 	// TODO : レーザーがプレイヤーを追従するようにする
 	// できたけどなんか変、別のゲーム研究して改変予知あり
@@ -33,9 +31,6 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* 
 	pos_ = *firePos;
 	vec_ = vec;
 	isEnabled_ = true;
-	fireObjectMoveVec_ = fireObjectMoveVec;
-	isRefrect_ = false;
-	effectScale_ = effect_scale;
 
 	// ベクトル方向の回転行列を作成
 	rotMtx_ = MGetRotVec2(init_model_direction, *vec_);
@@ -89,6 +84,9 @@ void NormalLazer::Update()
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 	effectManager.SetEffectRot(laserEffectHandle_, effectRot);
 
+	// エフェクトの拡大率の設定
+	effectManager.SetEffectScale(laserEffectHandle_, effect_scale);
+
 	// エフェクトのチャージが終了したら発射
 	collisionAndEffectDifferenceTimer_.Update(1);
 	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
@@ -110,11 +108,21 @@ void NormalLazer::Draw()
 #endif
 }
 
-//void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
-//{
-//	//// レーザーのエフェクトをストップ
-//	//auto& effectManager = Effekseer3DEffectManager::GetInstance();
-//	//effectManager.DeleteEffect(laserEffectHandle_);
+void NormalLazer::Stop(const VECTOR pos)
+{
+	VECTOR vec = VSub(pos, *firePos_);
+	float size = VSize(vec);
+
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	effectManager.SetEffectScale(laserEffectHandle_, { effect_scale.x, effect_scale.y, size / 310.0f });
+
+	scale_.x = 1.0f;
+	pModel_->SetScale(scale_);
+	pModel_->Update();
+
+	//// レーザーのエフェクトをストップ
+	//auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	//effectManager.DeleteEffect(laserEffectHandle_);
 //
 //	isRefrect_ = true;
 //	pos_ = pos;
@@ -146,7 +154,7 @@ void NormalLazer::Draw()
 //	effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::refrect_laser, &effectPos_, effect_scale, 1.0f, effectRot);
 //
 //	pModel_->Update();
-//}
+}
 
 // レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
 void NormalLazer::ConfirmDelete()
@@ -156,4 +164,9 @@ void NormalLazer::ConfirmDelete()
 	{
 		isEnabled_ = false;
 	}
+}
+
+VECTOR NormalLazer::GetVec() const
+{
+	return *vec_;
 }

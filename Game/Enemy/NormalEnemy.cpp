@@ -56,7 +56,7 @@ void NormalEnemy::Update()
 	if (utilTimerTable_["normalLaserFireInterval"].IsTimeOut())
 	{
 		// ƒŒ[ƒU[‚ð”­ŽË
-		pLaserManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_, &moveVec_);
+		pLaserManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_);
 		utilTimerTable_["normalLaserFireInterval"].Reset();
 	}
 

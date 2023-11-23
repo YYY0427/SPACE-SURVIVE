@@ -1,6 +1,7 @@
 #include "LazerManager.h"
 #include "CubeLazer.h"
 #include "NormalLazer.h"
+#include "ReflectLaser.h"
 #include "../Util/DrawFunctions.h"
 #include "../Util/Debug.h"
 #include <string>
@@ -26,7 +27,7 @@ LazerManager::~LazerManager()
 	}
 }
 
-void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, VECTOR* fireObjectMoveVec)
+void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec)
 {
 	LaserData data;
 	data.type = laserType;
@@ -38,11 +39,11 @@ void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, VECTOR*
 		break;
 
 	case LaserType::NORMAL:
-		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, fireObjectMoveVec, false);
+		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, false);
 		break;
 
 	case LaserType::CONTINUE_NORMAL:
-		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[LaserType::NORMAL], pos, vec, fireObjectMoveVec, true);
+		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[LaserType::NORMAL], pos, vec, true);
 		break;
 
 	default:
@@ -69,6 +70,46 @@ void LazerManager::Draw()
 	{
 		laser.pLaser->Draw();
 	}
+}
+
+void LazerManager::Reflect(const VECTOR pos, const VECTOR vec, const VECTOR normal)
+{
+	auto it = std::find_if(
+		pLaseres_.begin(), pLaseres_.end(), 
+		[](LaserData data) { return data.type == LaserType::REFLECT; });
+
+	// 反射ベクトルの作成
+	VECTOR inversionVec = VScale(vec, -1);
+	float dot = VDot(inversionVec, normal);
+	dot *= 2.0f;
+	VECTOR normVec = VScale(normal, dot);
+	VECTOR reflectVec = VAdd(vec, normVec);
+	reflectVec = VNorm(vec);
+
+	// 反射レーザーが存在するか
+	if (it == pLaseres_.end()) 
+	{
+		// 見つからなかった
+
+		// 反射レーザーを作成
+		LaserData data;
+		data.type = LaserType::REFLECT;
+		data.pLaser = std::make_shared<ReflectLaser>(
+			laserModelHanldeTable_[LaserType::NORMAL], 
+			pos, reflectVec);
+
+		pLaseres_.push_back(data);
+	}
+	else 
+	{
+		// 見つかった
+		it->pLaser->ReflectLaserUpdate(pos, reflectVec);
+	}
+}
+
+void LazerManager::DeleteReflectLaser()
+{
+	pLaseres_.remove_if([](LaserData data) { return data.type == LaserType::REFLECT; });
 }
 
 void LazerManager::DeleteContinueLaser()

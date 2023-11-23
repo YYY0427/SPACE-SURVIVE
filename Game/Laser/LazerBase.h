@@ -8,6 +8,7 @@ enum class LaserType
 	NORMAL, 
 	CONTINUE_NORMAL,
 	CUBE,
+	REFLECT
 };
 
 class LazerBase
@@ -19,12 +20,8 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	/// <summary>
-	/// レーザーを反射
-	/// </summary>
-	/// <param name="pos">反射するレーザーを発射する位置</param>
-	/// <param name="norm">シールドの法線情報</param>
-	virtual void Refrect(const VECTOR pos, const VECTOR normal){};
+	// レーザーを止める
+	virtual void Stop(const VECTOR pos){};
 
 	void Delete();
 
@@ -36,7 +33,9 @@ public:
 
 	int GetModelHandle() const;
 
-	bool IsRefrect() const;
+	virtual VECTOR GetVec() const;
+
+	virtual void ReflectLaserUpdate(VECTOR pos, VECTOR vec){}
 
 protected:
 	std::unique_ptr<Model> pModel_;
@@ -49,7 +48,4 @@ protected:
 	VECTOR endScale_;
 
 	bool isEnabled_;
-
-	// 反射後のレーザーか
-	bool isRefrect_;
 };

@@ -88,6 +88,9 @@ void Image3D::Update()
 
 void Image3D::Draw()
 {
+	// ポリゴンの裏側も描画する
+	SetUseBackCulling(FALSE);
+
 	// ライティングは行わない
 	SetUseLighting(FALSE);
 
@@ -96,6 +99,9 @@ void Image3D::Draw()
 
 	// ライティングは行わない
 	SetUseLighting(TRUE);
+
+	// ポリゴンの裏側は描画しない
+	SetUseBackCulling(TRUE);
 }
 
 int Image3D::GetImageHandle() const

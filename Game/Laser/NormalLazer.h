@@ -13,7 +13,7 @@ public:
 	/// <param name="vec">ベクトル(正規化されてる)</param>
 	/// <param name="fireObjectMoveVec">発射元の移動ベクトル</param>
 	/// <param name="isContinue">継続発射のレーザーかどうか</param>
-	NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* fireObjectMoveVec, bool isContinue);
+	NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, bool isContinue);
 
 	// デストラクタ
 	~NormalLazer();
@@ -25,25 +25,19 @@ public:
 	void Draw() override;
 
 	// レーザーの反射
-//	void Refrect(const VECTOR pos, const VECTOR norm) override;
+	void Stop(const VECTOR pos) override;
 
 	// レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
 	void ConfirmDelete() override;
 
-private:
-	VECTOR effectScale_;
+	VECTOR GetVec() const override;
 
+private:
 	// 回転行列
 	MATRIX rotMtx_;
 
 	// 発射元のベクトルを保存
 	VECTOR* vec_;
-
-	// 発射元の移動ベクトルを保存
-	VECTOR* fireObjectMoveVec_;
-
-	// 実際に使用するベクトル
-	VECTOR actualVec_;
 
 	// エフェクトの位置
 	VECTOR effectPos_;

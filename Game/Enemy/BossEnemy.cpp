@@ -349,7 +349,7 @@ void BossEnemy::CubeLaserAttack()
 	vec = VScale(vec, cubeLaserSpeed_);
 
 	// レーザーの発射
-	pLaserManager_->Create(LaserType::CUBE, &firePos, &vec, {});
+	pLaserManager_->Create(LaserType::CUBE, &firePos, &vec);
 }
 
 ////// Entar //////
@@ -405,7 +405,7 @@ void BossEnemy::EntarStopNormalLaserAttack()
 	pModel_->ChangeAnimation(normal_laser_fire_anim_no, false, false, 8);
 
 	// 通常レーザーの発射
-	pLaserManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
+	pLaserManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_);
 }
 
 void BossEnemy::EntarMoveCubeLaserAttack()
@@ -423,7 +423,7 @@ void BossEnemy::EntarMoveNormalLaserAttack()
 	pModel_->ChangeAnimation(normal_laser_fire_anim_no, true, false, 8);
 
 	// 継続レーザーの発射
-	pLaserManager_->Create(LaserType::CONTINUE_NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
+	pLaserManager_->Create(LaserType::CONTINUE_NORMAL, &normalLaserFirePos_, &toTargetVec_);
 
 	// 初期化
 	InitMove();

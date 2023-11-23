@@ -13,7 +13,7 @@ namespace
 {
 	const std::string model_file_path = "Data/Image/Shield.png";
 	constexpr VECTOR effect_scale = { 80.0f,  80.0f, 80.0f, };
-	constexpr int max_enerugy_gage = 100;
+	constexpr int max_enerugy_gage = 10000;
 }
 
 Shield::Shield(Player& player) :

@@ -6,8 +6,7 @@ LazerBase::LazerBase():
 	vec_({}),
 	rot_({}),
 	scale_({}),
-	isEnabled_(false),
-	isRefrect_(false)
+	isEnabled_(false)
 {
 }
 
@@ -30,7 +29,7 @@ int LazerBase::GetModelHandle() const
 	return pModel_->GetModelHandle();
 }
 
-bool LazerBase::IsRefrect() const
+VECTOR LazerBase::GetVec() const
 {
-	return isRefrect_;
+	return vec_;
 }

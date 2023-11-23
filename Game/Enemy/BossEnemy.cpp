@@ -189,8 +189,9 @@ void BossEnemy::Update()
 	toTargetVec_ = VSub(pPlayer_->GetPosLogTable().back(), normalLaserFirePos_);
 	toTargetVec_ = VNorm(toTargetVec_);
 
-	// 登場中の場合はプレイヤーの方向を向かない
-	if(stateMachine_.GetCurrentState() != State::ENTRY)
+	// 登場中、死亡時の場合はプレイヤーの方向を向かない
+	if(stateMachine_.GetCurrentState() != State::ENTRY &&
+	   stateMachine_.GetCurrentState() != State::DEID)
 	{
 		// ベクトル方向の回転行列を角度に変換
 		bool isGimbalLock = false;
@@ -251,7 +252,7 @@ void BossEnemy::OnDamage(int damage, VECTOR pos)
 	// HPが残っていたら、ダメージを受けた時のステートに変更
 	else
 	{
-		stateMachine_.SetState(State::DAMAGE);
+	//	stateMachine_.SetState(State::DAMAGE);
 	}
 }
 
@@ -379,12 +380,12 @@ void BossEnemy::EntarDamage()
 
 void BossEnemy::EntarDied()
 {
-	Effekseer3DEffectManager::GetInstance().PlayEffect(
-		onDamageEffectHandle_,
-		EffectID::enemy_died,
-		pos_,
-		{ 200.0f, 200.0f, 200.0f },
-		0.5f);
+	moveVec_ = { 0, 0, 0 };
+
+	pModel_->StopAnim();
+
+	utilTimerTable_["effectIntarval"] = GetRand(30) + 30;
+	utilTimerTable_["continueFrame"] = 300;
 }
 
 void BossEnemy::EntarStopCubeLaserAttack()
@@ -487,6 +488,31 @@ void BossEnemy::UpdateDamage()
 
 void BossEnemy::UpdateDied()
 {
+	utilTimerTable_["continueFrame"].Update(1);
+	if (!utilTimerTable_["continueFrame"].IsTimeOut())
+	{
+		utilTimerTable_["effectIntarval"].Update(1);
+		if (utilTimerTable_["effectIntarval"].IsTimeOut())
+		{
+			float effectSize = GetRand(50) + 30;
+			VECTOR effectPos =
+			{
+				pos_.x + GetRand(200) - 100,
+				pos_.y + GetRand(200) - 100,
+				pos_.z
+			};
+			
+			Effekseer3DEffectManager::GetInstance().PlayEffect(
+				diedEffectHandle_,
+				EffectID::enemy_died,
+				effectPos,
+				{ effectSize, effectSize, effectSize },
+				0.5f);
+
+			utilTimerTable_["effectIntarval"].Reset();
+			utilTimerTable_["effectIntarval"] = GetRand(30) + 30;
+		}
+	}
 }
 
 void BossEnemy::UpdateStopCubeLaserAttack()

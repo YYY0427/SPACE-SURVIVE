@@ -21,13 +21,13 @@ public:
 	virtual void Draw() = 0;
 
 	// レーザーを止める
-	virtual void Stop(const VECTOR pos){};
+	virtual void Stop(const VECTOR pos){}
 
 	void Delete();
 
 	// カメラ内に存在するか
 	// 存在しなかったら削除する
-	virtual void ConfirmDelete() = 0;
+	virtual void ConfirmDelete() {}
 
 	bool IsEnabled() const;
 
@@ -36,6 +36,9 @@ public:
 	virtual VECTOR GetVec() const;
 
 	virtual void ReflectLaserUpdate(VECTOR pos, VECTOR vec){}
+
+	bool IsReflect() const;
+	void SetIsReflect(bool isReflect);
 
 protected:
 	std::unique_ptr<Model> pModel_;
@@ -47,5 +50,6 @@ protected:
 	VECTOR scale_;
 	VECTOR endScale_;
 
+	bool isReflect_;
 	bool isEnabled_;
 };

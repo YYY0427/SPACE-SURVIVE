@@ -10,8 +10,6 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void ConfirmDelete() override;
-
 	void ReflectLaserUpdate(VECTOR pos, VECTOR vec) override;
 
 private:

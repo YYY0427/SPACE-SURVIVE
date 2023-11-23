@@ -62,6 +62,9 @@ public:
 	/// <returns>true : 終了、false : 再生中</returns>
 	bool IsAnimEnd();
 
+	// アニメーションを止める
+	void StopAnim();
+
 	// ゲッター
 	int GetModelHandle() const;		// モデルのハンドルの取得
 	int GetColFrameIndex() const;	// 当たり判定に使用するフレームインデックスを取得する

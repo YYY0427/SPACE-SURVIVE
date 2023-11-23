@@ -11,7 +11,7 @@ EnemyBase::EnemyBase() :
 	rot_({}),
 	collisionRadius_(0.0f),
 	sinWaveTimer_(0),
-	onDamageEffectHandle_(-1),
+	diedEffectHandle_(-1),
 	hp_(0.0f),
 	isEnabled_(true),
 	moveVec_({}),
@@ -52,7 +52,7 @@ void EnemyBase::OnDamage(int damage, VECTOR pos)
 		isEnabled_ = false;
 
 		Effekseer3DEffectManager::GetInstance().PlayEffect(
-			onDamageEffectHandle_,
+			diedEffectHandle_,
 			EffectID::enemy_died,
 			pos,
 			{ 200.0f, 200.0f, 200.0f },

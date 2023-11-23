@@ -107,44 +107,46 @@ void GameMainScene::NormalUpdate()
 	pPlanetManager_->Update();
 	pCamera_->Update();
 
-	// レーザーとシールドの当たり判定
-	for (auto& laser : pLazerManager_->GetLazeres())
+	if (pPlayer_->GetShield()->GetIsShield())
 	{
-		// シールドを出していなかったら判定を行わない
-		if (!pPlayer_->GetShield()->GetIsShield()) continue;
-
-		// キューブレーザーは反射できないので飛ばす
-		if (laser.type == LaserType::CUBE) continue;
-		
-		VECTOR leftTop = pPlayer_->GetShield()->GetVertex()[0].pos;
-		VECTOR rightTop = pPlayer_->GetShield()->GetVertex()[1].pos;
-		VECTOR leftBottom = pPlayer_->GetShield()->GetVertex()[2].pos;
-		VECTOR rightBottom = pPlayer_->GetShield()->GetVertex()[3].pos;
-
-		// シールドは二つのポリゴンからできてるので二つのポリゴンともチェック
-		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Triangle(laser.pLaser->GetModelHandle(), -1, leftTop, rightTop, leftBottom);
-		MV1_COLL_RESULT_POLY_DIM result2 = MV1CollCheck_Triangle(laser.pLaser->GetModelHandle(), -1, rightBottom, leftBottom, rightTop);
-
-		// 1つでもポリゴンと当たっていたら
-		if (result.HitNum > 0 || result2.HitNum > 0)
+		// レーザーとシールドの当たり判定
+		for (auto& laser : pLazerManager_->GetLazeres())
 		{
-			// レーザーを止める
-			laser.pLaser->Stop(pPlayer_->GetShield()->GetPos());
+			// キューブレーザーは反射できないので飛ばす
+			if (laser.type == LaserType::CUBE) continue;
+			if (laser.type == LaserType::REFLECT) continue;
 
-			// 反射レーザーを作成(既に作成されていた場合更新を行う)
-			// シールドの法線情報
-			VECTOR shieldNorm = pPlayer_->GetShield()->GetVertex()[0].norm;
-			pLazerManager_->Reflect(pPlayer_->GetShield()->GetPos(), laser.pLaser->GetVec(), shieldNorm);
-		}
-		else
-		{
-			// 反射中ではないので反射レーザーを削除
-		//	pLazerManager_->DeleteReflectLaser();
-		}
+			VECTOR leftTop = pPlayer_->GetShield()->GetVertex()[0].pos;
+			VECTOR rightTop = pPlayer_->GetShield()->GetVertex()[1].pos;
+			VECTOR leftBottom = pPlayer_->GetShield()->GetVertex()[2].pos;
+			VECTOR rightBottom = pPlayer_->GetShield()->GetVertex()[3].pos;
 
-		// 当たり判定情報の後始末
-		MV1CollResultPolyDimTerminate(result);
-		MV1CollResultPolyDimTerminate(result2);
+			// シールドは二つのポリゴンからできてるので二つのポリゴンともチェック
+			MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Triangle(laser.pLaser->GetModelHandle(), -1, leftTop, rightTop, leftBottom);
+			MV1_COLL_RESULT_POLY_DIM result2 = MV1CollCheck_Triangle(laser.pLaser->GetModelHandle(), -1, rightBottom, leftBottom, rightTop);
+
+			// 1つでもポリゴンと当たっていたら
+			if (result.HitNum > 0 || result2.HitNum > 0)
+			{
+				laser.pLaser->SetIsReflect(true);
+
+				// レーザーを止める
+				laser.pLaser->Stop(pPlayer_->GetShield()->GetPos());
+
+				// 反射レーザーを作成(既に作成されていた場合更新を行う)
+				// シールドの法線情報
+				VECTOR shieldNorm = pPlayer_->GetShield()->GetVertex()[0].norm;
+				pLazerManager_->Reflect(pPlayer_->GetShield()->GetPos(), laser.pLaser->GetVec(), shieldNorm);
+			}
+			else
+			{
+				laser.pLaser->SetIsReflect(false);
+			}
+
+			// 当たり判定情報の後始末
+			MV1CollResultPolyDimTerminate(result);
+			MV1CollResultPolyDimTerminate(result2);
+		}
 	}
 
 	// レーザーと敵の当たり判定
@@ -162,7 +164,7 @@ void GameMainScene::NormalUpdate()
 			// ポリゴン一つにでも当たっていたら
 			if (result.HitNum > 0)
 			{
-				enemy->OnDamage(0.1f, result.Dim->HitPosition);
+				enemy->OnDamage(1.0f, result.Dim->HitPosition);
 			}
 
 			// 当たり判定情報の後始末
@@ -175,6 +177,8 @@ void GameMainScene::NormalUpdate()
 	{
 		// 無敵時間中なら当たらない
 		if (pPlayer_->IsUltimate()) continue;
+
+		if (laser.type == LaserType::REFLECT) continue;
 
 		// レーザーとプレイヤーの当たり判定
 		MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(laser.pLaser->GetModelHandle(), -1, pPlayer_->GetPos(), pPlayer_->GetCollsionRadius());

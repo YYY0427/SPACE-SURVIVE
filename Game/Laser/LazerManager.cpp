@@ -57,6 +57,15 @@ void LazerManager::Update()
 	// 不要になったレーザーの削除
 	pLaseres_.remove_if([](LaserData data){ return !data.pLaser->IsEnabled(); });
 
+	auto it = std::find_if(
+		pLaseres_.begin(), pLaseres_.end(),
+		[](LaserData data) { return data.pLaser->IsReflect(); });
+
+	if (it == pLaseres_.end())
+	{
+		DeleteReflectLaser();
+	}
+
 	for (auto& laser : pLaseres_)
 	{
 		laser.pLaser->ConfirmDelete();
@@ -84,7 +93,6 @@ void LazerManager::Reflect(const VECTOR pos, const VECTOR vec, const VECTOR norm
 	dot *= 2.0f;
 	VECTOR normVec = VScale(normal, dot);
 	VECTOR reflectVec = VAdd(vec, normVec);
-	reflectVec = VNorm(vec);
 
 	// 反射レーザーが存在するか
 	if (it == pLaseres_.end()) 

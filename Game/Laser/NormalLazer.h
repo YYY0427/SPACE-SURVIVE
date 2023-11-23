@@ -47,5 +47,7 @@ private:
 
 	// レーザーの当たり判定モデルとエフェクトの発射フレームの差を測るタイマー
 	Timer<int> collisionAndEffectDifferenceTimer_;
+
+	bool isReflect_;
 };
 

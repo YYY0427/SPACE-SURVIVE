@@ -59,7 +59,7 @@ protected:
 	std::map<std::string, Timer<int>> utilTimerTable_;
 
 	int sinWaveTimer_;
-	int onDamageEffectHandle_;
+	int diedEffectHandle_;
 	float collisionRadius_;
 	float hp_;				
 	bool isEnabled_;

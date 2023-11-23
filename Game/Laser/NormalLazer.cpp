@@ -16,7 +16,8 @@ namespace
 
 NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, bool isContinue) :
 	collisionAndEffectDifferenceTimer_(effect_charge_frame),
-	effectPos_({})
+	effectPos_({}),
+	isReflect_(false)
 {
 	// TODO : レーザーがプレイヤーを追従するようにする
 	// できたけどなんか変、別のゲーム研究して改変予知あり

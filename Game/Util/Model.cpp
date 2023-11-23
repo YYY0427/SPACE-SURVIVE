@@ -241,6 +241,12 @@ bool Model::IsAnimEnd()
 	return false;
 }
 
+void Model::StopAnim()
+{
+	InitAnimData(animPrev_);
+	InitAnimData(animNext_);
+}
+
 // ƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹‚ÌŽæ“¾
 int Model::GetModelHandle() const
 {

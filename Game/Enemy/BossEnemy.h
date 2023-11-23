@@ -15,7 +15,7 @@ public:
 	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager);
 
 	// デストラクタ
-	virtual ~BossEnemy();
+	~BossEnemy();
 
 	// 更新
 	void Update() override;
@@ -40,7 +40,6 @@ private:
 
 	void Move();
 	void CubeLaserAttack();
-	void NormalLaserAttack();
 
 private:
 	// Entar

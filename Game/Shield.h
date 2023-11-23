@@ -11,7 +11,7 @@ class Shield
 {
 public:
 	Shield(Player& player);
-	virtual ~Shield();
+	~Shield();
 
 	void Update();
 	void Draw();

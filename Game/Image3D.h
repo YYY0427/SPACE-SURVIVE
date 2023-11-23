@@ -9,7 +9,7 @@ public:
 	Image3D(std::string filePath);
 	Image3D(int imgHandle);
 
-	virtual ~Image3D();
+	~Image3D();
 
 	void Update();
 	void Draw();

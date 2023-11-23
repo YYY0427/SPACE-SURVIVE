@@ -10,7 +10,7 @@ class PlanetManager
 {
 public:
 	PlanetManager();
-	virtual ~PlanetManager();
+	~PlanetManager();
 
 	void Update();
 

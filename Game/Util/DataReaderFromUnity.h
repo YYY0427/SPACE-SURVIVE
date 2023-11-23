@@ -17,7 +17,7 @@ class DataReaderFromUnity
 {
 public:
 	// デストラクタ
-	virtual ~DataReaderFromUnity();
+	~DataReaderFromUnity();
 
 	/// <summary>
 	/// 唯一のインスタンスを返す

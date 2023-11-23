@@ -5,7 +5,7 @@ class Sun : public PlanetBase
 {
 public:
 	Sun(int handle);
-	virtual ~Sun();
+	~Sun();
 
 	void Update();
 

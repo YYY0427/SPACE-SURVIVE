@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Laser\ReflectLaser.cpp" />
     <ClCompile Include="UI\EnergyGage.cpp" />
     <ClCompile Include="UI\HpBar.cpp" />
     <ClCompile Include="Laser\CubeLazer.cpp" />
@@ -201,6 +202,7 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Laser\ReflectLaser.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="UI\EnergyGage.h" />
     <ClInclude Include="UI\HpBar.h" />

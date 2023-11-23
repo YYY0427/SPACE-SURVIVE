@@ -16,14 +16,14 @@ namespace
 	constexpr int anim_frame = 1;
 
 	constexpr VECTOR init_pos = { 60, 0, 800 };
-	constexpr VECTOR model_scale = { 0.7, 0.7, 0.7 };
+	constexpr VECTOR model_scale = { 0.7f, 0.7f, 0.7f };
 	constexpr VECTOR model_rot = { 0, 0, 0 };
 }
 
 NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager)
 {
 	pPlayer_ = pPlayer;
-	pLazerManager_ = pLazerManager;
+	pLaserManager_ = pLazerManager;
 	moveVec_.x = 10;
 	pos_ = init_pos;
 	rot_ = model_rot;
@@ -56,7 +56,7 @@ void NormalEnemy::Update()
 	if (utilTimerTable_["normalLaserFireInterval"].IsTimeOut())
 	{
 		// ƒŒ[ƒU[‚ð”­ŽË
-		pLazerManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_, &moveVec_);
+		pLaserManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_, &moveVec_);
 		utilTimerTable_["normalLaserFireInterval"].Reset();
 	}
 

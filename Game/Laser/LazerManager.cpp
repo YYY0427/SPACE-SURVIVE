@@ -34,48 +34,51 @@ void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, VECTOR*
 	switch (laserType)
 	{
 	case LaserType::CUBE:
-		data.pLazer = std::make_shared<CubeLazer>(laserModelHanldeTable_[laserType], *pos, *vec);
+		data.pLaser = std::make_shared<CubeLazer>(laserModelHanldeTable_[laserType], *pos, *vec);
 		break;
 
 	case LaserType::NORMAL:
-		data.pLazer = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, fireObjectMoveVec, false);
+		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, fireObjectMoveVec, false);
 		break;
 
 	case LaserType::CONTINUE_NORMAL:
-		data.pLazer = std::make_shared<NormalLazer>(laserModelHanldeTable_[LaserType::NORMAL], pos, vec, fireObjectMoveVec, true);
+		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[LaserType::NORMAL], pos, vec, fireObjectMoveVec, true);
 		break;
 
 	default:
 		assert(0);
 	}
-	pLazeres_.push_back(data);
+	pLaseres_.push_back(data);
 }
 
 void LazerManager::Update()
 {
 	// 不要になったレーザーの削除
-	auto rmIt = std::remove_if(pLazeres_.begin(), pLazeres_.end(), [](const LaserData lazer)
-		{
-			return !lazer.pLazer->GetIsEnabled();
-		});
-	pLazeres_.erase(rmIt, pLazeres_.end());
+	pLaseres_.remove_if([](LaserData data){ return !data.pLaser->IsEnabled(); });
 
-	for (auto& lazer : pLazeres_)
+	for (auto& laser : pLaseres_)
 	{
-		lazer.pLazer->ConfirmDelete();
-		lazer.pLazer->Update();
+		laser.pLaser->ConfirmDelete();
+		laser.pLaser->Update();
 	}
 }
 
 void LazerManager::Draw()
 {
-	for (auto& lazer : pLazeres_)
+	for (auto& laser : pLaseres_)
 	{
-		lazer.pLazer->Draw();
+		laser.pLaser->Draw();
 	}
+}
+
+void LazerManager::DeleteContinueLaser()
+{
+	pLaseres_.remove_if(
+		[](LaserData data)
+		{ return data.type == LaserType::CONTINUE_NORMAL; });
 }
 
 const std::list<LaserData>& LazerManager::GetLazeres() const
 {
-	return pLazeres_;
+	return pLaseres_;
 }

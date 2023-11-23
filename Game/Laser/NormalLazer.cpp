@@ -9,6 +9,7 @@ namespace
 	constexpr VECTOR init_model_direction{ 1, 0, 0 };
 	constexpr VECTOR init_effect_direction{ 0, 0, -1 };
 	constexpr VECTOR effect_scale = { 24.0f, 24.0f, 24.0f };
+	constexpr VECTOR refrect_effect_scale = { 24.0f, 24.0f, 1.0f };
 
 	// エフェクトのチャージ時間フレーム
 	constexpr int effect_charge_frame = 150;
@@ -16,11 +17,11 @@ namespace
 
 NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* fireObjectMoveVec, bool isContinue) :
 	collisionAndEffectDifferenceTimer_(effect_charge_frame),
-	effectPos_({})
+	effectPos_({}),
+	effectScale_({})
 {
 	// TODO : レーザーがプレイヤーを追従するようにする
-	// エフェクトとモデルの角度を変えたらいけそう
-	// ただしモデルはフレーム追加して移動処理から変えなきゃいけなそう
+	// できたけどなんか変、別のゲーム研究して改変予知あり
 	
 	// TODO : レーザーの反射処理の変更
 	// 今の反射だと反射とは言えない
@@ -34,6 +35,7 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* 
 	isEnabled_ = true;
 	fireObjectMoveVec_ = fireObjectMoveVec;
 	isRefrect_ = false;
+	effectScale_ = effect_scale;
 
 	// ベクトル方向の回転行列を作成
 	rotMtx_ = MGetRotVec2(init_model_direction, *vec_);
@@ -66,6 +68,8 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* 
 
 NormalLazer::~NormalLazer()
 {
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	effectManager.DeleteEffect(laserEffectHandle_);
 }
 
 void NormalLazer::Update()
@@ -106,43 +110,43 @@ void NormalLazer::Draw()
 #endif
 }
 
-void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
-{
-	// レーザーのエフェクトをストップ
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	effectManager.DeleteEffect(laserEffectHandle_);
-
-	isRefrect_ = true;
-	pos_ = pos;
-	effectPos_ = pos;
-	pModel_->SetPos(pos);
-
-#if true
-	// 反射ベクトルの作成
-	VECTOR inversionVec = VScale(*vec_, -1);
-	float dot = VDot(inversionVec, norm);
-	dot *= 2.0f;
-	VECTOR normVec = VScale(norm, dot);
-	actualVec_ = VAdd(*vec_, normVec);
-	actualVec_ = VScale(actualVec_, 48.0f);
-#else
-	vec_ = VScale(vec_, -1);
-#endif
-
-	// ベクトル方向の回転行列をモデルに設定
-	MATRIX rotModelMtx = MGetRotVec2(init_model_direction, actualVec_);
-	MV1SetRotationMatrix(pModel_->GetModelHandle(), rotModelMtx);
-
-	// ベクトル方向の回転行列からオイラー角を出力
-	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, actualVec_);
-	bool isGimbalLock = false;
-	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
-
-	// レーザーのエフェクトの再生
-	effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::refrect_laser, &effectPos_, effect_scale, 1.0f, effectRot);
-
-	pModel_->Update();
-}
+//void NormalLazer::Refrect(const VECTOR pos, const VECTOR norm)
+//{
+//	//// レーザーのエフェクトをストップ
+//	//auto& effectManager = Effekseer3DEffectManager::GetInstance();
+//	//effectManager.DeleteEffect(laserEffectHandle_);
+//
+//	isRefrect_ = true;
+//	pos_ = pos;
+//	effectPos_ = pos;
+//	pModel_->SetPos(pos);
+//
+//#if true
+//	// 反射ベクトルの作成
+//	VECTOR inversionVec = VScale(*vec_, -1);
+//	float dot = VDot(inversionVec, norm);
+//	dot *= 2.0f;
+//	VECTOR normVec = VScale(norm, dot);
+//	actualVec_ = VAdd(*vec_, normVec);
+//	actualVec_ = VScale(actualVec_, 48.0f);
+//#else
+//	vec_ = VScale(vec_, -1);
+//#endif
+//
+//	// ベクトル方向の回転行列をモデルに設定
+//	MATRIX rotModelMtx = MGetRotVec2(init_model_direction, actualVec_);
+//	MV1SetRotationMatrix(pModel_->GetModelHandle(), rotModelMtx);
+//
+//	// ベクトル方向の回転行列からオイラー角を出力
+//	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, actualVec_);
+//	bool isGimbalLock = false;
+//	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
+//
+//	// レーザーのエフェクトの再生
+//	effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::refrect_laser, &effectPos_, effect_scale, 1.0f, effectRot);
+//
+//	pModel_->Update();
+//}
 
 // レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
 void NormalLazer::ConfirmDelete()

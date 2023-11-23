@@ -23,7 +23,7 @@ public:
 	Model(int modelHandle);		
 
 	// デストラクタ
-	virtual ~Model();
+	~Model();
 
 	/// <summary>
 	/// 当たり判定設定

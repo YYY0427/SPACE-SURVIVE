@@ -49,7 +49,7 @@ namespace
 	constexpr int max_hp = 1000;
 
 	// 何フレーム前まで位置情報を保存するか
-	constexpr int log_frame = 2;
+	constexpr int log_frame = 10;
 }
 
 //  コンストラクタ
@@ -203,6 +203,16 @@ void Player::Update(float cameraYaw)
 			pos_ = tempPos;
 		}
 	}
+
+	// 移動している場合ログに追加
+	posLogTable_.push_front(pos_);
+
+	// 保存可能な数を超えていたら末尾から消す
+	if (posLogTable_.size() > log_frame)
+	{
+		posLogTable_.pop_back();
+	}
+
 
 	// 無敵時間のタイマーの更新
 	// 0以下にはならない
@@ -391,7 +401,7 @@ std::shared_ptr<Shield> Player::GetShield() const
 	return pShield_;
 }
 
-std::deque<VECTOR> Player::GetMovingPosLogTable() const
+std::deque<VECTOR> Player::GetPosLogTable() const
 {
 	return posLogTable_;
 }

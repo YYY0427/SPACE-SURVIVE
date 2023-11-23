@@ -13,7 +13,7 @@ public:
 	Camera();
 
 	// デストラクタ
-	virtual ~Camera();
+	~Camera();
 
 	/// <summary>
 	/// 更新

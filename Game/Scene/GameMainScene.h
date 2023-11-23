@@ -25,13 +25,14 @@ public:
 	GameMainScene(SceneManager& manager);
 
 	// デストラクタ
-	virtual ~GameMainScene();
+	~GameMainScene();
 
 	// メンバ関数ポインタの更新
-	void Update();
+	void Update() override;
 
 	// 描画
-	void Draw();
+	void Draw() override;
+
 private:
 	// 通常の更新
 	void NormalUpdate();

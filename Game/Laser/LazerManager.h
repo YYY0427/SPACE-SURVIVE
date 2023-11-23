@@ -6,7 +6,7 @@
 
 struct LaserData
 {
-	std::shared_ptr<LazerBase> pLazer;
+	std::shared_ptr<LazerBase> pLaser;
 	LaserType type;
 };
 
@@ -14,15 +14,19 @@ class LazerManager
 {
 public:
 	LazerManager();
-	virtual ~LazerManager();
+	~LazerManager();
 
 	void Create(LaserType laserType, VECTOR* pos, VECTOR* vec, VECTOR* fireObjectMoveVec);
 
 	void Update();
 	void Draw();
 
+	// Œp‘±ƒŒ[ƒU[‚Ìíœ
+	void DeleteContinueLaser();
+
 	const std::list<LaserData>& GetLazeres() const;
+
 private:
-	std::list<LaserData> pLazeres_;
+	std::list<LaserData> pLaseres_;
 	std::unordered_map<LaserType, int> laserModelHanldeTable_;
 };

@@ -13,13 +13,14 @@ public:
 	OptionScene(SceneManager& manager);
 
 	// デストラクタ
-	virtual ~OptionScene();
+	~OptionScene();
 
 	// 更新
-	void Update();
+	void Update() override;
 
 	// 描画
-	void Draw();
+	void Draw() override;
+
 private:
 	// 項目
 	enum class Item

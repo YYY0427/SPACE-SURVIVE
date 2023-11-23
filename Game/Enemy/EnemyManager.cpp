@@ -136,9 +136,5 @@ void EnemyManager::CreateBossEnemyUpdate()
 void EnemyManager::DeleteNotEnabledEnemy()
 {
 	// •s—v‚É‚È‚Á‚½“G‚Ìíœ
-	auto rmIt = std::remove_if(pEnemies_.begin(), pEnemies_.end(), [](const std::shared_ptr<EnemyBase> enemy)
-		{
-			return !enemy->IsEnabled();
-		});
-	pEnemies_.erase(rmIt, pEnemies_.end());
+	pEnemies_.remove_if([](std::shared_ptr<EnemyBase> enemy) { return !enemy->IsEnabled(); });
 }

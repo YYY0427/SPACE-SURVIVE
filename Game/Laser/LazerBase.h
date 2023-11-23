@@ -26,18 +26,17 @@ public:
 	/// <param name="norm">シールドの法線情報</param>
 	virtual void Refrect(const VECTOR pos, const VECTOR normal){};
 
-
 	void Delete();
 
 	// カメラ内に存在するか
 	// 存在しなかったら削除する
 	virtual void ConfirmDelete() = 0;
 
-	bool GetIsEnabled() const;
+	bool IsEnabled() const;
 
 	int GetModelHandle() const;
 
-	bool GetIsRefrect() const;
+	bool IsRefrect() const;
 
 protected:
 	std::unique_ptr<Model> pModel_;

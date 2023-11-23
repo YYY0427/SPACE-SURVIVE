@@ -16,7 +16,7 @@ public:
 	NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, VECTOR* fireObjectMoveVec, bool isContinue);
 
 	// デストラクタ
-	virtual ~NormalLazer();
+	~NormalLazer();
 
 	// 更新
 	void Update() override;
@@ -25,12 +25,14 @@ public:
 	void Draw() override;
 
 	// レーザーの反射
-	void Refrect(const VECTOR pos, const VECTOR norm) override;
+//	void Refrect(const VECTOR pos, const VECTOR norm) override;
 
 	// レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
 	void ConfirmDelete() override;
 
 private:
+	VECTOR effectScale_;
+
 	// 回転行列
 	MATRIX rotMtx_;
 

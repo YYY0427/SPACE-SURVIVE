@@ -86,7 +86,7 @@ BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shar
 {
 	// 初期化
 	pPlayer_ = pPlayer;
-	pLazerManager_ = pLazerManager;
+	pLaserManager_ = pLazerManager;
 	pos_ = start_init_pos;
 	rot_ = rot;
 	cubeLaserSpeed_ = cube_laser_speed;
@@ -183,10 +183,10 @@ void BossEnemy::Update()
 	normalLaserFirePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), normal_laser_fire_frame);
 
 	// TODO :　プレイヤーに向かうベクトルを下を使って実装する
-	pPlayer_->GetMovingPosLogTable();
+	pPlayer_->GetPosLogTable();
 
 	// 通常レーザがプレイヤーに向かうベクトルの作成
-	toTargetVec_ = VSub(pPlayer_->GetPos(), normalLaserFirePos_);
+	toTargetVec_ = VSub(pPlayer_->GetPosLogTable().back(), normalLaserFirePos_);
 	toTargetVec_ = VNorm(toTargetVec_);
 
 	// 登場中の場合はプレイヤーの方向を向かない
@@ -349,7 +349,7 @@ void BossEnemy::CubeLaserAttack()
 	vec = VScale(vec, cubeLaserSpeed_);
 
 	// レーザーの発射
-	pLazerManager_->Create(LaserType::CUBE, &firePos, &vec, {});
+	pLaserManager_->Create(LaserType::CUBE, &firePos, &vec, {});
 }
 
 ////// Entar //////
@@ -405,7 +405,7 @@ void BossEnemy::EntarStopNormalLaserAttack()
 	pModel_->ChangeAnimation(normal_laser_fire_anim_no, false, false, 8);
 
 	// 通常レーザーの発射
-	pLazerManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
+	pLaserManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
 }
 
 void BossEnemy::EntarMoveCubeLaserAttack()
@@ -420,10 +420,10 @@ void BossEnemy::EntarMoveCubeLaserAttack()
 void BossEnemy::EntarMoveNormalLaserAttack()
 {
 	// 通常レーザー発射用のアニメーションに変更
-	pModel_->ChangeAnimation(normal_laser_fire_anim_no, false, false, 8);
+	pModel_->ChangeAnimation(normal_laser_fire_anim_no, true, false, 8);
 
 	// 継続レーザーの発射
-	pLazerManager_->Create(LaserType::CONTINUE_NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
+	pLaserManager_->Create(LaserType::CONTINUE_NORMAL, &normalLaserFirePos_, &toTargetVec_, &moveVec_);
 
 	// 初期化
 	InitMove();
@@ -609,6 +609,5 @@ void BossEnemy::ExitMoveNormalLaserAttack()
 	isMoveEnd_ = false;
 
 	// TODO : レーザーエフェクトの削除
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-
+	pLaserManager_->DeleteContinueLaser();
 }

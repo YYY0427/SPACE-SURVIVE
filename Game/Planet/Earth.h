@@ -5,7 +5,7 @@ class Earth : public PlanetBase
 {
 public:
 	Earth(int handle);
-	virtual ~Earth();
+	~Earth();
 
 	void Update();
 

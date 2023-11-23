@@ -171,11 +171,11 @@
     <ClCompile Include="UI\Warning.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\UIManager.cpp">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Util\MathUtil.cpp">
       <Filter>ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Laser\ReflectLaser.cpp">
+      <Filter>ソース ファイル\Lazer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,11 +308,14 @@
     <ClInclude Include="UI\Warning.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="UI\UIManager.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Util\MathUtil.h">
       <Filter>ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser\ReflectLaser.h">
+      <Filter>ヘッダー ファイル\Lazer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

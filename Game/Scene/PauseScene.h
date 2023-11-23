@@ -13,13 +13,14 @@ public:
 	PauseScene(SceneManager& manager);
 
 	// デストラクタ
-	virtual ~PauseScene();
+	~PauseScene();
 
 	// 更新
-	virtual void Update();
+	void Update() override;
 
 	// 描画
-	void Draw();
+	void Draw() override;
+
 private:
 	// フェード設定データ
 	struct FadeData

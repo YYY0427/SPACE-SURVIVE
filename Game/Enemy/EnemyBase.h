@@ -46,7 +46,7 @@ public:
 
 protected:
 	std::unique_ptr<Model> pModel_;
-	std::shared_ptr<LazerManager> pLazerManager_;
+	std::shared_ptr<LazerManager> pLaserManager_;
 	std::shared_ptr<Player> pPlayer_;
 	VECTOR pos_;
 	VECTOR firePos_;

@@ -12,7 +12,7 @@ class EnemyManager
 {
 public:
 	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager);
-	virtual ~EnemyManager();
+	~EnemyManager();
 
 	void Update(int time);
 	void Draw();

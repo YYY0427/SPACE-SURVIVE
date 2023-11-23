@@ -410,8 +410,12 @@ void Effekseer3DEffectManager::DeleteEffect(int effectPlayingHandle)
 	StopEffect(effectPlayingHandle);
 
 	// どっちのテーブルに格納されているか分からないため両方のテーブルを確認しハンドルが一致したデータを削除
-	effectDataTable_.remove_if([effectPlayingHandle](EffectData data) { return *data.playingEffectHandle == effectPlayingHandle; });
-	followEffectDataTable_.remove_if([effectPlayingHandle](FollowEffectData data) { return *data.playingEffectHandle == effectPlayingHandle; });
+	effectDataTable_.remove_if(
+		[effectPlayingHandle](EffectData data) 
+		{ return *data.playingEffectHandle == effectPlayingHandle; });
+	followEffectDataTable_.remove_if(
+		[effectPlayingHandle](FollowEffectData data) 
+		{ return *data.playingEffectHandle == effectPlayingHandle; });
 }
 
 // 全てのエフェクトの削除

@@ -19,13 +19,13 @@ public:
 	TestScene(SceneManager& manager);
 
 	// デストラクタ
-	virtual ~TestScene();
+	~TestScene();
 
 	// メンバ関数ポインタの更新
-	void Update();
+	void Update() override;
 	
 	// 描画
-	void Draw();
+	void Draw() override;
 
 private:
 	// ポインタ

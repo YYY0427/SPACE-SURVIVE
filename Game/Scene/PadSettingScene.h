@@ -13,13 +13,13 @@ public:
 	PadSettingScene(SceneManager& manager);
 
 	// デストラクタ
-	virtual ~PadSettingScene();
+	~PadSettingScene();
 
 	// 更新
-	void Update();
+	void Update() override;
 
 	// 描画
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// パッドの反転のオン、オフの表示
@@ -27,6 +27,7 @@ public:
 	/// <param name="isOn">パッドの反転がオンかどうか</param>
 	/// <param name="item">項目の番号</param>
 	void DrawPadReverse(bool isOn, int item);
+
 private:
 	// 項目
 	enum class Item

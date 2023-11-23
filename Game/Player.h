@@ -15,7 +15,7 @@ public:
 	Player();
 
 	// デストラクタ
-	virtual ~Player();
+	~Player();
 
 	// 更新
 	void Update(float cameraYaw);
@@ -63,8 +63,8 @@ public:
 	// シールドのインスタンスの取得
 	std::shared_ptr<Shield> GetShield() const;
 
-	// 移動中のみ位置情報を保存するテーブルの取得
-	std::deque<VECTOR> GetMovingPosLogTable() const;
+	// 決められたフレームの数だけ位置情報を保存するテーブルの取得
+	std::deque<VECTOR> GetPosLogTable() const;
 
 private:
 	// ポインタ

@@ -20,7 +20,7 @@ void LazerBase::Delete()
 	isEnabled_ = false;
 }
 
-bool LazerBase::GetIsEnabled() const
+bool LazerBase::IsEnabled() const
 {
 	return isEnabled_;
 }
@@ -30,7 +30,7 @@ int LazerBase::GetModelHandle() const
 	return pModel_->GetModelHandle();
 }
 
-bool LazerBase::GetIsRefrect() const
+bool LazerBase::IsRefrect() const
 {
 	return isRefrect_;
 }

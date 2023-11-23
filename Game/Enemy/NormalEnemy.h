@@ -5,7 +5,7 @@ class NormalEnemy : public EnemyBase
 {
 public:
 	NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager);
-	virtual ~NormalEnemy();
+	~NormalEnemy();
 
 	void InitState() override {}
 	void Update() override;

@@ -8,7 +8,7 @@ namespace
 	constexpr VECTOR init_model_direction{ -1, 0, 0 };
 	constexpr VECTOR init_effect_direction{ 0, 0, -1 };
 	constexpr VECTOR model_scale = { 1.0f, 0.1f, 0.1f };
-	constexpr VECTOR effect_scale = { 30.0f, 30.0f, 24.0f };
+	constexpr VECTOR effect_scale = { 40.0f, 40.0f, 24.0f };
 }
 
 ReflectLaser::ReflectLaser(int modelHandle, VECTOR pos, VECTOR vec)

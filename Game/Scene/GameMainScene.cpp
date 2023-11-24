@@ -148,6 +148,10 @@ void GameMainScene::NormalUpdate()
 			MV1CollResultPolyDimTerminate(result2);
 		}
 	}
+	else
+	{
+		pLazerManager_->DeleteReflectLaser();
+	}
 
 	// ƒŒ[ƒU[‚Æ“G‚Ì“–‚½‚è”»’è
 	for (auto& laser : pLazerManager_->GetLazeres())

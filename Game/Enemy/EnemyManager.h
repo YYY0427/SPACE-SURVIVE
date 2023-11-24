@@ -8,6 +8,13 @@ class LazerManager;
 class Player;
 class Warning;
 
+struct NormalEnemyAIData
+{
+	VECTOR goalPos;
+	float speed;
+	bool isShot;
+};
+
 class EnemyManager
 {
 public:
@@ -24,6 +31,8 @@ private:
 	void NormalUpdate();
 	void CreateBossEnemyUpdate();
 	void DeleteNotEnabledEnemy();
+
+	void NormalEnemyEntry();
 
 private:
 	// メンバ関数ポインタ

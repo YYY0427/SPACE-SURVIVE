@@ -4,6 +4,8 @@
 #include "../Player.h"
 #include "../common.h"
 #include "../Vector2.h"
+#include "../Util/Debug.h"
+#include "../Util/InputState.h"
 
 namespace
 {
@@ -15,22 +17,55 @@ namespace
 
 	constexpr int anim_frame = 1;
 
-	constexpr VECTOR init_pos = { 60, 0, 800 };
+	constexpr float move_error_range = 10.0f;
+
 	constexpr VECTOR model_scale = { 0.7f, 0.7f, 0.7f };
-	constexpr VECTOR model_rot = { 0, 0, 0 };
+	constexpr VECTOR init_model_direction = { 0, 0, -1 };
 }
 
-NormalEnemy::NormalEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager)
+NormalEnemy::NormalEnemy(
+	int modelHandle,
+	std::shared_ptr<Player> pPlayer,
+	std::shared_ptr<LazerManager> pLazerManager,
+	VECTOR initPos,
+	std::vector<NormalEnemyAIData> normalEnemyGoalPosTable)
 {
 	pPlayer_ = pPlayer;
 	pLaserManager_ = pLazerManager;
-	moveVec_.x = 10;
-	pos_ = init_pos;
-	rot_ = model_rot;
-	utilTimerTable_["normalLaserFireInterval"] = (GetRand(10) + 1) * 60;
+	opacity_ = 1.0f;
+	pos_ = initPos;
+	normalEnemyGoalPosTable_ = normalEnemyGoalPosTable;
 	collisionRadius_ = collision_radius;
+	movePoint_ = 0;
 
+	stateMachine_.AddState(
+		State::NORMAL,
+		[this]() { this->EntarNormal(); },
+		[this]() { this->UpdateNormal(); },
+		[this]() { this->ExitNormal(); });
+	stateMachine_.AddState(
+		State::SHOT,
+		[this]() { this->EntarShot(); },
+		[this]() { this->UpdateShot(); },
+		[this]() { this->ExitShot(); });
+	stateMachine_.AddState(
+		State::DEID,
+		[this]() { this->EntarDeid(); },
+		[this]() { this->UpdateDeid(); },
+		[this]() { this->ExitDeid(); });
+	stateMachine_.AddState(
+		State::DEBUG,
+		[this]() { this->EntarDebug(); },
+		[this]() { this->UpdateDebug(); },
+		[this]() { this->ExitDebug(); });
+
+	stateMachine_.SetState(State::NORMAL);
+
+	// インスタンス生成
 	pModel_ = std::make_unique<Model>(modelHandle);
+
+	// モデルの設定
+	pModel_->SetOpacity(opacity_);	// 不透明度
 	pModel_->SetPos(pos_);
 	pModel_->SetRot(rot_);
 	pModel_->SetScale(model_scale);
@@ -44,35 +79,35 @@ NormalEnemy::~NormalEnemy()
 
 void NormalEnemy::Update()
 {
+	stateMachine_.Update();
+
+	if (InputState::IsTriggered(InputType::NORMAL_ENEMY_DEBUG))
+	{
+		stateMachine_.SetState(State::DEBUG);
+	}
+
 	// レーザーの発射位置のフレーム座標の取得
 	// 追従させるために毎フレーム取得
 	firePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos);
 
 	// プレイヤーに向かうベクトルを作成
-	toTargetVec_ = VSub(pPlayer_->GetPos(), firePos_);
+	toTargetVec_ = VSub(pPlayer_->GetPosLogTable().back(), firePos_);
 	toTargetVec_ = VNorm(toTargetVec_);
 
-	utilTimerTable_["normalLaserFireInterval"].Update(1);
-	if (utilTimerTable_["normalLaserFireInterval"].IsTimeOut())
-	{
-		// レーザーを発射
-		pLaserManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_);
-		utilTimerTable_["normalLaserFireInterval"].Reset();
-	}
+	VECTOR vec = VSub(pPlayer_->GetPos(), pos_);
+	vec = VNorm(vec);
 
-	// サインカーブ移動
-	// 浮いているように見せるため
-	SinWave(50, 5);
-
-	VECTOR screenPos = ConvWorldPosToScreenPos(pos_);
-	if (screenPos.x > common::screen_width || screenPos.x < 0)
-		moveVec_.x *= -1;
+	MATRIX rotMtx = MGetRotVec2(init_model_direction, vec);
 
 	pos_ = VAdd(pos_, moveVec_);
 
-	pModel_->SetRot(rot_);
-	pModel_->SetPos(pos_);
-	pModel_->Update();
+	// モデルの設定
+	pModel_->SetOpacity(opacity_);	// 不透明度
+	pModel_->SetRotMtx(rotMtx);		// 回転行列
+	pModel_->SetPos(pos_);			// 位置
+	pModel_->Update();				// アニメーションの更新
+
+	Debug::Log("NormalEnemyPos", pos_);
 }
 
 void NormalEnemy::Draw()
@@ -83,4 +118,135 @@ void NormalEnemy::Draw()
 //	DrawSphere3D(MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos), 10, 8, 0xff0000, 0xff0000, 0xff0000);
 //	DrawSphere3D(pos_, collisionRadius_, 8, 0xff0000, 0xff0000, 0xff0000);
 #endif
+}
+
+void NormalEnemy::EntarIdle()
+{
+	utilTimerTable_["idleFrame"] = 120;
+}
+
+void NormalEnemy::EntarNormal()
+{
+	auto itr = normalEnemyGoalPosTable_.begin();
+	std::advance(itr, movePoint_);
+
+	goalPos_ = itr->goalPos;
+	float speed = itr->speed;
+
+	VECTOR vec = VSub(goalPos_, pos_);
+	vec = VNorm(vec);
+	vec = VScale(vec, speed);
+	moveVec_ = vec;
+}
+
+void NormalEnemy::EntarShot()
+{
+	// レーザーを発射
+	pLaserManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_, 1.5f);
+}
+
+void NormalEnemy::EntarDeid()
+{
+}
+
+void NormalEnemy::EntarDebug()
+{
+}
+
+void NormalEnemy::UpdateIdle()
+{
+	utilTimerTable_["idleFrame"].;
+	SinWave(50, 5);
+}
+
+void NormalEnemy::UpdateNormal()
+{
+	// 目標の地点に到達したら目標地点を進める
+	if (pos_.x <= goalPos_.x + move_error_range && goalPos_.x - move_error_range <= pos_.x &&
+		pos_.y <= goalPos_.y + move_error_range && goalPos_.y - move_error_range <= pos_.y &&
+		pos_.z <= goalPos_.z + move_error_range && goalPos_.z - move_error_range <= pos_.z)
+	{
+		// 到着した地点でショット発射するフラグが立っていたらショットのステートに変更
+		auto itr = normalEnemyGoalPosTable_.begin();
+		std::advance(itr, movePoint_);
+		if (itr->isShot)
+		{
+			stateMachine_.SetState(State::SHOT);
+		}
+
+		movePoint_++;
+		if (normalEnemyGoalPosTable_.size() <= movePoint_)
+		{
+			isEnabled_ = false;
+		}
+		else
+		{
+			itr++;
+			goalPos_ = itr->goalPos;
+			float speed = itr->speed;
+
+			VECTOR vec = VSub(goalPos_, pos_);
+			vec = VNorm(vec);
+			vec = VScale(vec, speed);
+			moveVec_ = vec;
+		}
+	}
+}
+
+void NormalEnemy::UpdateShot()
+{
+	stateMachine_.SetState(State::NORMAL);
+}
+
+void NormalEnemy::UpdateDeid()
+{
+}
+
+void NormalEnemy::UpdateDebug()
+{
+	moveVec_ = { 0, 0, 0 };
+	if (InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP))
+	{
+		moveVec_.y += 10.0f;
+	}
+	if (InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN))
+	{
+		moveVec_.y -= 10.0f;
+	}
+	if (InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT))
+	{
+		moveVec_.x -= 10.0f;
+	}
+	if (InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT))
+	{
+		moveVec_.x += 10.0f;
+	}
+	if (InputState::IsPadTrigger(PadLR::LEFT))
+	{
+		moveVec_.z -= 10.0f;
+	}
+	if (InputState::IsPadTrigger(PadLR::RIGHT))
+	{
+		moveVec_.z += 10.0f;
+	}
+}
+
+void NormalEnemy::ExitIdle()
+{
+}
+
+void NormalEnemy::ExitNormal()
+{
+}
+
+void NormalEnemy::ExitShot()
+{
+}
+
+void NormalEnemy::ExitDeid()
+{
+}
+
+void NormalEnemy::ExitDebug()
+{
 }

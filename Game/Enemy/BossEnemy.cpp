@@ -16,7 +16,7 @@ namespace
 	constexpr int hp_bar_side_space = 300;
 	constexpr int hp_bar_start_y = 50;
 	constexpr int hp_bar_height = 30;
-	constexpr float aim_hp_speed = 0.09f;
+	constexpr float aim_hp_speed = 0.4f;
 	constexpr float max_hp = 100.0f;
 
 	// キューブレーザーの発射位置フレーム
@@ -82,7 +82,8 @@ namespace
 BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :
 	isGoal_(false),
 	isMoveEnd_(false),
-	movePoint_(0)
+	movePoint_(0),
+	attackState_(0)
 {
 	// 初期化
 	pPlayer_ = pPlayer;
@@ -171,6 +172,12 @@ void BossEnemy::InitState()
 		[this]() { this->EntarMoveNormalLaserAttack(); },
 		[this]() { this->UpdateMoveNormalLaserAttack(); },
 		[this]() { this->ExitMoveNormalLaserAttack(); });
+
+	// 攻撃のステートを保存
+	attackStateTable_.push_back(State::MOVE_ATTACK_CUBE_LASER);
+	attackStateTable_.push_back(State::MOVE_ATTACK_NORMAL_LASER);
+	attackStateTable_.push_back(State::STOP_ATTACK_CUBE_LASER);
+	attackStateTable_.push_back(State::STOP_ATTACK_NORMAL_LASER);
 }
 
 // 更新
@@ -181,9 +188,6 @@ void BossEnemy::Update()
 
 	// 通常レーザーの発射位置のフレーム座標の取得
 	normalLaserFirePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), normal_laser_fire_frame);
-
-	// TODO :　プレイヤーに向かうベクトルを下を使って実装する
-	pPlayer_->GetPosLogTable();
 
 	// 通常レーザがプレイヤーに向かうベクトルの作成
 	toTargetVec_ = VSub(pPlayer_->GetPosLogTable().back(), normalLaserFirePos_);
@@ -353,6 +357,23 @@ void BossEnemy::CubeLaserAttack()
 	pLaserManager_->Create(LaserType::CUBE, &firePos, &vec);
 }
 
+// ステートの管理
+void BossEnemy::StateManager()
+{
+	stateMachine_.SetState(attackStateTable_[attackState_]);
+	attackState_++;
+
+	if (attackStateTable_.size() <= attackState_)
+	{
+		// 行動の順序の入れ替え(配列の中身をシャッフル)
+		std::random_device seed;
+		std::mt19937 engine(seed());
+		std::shuffle(attackStateTable_.begin(), attackStateTable_.end(), engine);
+
+		attackState_ = 0;
+	}
+}
+
 ////// Entar //////
 
 void BossEnemy::EntarEntry()
@@ -465,7 +486,9 @@ void BossEnemy::UpdateIdle()
 	// 制限時間を超えたらステートの変更
 	if (utilTimerTable_["idleStateContinue"].IsTimeOut())
 	{
-		stateMachine_.SetState(State::MOVE_ATTACK_NORMAL_LASER);
+	//	stateMachine_.SetState(State::MOVE_ATTACK_NORMAL_LASER);
+
+		StateManager();
 	}
 }
 
@@ -634,6 +657,6 @@ void BossEnemy::ExitMoveNormalLaserAttack()
 	// 初期化
 	isMoveEnd_ = false;
 
-	// TODO : レーザーエフェクトの削除
+	// レーザーエフェクトの削除
 	pLaserManager_->DeleteContinueLaser();
 }

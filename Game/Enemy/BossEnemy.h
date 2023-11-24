@@ -41,6 +41,9 @@ private:
 	void Move();
 	void CubeLaserAttack();
 
+	// ステートの管理
+	void StateManager();
+
 private:
 	// Entar
 	void EntarEntry();
@@ -96,6 +99,11 @@ private:
 
 	// HPバー
 	std::unique_ptr<HpBar> pHpBar_;
+
+	// 攻撃のステートを保存するテーブル
+	std::vector<State> attackStateTable_;
+
+	int attackState_;
 
 	// キューブレーザーの移動速度
 	float cubeLaserSpeed_;

@@ -13,6 +13,7 @@ enum class InputType
 	DOWN,		// 下
 	RIGHT,		// 右
 	LEFT,		// 左
+	NORMAL_ENEMY_DEBUG,		// 
 	TOTAL_VALUE	// ボタンの入力タイプの合計値
 };
 

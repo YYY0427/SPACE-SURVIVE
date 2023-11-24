@@ -27,7 +27,7 @@ namespace
 	constexpr int warning_ui_draw_frame = 60 * 1;
 
 	// ゲーム開始から何フレーム経過したらボスを出現させるか
-	constexpr int boss_create_frame = 60 * 1;
+	constexpr int boss_create_frame = 60 * 1000;
 }
 
 EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :
@@ -45,7 +45,11 @@ EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<Laze
 	modelHandleTable_[EnemyType::BOSS] = my::MyLoadModel(bossEnemyFilePath.c_str());
 
 	// 雑魚敵のインスタンスの作成
-	pEnemies_.push_back(std::make_shared<NormalEnemy>(modelHandleTable_[EnemyType::NOMAL], pPlayer, pLazerManager));
+	/*pEnemies_.push_back(std::make_shared<NormalEnemy>(
+		modelHandleTable_[EnemyType::NOMAL],
+		pPlayer_,
+		pLazerManager_));*/
+	NormalEnemyEntry();
 }
 
 EnemyManager::~EnemyManager()
@@ -137,4 +141,33 @@ void EnemyManager::DeleteNotEnabledEnemy()
 {
 	// 不要になった敵の削除
 	pEnemies_.remove_if([](std::shared_ptr<EnemyBase> enemy) { return !enemy->IsEnabled(); });
+}
+
+void EnemyManager::NormalEnemyEntry()
+{
+	std::vector<NormalEnemyAIData> table;
+
+	// 敵1の行動1
+	NormalEnemyAIData data{};
+	data.goalPos = { -930, 430, 800 };
+	data.speed = 15.0f;
+	data.isShot = true;
+	table.push_back(data);
+
+	// 敵1の行動2
+	data.goalPos = pPlayer_->GetPos();
+	data.speed = 5.0f;
+	data.isShot = false;
+	table.push_back(data);
+
+	VECTOR initPos = { -2520, 540, 400 };
+
+	// 敵1のインスタンスの作成
+	pEnemies_.push_back(
+		std::make_shared<NormalEnemy>(
+		modelHandleTable_[EnemyType::NOMAL], 
+		pPlayer_, 
+		pLazerManager_,
+		initPos,
+		table));
 }

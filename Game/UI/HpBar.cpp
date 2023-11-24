@@ -5,6 +5,9 @@
 #include <DxLib.h>
 #include <string>
 
+// TODO : ダメージを受けている間はbackHPは減らないようにする
+// ダメージを受けてから決められたフレームの間ダメージを受けなかったらbackHPを減らすように変更して
+
 namespace
 {
 	const std::string hp_frame_img_file_path = "Data/Image/HPFrame.png";

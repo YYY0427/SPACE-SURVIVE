@@ -96,8 +96,8 @@ void Shield::Draw()
 {
 	if (GetIsShield())
 	{
-#ifdef _DEBUG
 		pShiled_->Draw();
+#ifdef _DEBUG
 #endif
 	}
 }

@@ -37,12 +37,18 @@ NormalEnemy::NormalEnemy(
 	normalEnemyGoalPosTable_ = normalEnemyGoalPosTable;
 	collisionRadius_ = collision_radius;
 	movePoint_ = 0;
+	isGoal_ = false;
 
 	stateMachine_.AddState(
 		State::NORMAL,
 		[this]() { this->EntarNormal(); },
 		[this]() { this->UpdateNormal(); },
 		[this]() { this->ExitNormal(); });
+	stateMachine_.AddState(
+		State::IDLE,
+		[this]() { this->EntarIdle(); },
+		[this]() { this->UpdateIdle(); },
+		[this]() { this->ExitIdle(); });
 	stateMachine_.AddState(
 		State::SHOT,
 		[this]() { this->EntarShot(); },
@@ -107,6 +113,7 @@ void NormalEnemy::Update()
 	pModel_->SetPos(pos_);			// 位置
 	pModel_->Update();				// アニメーションの更新
 
+//	Debug::Log("NormalEnemyPos", ConvWorldPosToScreenPos(pos_));
 	Debug::Log("NormalEnemyPos", pos_);
 }
 
@@ -122,7 +129,9 @@ void NormalEnemy::Draw()
 
 void NormalEnemy::EntarIdle()
 {
-	utilTimerTable_["idleFrame"] = 120;
+	moveVec_ = { 0, 0, 0 };
+
+	utilTimerTable_["idle"] = idleTime_;
 }
 
 void NormalEnemy::EntarNormal()
@@ -141,6 +150,8 @@ void NormalEnemy::EntarNormal()
 
 void NormalEnemy::EntarShot()
 {
+	moveVec_ = { 0, 0, 0 };
+
 	// レーザーを発射
 	pLaserManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_, 1.5f);
 }
@@ -155,8 +166,13 @@ void NormalEnemy::EntarDebug()
 
 void NormalEnemy::UpdateIdle()
 {
-	utilTimerTable_["idleFrame"].;
 	SinWave(50, 5);
+
+	utilTimerTable_["idle"].Update(1);
+	if (utilTimerTable_["idle"].IsTimeOut())
+	{
+		stateMachine_.SetState(State::NORMAL);
+	}
 }
 
 void NormalEnemy::UpdateNormal()
@@ -164,38 +180,47 @@ void NormalEnemy::UpdateNormal()
 	// 目標の地点に到達したら目標地点を進める
 	if (pos_.x <= goalPos_.x + move_error_range && goalPos_.x - move_error_range <= pos_.x &&
 		pos_.y <= goalPos_.y + move_error_range && goalPos_.y - move_error_range <= pos_.y &&
-		pos_.z <= goalPos_.z + move_error_range && goalPos_.z - move_error_range <= pos_.z)
+		pos_.z <= goalPos_.z + move_error_range && goalPos_.z - move_error_range <= pos_.z &&
+		!isGoal_)
 	{
-		// 到着した地点でショット発射するフラグが立っていたらショットのステートに変更
-		auto itr = normalEnemyGoalPosTable_.begin();
-		std::advance(itr, movePoint_);
-		if (itr->isShot)
-		{
-			stateMachine_.SetState(State::SHOT);
-		}
+		isGoal_ = true;
 
 		movePoint_++;
+
+		auto itr = normalEnemyGoalPosTable_.begin();
+		std::advance(itr, movePoint_);
+
 		if (normalEnemyGoalPosTable_.size() <= movePoint_)
 		{
 			isEnabled_ = false;
 		}
 		else
 		{
-			itr++;
-			goalPos_ = itr->goalPos;
-			float speed = itr->speed;
+			itr--;
 
-			VECTOR vec = VSub(goalPos_, pos_);
-			vec = VNorm(vec);
-			vec = VScale(vec, speed);
-			moveVec_ = vec;
+			// 
+			idleTime_ = itr->idleTime;
+
+			// 到着した地点でのショット発射するフラグが立っていたらショットのステートに変更
+			if (itr->isShot)
+			{
+				stateMachine_.SetState(State::SHOT);
+			}
+			else
+			{
+				stateMachine_.SetState(State::IDLE);
+			}
 		}
+	}
+	else
+	{
+		isGoal_ = false;
 	}
 }
 
 void NormalEnemy::UpdateShot()
 {
-	stateMachine_.SetState(State::NORMAL);
+	stateMachine_.SetState(State::IDLE);
 }
 
 void NormalEnemy::UpdateDeid()
@@ -233,6 +258,7 @@ void NormalEnemy::UpdateDebug()
 
 void NormalEnemy::ExitIdle()
 {
+	utilTimerTable_.clear();
 }
 
 void NormalEnemy::ExitNormal()

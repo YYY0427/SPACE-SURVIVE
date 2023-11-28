@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-10-23" view-index="0" gantt-divider-location="772" resource-divider-location="300" version="3.2.3247" locale="ja_JP">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-11-25" view-index="0" gantt-divider-location="772" resource-divider-location="300" version="3.2.3247" locale="ja_JP">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="名前" width="439" order="0"/>
-        <field id="tpd4" name="開始日" width="165" order="1"/>
-        <field id="tpd5" name="終了日" width="167" order="2"/>
+        <field id="tpd3" name="名前" width="430" order="0"/>
+        <field id="tpd4" name="開始日" width="162" order="1"/>
+        <field id="tpd5" name="終了日" width="164" order="2"/>
         <option id="filter.completedTasks" value="false"/>
         <timeline>
             <![CDATA[20]]>
         </timeline>
         <option id="color.recent">
-            <![CDATA[#ff0000 #cccccc #333333 #00ffff #33ff33 #ffff99 #009900 #cccc00 #3366ff #000000]]>
+            <![CDATA[#33ff33 #ff0000 #f4f4f4 #cccccc #333333 #00ffff #ffff99 #009900 #cccc00 #3366ff]]>
         </option>
     </view>
     <view id="resource-table">
@@ -92,50 +92,38 @@
             </task>
         </task>
         <task id="28" name="予定アルファ期間" color="#009900" meeting="false" start="2023-11-06" duration="21" complete="0" thirdDate="2023-10-15" thirdDate-constraint="0" expand="true"/>
-        <task id="29" name="実アルファ期間" color="#33ff33" meeting="false" start="2023-11-06" duration="21" complete="12" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true">
+        <task id="29" name="実アルファ期間" color="#33ff33" meeting="false" start="2023-11-06" duration="42" complete="17" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true">
             <task id="30" name="敵のモデルの選定とモデルの入れ替え" color="#33ff33" meeting="false" start="2023-11-06" duration="1" complete="100" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
             <task id="31" name="敵のHPのUI実装" color="#33ff33" meeting="false" start="2023-11-06" duration="2" complete="100" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
             <task id="32" name="シールドのゲージのUI実装" color="#33ff33" meeting="false" start="2023-11-07" duration="2" complete="100" thirdDate="2023-10-25" thirdDate-constraint="0" expand="true"/>
             <task id="33" name="プレイヤーがダメージを受けた時の演出" color="#33ff33" meeting="false" start="2023-11-09" duration="1" complete="100" thirdDate="2023-11-01" thirdDate-constraint="0" expand="true"/>
-            <task id="34" name="敵が跳ね返ってきたレーザーを受けた時の演出" color="#33ff33" meeting="false" start="2023-11-09" duration="1" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
-            <task id="40" name="ウェーブの実装" color="#33ff33" meeting="false" start="2023-11-10" duration="2" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true">
+            <task id="57" name="敵の雑魚敵のAI" color="#33ff33" meeting="false" start="2023-11-28" duration="3" complete="0" thirdDate="2023-10-27" thirdDate-constraint="0" expand="true"/>
+            <task id="34" name="敵が跳ね返ってきたレーザーを受けた時の演出" color="#33ff33" meeting="false" start="2023-12-01" duration="1" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
+            <task id="61" name="プレイヤーの残機のUI" color="#33ff33" meeting="false" start="2023-12-01" duration="2" complete="0" thirdDate="2023-11-15" thirdDate-constraint="0" expand="true"/>
+            <task id="35" name="ゲームクリア時の演出" color="#33ff33" meeting="false" start="2023-12-03" duration="2" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
+            <task id="36" name="ゲームオーバー時の演出" color="#33ff33" meeting="false" start="2023-12-04" duration="2" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
+            <task id="59" name="ゲームの開始演出" color="#33ff33" meeting="false" start="2023-12-06" duration="2" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="true"/>
+            <task id="64" name="各シーンの修正" color="#33ff33" meeting="false" start="2023-12-08" duration="2" complete="0" thirdDate="2023-11-11" thirdDate-constraint="0" expand="true">
+                <task id="65" name="タイトルシーン" color="#33ff33" meeting="false" start="2023-12-08" duration="2" complete="0" thirdDate="2023-11-11" thirdDate-constraint="0" expand="true"/>
+                <task id="66" name="オプションシーン" color="#33ff33" meeting="false" start="2023-12-08" duration="2" complete="0" thirdDate="2023-11-11" thirdDate-constraint="0" expand="true"/>
+                <task id="67" name="ポーズシーン" color="#33ff33" meeting="false" start="2023-12-08" duration="2" complete="0" thirdDate="2023-11-11" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="44" name="チュートリアルの実装" color="#33ff33" meeting="false" start="2023-12-10" duration="3" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
+            <task id="63" name="シールドの回転を変更" color="#33ff33" meeting="false" start="2023-12-13" duration="1" complete="0" thirdDate="2023-11-13" thirdDate-constraint="0" expand="true">
                 <notes>
-                    <![CDATA[このゲームはウェーブで進んでいく
-特定のHPまで敵のHPを削ると、敵が退散していく
-それを敵のHPがなくなるまで続ける]]>
+                    <![CDATA[体の周りをぐるぐる回っていて後ろ側とかには意味がないため正面に対して範囲制限はあるがある程度自由に動かせるようにする]]>
                 </notes>
             </task>
-            <task id="35" name="ゲームクリア時の演出" color="#33ff33" meeting="false" start="2023-11-12" duration="1" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
-            <task id="36" name="ゲームオーバー時の演出" color="#33ff33" meeting="false" start="2023-11-12" duration="1" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
-            <task id="39" name="無限モードの実装" color="#33ff33" meeting="false" start="2023-11-13" duration="2" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="false">
-                <notes>
-                    <![CDATA[通常の場合ウェーブ制で進んでいき、ゲームクリアとなるが
-無限モードはゲームクリアが存在せず、一発でも敵のレーザーを受けるとゲームオーバーとなる]]>
-                </notes>
-                <task id="42" name="スコアの実装" color="#33ff33" meeting="false" start="2023-11-13" duration="1" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
-                <task id="41" name="リザルト画面の実装" color="#33ff33" meeting="false" start="2023-11-13" duration="1" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true">
-                    <notes>
-                        <![CDATA[無限モードではゲームクリアが存在しないため、その代わりにリザルト画面を出すt]]>
-                    </notes>
-                </task>
-                <task id="43" name="無限モード" color="#33ff33" meeting="false" start="2023-11-13" duration="2" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
-            </task>
-            <task id="44" name="チュートリアルの実装" color="#33ff33" meeting="false" start="2023-11-15" duration="2" complete="0" thirdDate="2023-10-31" thirdDate-constraint="0" expand="true"/>
-            <task id="45" name="敵のレーザーの演出" color="#33ff33" meeting="false" start="2023-11-17" duration="10" complete="0" thirdDate="2023-11-03" thirdDate-constraint="0" expand="true"/>
-            <task id="48" name="サウンド" color="#33ff33" meeting="false" start="2023-11-17" duration="10" complete="0" thirdDate="2023-11-03" thirdDate-constraint="0" expand="true">
-                <task id="47" name="サウンドの実装" color="#33ff33" meeting="false" start="2023-11-17" duration="10" complete="0" thirdDate="2023-11-03" thirdDate-constraint="0" expand="true"/>
-                <task id="46" name="サウンド探し" color="#33ff33" meeting="false" start="2023-11-17" duration="10" complete="0" thirdDate="2023-11-03" thirdDate-constraint="0" expand="true"/>
+            <task id="68" name="キューブレーザーの奥行" color="#33ff33" meeting="false" start="2023-12-14" duration="1" complete="0" thirdDate="2023-11-27" thirdDate-constraint="0" expand="true"/>
+            <task id="48" name="サウンド" color="#33ff33" meeting="false" start="2023-12-15" duration="3" complete="0" thirdDate="2023-11-03" thirdDate-constraint="0" expand="true">
+                <task id="47" name="サウンドの実装" color="#33ff33" meeting="false" start="2023-12-15" duration="3" complete="0" thirdDate="2023-11-03" thirdDate-constraint="0" expand="true"/>
+                <task id="46" name="サウンド探し" color="#33ff33" meeting="false" start="2023-12-15" duration="3" complete="0" thirdDate="2023-11-03" thirdDate-constraint="0" expand="true"/>
             </task>
         </task>
-        <task id="49" name="予定ベータ期間" color="#3366ff" meeting="false" start="2023-11-27" duration="7" complete="0" thirdDate="2023-10-30" thirdDate-constraint="0" expand="true"/>
-        <task id="50" name="実ベータ期間" color="#00ffff" meeting="false" start="2023-11-27" duration="7" complete="0" thirdDate="2023-11-13" thirdDate-constraint="0" expand="false">
-            <task id="51" name="アイテムの実装" color="#00ffff" meeting="false" start="2023-11-27" duration="3" complete="0" thirdDate="2023-11-11" thirdDate-constraint="0" expand="true"/>
-            <task id="52" name="他に追加予定あり" color="#00ffff" meeting="false" start="2023-11-27" duration="7" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="true"/>
+        <task id="53" name="マスター期間" color="#ff0000" meeting="false" start="2023-12-18" duration="7" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="true">
+            <task id="54" name="バグ取" color="#ff0000" meeting="false" start="2023-12-18" duration="7" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="53" name="マスター期間" color="#333333" meeting="false" start="2023-12-04" duration="7" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="false">
-            <task id="54" name="バグ取" color="#cccccc" meeting="false" start="2023-12-04" duration="7" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="true"/>
-        </task>
-        <task id="56" name="リファクタリング" color="#ff0000" meeting="false" start="2023-12-11" duration="7" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="true"/>
+        <task id="56" name="リファクタリング" color="#ff0000" meeting="false" start="2023-12-25" duration="7" complete="0" thirdDate="2023-11-09" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>

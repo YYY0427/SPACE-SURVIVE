@@ -103,10 +103,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// 初期シーンの設定
 	SceneManager sceneManager;
 #ifdef _DEBUG
-	sceneManager.ChangeScene(new DebugScene(sceneManager));
-#else 
 	sceneManager.ChangeScene(new TitleScene(sceneManager));
+#else 
 #endif
+	sceneManager.ChangeScene(new DebugScene(sceneManager));
 
 	// 異常が起きた時に終了
 	while (ProcessMessage() == 0)

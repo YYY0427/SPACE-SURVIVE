@@ -55,4 +55,9 @@ private:
 	VECTOR goalPos_;
 
 	int movePoint_;
+
+	bool isGoal_;
+
+	float idleTime_;
+
 };

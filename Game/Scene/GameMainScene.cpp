@@ -53,6 +53,8 @@ void GameMainScene::Update()
 // 描画
 void GameMainScene::Draw()
 {
+	LONGLONG start = GetNowHiPerformanceCount();
+
 	// 各クラスの描画
 	pBackground_->Draw();
 	pPlanetManager_->Draw();
@@ -63,6 +65,16 @@ void GameMainScene::Draw()
 	// 各クラスのUIの描画
 	pPlayer_->DrawUI();
 	pEnemyManager_->DrawUI();
+
+	drawTime_ = GetNowHiPerformanceCount() - start;
+
+	float rate = static_cast<float>(updateTime_ + drawTime_) / 16666.6f;
+	int width = static_cast<int>(common::screen_width * rate);
+	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0xff0000, true);
+
+	rate = static_cast<float>(updateTime_) / 16666.6f;
+	width = static_cast<int>(common::screen_width * rate);
+	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0x0000ff, true);
 
 	// 現在のシーンのテキスト表示
 	Debug::Log("GameMainScene");
@@ -99,6 +111,8 @@ void GameMainScene::NormalUpdate()
 		StartFadeIn();
 		return;
 	}
+
+	LONGLONG start = GetNowHiPerformanceCount();
 
 	// 更新
 	pPlayer_->Update(pCamera_->GetCameraYaw());
@@ -201,6 +215,8 @@ void GameMainScene::NormalUpdate()
 		// 当たり判定情報の後始末
 		MV1CollResultPolyDimTerminate(result);
 	}
+
+	updateTime_ = GetNowHiPerformanceCount() - start;
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))

@@ -10,9 +10,25 @@ class Warning;
 
 struct NormalEnemyAIData
 {
+	VECTOR initPos;
 	VECTOR goalPos;
 	float speed;
+	float idleTime;
 	bool isShot;
+};
+
+struct Data
+{
+	VECTOR goalPos;
+	float speed;
+	float idleTime;
+	bool isShot;
+};
+
+struct EnemyAIData
+{
+	VECTOR initPos;
+	Data a;
 };
 
 class EnemyManager

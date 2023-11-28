@@ -53,6 +53,8 @@ private:
 	int backGroundH_;
 	SceneItem item_;
 	Timer<int> timer_;
+	LONGLONG drawTime_;
+	LONGLONG updateTime_;
 
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成

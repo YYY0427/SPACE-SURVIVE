@@ -13,7 +13,7 @@ public:
 	/// <param name="vec">ベクトル(正規化されてる)</param>
 	/// <param name="fireObjectMoveVec">発射元の移動ベクトル</param>
 	/// <param name="isContinue">継続発射のレーザーかどうか</param>
-	NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, float effectSpeed, bool isContinue);
+	NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, float fireFrameCount, bool isContinue);
 
 	// デストラクタ
 	~NormalLazer();

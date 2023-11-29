@@ -16,7 +16,7 @@ public:
 	LazerManager();
 	~LazerManager();
 
-	void Create(LaserType laserType, VECTOR* pos, VECTOR* vec, float effectSpeed = 1.0f);
+	void Create(LaserType laserType, VECTOR* pos, VECTOR* vec, float fireFrameCount = 1.0f);
 
 	void Update();
 	void Draw();

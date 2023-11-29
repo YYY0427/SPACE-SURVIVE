@@ -106,6 +106,7 @@ void NormalEnemy::Update()
 	// プレイヤーに向かうベクトルを作成
 	toTargetVec_ = VSub(pPlayer_->GetPosLogTable().back(), firePos_);
 	toTargetVec_ = VNorm(toTargetVec_);
+//	toTargetVec_ = VScale(toTargetVec_, -1);
 
 	VECTOR vec = VSub(pPlayer_->GetPos(), pos_);
 	vec = VNorm(vec);
@@ -208,7 +209,7 @@ void NormalEnemy::UpdateNormal()
 			idleTime_ = itr->idleTime;
 
 			// 到着した地点でのショット発射するフラグが立っていたらショットのステートに変更
-			if (itr->isShot)
+			if (itr->isLaser)
 			{
 				stateMachine_.SetState(State::SHOT);
 			}

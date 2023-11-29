@@ -168,9 +168,6 @@ void EnemyManager::NormalEnemyEntry(const std::string filePath)
 
 		// csvデータ１行を','で複数の文字列に変換
 		std::vector<std::string> strvec = StringManager::GetInstance().SplitString(line, ',');
-
-		// csvデータから取得したデータからフォントハンドルの作成して格納
-		EnemyAIData data{};
 		
 		// 初期位置の保存
 		VECTOR initPos{};
@@ -181,8 +178,11 @@ void EnemyManager::NormalEnemyEntry(const std::string filePath)
 		initPos.z = std::stof(strvec[index]);
 		index++;
 
+		// 位置は複数地点設定できるため繰り返す
 		while(index < strvec.size())
 		{
+			EnemyAIData data{};
+
 			// 目的地の保存
 			data.goalPos.x = std::stof(strvec[index]);
 			index++;
@@ -195,17 +195,26 @@ void EnemyManager::NormalEnemyEntry(const std::string filePath)
 			data.speed = std::stof(strvec[index]);
 			index++;
 
-			// ショットするかの保存
-			data.isShot = std::stoi(strvec[index]);
-			index++;
-
 			// 待機時間の保存
 			data.idleTime = std::stoi(strvec[index]);
+			index++;
+
+			// レーザーを撃つのかの保存
+			data.isLaser = std::stoi(strvec[index]);
+			index++;
+
+			// レーザータイプの保存
+			data.laserType = std::stoi(strvec[index]);
+			index++;
+
+			// レーザーを撃つまでの時間の保存
+			data.laserIdleTime = std::stof(strvec[index]);
 			index++;
 
 			dataTable.push_back(data);
 		}
 
+		// 読み込んだ情報をもとに敵を作成
 		pEnemies_.push_back(
 		std::make_shared<NormalEnemy>(
 		modelHandleTable_[EnemyType::NOMAL], 

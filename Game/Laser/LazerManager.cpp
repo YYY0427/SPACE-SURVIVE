@@ -27,7 +27,7 @@ LazerManager::~LazerManager()
 	}
 }
 
-void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, float effectSpeed)
+void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, float fireFrameCount)
 {
 	LaserData data;
 	data.type = laserType;
@@ -39,11 +39,11 @@ void LazerManager::Create(LaserType laserType, VECTOR* pos, VECTOR* vec, float e
 		break;
 
 	case LaserType::NORMAL:
-		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, effectSpeed, false);
+		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[laserType], pos, vec, fireFrameCount, false);
 		break;
 
 	case LaserType::CONTINUE_NORMAL:
-		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[LaserType::NORMAL], pos, vec, effectSpeed, true);
+		data.pLaser = std::make_shared<NormalLazer>(laserModelHanldeTable_[LaserType::NORMAL], pos, vec, fireFrameCount, true);
 		break;
 
 	default:

@@ -9,29 +9,15 @@ class LazerManager;
 class Player;
 class Warning;
 
-//struct NormalEnemyAIData
-//{
-//	VECTOR initPos;
-//	VECTOR goalPos;
-//	float speed;
-//	float idleTime;
-//	bool isShot;
-//};
-//
-//struct Data
-//{
-//	VECTOR goalPos;
-//	float speed;
-//	float idleTime;
-//	bool isShot;
-//};
-
 struct EnemyAIData
 {
-	VECTOR goalPos;
-	float speed;
-	float idleTime;
-	bool isShot;
+	VECTOR goalPos;			// 目的地
+	float speed;			// 目的地に向かう速度
+	float idleTime;			// 目的地に到達してから次の目的地に向かうまでの待機フレーム
+	bool isLaser;			// 目的地に到達したらレーザーを撃つか
+	int laserType;			// レーザーを撃つ場合、どのレーザーを撃つか
+	int laserFireFrameCount;// レーザーを何フレーム発射し続けるか
+	float laserIdleTime;	// レーザーを撃つ場合、目的地に到達してからレーザーを撃つまでの待機フレーム
 };
 
 class EnemyManager
@@ -49,8 +35,8 @@ public:
 private:
 	void NormalUpdate();
 	void CreateBossEnemyUpdate();
-	void DeleteNotEnabledEnemy();
 
+	void DeleteNotEnabledEnemy();
 	void NormalEnemyEntry(const std::string filePath);
 
 private:

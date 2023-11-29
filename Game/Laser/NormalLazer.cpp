@@ -12,10 +12,12 @@ namespace
 
 	// エフェクトのチャージ時間フレーム
 	constexpr int effect_charge_frame = 150;
+
+	// エフェクトの総再生時間フレーム
+	constexpr int effect_total_play_frame = 290;
 }
 
-NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, float effectSpeed, bool isContinue) :
-	collisionAndEffectDifferenceTimer_(effect_charge_frame * effectSpeed),
+NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, float fireFrameCount, bool isContinue) :
 	effectPos_({}),
 	isReflect_(false)
 {
@@ -25,7 +27,13 @@ NormalLazer::NormalLazer(int modelHandle, VECTOR* firePos, VECTOR* vec, float ef
 	// TODO : レーザーの反射処理の変更
 	// できたけどかくかくだから補完入れて
 
+	// エフェクトの総再生時間と再生したいフレーム時間からエフェクトの再生速度を求める
+	float effectSpeed = effect_total_play_frame / fireFrameCount;
 
+	// エフェクトのチャージ時間フレームとエフェクトの再生速度からチャージ時間が何フレームなのか求める
+	collisionAndEffectDifferenceTimer_ = effect_charge_frame / effectSpeed;
+
+	// 初期化
 	firePos_ = firePos;
 	scale_ = model_scale;
 	pos_ = *firePos;

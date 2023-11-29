@@ -8,14 +8,18 @@
 #include "../Util/DrawFunctions.h"
 #include "../Util/StringManager.h"
 #include "../UI/Warning.h"
-#include <string>
 #include <DxLib.h>
 #include <cassert>
 #include <fstream>
 #include <sstream>
 
+// TODO : 面白味追加　雑魚敵は倒せなくてもいいが雑魚敵を倒せば倒すほどバリアが大きくなりボス戦が楽になる
+
 namespace
 {
+	// 敵の配置データ
+	const std::string place_data = "Data/Csv/Enemy.csv";
+
 	// ファイルの階層
 	const std::string model_file_hierarchy = "Data/Model/MV1/";
 
@@ -48,11 +52,7 @@ EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<Laze
 	modelHandleTable_[EnemyType::BOSS] = my::MyLoadModel(bossEnemyFilePath.c_str());
 
 	// 雑魚敵のインスタンスの作成
-	/*pEnemies_.push_back(std::make_shared<NormalEnemy>(
-		modelHandleTable_[EnemyType::NOMAL],
-		pPlayer_,
-		pLazerManager_));*/
-	NormalEnemyEntry();
+	NormalEnemyEntry(place_data);
 }
 
 EnemyManager::~EnemyManager()
@@ -141,126 +141,77 @@ void EnemyManager::DeleteNotEnabledEnemy()
 	pEnemies_.remove_if([](std::shared_ptr<EnemyBase> enemy) { return !enemy->IsEnabled(); });
 }
 
-void EnemyManager::NormalEnemyEntry()
+void EnemyManager::NormalEnemyEntry(const std::string filePath)
 {
 	// TODO : エディターを作る or 外部ファイル化(パターンを複数作る) or Mayaやblenderを使ってフレームを配置してそこを目指す的な
 
-	//// ファイル情報の読み込み(読み込みに失敗したら止める)
-	//std::ifstream ifs("Data/Csv/Enemy.csv");
-	//assert(ifs);
+	// ファイル情報の読み込み(読み込みに失敗したら止める)
+	std::ifstream ifs(filePath);
+	assert(ifs);
 
-	//// csvデータを1行ずつ読み取る
-	//std::vector<EnemyAIData> dataTable;
-	//int index = 0;
-	//bool isFirst = false;
-	//std::string line;
-	//while (getline(ifs, line))
-	//{
-	//	// 1行目は読み込まない
-	//	// 1行目には項目が書いてあるため
-	//	if (!isFirst)
-	//	{
-	//		isFirst = true;
-	//		continue;
-	//	}
+	// csvデータを1行ずつ読み取る
+	bool isFirst = false;
+	std::string line;
+	while (getline(ifs, line))
+	{
+		// 1行目は読み込まない
+		// 1行目には項目が書いてあるため
+		if (!isFirst)
+		{
+			isFirst = true;
+			continue;
+		}
 
-	//	// csvデータ１行を','で複数の文字列に変換
-	//	std::vector<std::string> strvec = StringManager::GetInstance().SplitString(line, ',');
+		// 初期化
+		std::vector<EnemyAIData> dataTable{};
+		int index = 0;
 
-	//	// csvデータから取得したデータからフォントハンドルの作成して格納
-	//	EnemyAIData data{};
-	//	
-	//	// 初期位置の保存
-	//	data.initPos.x = std::stof(strvec[index]);
-	//	index++;
-	//	data.initPos.y = std::stof(strvec[index]);
-	//	index++;
-	//	data.initPos.z = std::stof(strvec[index]);
-	//	index++;
+		// csvデータ１行を','で複数の文字列に変換
+		std::vector<std::string> strvec = StringManager::GetInstance().SplitString(line, ',');
 
-	//	auto itr = strvec.begin();
-	//	std::advance(itr, index);
-	//	VECTOR pos{};
-	//	for (itr; itr != strvec.end(); itr++)
-	//	{
-	//		// 目的地の保存
-	//		pos.x = std::stof(strvec[index]);
-	//		index++;
-	//		pos.y = std::stof(strvec[index]);
-	//		index++;
-	//		pos.z = std::stof(strvec[index]);
-	//		index++;
-	//		data.a.goalPos = pos;
+		// csvデータから取得したデータからフォントハンドルの作成して格納
+		EnemyAIData data{};
+		
+		// 初期位置の保存
+		VECTOR initPos{};
+		initPos.x = std::stof(strvec[index]);
+		index++;
+		initPos.y = std::stof(strvec[index]);
+		index++;
+		initPos.z = std::stof(strvec[index]);
+		index++;
 
-	//		// スピードの保存
-	//		data.a.speed = std::stof(strvec[index]);
-	//		index++;
+		while(index < strvec.size())
+		{
+			// 目的地の保存
+			data.goalPos.x = std::stof(strvec[index]);
+			index++;
+			data.goalPos.y = std::stof(strvec[index]);
+			index++;
+			data.goalPos.z = std::stof(strvec[index]);
+			index++;
 
-	//		// ショットするかの保存
-	//		data.a.isShot = std::stoi(strvec[index]);
-	//		index++;
+			// スピードの保存
+			data.speed = std::stof(strvec[index]);
+			index++;
 
-	//		// 待機時間の保存
-	//		data.a.idleTime = std::stoi(strvec[index]);
-	//		index++;
+			// ショットするかの保存
+			data.isShot = std::stoi(strvec[index]);
+			index++;
 
-	//		std::advance(itr, index);
-	//	}
-	//	dataTable.push_back(data);
-	//}
+			// 待機時間の保存
+			data.idleTime = std::stoi(strvec[index]);
+			index++;
 
-	std::vector<NormalEnemyAIData> table;
+			dataTable.push_back(data);
+		}
 
-	// 初期位置
-	VECTOR initPos = { -2520, 540, 400 };
-
-	// 敵1の行動1
-	NormalEnemyAIData data{};
-	data.goalPos = { -700, 300, 800 };
-	data.speed = 15.0f;
-	data.idleTime = 180.0f;
-	data.isShot = true;
-	table.push_back(data);
-
-	// 敵1の行動2
-	data.goalPos = initPos;
-	data.speed = 15.0f;
-	data.idleTime = 0.0f;
-	data.isShot = false;
-	table.push_back(data);
-
-	// 敵1のインスタンスの作成
-	pEnemies_.push_back(
+		pEnemies_.push_back(
 		std::make_shared<NormalEnemy>(
 		modelHandleTable_[EnemyType::NOMAL], 
 		pPlayer_, 
 		pLazerManager_,
 		initPos,
-		table));
-
-	std::vector<NormalEnemyAIData> table2;
-	initPos = { -2520, -540, 400 };
-
-	// 敵2の行動1
-	data.goalPos = { -700, -300, 800 };
-	data.speed = 15.0f;
-	data.idleTime = 180.0f;
-	data.isShot = true;
-	table2.push_back(data);
-
-	// 敵2の行動2
-	data.goalPos = initPos;
-	data.speed = 15.0f;
-	data.idleTime = 0.0f;
-	data.isShot = false;
-	table2.push_back(data);
-
-	// 敵2のインスタンスの作成
-	pEnemies_.push_back(
-		std::make_shared<NormalEnemy>(
-			modelHandleTable_[EnemyType::NOMAL],
-			pPlayer_,
-			pLazerManager_,
-			initPos,
-			table2));
+		dataTable));
+	}
 }

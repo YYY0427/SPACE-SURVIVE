@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <string>
 #include <unordered_map>
 #include <vector>
 #include "EnemyBase.h"
@@ -8,27 +9,29 @@ class LazerManager;
 class Player;
 class Warning;
 
-struct NormalEnemyAIData
-{
-	VECTOR initPos;
-	VECTOR goalPos;
-	float speed;
-	float idleTime;
-	bool isShot;
-};
-
-struct Data
-{
-	VECTOR goalPos;
-	float speed;
-	float idleTime;
-	bool isShot;
-};
+//struct NormalEnemyAIData
+//{
+//	VECTOR initPos;
+//	VECTOR goalPos;
+//	float speed;
+//	float idleTime;
+//	bool isShot;
+//};
+//
+//struct Data
+//{
+//	VECTOR goalPos;
+//	float speed;
+//	float idleTime;
+//	bool isShot;
+//};
 
 struct EnemyAIData
 {
-	VECTOR initPos;
-	Data a;
+	VECTOR goalPos;
+	float speed;
+	float idleTime;
+	bool isShot;
 };
 
 class EnemyManager
@@ -48,7 +51,7 @@ private:
 	void CreateBossEnemyUpdate();
 	void DeleteNotEnabledEnemy();
 
-	void NormalEnemyEntry();
+	void NormalEnemyEntry(const std::string filePath);
 
 private:
 	// メンバ関数ポインタ

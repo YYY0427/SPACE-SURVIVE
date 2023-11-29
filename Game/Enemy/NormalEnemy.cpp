@@ -28,7 +28,7 @@ NormalEnemy::NormalEnemy(
 	std::shared_ptr<Player> pPlayer,
 	std::shared_ptr<LazerManager> pLazerManager,
 	VECTOR initPos,
-	std::vector<NormalEnemyAIData> normalEnemyGoalPosTable)
+	std::vector<EnemyAIData> normalEnemyGoalPosTable)
 {
 	pPlayer_ = pPlayer;
 	pLaserManager_ = pLazerManager;
@@ -39,6 +39,30 @@ NormalEnemy::NormalEnemy(
 	movePoint_ = 0;
 	isGoal_ = false;
 
+	// ステートの初期化
+	InitState();
+
+	// ステートの設定
+	stateMachine_.SetState(State::NORMAL);
+
+	// インスタンス生成
+	pModel_ = std::make_unique<Model>(modelHandle);
+
+	// モデルの設定
+	pModel_->SetOpacity(opacity_);	// 不透明度
+	pModel_->SetPos(pos_);
+	pModel_->SetRot(rot_);
+	pModel_->SetScale(model_scale);
+	pModel_->ChangeAnimation(anim_frame, true, false, 8);
+	pModel_->Update();
+}
+
+NormalEnemy::~NormalEnemy()
+{
+}
+
+void NormalEnemy::InitState()
+{
 	stateMachine_.AddState(
 		State::NORMAL,
 		[this]() { this->EntarNormal(); },
@@ -64,23 +88,6 @@ NormalEnemy::NormalEnemy(
 		[this]() { this->EntarDebug(); },
 		[this]() { this->UpdateDebug(); },
 		[this]() { this->ExitDebug(); });
-
-	stateMachine_.SetState(State::NORMAL);
-
-	// インスタンス生成
-	pModel_ = std::make_unique<Model>(modelHandle);
-
-	// モデルの設定
-	pModel_->SetOpacity(opacity_);	// 不透明度
-	pModel_->SetPos(pos_);
-	pModel_->SetRot(rot_);
-	pModel_->SetScale(model_scale);
-	pModel_->ChangeAnimation(anim_frame, true, false, 8);
-	pModel_->Update();
-}
-
-NormalEnemy::~NormalEnemy()
-{
 }
 
 void NormalEnemy::Update()
@@ -113,7 +120,6 @@ void NormalEnemy::Update()
 	pModel_->SetPos(pos_);			// 位置
 	pModel_->Update();				// アニメーションの更新
 
-//	Debug::Log("NormalEnemyPos", ConvWorldPosToScreenPos(pos_));
 	Debug::Log("NormalEnemyPos", pos_);
 }
 

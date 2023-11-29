@@ -10,10 +10,10 @@ public:
 		std::shared_ptr<Player> pPlayer, 
 		std::shared_ptr<LazerManager> pLazerManager,
 		VECTOR initPos,
-		std::vector<NormalEnemyAIData> normalEnemyGoalPosTable);
+		std::vector<EnemyAIData> normalEnemyGoalPosTable);
 	~NormalEnemy();
 
-	void InitState() override {}
+	void InitState() override;
 	void Update() override;
 	void Draw() override;
 
@@ -50,7 +50,7 @@ private:
 	// ステートマシン(ステートを管理する)
 	StateMachine<State> stateMachine_;
 
-	std::vector<NormalEnemyAIData> normalEnemyGoalPosTable_;
+	std::vector<EnemyAIData> normalEnemyGoalPosTable_;
 
 	VECTOR goalPos_;
 

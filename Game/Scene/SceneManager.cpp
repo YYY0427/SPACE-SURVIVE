@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "SceneBase.h"
+#include "../common.h"
 #include "../Util/Effekseer3DEffectManager.h"
 
 // 全てのシーンの削除とシーンの切り替え
@@ -70,17 +71,22 @@ void SceneManager::SetIsGameEnd(bool isGameEnd)
 // シーンの更新
 void SceneManager::Update()
 {
-	scene_.front()->Update();
+	LONGLONG start = GetNowHiPerformanceCount();
 
 	if (static_cast<int>(scene_.size()) == 1)
 	{
 		Effekseer3DEffectManager::GetInstance().Update();
 	}
+	scene_.front()->Update();
+
+	updateTime_ = GetNowHiPerformanceCount() - start;
 }
 
 // 各シーンの描画
 void SceneManager::Draw()
 {
+	LONGLONG start = GetNowHiPerformanceCount();
+
 	for (int i = static_cast<int>(scene_.size() - 1); 0 <= i; i--)
 	{
 		scene_[i]->Draw();
@@ -89,4 +95,14 @@ void SceneManager::Draw()
 	{
 		Effekseer3DEffectManager::GetInstance().Draw();
 	}
+
+	drawTime_ = GetNowHiPerformanceCount() - start;
+
+	float rate = static_cast<float>(updateTime_ + drawTime_) / static_cast<float>((1000 / common::fps) * 1000);
+	int width = static_cast<int>(common::screen_width * rate);
+	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0xff0000, true);
+
+	rate = static_cast<float>(updateTime_) / static_cast<float>((1000 / common::fps) * 1000);
+	width = static_cast<int>(common::screen_width * rate);
+	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0x0000ff, true);
 }

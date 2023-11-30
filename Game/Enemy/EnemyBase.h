@@ -8,7 +8,7 @@
 #include "../Util/Timer.h"
 
 class Model;
-class LazerManager;
+class LaserManager;
 class Player;
 
 enum class EnemyType
@@ -46,7 +46,7 @@ public:
 
 protected:
 	std::unique_ptr<Model> pModel_;
-	std::shared_ptr<LazerManager> pLaserManager_;
+	std::shared_ptr<LaserManager> pLaserManager_;
 	std::shared_ptr<Player> pPlayer_;
 	VECTOR pos_;
 	VECTOR firePos_;

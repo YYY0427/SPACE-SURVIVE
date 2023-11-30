@@ -10,7 +10,7 @@ class Camera;
 class Player;
 class DataReaderFromUnity;
 class EnemyManager;
-class LazerManager;
+class LaserManager;
 class Background;
 
 // メインシーン
@@ -49,12 +49,8 @@ private:
 	};
 
 private:
-	int windEffectH_;
-	int backGroundH_;
 	SceneItem item_;
 	Timer<int> timer_;
-	LONGLONG drawTime_;
-	LONGLONG updateTime_;
 
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成
@@ -68,6 +64,6 @@ private:
 	std::shared_ptr<DataReaderFromUnity> pDataReader_;
 	std::shared_ptr<PlanetManager> pPlanetManager_;
 	std::shared_ptr<EnemyManager> pEnemyManager_;
-	std::shared_ptr<LazerManager> pLazerManager_;
+	std::shared_ptr<LaserManager> pLaserManager_;
 };
 

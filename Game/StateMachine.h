@@ -2,6 +2,7 @@
 #pragma once
 #include <functional>
 #include <map>
+#include <vector>
 
 // ステートマシン
 template <class TState> class StateMachine
@@ -22,6 +23,7 @@ private:
 
 	TState currentState = {};
 	std::map<TState, StateDelegateSet> stateFuncMap;
+	std::vector<Delegate> allExitFuncTable_;
 	bool isInitialized = false;
 
 public:
@@ -53,8 +55,14 @@ public:
 		// 直前のstateのexitを呼んでステートを更新
 		else if (currentState != state)
 		{
+			for (auto& func : allExitFuncTable_)
+			{
+				func();
+			}
 			stateFuncMap[currentState].exit();
+
 			currentState = state;
+
 			stateFuncMap[currentState].enter();
 		}
 	}
@@ -63,6 +71,12 @@ public:
 	void Update()
 	{
 		stateFuncMap[currentState].update();
+	}
+
+	// 全てのexitで呼びたい関数の設定
+	void SetAllExitFunction(Delegate exit)
+	{
+		allExitFuncTable_.push_back(exit);
 	}
 
 	// ステートの取得

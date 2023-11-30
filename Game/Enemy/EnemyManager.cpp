@@ -13,50 +13,40 @@
 #include <fstream>
 #include <sstream>
 
-// TODO : 面白味追加　雑魚敵は倒せなくてもいいが雑魚敵を倒せば倒すほどバリアが大きくなりボス戦が楽になる
-
 namespace
 {
-	// 敵の配置データ
-	const std::string place_data = "Data/Csv/Enemy.csv";
+	// 雑魚敵の行動データのファイルパス
+	const std::string normal_eneny_action_file_path_test = "Data/Csv/NormalEnemy/ActionTest.csv";
+	const std::string normal_eneny_action_file_path_1 = "Data/Csv/NormalEnemy/Action1.csv";
 
-	// ファイルの階層
-	const std::string model_file_hierarchy = "Data/Model/MV1/";
-
-	// ファイルの拡張子
-	const std::string model_file_extension = ".mv1";
-
-	// ファイル名
-	const std::string normal_enemy_model_file_name = "NormalEnemy2";
-	const std::string boss_enemy_model_file_name = "BossEnemy";
+	// モデルのファイルパス
+	const std::string boss_enemy_model_file_path_1 = "Data/Model/BossEnemy1.mv1";
+	const std::string normal_enemy_model_file_path_1 = "Data/Model/NormalEnemy1.mv1";
 
 	// 何フレーム間、ボス出現のWARNING!!を描画するか
 	constexpr int warning_ui_draw_frame = 60 * 4;
 
 	// ゲーム開始から何フレーム経過したらボスを出現させるか
-	constexpr int boss_create_frame = 60 * 10;
+	constexpr int boss_create_frame = 60 * 1000;
 }
 
-EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :
+EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager) :
 	pPlayer_(pPlayer),
-	pLazerManager_(pLazerManager),
+	pLaserManager_(pLaserManager),
 	isCreateBossEnemy_(false),
-	pWarning_(nullptr),
 	updateFunc_(&EnemyManager::NormalUpdate)
 {
 	// モデルのロード
-	std::string normalEnemyFilePath = model_file_hierarchy + normal_enemy_model_file_name + model_file_extension;
-	modelHandleTable_[EnemyType::NOMAL] = my::MyLoadModel(normalEnemyFilePath.c_str());
-
-	std::string bossEnemyFilePath = model_file_hierarchy + boss_enemy_model_file_name + model_file_extension;
-	modelHandleTable_[EnemyType::BOSS] = my::MyLoadModel(bossEnemyFilePath.c_str());
+	modelHandleTable_[EnemyType::NOMAL] = my::MyLoadModel(normal_enemy_model_file_path_1.c_str());
+	modelHandleTable_[EnemyType::BOSS] = my::MyLoadModel(boss_enemy_model_file_path_1.c_str());
 
 	// 雑魚敵のインスタンスの作成
-	NormalEnemyEntry(place_data);
+	LoadAndStoreNormalEnemyActionFileData(normal_eneny_action_file_path_1);
 }
 
 EnemyManager::~EnemyManager()
 {
+	// 全てのモデルの解放
 	for (auto& handle : modelHandleTable_)
 	{
 		MV1DeleteModel(handle.second);
@@ -65,22 +55,25 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Update(int time)
 {
-	// 存在していない敵の削除
-	DeleteNotEnabledEnemy();
+	// 不要になった敵の削除
+	pEnemies_.remove_if([](std::shared_ptr<EnemyBase> enemy) { return !enemy->IsEnabled(); });
 
+	// ボス出現していない、ボス出現の時間に到達したらボス出現
 	if (boss_create_frame < time &&
 		!isCreateBossEnemy_)
 	{
+		// ボス出現フラグを立てる
 		isCreateBossEnemy_ = true;
+
+		// 全ての敵の削除
 		pEnemies_.clear();
 
+		// ボス出現のUI演出を開始
 		pWarning_ = std::make_unique<Warning>(warning_ui_draw_frame);
 
 		// updateをボス登場のupdateに切り替え
 		updateFunc_ = &EnemyManager::CreateBossEnemyUpdate;
 	}
-
-	Debug::Log("time", time / 60);
 
 	(this->*updateFunc_)();
 }	
@@ -121,30 +114,24 @@ void EnemyManager::NormalUpdate()
 
 void EnemyManager::CreateBossEnemyUpdate()
 {
+	// 敵ボス出現のUIの更新
 	pWarning_->Update();
 
+	// 敵ボス出現のUI演出が終了したか
 	if (pWarning_->IsEnd())
 	{
 		// 敵ボスのインスタンス生成
 		pEnemies_.push_back(
 			std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS],
 				pPlayer_,
-				pLazerManager_));
+				pLaserManager_));
 
 		updateFunc_ = &EnemyManager::NormalUpdate;
 	}
 }
 
-void EnemyManager::DeleteNotEnabledEnemy()
+void EnemyManager::LoadAndStoreNormalEnemyActionFileData(const std::string filePath)
 {
-	// 不要になった敵の削除
-	pEnemies_.remove_if([](std::shared_ptr<EnemyBase> enemy) { return !enemy->IsEnabled(); });
-}
-
-void EnemyManager::NormalEnemyEntry(const std::string filePath)
-{
-	// TODO : エディターを作る or 外部ファイル化(パターンを複数作る) or Mayaやblenderを使ってフレームを配置してそこを目指す的な
-
 	// ファイル情報の読み込み(読み込みに失敗したら止める)
 	std::ifstream ifs(filePath);
 	assert(ifs);
@@ -163,7 +150,7 @@ void EnemyManager::NormalEnemyEntry(const std::string filePath)
 		}
 
 		// 初期化
-		std::vector<EnemyAIData> dataTable{};
+		std::vector<NormalEnemyActionData> dataTable{};
 		int index = 0;
 
 		// csvデータ１行を','で複数の文字列に変換
@@ -178,10 +165,14 @@ void EnemyManager::NormalEnemyEntry(const std::string filePath)
 		initPos.z = std::stof(strvec[index]);
 		index++;
 
+		// 最終目的地に到達したときに消すかの保存
+		bool isErase = std::stoi(strvec[index]);
+		index++;
+
 		// 位置は複数地点設定できるため繰り返す
 		while(index < strvec.size())
 		{
-			EnemyAIData data{};
+			NormalEnemyActionData data{};
 
 			// 目的地の保存
 			data.goalPos.x = std::stof(strvec[index]);
@@ -208,7 +199,19 @@ void EnemyManager::NormalEnemyEntry(const std::string filePath)
 			index++;
 
 			// レーザーを撃つまでの時間の保存
-			data.laserIdleTime = std::stof(strvec[index]);
+			data.laserIdleFrame = std::stoi(strvec[index]);
+			index++;
+
+			// レーザーを何フレーム発射し続けるかの保存 
+			data.laserFireFrameTime = std::stoi(strvec[index]);
+			index++;
+
+			// キューブレーザーの速度の保存
+			data.cubeLaserSpeed = std::stof(strvec[index]);
+			index++;
+
+			// レーザーのチャージフレームの保存
+			data.laserChargeFrame = std::stoi(strvec[index]);
 			index++;
 
 			dataTable.push_back(data);
@@ -219,8 +222,9 @@ void EnemyManager::NormalEnemyEntry(const std::string filePath)
 		std::make_shared<NormalEnemy>(
 		modelHandleTable_[EnemyType::NOMAL], 
 		pPlayer_, 
-		pLazerManager_,
+		pLaserManager_,
 		initPos,
+		isErase,
 		dataTable));
 	}
 }

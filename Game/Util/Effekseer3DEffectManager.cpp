@@ -8,7 +8,7 @@
 namespace
 {
 	// エフェクトのファイルパス
-	const std::string data_file_path = "Data/Effect/AfterData/";
+	const std::string data_file_path = "Data/Effect/";
 
 	// エフェクトの拡張子
 	const std::string data_extension = ".efk";

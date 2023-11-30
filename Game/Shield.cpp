@@ -94,7 +94,7 @@ void Shield::Update()
 
 void Shield::Draw()
 {
-	if (GetIsShield())
+	if (IsShield())
 	{
 		pShiled_->Draw();
 #ifdef _DEBUG
@@ -113,7 +113,7 @@ VECTOR Shield::GetPos() const
 	return pos_;
 }
 
-bool Shield::GetIsShield() const
+bool Shield::IsShield() const
 {
 	return (enerugyGage_ > 0) && (isInput_);
 }

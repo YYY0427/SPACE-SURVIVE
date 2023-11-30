@@ -19,7 +19,7 @@ public:
 
 	VECTOR GetPos() const;
 
-	bool GetIsShield() const;
+	bool IsShield() const;
 
 	std::array<VERTEX3D, 6> GetVertex() const;
 

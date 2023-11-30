@@ -11,9 +11,7 @@
 namespace
 {
 	// プレイヤーモデルのファイルのパス
-	const std::string model_file_hierarchy = "Data/Model/MV1/";
-	const std::string model_file_name = "Player";
-	const std::string model_file_extension = ".mv1";
+	const std::string model_file_path = "Data/Model/Player.mv1";
 
 	// プレイヤーの移動量
 	constexpr VECTOR player_vec_up = { 0, 1, 0 };
@@ -70,8 +68,7 @@ Player::Player() :
 	rot_ = init_rot;
 
 	// プレイヤーモデルのインスタンスの生成
-	std::string filePath = model_file_hierarchy + model_file_name + model_file_extension;
-	pModel_ = std::make_shared<Model>(filePath.c_str());
+	pModel_ = std::make_shared<Model>(model_file_path.c_str());
 
 	// シールドのインスタンスの生成
 	pShield_ = std::make_shared<Shield>(*this);

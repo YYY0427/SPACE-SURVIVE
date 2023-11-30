@@ -1,6 +1,6 @@
 #include "NormalEnemy.h"
 #include "../Util/Model.h"
-#include "../Laser/LazerManager.h"
+#include "../Laser/LaserManager.h"
 #include "../Player.h"
 #include "../common.h"
 #include "../Vector2.h"
@@ -10,39 +10,47 @@
 namespace
 {
 	// レーザーの発射位置のフレーム
-	constexpr int lazer_fire_frame_pos = 37;
+	constexpr int laser_fire_frame_pos = 37;
 
 	// 当たり判定の半径
 	constexpr float collision_radius = 48.0f;
 
+	// アニメーション番号
 	constexpr int anim_frame = 1;
 
+	// 目的地を特定の座標にすると通り抜けていく可能性があるため、ある程度範囲をつける
 	constexpr float move_error_range = 10.0f;
 
+	// モデルの拡大率
 	constexpr VECTOR model_scale = { 0.7f, 0.7f, 0.7f };
+
+	// モデルの初期の向いている方向
 	constexpr VECTOR init_model_direction = { 0, 0, -1 };
 }
 
 NormalEnemy::NormalEnemy(
 	int modelHandle,
 	std::shared_ptr<Player> pPlayer,
-	std::shared_ptr<LazerManager> pLazerManager,
+	std::shared_ptr<LaserManager> pLazerManager,
 	VECTOR initPos,
-	std::vector<EnemyAIData> normalEnemyGoalPosTable)
+	bool isErase,
+	std::vector<NormalEnemyActionData> actionDataTable)
 {
 	pPlayer_ = pPlayer;
 	pLaserManager_ = pLazerManager;
-	opacity_ = 1.0f;
 	pos_ = initPos;
-	normalEnemyGoalPosTable_ = normalEnemyGoalPosTable;
+	actionDataTable_ = actionDataTable;
 	collisionRadius_ = collision_radius;
+	isErase_ = isErase;
 	movePoint_ = 0;
+	opacity_ = 1.0f;
 	isGoal_ = false;
 
 	// ステートの初期化
 	InitState();
 
 	// ステートの設定
+	stateMachine_.SetAllExitFunction([this]() { this->AllExitFucsion(); });
 	stateMachine_.SetState(State::NORMAL);
 
 	// インスタンス生成
@@ -74,10 +82,10 @@ void NormalEnemy::InitState()
 		[this]() { this->UpdateIdle(); },
 		[this]() { this->ExitIdle(); });
 	stateMachine_.AddState(
-		State::SHOT,
-		[this]() { this->EntarShot(); },
-		[this]() { this->UpdateShot(); },
-		[this]() { this->ExitShot(); });
+		State::LASER,
+		[this]() { this->EntarLaser(); },
+		[this]() { this->UpdateLaser(); },
+		[this]() { this->ExitLaser(); });
 	stateMachine_.AddState(
 		State::DEID,
 		[this]() { this->EntarDeid(); },
@@ -92,6 +100,7 @@ void NormalEnemy::InitState()
 
 void NormalEnemy::Update()
 {
+	// ステートマシンの更新
 	stateMachine_.Update();
 
 	if (InputState::IsTriggered(InputType::NORMAL_ENEMY_DEBUG))
@@ -101,18 +110,18 @@ void NormalEnemy::Update()
 
 	// レーザーの発射位置のフレーム座標の取得
 	// 追従させるために毎フレーム取得
-	firePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), lazer_fire_frame_pos);
+	firePos_ = MV1GetFramePosition(pModel_->GetModelHandle(), laser_fire_frame_pos);
 
 	// プレイヤーに向かうベクトルを作成
 	toTargetVec_ = VSub(pPlayer_->GetPosLogTable().back(), firePos_);
 	toTargetVec_ = VNorm(toTargetVec_);
-//	toTargetVec_ = VScale(toTargetVec_, -1);
 
+	// プレイヤーを向く回転行列の作成
 	VECTOR vec = VSub(pPlayer_->GetPos(), pos_);
 	vec = VNorm(vec);
-
 	MATRIX rotMtx = MGetRotVec2(init_model_direction, vec);
 
+	// 移動
 	pos_ = VAdd(pos_, moveVec_);
 
 	// モデルの設定
@@ -134,6 +143,11 @@ void NormalEnemy::Draw()
 #endif
 }
 
+void NormalEnemy::AllExitFucsion()
+{
+	utilTimerTable_.clear();
+}
+
 void NormalEnemy::EntarIdle()
 {
 	moveVec_ = { 0, 0, 0 };
@@ -143,7 +157,7 @@ void NormalEnemy::EntarIdle()
 
 void NormalEnemy::EntarNormal()
 {
-	auto itr = normalEnemyGoalPosTable_.begin();
+	auto itr = actionDataTable_.begin();
 	std::advance(itr, movePoint_);
 
 	goalPos_ = itr->goalPos;
@@ -155,12 +169,13 @@ void NormalEnemy::EntarNormal()
 	moveVec_ = vec;
 }
 
-void NormalEnemy::EntarShot()
+void NormalEnemy::EntarLaser()
 {
+	// 初期化
 	moveVec_ = { 0, 0, 0 };
 
-	// レーザーを発射
-	pLaserManager_->Create(LaserType::NORMAL, &firePos_, &toTargetVec_, 1.5f);
+	// タイマーの制限時間の設定
+	utilTimerTable_["fireIdleTime"] = laserFireIdleTime_;
 }
 
 void NormalEnemy::EntarDeid()
@@ -178,7 +193,14 @@ void NormalEnemy::UpdateIdle()
 	utilTimerTable_["idle"].Update(1);
 	if (utilTimerTable_["idle"].IsTimeOut())
 	{
-		stateMachine_.SetState(State::NORMAL);
+		if (static_cast<int>(actionDataTable_.size()) <= movePoint_ && isErase_)
+		{
+			isEnabled_ = false;
+		}
+		else if(static_cast<int>(actionDataTable_.size()) > movePoint_)
+		{
+			stateMachine_.SetState(State::NORMAL);
+		}
 	}
 }
 
@@ -190,34 +212,33 @@ void NormalEnemy::UpdateNormal()
 		pos_.z <= goalPos_.z + move_error_range && goalPos_.z - move_error_range <= pos_.z &&
 		!isGoal_)
 	{
+		// 目標地点に到達した時の一回のみしか通りたくないからフラグを立てて制限
 		isGoal_ = true;
 
-		movePoint_++;
-
-		auto itr = normalEnemyGoalPosTable_.begin();
+		// 現在のイテレーターの取得
+		auto itr = actionDataTable_.begin();
 		std::advance(itr, movePoint_);
 
-		if (normalEnemyGoalPosTable_.size() <= movePoint_)
+		// 待機時間の保存
+		// ショットの待機時間を待機時間に含めないために引く
+		idleTime_ = itr->idleTime - itr->laserIdleFrame;
+
+		// 到着した地点でのショット発射するフラグが立っていたらショットのステートに変更
+		if (itr->isLaser)
 		{
-			isEnabled_ = false;
+			laserType_ = static_cast<LaserType>(itr->laserType);
+			laserFireIdleTime_ = itr->laserIdleFrame;
+			laserFireFrameTime_ = itr->laserFireFrameTime;
+			cubeLaserSpeed_ = itr->cubeLaserSpeed;
+			laserChargeFrame_ = itr->laserChargeFrame;
+
+			stateMachine_.SetState(State::LASER);
 		}
 		else
 		{
-			itr--;
-
-			// 
-			idleTime_ = itr->idleTime;
-
-			// 到着した地点でのショット発射するフラグが立っていたらショットのステートに変更
-			if (itr->isLaser)
-			{
-				stateMachine_.SetState(State::SHOT);
-			}
-			else
-			{
-				stateMachine_.SetState(State::IDLE);
-			}
+			stateMachine_.SetState(State::IDLE);
 		}
+		movePoint_++;
 	}
 	else
 	{
@@ -225,9 +246,23 @@ void NormalEnemy::UpdateNormal()
 	}
 }
 
-void NormalEnemy::UpdateShot()
+void NormalEnemy::UpdateLaser()
 {
-	stateMachine_.SetState(State::IDLE);
+	SinWave(50, 5);
+
+	utilTimerTable_["fireIdleTime"].Update(1);
+	if (utilTimerTable_["fireIdleTime"].IsTimeOut())
+	{
+		if (laserType_ == LaserType::CUBE)
+		{
+			toTargetVec_ = VScale(toTargetVec_, cubeLaserSpeed_);
+		}
+
+		// レーザーを発射
+		pLaserManager_->Create(laserType_, &firePos_, &toTargetVec_, laserFireFrameTime_, laserChargeFrame_);
+
+		stateMachine_.SetState(State::IDLE);
+	}
 }
 
 void NormalEnemy::UpdateDeid()
@@ -265,14 +300,13 @@ void NormalEnemy::UpdateDebug()
 
 void NormalEnemy::ExitIdle()
 {
-	utilTimerTable_.clear();
 }
 
 void NormalEnemy::ExitNormal()
 {
 }
 
-void NormalEnemy::ExitShot()
+void NormalEnemy::ExitLaser()
 {
 }
 

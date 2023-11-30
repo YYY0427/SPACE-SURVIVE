@@ -12,9 +12,10 @@
 #include "../Planet/PlanetManager.h"
 #include "../Planet/PlanetBase.h"
 #include "../Enemy/EnemyManager.h"
-#include "../Laser/LazerManager.h"
+#include "../Laser/LaserManager.h"
 #include "../Background.h"
 #include "../Shield.h"
+#include "../Laser/Laser.h"
 #include "../common.h"
 
 namespace
@@ -28,10 +29,9 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 {
 	// インスタンス生成
 	pBackground_ = std::make_shared<Background>();
-	pLazerManager_ = std::make_shared<LazerManager>();
+	pLaserManager_ = std::make_shared<LaserManager>();
 	pPlayer_ = std::make_shared<Player>();
-	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLazerManager_);
-	pPlanetManager_ = std::make_shared<PlanetManager>();
+	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLaserManager_);
 	pCamera_ = std::make_shared<Camera>();
 }
 
@@ -53,28 +53,15 @@ void GameMainScene::Update()
 // 描画
 void GameMainScene::Draw()
 {
-	LONGLONG start = GetNowHiPerformanceCount();
-
 	// 各クラスの描画
 	pBackground_->Draw();
-	pPlanetManager_->Draw();
 	pEnemyManager_->Draw();
 	pPlayer_->Draw();
-	pLazerManager_->Draw();
+	pLaserManager_->Draw();
 
 	// 各クラスのUIの描画
 	pPlayer_->DrawUI();
 	pEnemyManager_->DrawUI();
-
-	drawTime_ = GetNowHiPerformanceCount() - start;
-
-	float rate = static_cast<float>(updateTime_ + drawTime_) / 16666.6f;
-	int width = static_cast<int>(common::screen_width * rate);
-	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0xff0000, true);
-
-	rate = static_cast<float>(updateTime_) / 16666.6f;
-	width = static_cast<int>(common::screen_width * rate);
-	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0x0000ff, true);
 
 	// 現在のシーンのテキスト表示
 	Debug::Log("GameMainScene");
@@ -112,19 +99,16 @@ void GameMainScene::NormalUpdate()
 		return;
 	}
 
-	LONGLONG start = GetNowHiPerformanceCount();
-
 	// 更新
 	pPlayer_->Update(pCamera_->GetCameraYaw());
 	pEnemyManager_->Update(timer_.GetTime());
-	pLazerManager_->Update();
-	pPlanetManager_->Update();
+	pLaserManager_->Update();
 	pCamera_->Update();
 
-	if (pPlayer_->GetShield()->GetIsShield())
+	if (pPlayer_->GetShield()->IsShield())
 	{
 		// レーザーとシールドの当たり判定
-		for (auto& laser : pLazerManager_->GetLazeres())
+		for (auto& laser : pLaserManager_->GetLazeres())
 		{
 			// キューブレーザーは反射できないので飛ばす
 			if (laser.type == LaserType::CUBE) continue;
@@ -145,12 +129,13 @@ void GameMainScene::NormalUpdate()
 				laser.pLaser->SetIsReflect(true);
 
 				// レーザーを止める
-				laser.pLaser->Stop(pPlayer_->GetShield()->GetPos());
+				auto pLaser = std::dynamic_pointer_cast<Laser>(laser.pLaser);
+				pLaser->Stop(pPlayer_->GetShield()->GetPos());
 
 				// 反射レーザーを作成(既に作成されていた場合更新を行う)
 				// シールドの法線情報
 				VECTOR shieldNorm = pPlayer_->GetShield()->GetVertex()[0].norm;
-				pLazerManager_->Reflect(pPlayer_->GetShield()->GetPos(), laser.pLaser->GetVec(), shieldNorm);
+				pLaserManager_->Reflect(pPlayer_->GetShield()->GetPos(), laser.pLaser->GetVec(), shieldNorm);
 			}
 			else
 			{
@@ -164,11 +149,11 @@ void GameMainScene::NormalUpdate()
 	}
 	else
 	{
-		pLazerManager_->DeleteReflectLaser();
+		pLaserManager_->DeleteReflectLaser();
 	}
 
 	// レーザーと敵の当たり判定
-	for (auto& laser : pLazerManager_->GetLazeres())
+	for (auto& laser : pLaserManager_->GetLazeres())
 	{
 		// 反射可能なレーザー以外の場合は判定を行わない
 		if (laser.type != LaserType::REFLECT) continue;
@@ -191,7 +176,7 @@ void GameMainScene::NormalUpdate()
 	}
 
 	// レーザーとプレイヤーの当たり判定
-	for (auto& laser : pLazerManager_->GetLazeres())
+	for (auto& laser : pLaserManager_->GetLazeres())
 	{
 		// 無敵時間中なら当たらない
 		if (pPlayer_->IsUltimate()) continue;
@@ -205,7 +190,9 @@ void GameMainScene::NormalUpdate()
 		if (result.HitNum > 0)
 		{
 			// Updateをゲームオーバー時のUpdateに変更
-			updateFunc_ = &GameMainScene::CollisionRockUpdate;
+		//	updateFunc_ = &GameMainScene::CollisionRockUpdate;
+
+			Debug::Log("あああああああああああああああああああああ");
 
 			// 当たり判定情報の後始末
 			MV1CollResultPolyDimTerminate(result);
@@ -215,8 +202,6 @@ void GameMainScene::NormalUpdate()
 		// 当たり判定情報の後始末
 		MV1CollResultPolyDimTerminate(result);
 	}
-
-	updateTime_ = GetNowHiPerformanceCount() - start;
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
@@ -266,7 +251,7 @@ void GameMainScene::CollisionRockUpdate()
 
 	// 更新
 	pCamera_->Update();
-	pLazerManager_->Update();
+	pLaserManager_->Update();
 	pEnemyManager_->Update(timer_.GetTime());
 
 	// フェードの更新

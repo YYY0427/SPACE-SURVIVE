@@ -12,7 +12,7 @@ public:
 	/// <param name="modelHandle"></param>
 	/// <param name="pPlayer"></param>
 	/// <param name="pLazerManager"></param>
-	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager);
+	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLazerManager);
 
 	// デストラクタ
 	~BossEnemy();

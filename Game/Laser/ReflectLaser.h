@@ -1,7 +1,7 @@
 #pragma once
-#include "LazerBase.h"
+#include "LaserBase.h"
 
-class ReflectLaser : public LazerBase
+class ReflectLaser : public LaserBase
 {
 public:
 	ReflectLaser(int modelHandle, VECTOR pos, VECTOR vec);
@@ -10,7 +10,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void ReflectLaserUpdate(VECTOR pos, VECTOR vec) override;
+	void ReflectLaserUpdate(VECTOR pos, VECTOR vec);
 
 private:
 	int laserEffectHandle_;

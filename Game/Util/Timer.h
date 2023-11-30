@@ -55,10 +55,10 @@ public:
 	/// <returns>true : タイムアウト, false : タイム内</returns>
 	bool IsTimeOut() const
 	{
-		// 制限時間を設定していない場合、タイム内を常に返す
+		// 制限時間を設定していない場合、タイムアウトを常に返す
 		if (limitTime_ <= 0)
 		{
-			return false;
+			return true;
 		}
 
 		return time_ >= limitTime_;

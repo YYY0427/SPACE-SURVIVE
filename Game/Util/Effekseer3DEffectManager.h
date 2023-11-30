@@ -9,7 +9,7 @@ namespace EffectID
 {
 	const std::string player_dead = "Explosion";		// プレイヤー死亡時に出すエフェクト
 	const std::string player_shield = "MagicShield";	// プレイヤーのシールド	
-	const std::string player_boost = "FirePot1";		// プレイヤーに常に出すエフェクト
+	const std::string player_boost = "Boost";			// プレイヤーに常に出すエフェクト
 	const std::string normal_laser = "Laser";			// 敵の通常レーザーのエフェクト
 	const std::string continue_laser = "ContinueLaser";	// 敵の継続通常レーザーエフェクト
 	const std::string refrect_laser = "RefrectLaser";	// 敵のレーザーを反射したレーザー

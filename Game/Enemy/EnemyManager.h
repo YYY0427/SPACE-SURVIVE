@@ -5,25 +5,27 @@
 #include <vector>
 #include "EnemyBase.h"
 
-class LazerManager;
+class LaserManager;
 class Player;
 class Warning;
 
-struct EnemyAIData
+struct NormalEnemyActionData
 {
 	VECTOR goalPos;			// 目的地
 	float speed;			// 目的地に向かう速度
-	float idleTime;			// 目的地に到達してから次の目的地に向かうまでの待機フレーム
+	int idleTime;			// 目的地に到達してから次の目的地に向かうまでの待機フレーム
 	bool isLaser;			// 目的地に到達したらレーザーを撃つか
 	int laserType;			// レーザーを撃つ場合、どのレーザーを撃つか
-	int laserFireFrameCount;// レーザーを何フレーム発射し続けるか
-	float laserIdleTime;	// レーザーを撃つ場合、目的地に到達してからレーザーを撃つまでの待機フレーム
+	int laserIdleFrame;		// レーザーを撃つ場合、目的地に到達してからレーザーを撃つまでの待機フレーム
+	int laserFireFrameTime; // レーザーを何フレーム発射し続けるか
+	float cubeLaserSpeed;	// キューブレーザーの速度
+	int laserChargeFrame;	// レーザーのチャージフレーム
 };
 
 class EnemyManager
 {
 public:
-	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager);
+	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager);
 	~EnemyManager();
 
 	void Update(int time);
@@ -36,8 +38,11 @@ private:
 	void NormalUpdate();
 	void CreateBossEnemyUpdate();
 
-	void DeleteNotEnabledEnemy();
-	void NormalEnemyEntry(const std::string filePath);
+	/// <summary>
+	/// 雑魚敵の行動ファイルデータのロードと保存
+	/// </summary>
+	/// <param name="filePath">ファイルパス</param>
+	void LoadAndStoreNormalEnemyActionFileData(const std::string filePath);
 
 private:
 	// メンバ関数ポインタ
@@ -46,7 +51,7 @@ private:
 
 	std::list<std::shared_ptr<EnemyBase>> pEnemies_;
 	std::shared_ptr<Player> pPlayer_;
-	std::shared_ptr<LazerManager> pLazerManager_;
+	std::shared_ptr<LaserManager> pLaserManager_;
 	std::unique_ptr<Warning> pWarning_;
 
 	// モデルハンドルテーブル

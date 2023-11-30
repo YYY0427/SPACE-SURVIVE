@@ -1,5 +1,6 @@
 #pragma once
 #include <deque>
+#include <DxLib.h>
 
 // プロトタイプ宣言
 class SceneBase;
@@ -61,5 +62,8 @@ private:
 
 	// ゲームを終了するかどうか
 	bool isGameEnd_;
+
+	LONGLONG updateTime_;
+	LONGLONG drawTime_;
 };
 

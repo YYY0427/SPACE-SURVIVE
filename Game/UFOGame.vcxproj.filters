@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="リソース ファイル">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,38 +12,26 @@
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{70b1db2c-fa20-4271-b661-f156a1d6a773}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Scene">
-      <UniqueIdentifier>{bc0ccc3e-affa-4700-b6f0-98c092199f60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Util">
       <UniqueIdentifier>{5223935b-1d00-4d29-92b7-d7d751c8a679}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Util">
-      <UniqueIdentifier>{c103c3e9-4cea-4ec3-8ac6-a29c1c74c5c7}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Planet">
       <UniqueIdentifier>{9686814b-b0d9-4532-b9ff-c5fd818d3027}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Planet">
-      <UniqueIdentifier>{aad0a412-52fe-40ea-8722-1fba6b31fe81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Enemy">
       <UniqueIdentifier>{025c9968-63e1-4b0d-96d5-5dfb1500d62d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Enemy">
-      <UniqueIdentifier>{4eacc0d9-3c2b-466c-a694-d4ba2cad23db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lazer">
-      <UniqueIdentifier>{099a6cda-38ff-4384-95a7-3257831e92de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Lazer">
-      <UniqueIdentifier>{44df97de-a535-4595-b16d-216ded92176f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\UI">
       <UniqueIdentifier>{84281b87-693a-4902-afe1-153fba839dbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\UI">
-      <UniqueIdentifier>{eee7cd12-cfe4-407a-b525-4cd298deadfa}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Enemy\Boss">
+      <UniqueIdentifier>{81fef666-47fb-4657-a756-586f9929ea80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy\Normal">
+      <UniqueIdentifier>{7c27b8cd-8d41-4086-bf43-7bd466478ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Laser">
+      <UniqueIdentifier>{099a6cda-38ff-4384-95a7-3257831e92de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,23 +122,17 @@
     <ClCompile Include="Enemy\EnemyBase.cpp">
       <Filter>ソース ファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\BossEnemy.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
+    <ClCompile Include="Laser\LaserBase.cpp">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\NormalEnemy.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
+    <ClCompile Include="Laser\LaserManager.cpp">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClCompile>
-    <ClCompile Include="Laser\LazerBase.cpp">
-      <Filter>ソース ファイル\Lazer</Filter>
+    <ClCompile Include="Laser\CubeLaser.cpp">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClCompile>
-    <ClCompile Include="Laser\LazerManager.cpp">
-      <Filter>ソース ファイル\Lazer</Filter>
-    </ClCompile>
-    <ClCompile Include="Laser\CubeLazer.cpp">
-      <Filter>ソース ファイル\Lazer</Filter>
-    </ClCompile>
-    <ClCompile Include="Laser\NormalLazer.cpp">
-      <Filter>ソース ファイル\Lazer</Filter>
+    <ClCompile Include="Laser\Laser.cpp">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>ソース ファイル</Filter>
@@ -175,147 +153,153 @@
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="Laser\ReflectLaser.cpp">
-      <Filter>ソース ファイル\Lazer</Filter>
+      <Filter>ソース ファイル\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\BossEnemy.cpp">
+      <Filter>ソース ファイル\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\NormalEnemy.cpp">
+      <Filter>ソース ファイル\Enemy\Normal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="common.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneManager.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneBase.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\TitleScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\TestScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\PauseScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\OptionScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Effekseer3DEffectManager.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\DrawFunctions.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\SoundManager.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\SaveData.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Model.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\DebugScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GameMainScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\InputState.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\StringManager.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Range.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\PadSettingScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Timer.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\DataReaderFromUnity.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Planet\PlanetBase.h">
-      <Filter>ヘッダー ファイル\Planet</Filter>
-    </ClInclude>
-    <ClInclude Include="Planet\PlanetManager.h">
-      <Filter>ヘッダー ファイル\Planet</Filter>
-    </ClInclude>
-    <ClInclude Include="Planet\Sun.h">
-      <Filter>ヘッダー ファイル\Planet</Filter>
-    </ClInclude>
-    <ClInclude Include="Planet\Earth.h">
-      <Filter>ヘッダー ファイル\Planet</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Debug.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Shield.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Image3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\EnemyManager.h">
-      <Filter>ヘッダー ファイル\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy\EnemyBase.h">
-      <Filter>ヘッダー ファイル\Enemy</Filter>
+    <ClInclude Include="Laser\LaserBase.h">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\BossEnemy.h">
-      <Filter>ヘッダー ファイル\Enemy</Filter>
+      <Filter>ソース ファイル\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyBase.h">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyManager.h">
+      <Filter>ソース ファイル\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\NormalEnemy.h">
-      <Filter>ヘッダー ファイル\Enemy</Filter>
+      <Filter>ソース ファイル\Enemy\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Laser\LazerBase.h">
-      <Filter>ヘッダー ファイル\Lazer</Filter>
+    <ClInclude Include="Laser\CubeLaser.h">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClInclude>
-    <ClInclude Include="Laser\LazerManager.h">
-      <Filter>ヘッダー ファイル\Lazer</Filter>
+    <ClInclude Include="Laser\LaserManager.h">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClInclude>
-    <ClInclude Include="Laser\CubeLazer.h">
-      <Filter>ヘッダー ファイル\Lazer</Filter>
-    </ClInclude>
-    <ClInclude Include="Laser\NormalLazer.h">
-      <Filter>ヘッダー ファイル\Lazer</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\HpBar.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\EnergyGage.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\Warning.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\MathUtil.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Laser\Laser.h">
+      <Filter>ソース ファイル\Laser</Filter>
     </ClInclude>
     <ClInclude Include="Laser\ReflectLaser.h">
-      <Filter>ヘッダー ファイル\Lazer</Filter>
+      <Filter>ソース ファイル\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\Earth.h">
+      <Filter>ソース ファイル\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\PlanetBase.h">
+      <Filter>ソース ファイル\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\PlanetManager.h">
+      <Filter>ソース ファイル\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet\Sun.h">
+      <Filter>ソース ファイル\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\DebugScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameMainScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\OptionScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PadSettingScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PauseScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneBase.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TestScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TitleScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\EnergyGage.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\HpBar.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Warning.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\DataReaderFromUnity.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Debug.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\DrawFunctions.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Effekseer3DEffectManager.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\InputState.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\MathUtil.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Model.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Range.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\SaveData.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\SoundManager.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\StringManager.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Timer.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Image3D.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

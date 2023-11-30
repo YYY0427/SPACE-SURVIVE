@@ -2,13 +2,21 @@
 #include "../Util/Model.h"
 #include "../Util/Timer.h"
 #include "../UI/HpBar.h"
-#include "../Laser/LazerManager.h"
+#include "../Laser/LaserManager.h"
 #include "../Player.h"
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/Debug.h";
 #include "../Util/MathUtil.h"
 #include <random>
 #include <algorithm>
+
+// TODO : プレイヤーを残機からHPにする(ゲームが途中で中断してしまうため
+// TODO : 敵の反射できるレーザーをもうちょいテンポ感をよくする(初めてプレイする人でももたもたしながらプレイできるようにするため)
+// TODO : 敵のレーザーを反射するとき与えるダメージを制限する(ある程度敵にダメージを与えると、敵がシールドを張る)
+// TODO : キューブレーザーの奥行を分かりやすくするために、プレイヤーの正面に見えない当たり判定を作り、そこにキューブレーザーがぶつかるとエフェクトを発生させる
+// TODO : 宇宙空間にオブジェクトを置いて奥行を分かりやすくする
+// TODO : 面白味追加　雑魚敵は倒せなくてもいいが雑魚敵を倒せば倒すほどバリアが大きくなりボス戦が楽になる
+// TODO : 敵レーザーとプレイヤーシールドの当たり判定の修正(現状結構抜けちゃう)
 
 namespace
 {
@@ -79,7 +87,7 @@ namespace
 }
 
 // コンストラクタ
-BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LazerManager> pLazerManager) :
+BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLazerManager) :
 	isGoal_(false),
 	isMoveEnd_(false),
 	movePoint_(0),
@@ -427,7 +435,7 @@ void BossEnemy::EntarStopNormalLaserAttack()
 	pModel_->ChangeAnimation(normal_laser_fire_anim_no, false, false, 8);
 
 	// 通常レーザーの発射
-	pLaserManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_);
+	pLaserManager_->Create(LaserType::NORMAL, &normalLaserFirePos_, &toTargetVec_, 180);
 }
 
 void BossEnemy::EntarMoveCubeLaserAttack()
@@ -445,7 +453,7 @@ void BossEnemy::EntarMoveNormalLaserAttack()
 	pModel_->ChangeAnimation(normal_laser_fire_anim_no, true, false, 8);
 
 	// 継続レーザーの発射
-	pLaserManager_->Create(LaserType::CONTINUE_NORMAL, &normalLaserFirePos_, &toTargetVec_);
+	pLaserManager_->Create(LaserType::NORMAL_INFINITY, &normalLaserFirePos_, &toTargetVec_);
 
 	// 初期化
 	InitMove();

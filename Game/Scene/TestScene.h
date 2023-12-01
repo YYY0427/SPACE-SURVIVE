@@ -32,4 +32,5 @@ private:
 	std::shared_ptr<Camera> pCamera_;
 	std::shared_ptr<Warning> pWarning_;
 	std::shared_ptr<HpBar> pHpBar_;
+	int laserEffectHandle_;
 };

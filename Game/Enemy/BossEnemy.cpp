@@ -52,6 +52,12 @@ namespace
 	constexpr int normal_laser_fire_anim_no = 1;	// 通常レーザーの発射時
 	constexpr int cube_laser_fire_anim_no = 3;		// キューブレーザーの発射時
 
+	// モデルのマテリアル番号
+	constexpr int body_material_no = 0;
+	constexpr int lense_material_no = 1;
+	constexpr int eye_material_no = 2;
+	constexpr int laser_material_no = 3;
+
 	// レーザー攻撃を何フレーム行うか
 	constexpr int cube_laser_attack_continue_frame = 60 * 10;
 
@@ -87,7 +93,7 @@ namespace
 }
 
 // コンストラクタ
-BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLazerManager) :
+BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager) :
 	isGoal_(false),
 	isMoveEnd_(false),
 	movePoint_(0),
@@ -95,7 +101,7 @@ BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shar
 {
 	// 初期化
 	pPlayer_ = pPlayer;
-	pLaserManager_ = pLazerManager;
+	pLaserManager_ = pLaserManager;
 	pos_ = start_init_pos;
 	rot_ = rot;
 	cubeLaserSpeed_ = cube_laser_speed;
@@ -221,6 +227,7 @@ void BossEnemy::Update()
 	pHpBar_->Update(aim_hp_speed);
 
 	// モデル設定
+	pModel_->RestoreAllMaterialDifColor();	// ディフューズカラーを元に戻す
 	pModel_->SetOpacity(opacity_);	// 不透明度
 	pModel_->SetRot(rot_);			// 回転率
 	pModel_->SetPos(pos_);			// 位置
@@ -255,6 +262,12 @@ void BossEnemy::OnDamage(int damage, VECTOR pos)
 
 	// HPバーのバーを減らす
 	pHpBar_->OnDamage(hp_);
+
+	// モデルのディフューズカラーを反転
+	pModel_->InversAllMaterialDifColor();
+
+	// ヒットエフェクトの再生
+	Effekseer3DEffectManager::GetInstance().PlayEffect(hitEffectHandle_, EffectID::enemy_boss_hit_effect, pos, {200.0f, 200.0f, 200.0f});
 
 	// HPがなくなった場合、死亡時のステートに変更
 	if (hp_ <= 0)

@@ -1,6 +1,7 @@
 #pragma once
 #include <DxLib.h>
 #include <string>
+#include <vector>
 
 // TODO : 当たり判定関係の関数の追加
 
@@ -68,13 +69,27 @@ public:
 	// ゲッター
 	int GetModelHandle() const;		// モデルのハンドルの取得
 	int GetColFrameIndex() const;	// 当たり判定に使用するフレームインデックスを取得する
+	int GetMaterialNum() const;		// モデルのマテリアルの数の取得
 
-	// セッター
+	// モデル設定
 	void SetPos(VECTOR pos);			// 表示位置の設定
 	void SetRot(VECTOR rot);			// 回転状態の設定
 	void SetRotMtx(MATRIX mtx);			// 回転行列の設定
 	void SetScale(VECTOR scale);		// 拡大率の設定
 	void SetOpacity(float opacity);		// 不透明度の設定(0.0~1.0)
+
+	// 描画モード設定
+	void SetMaterialDrawBlendMode(int materialIndex, int blendMode);	// 指定のマテリアルの描画モードの設定
+	void SetAllMaterialDrawBlendMode(int blendMode);					// 全てのマテリアルの描画モードの設定
+	void SetMaterialDrawBlendParam(int materialIndex, int blendParam);	// 指定のマテリアルの描画ブレンドパラメータの設定
+	void SetAllMaterialDrawBlendParam(int blendParam);					// 全てのマテリアルの描画ブレンドパラメータの設定
+
+	// ディフューズカラー設定
+	void SetMaterialDifColor(int materialIndex, COLOR_F color);	// 指定のマテリアルのディフューズカラーの設定
+	void SetAllMaterialDifColor(COLOR_F color);					// 全てのマテリアルのディフューズカラーの設定
+	void InversAllMaterialDifColor();							// 全てのマテリアルのディフューズカラーを反転
+	void RestoreAllMaterialDifColor();							// 全てのマテリアルのディフューズカラーを元に戻す
+
 
 private:
 	// アニメーション情報
@@ -122,4 +137,7 @@ private:
 	// アニメーションの切り替え情報
 	int animChangeFrame_;			// 現在の切り替えフレーム数
 	int animChangeFrameTotal_;		// 切り替えにかける総フレーム数
+
+	// 全ての元のマテリアルのディフューズカラーを保存しているテーブル
+	std::vector<COLOR_F> matarialColorTable_;
 };

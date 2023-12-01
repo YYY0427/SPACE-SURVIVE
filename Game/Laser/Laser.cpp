@@ -14,7 +14,10 @@ namespace
 	constexpr int effect_charge_frame = 150;
 
 	// エフェクトの総再生時間フレーム
-	constexpr int effect_total_play_frame = 290;
+	constexpr int effect_total_play_frame = 100;
+
+	// エフェクトの再生速度
+	constexpr float effect_play_speed = 1.5f;
 }
 
 Laser::Laser(int modelHandle, VECTOR* firePos, VECTOR* vec, float fireFrameTime, bool isInfinity, int chargeFrame) :
@@ -32,7 +35,7 @@ Laser::Laser(int modelHandle, VECTOR* firePos, VECTOR* vec, float fireFrameTime,
 	pos_ = *firePos;
 	vec_ = vec;
 	isInfinity_ = isInfinity;
-	fireFrameTime_ = fireFrameTime;
+	fireFrameTimer_ = fireFrameTime;
 	scale_ = model_scale;
 	isEnabled_ = true;
 
@@ -44,23 +47,12 @@ Laser::Laser(int modelHandle, VECTOR* firePos, VECTOR* vec, float fireFrameTime,
 	bool isGimbalLock = false;
 	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 
-	// エフェクトのチャージ時間フレームと再生したいフレーム速度から再生速度を求める
-	effectSpeed_ = static_cast<float>(effect_charge_frame) / static_cast<float>(chargeFrame);
-
 	// エフェクトのチャージ時間フレームとエフェクトの再生速度からチャージ時間が何フレームなのか求める
-	collisionAndEffectDifferenceTimer_ = effect_charge_frame / effectSpeed_;
+	chargeEffectTimer_ = effect_charge_frame / effect_play_speed;
 
+	// 無限レーザーのエフェクトの再生
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	if (!isInfinity_)
-	{
-		// レーザーのエフェクトの再生
-		effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::normal_laser, firePos_, effect_scale, effectSpeed_, effectRot);
-	}
-	else
-	{	
-		// 継続レーザーのエフェクトの再生
-		effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::continue_laser, firePos_, effect_scale, effectSpeed_, effectRot);
-	}
+	effectManager.PlayEffectFollow(laserEffectHandle_, EffectID::infinity_laser, firePos_, effect_scale, effect_play_speed, effectRot);
 
 	// 当たり判定に使用するモデルの設定
 	pModel_ = std::make_unique<Model>(modelHandle);	// インスタンス生成
@@ -91,19 +83,19 @@ void Laser::Update()
 	VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
 
 	// エフェクトのチャージが終了したら発射
-	collisionAndEffectDifferenceTimer_.Update(1);
-	if (collisionAndEffectDifferenceTimer_.IsTimeOut())
+	chargeEffectTimer_.Update(1);
+	if (chargeEffectTimer_.IsTimeOut())
 	{
 		scale_.x = -1.0f;
 
+		// 通常のレーザーの場合
 		if (!isInfinity_)
 		{
-			// エフェクトの総再生時間と再生したいフレーム時間からエフェクトの再生速度を求める
-			effectSpeed_ = static_cast<float>(effect_total_play_frame / fireFrameTime_);
-		}
-		else
-		{
-			effectSpeed_ = 1.5f;
+			fireFrameTimer_.Update(1);
+			if (fireFrameTimer_.IsTimeOut())
+			{
+				isEnabled_ = false;
+			}
 		}
 	}
 
@@ -111,7 +103,6 @@ void Laser::Update()
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
 	effectManager.SetEffectRot(laserEffectHandle_, effectRot);			// 回転率の設定
 	effectManager.SetEffectScale(laserEffectHandle_, effect_scale);		// 拡大率の設定
-	effectManager.SetEffectSpeed(laserEffectHandle_, effectSpeed_);		// スピードの設定
 
 	// モデルの設定
 	pModel_->SetRotMtx(rotMtx_);
@@ -138,16 +129,6 @@ void Laser::Stop(const VECTOR pos)
 	scale_.x = 1.0f;
 	pModel_->SetScale(scale_);
 	pModel_->Update();
-}
-
-// レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
-void Laser::ConfirmDelete()
-{
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	if (!effectManager.IsPlayingEffect(laserEffectHandle_))
-	{
-		isEnabled_ = false;
-	}
 }
 
 VECTOR Laser::GetVec() const

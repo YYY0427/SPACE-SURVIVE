@@ -179,7 +179,7 @@ void GameMainScene::NormalUpdate()
 	for (auto& laser : pLaserManager_->GetLazeres())
 	{
 		// 無敵時間中なら当たらない
-		if (pPlayer_->IsUltimate()) continue;
+	//	if (pPlayer_->IsUltimate()) continue;
 
 		if (laser.type == LaserType::REFLECT) continue;
 
@@ -191,6 +191,8 @@ void GameMainScene::NormalUpdate()
 		{
 			// Updateをゲームオーバー時のUpdateに変更
 		//	updateFunc_ = &GameMainScene::CollisionRockUpdate;
+
+			pPlayer_->OnDamage();
 
 			Debug::Log("あああああああああああああああああああああ");
 
@@ -223,37 +225,37 @@ void GameMainScene::NormalUpdate()
 	UpdateFade();
 }
 
-void GameMainScene::CollisionRockUpdate()
-{
-	// フェードアウトが終わり次第シーン遷移
-	if (IsStartFadeOutAfterFadingOut())
-	{
-		if (pPlayer_->IsLive())
-		{
-			StartFadeIn();
-
-			// Updateを通常時のUpdateに変更
-			updateFunc_ = &GameMainScene::NormalUpdate;
-			return;
-		}
-	}
-
-	if (!IsFadeing())
-	{
-		bool isEnd = pPlayer_->OnDamageUpdate();
-
-		if (isEnd)
-		{
-			// フェードアウトの開始
-			StartFadeOut(255);
-		}
-	}
-
-	// 更新
-	pCamera_->Update();
-	pLaserManager_->Update();
-	pEnemyManager_->Update(timer_.GetTime());
-
-	// フェードの更新
-	UpdateFade();
-}
+//void GameMainScene::CollisionRockUpdate()
+//{
+//	// フェードアウトが終わり次第シーン遷移
+//	if (IsStartFadeOutAfterFadingOut())
+//	{
+//		if (pPlayer_->IsLive())
+//		{
+//			StartFadeIn();
+//
+//			// Updateを通常時のUpdateに変更
+//			updateFunc_ = &GameMainScene::NormalUpdate;
+//			return;
+//		}
+//	}
+//
+//	if (!IsFadeing())
+//	{
+//		bool isEnd = pPlayer_->OnDamageUpdate();
+//
+//		if (isEnd)
+//		{
+//			// フェードアウトの開始
+//			StartFadeOut(255);
+//		}
+//	}
+//
+//	// 更新
+//	pCamera_->Update();
+//	pLaserManager_->Update();
+//	pEnemyManager_->Update(timer_.GetTime());
+//
+//	// フェードの更新
+//	UpdateFade();
+//}

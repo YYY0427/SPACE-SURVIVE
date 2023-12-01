@@ -428,3 +428,13 @@ void Effekseer3DEffectManager::DeleteAllEffect()
 	effectDataTable_.clear();
 	followEffectDataTable_.clear();
 }
+
+float Effekseer3DEffectManager::GetDynamicEffectParam(int effectPlayinHandle, int32_t index)
+{
+	return GetDynamicInput3DEffect(effectPlayinHandle, index);
+}
+
+void Effekseer3DEffectManager::SetDynamicEffectParam(int effectPlayingHandle, int32_t index, float param)
+{
+	SetDynamicInput3DEffect(effectPlayingHandle, index, param);
+}

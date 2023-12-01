@@ -105,6 +105,8 @@ private:
 
 	int attackState_;
 
+	int hitEffectHandle_;
+
 	// キューブレーザーの移動速度
 	float cubeLaserSpeed_;
 

@@ -43,7 +43,7 @@ namespace
 	// 無敵時間のフレーム数
 	constexpr int ultimate_frames = 120;
 
-	// 残機数
+	// 最大HP
 	constexpr int max_hp = 1000;
 
 	// 何フレーム前まで位置情報を保存するか
@@ -210,6 +210,7 @@ void Player::Update(float cameraYaw)
 	float rotX = 30.0f * DX_PI_F / 180.0f;
 	rot_ = { rotX + moveVec_.z * 0.01f, 0.0f, -moveVec_.x * 0.01f };
 
+	// エフェクトの設定
 	effectManager.SetEffectRot(boostEffectHandle_, { rot_.x + DX_PI_F, rot_.y, -rot_.z});
 	effectManager.SetEffectScale(boostEffectHandle_, boostEffectScale_);
 	effectManager.SetEffectSpeed(boostEffectHandle_, boostEffectSpeed_);
@@ -227,64 +228,64 @@ void Player::Update(float cameraYaw)
 	pShield_->Update();
 }
 
-// 衝突時の更新
-bool Player::OnDamageUpdate()
-{
-	// ブースト時のエフェクトの再生のストップ
-	Effekseer3DEffectManager::GetInstance().DeleteEffect(boostEffectHandle_);
-	
-	// 移動ベクトルを反転していなかったら反転
-	// 既に反転していたら反転しない
-	if (!isReverseMoveVec_)
-	{
-		isReverseMoveVec_ = true;
-		moveVec_ = VScale(moveVec_, -1.0f);
-	}
-
-	// ベクトルを徐々に小さくする
-	moveVec_ = VScale(moveVec_, 0.96f);
-
-	// 作成した移動ベクトルで座標の移動
-	pos_ = VAdd(pos_, moveVec_);
-
-	// ベクトルが特定の大きさよりも小さくなったらゲームオーバーエフェクト再生
-	if(VSize(moveVec_) <= 1.0f)
-	{
-		// ダメージ処理
-		OnDamage();
-
-		// エフェクトを再生し終えたらtrueを返す
-		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
-		{
-			// 初期化
-			isReverseMoveVec_ = false;
-
-			isPlayGameOverEffect_ = false;
-
-			return true;
-		}
-
-		// ゲームオーバーエフェクトを再生してなかったら再生
-		// 既に再生していたら再生しない
-		if (!isPlayGameOverEffect_)
-		{
-			isPlayGameOverEffect_ = true;
-			Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, { 50.0f, 50.0f, 50.0f }, 0.5f);
-		}
-	}
-	
-	// 位置座標の設定
-	pModel_->SetPos(pos_);
-
-	// 向いている方向の設定
-	pModel_->SetRot(VGet(VSize(moveVec_) / 5.0f, 0.0f, VSize(moveVec_) / 10.0f));
-
-	// アニメーションと当たり判定の更新
-	pModel_->Update();
-
-	// 処理が途中なのでfalseを返す
-	return false;
-}
+//// 衝突時の更新
+//bool Player::OnDamageUpdate()
+//{
+//	// ブースト時のエフェクトの再生のストップ
+//	Effekseer3DEffectManager::GetInstance().DeleteEffect(boostEffectHandle_);
+//	
+//	// 移動ベクトルを反転していなかったら反転
+//	// 既に反転していたら反転しない
+//	if (!isReverseMoveVec_)
+//	{
+//		isReverseMoveVec_ = true;
+//		moveVec_ = VScale(moveVec_, -1.0f);
+//	}
+//
+//	// ベクトルを徐々に小さくする
+//	moveVec_ = VScale(moveVec_, 0.96f);
+//
+//	// 作成した移動ベクトルで座標の移動
+//	pos_ = VAdd(pos_, moveVec_);
+//
+//	// ベクトルが特定の大きさよりも小さくなったらゲームオーバーエフェクト再生
+//	if(VSize(moveVec_) <= 1.0f)
+//	{
+//		// ダメージ処理
+//		OnDamage();
+//
+//		// エフェクトを再生し終えたらtrueを返す
+//		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
+//		{
+//			// 初期化
+//			isReverseMoveVec_ = false;
+//
+//			isPlayGameOverEffect_ = false;
+//
+//			return true;
+//		}
+//
+//		// ゲームオーバーエフェクトを再生してなかったら再生
+//		// 既に再生していたら再生しない
+//		if (!isPlayGameOverEffect_)
+//		{
+//			isPlayGameOverEffect_ = true;
+//			Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, { 50.0f, 50.0f, 50.0f }, 0.5f);
+//		}
+//	}
+//	
+//	// 位置座標の設定
+//	pModel_->SetPos(pos_);
+//
+//	// 向いている方向の設定
+//	pModel_->SetRot(VGet(VSize(moveVec_) / 5.0f, 0.0f, VSize(moveVec_) / 10.0f));
+//
+//	// アニメーションと当たり判定の更新
+//	pModel_->Update();
+//
+//	// 処理が途中なのでfalseを返す
+//	return false;
+//}
 
 // エネルギー処理
 void Player::EnergyProcess()
@@ -303,16 +304,16 @@ void Player::Draw()
 {
 	Debug::Log("playerPos", ConvWorldPosToScreenPos(pos_));
 	Debug::Log("energyGauge", energyGauge_);
-	Debug::Log("残機", hp_);
+	Debug::Log("プレイヤーHP", hp_);
 
 	// 無敵時間の点滅
-	if (IsUltimate())
+	/*if (IsUltimate())
 	{
 		if ((ultimateTimer_ / 5) % 2 == 0)
 		{
 			return;
 		}
-	}
+	}*/
 
 	// プレイヤーモデルの描画
 	if (!isPlayGameOverEffect_)
@@ -330,35 +331,35 @@ void Player::DrawUI()
 	pShield_->DrawUI();
 }
 
-// プレイヤーのリスポーン処理
-void Player::Respawn(VECTOR restartPos)
-{
-	// Y軸の値を大きくする
-	// そのままだと道にめり込むため
-	restartPos = VGet(restartPos.x, restartPos.y + 200.0f, restartPos.z);
-
-	// リスポーン
-	pos_ = restartPos;
-}
+//// プレイヤーのリスポーン処理
+//void Player::Respawn(VECTOR restartPos)
+//{
+//	// Y軸の値を大きくする
+//	// そのままだと道にめり込むため
+//	restartPos = VGet(restartPos.x, restartPos.y + 200.0f, restartPos.z);
+//
+//	// リスポーン
+//	pos_ = restartPos;
+//}
 
 // ダメージ処理
 void Player::OnDamage()
 {
 	// 無敵時間中はダメージを受けない
-	if (IsUltimate()) return;
+//	if (IsUltimate()) return;
 
 	// HPを減らす
 	hp_--;
 
 	// 無敵時間の設定
-	ultimateTimer_ = ultimate_frames;
+//	ultimateTimer_ = ultimate_frames;
 }
 
-// プレイヤーが無敵時間中か
-bool Player::IsUltimate() const
-{
-	return (ultimateTimer_ > 0) ? true : false;
-}
+//// プレイヤーが無敵時間中か
+//bool Player::IsUltimate() const
+//{
+//	return (ultimateTimer_ > 0) ? true : false;
+//}
 
 bool Player::IsLive() const
 {

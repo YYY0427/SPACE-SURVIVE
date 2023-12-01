@@ -24,6 +24,13 @@ Model::Model(std::string fileName) :
 	// アニメーション情報の初期化
 	InitAnimData(animPrev_);
 	InitAnimData(animNext_);
+
+	// モデルのマテリアルのディフューズカラーを保存
+	for (int i = 0; i < GetMaterialNum(); i++)
+	{
+		COLOR_F color = MV1GetMaterialDifColor(modelHandle_, i);
+		matarialColorTable_.push_back(color);
+	}
 }
 
 // 指定されたハンドルのモデルをコピーして生成する
@@ -43,6 +50,13 @@ Model::Model(int modelHandle) :
 	// アニメーション情報の初期化
 	InitAnimData(animPrev_);
 	InitAnimData(animNext_);
+
+	// モデルのマテリアルのディフューズカラーを保存
+	for (int i = 0; i < GetMaterialNum(); i++)
+	{
+		COLOR_F color = MV1GetMaterialDifColor(modelHandle_, i);
+		matarialColorTable_.push_back(color);
+	}
 }
 
 // デストラクタ
@@ -154,6 +168,99 @@ void Model::SetOpacity(float opacity)
 	MV1SetOpacityRate(modelHandle_, opacity);
 }
 
+// モデルの指定のマテリアルの描画ブレンドモードを設定
+void Model::SetMaterialDrawBlendMode(int materialIndex, int blendMode)
+{
+	int result = MV1SetMaterialDrawBlendMode(modelHandle_, materialIndex, blendMode);
+	assert(result != -1);
+}
+
+// モデルの全てのマテリアルの描画モードの設定
+void Model::SetAllMaterialDrawBlendMode(int blendMode)
+{
+	// マテリアルの数の取得
+	int materialNum = GetMaterialNum();
+
+	// マテリアルの数の分、描画モードの設定
+	for (int i = 0; i < materialNum; i++)
+	{
+		SetMaterialDrawBlendMode(i, blendMode);
+	}
+}
+
+// 指定のマテリアルの描画ブレンドパラメータの設定
+void Model::SetMaterialDrawBlendParam(int materialIndex, int blendParam)
+{
+	int result = MV1SetMaterialDrawBlendParam(modelHandle_, materialIndex, blendParam);
+	assert(result != -1);
+}
+
+// 全てのマテリアルの描画ブレンドパラメータの設定
+void Model::SetAllMaterialDrawBlendParam(int blendParam)
+{
+	// マテリアルの数の取得
+	int materialNum = GetMaterialNum();
+
+	// マテリアルの数の分、描画ブレンドパラメータの設定
+	for (int i = 0; i < materialNum; i++)
+	{
+		SetMaterialDrawBlendParam(i, blendParam);
+	}
+}
+
+// 指定のマテリアルのディフューズカラーの設定
+void Model::SetMaterialDifColor(int materialIndex, COLOR_F color)
+{
+	int result = MV1SetMaterialDifColor(modelHandle_, materialIndex, color);
+	assert(result != -1);
+}
+
+// 全てのマテリアルのディフューズカラーの設定
+void Model::SetAllMaterialDifColor(COLOR_F color)
+{
+	// マテリアルの数の取得
+	int materialNum = GetMaterialNum();
+
+	// マテリアルの数の分、描画ブレンドパラメータの設定
+	for (int i = 0; i < materialNum; i++)
+	{
+		SetMaterialDifColor(i, color);
+	}
+}
+
+// 全てのマテリアルのディフューズカラーを反転
+void Model::InversAllMaterialDifColor()
+{
+	// マテリアルの数の取得
+	int materialNum = GetMaterialNum();
+
+	for (int i = 0; i < materialNum; i++)
+	{
+		// マテリアルの色を取得
+		COLOR_F color = MV1GetMaterialDifColor(modelHandle_, i);
+
+		// 色を反転
+		color = { 1.0f - color.r, 1.0f - color.g, 1.0f - color.b, 1.0f };
+
+		// マテリアルに色を設定
+		SetMaterialDifColor(i, color);
+	}
+}
+
+// 全てのマテリアルのディフューズカラーを元に戻す
+void Model::RestoreAllMaterialDifColor()
+{
+	// マテリアルの数の取得
+	int materialNum = GetMaterialNum();
+
+	// マテリアルの数の分、ディフューズカラーを元に戻す
+	for (int i = 0; i < materialNum; i++)
+	{
+		COLOR_F color = matarialColorTable_[i];
+		SetMaterialDifColor(i, color);
+	}
+}
+
 // アニメーションを設定する(ぱっと切り替える)
 void Model::SetAnimation(int animNo, bool isLoop, bool isForceChange, float animPlaySpeed)
 {
@@ -257,6 +364,13 @@ int Model::GetModelHandle() const
 int Model::GetColFrameIndex() const
 {
 	return colFrameIndex_;
+}
+
+int Model::GetMaterialNum() const
+{
+	int result = MV1GetMaterialNum(modelHandle_);
+	assert(result != -1);
+	return result;
 }
 
 // アニメーションデータの初期化

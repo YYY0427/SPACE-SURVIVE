@@ -27,9 +27,6 @@ public:
 	// レーザーの反射
 	void Stop(const VECTOR pos);
 
-	// レーザーのエフェクトの再生が終了していたら当たり判定用のモデルを削除
-	void ConfirmDelete() override;
-
 	VECTOR GetVec() const override;
 
 private:
@@ -46,14 +43,13 @@ private:
 	int laserEffectHandle_;
 
 	// レーザーの当たり判定モデルとエフェクトの発射フレームの差を測るタイマー
-	Timer<int> collisionAndEffectDifferenceTimer_;
+	Timer<int> chargeEffectTimer_;
+	
+	// レーザーが何フレーム残り続けるかを測るタイマー
+	Timer<int> fireFrameTimer_;
 
 	// 発射し続けるか
 	bool isInfinity_;
-
-	float effectSpeed_;
-
-	int fireFrameTime_;
 
 	bool isReflect_;
 };

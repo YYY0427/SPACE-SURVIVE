@@ -7,27 +7,29 @@
 // エフェクトのファイルパス
 namespace EffectID
 {
+	const std::string test = "Test";
 	const std::string player_dead = "Explosion";		// プレイヤー死亡時に出すエフェクト
 	const std::string player_shield = "MagicShield";	// プレイヤーのシールド	
 	const std::string player_boost = "Boost";			// プレイヤーに常に出すエフェクト
-	const std::string normal_laser = "Laser";			// 敵の通常レーザーのエフェクト
-	const std::string continue_laser = "ContinueLaser";	// 敵の継続通常レーザーエフェクト
+	const std::string infinity_laser = "ContinueLaser";	// 敵のレーザーエフェクト
 	const std::string refrect_laser = "RefrectLaser";	// 敵のレーザーを反射したレーザー
 	const std::string enemy_died = "Explosion";			// 敵の死亡時のエフェクト
 	const std::string enemy_boss_entry = "EnemyBossEntry";	// 敵のボスが出現するときのエフェクト
+	const std::string enemy_boss_hit_effect = "BossEnemyHitEffect";
 	const std::string wind = "Wind";
 
 	const std::string effect_file_path[] =
-	{
+	{ 
+		test,
 		player_dead,
 		player_shield,
 		player_boost,
-		normal_laser,
 		refrect_laser,
 		enemy_died,
 		enemy_boss_entry,
 		wind,
-		continue_laser,
+		infinity_laser,
+		enemy_boss_hit_effect,
 	};
 }
 
@@ -167,6 +169,10 @@ public:
 
 	// 全てのエフェクトの削除
 	void DeleteAllEffect();
+
+	float GetDynamicEffectParam(int effectPlayinHandle, int32_t index);
+
+	void SetDynamicEffectParam(int effectPlayingHandle, int32_t index, float param);
 
 private:
 	// コンストラクタ

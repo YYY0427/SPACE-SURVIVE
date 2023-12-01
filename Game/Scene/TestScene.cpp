@@ -17,6 +17,12 @@ TestScene::TestScene(SceneManager& manager) :
 	SceneBase(manager)
 {
 	pWarning_ = std::make_shared<Warning>(600);
+
+	pCamera_ = std::make_shared<Camera>();
+
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	effectManager.PlayEffect(laserEffectHandle_, EffectID::test, {0, 0, 0}, {30, 30, 30}, 1.0, {0.0, DX_PI_F, 0.0});
+
 //	pHpBar_ = std::make_shared<HpBar>(50);
 }
 
@@ -32,6 +38,17 @@ void TestScene::Update()
 	// 各クラスの更新
 //	pHpBar_->Update(30);
 //	pWarning_->Update();
+
+	pCamera_->Update();
+
+	auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	if (InputState::IsTriggered(InputType::UP))
+	{
+		effectManager.SetDynamicEffectParam(laserEffectHandle_, 0, 1.0f);
+
+	}
+	float param = effectManager.GetDynamicEffectParam(laserEffectHandle_, 0);
+	Debug::Log("レーザーのなんかの値", param);
 
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))

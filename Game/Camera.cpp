@@ -49,6 +49,17 @@ void Camera::Update()
 	SetCameraPositionAndTargetAndUpVec(pos_, target_, VGet(0, 1, 0));
 }
 
+void Camera::ShakeX(int shakeFrame, float shakeSize)
+{
+	shakeFrame_ = shakeFrame;
+	shakeFrame_.Update(1);
+	if (!shakeFrame_.IsTimeOut())
+	{
+		pos_.x += sinf(GetNowCount() / 10.0f) * shakeSize;
+		shakeSize *= 0.96f;
+	}
+}
+
 // •`‰æ
 void Camera::Draw()
 {

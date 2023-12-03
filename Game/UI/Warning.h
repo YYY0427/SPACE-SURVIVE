@@ -38,8 +38,6 @@ private:
 	std::array<Data, 3> uiDataTable_;
 
 	int stringAlphaParam_;
-	int addStringAlphaValue_;
-	Range<int> stringAlphaParamRange_;
 
 	int imgAlphaParam_;
 	int addImgAlphaValue_;

@@ -37,9 +37,6 @@ private:
 	// 通常の更新
 	void NormalUpdate();
 
-	// ゲームオーバー時の更新
-	void CollisionRockUpdate();
-
 private:
 	enum class SceneItem
 	{
@@ -49,8 +46,24 @@ private:
 	};
 
 private:
+	// シーンアイテム
 	SceneItem item_;
-	Timer<int> timer_;
+
+	// ゲームクリアフラグ
+	bool isGameClear_;
+
+	// ゲーム開始からの経過時間
+	Timer<int> gameTimer_;
+
+	// ゲームクリア時に何フレーム間画面を揺らすか
+	Timer<int> quakeTimer_;
+	
+	// ボスの死亡演出のフレーム
+	Timer<int> bossDiedEffectFrame_;
+
+	float quakeX_;
+
+	int screenHandle_;
 
 	// メンバ関数ポインタ
 	// Updateを切り替えるために作成

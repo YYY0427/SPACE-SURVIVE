@@ -7,6 +7,7 @@
 #include "../Util/Effekseer3DEffectManager.h"
 #include "../Util/Debug.h";
 #include "../Util/MathUtil.h"
+#include "../Util/InputState.h"
 #include <random>
 #include <algorithm>
 
@@ -27,16 +28,14 @@ namespace
 	constexpr float aim_hp_speed = 0.4f;
 	constexpr float max_hp = 100.0f;
 
-	// キューブレーザーの発射位置フレーム
-	constexpr int cube_laser_fire_frame_1 = 4;
-	constexpr int cube_laser_fire_frame_2 = 5;
-
-	// 通常レーザーの発射位置フレーム
-	constexpr int normal_laser_fire_frame = 2;
-
 	// 初期位置
 	constexpr VECTOR start_init_pos = { 0, 300, 1100 };
 	constexpr VECTOR goal_init_pos = { 0, 300, 800 };
+
+	// 待機ステートの継続時間フレーム
+	constexpr int idle_state_continue_frame = 180;
+
+	////// モデル //////
 
 	// 拡大率
 	constexpr VECTOR model_scale = { 1, 1, 1 };
@@ -58,6 +57,15 @@ namespace
 	constexpr int eye_material_no = 2;
 	constexpr int laser_material_no = 3;
 
+	////// レーザー //////
+
+	// キューブレーザーの発射位置フレーム
+	constexpr int cube_laser_fire_frame_1 = 4;
+	constexpr int cube_laser_fire_frame_2 = 5;
+
+	// 通常レーザーの発射位置フレーム
+	constexpr int normal_laser_fire_frame = 2;
+
 	// レーザー攻撃を何フレーム行うか
 	constexpr int cube_laser_attack_continue_frame = 60 * 10;
 
@@ -70,6 +78,8 @@ namespace
 
 	// 当たり判定の半径
 	constexpr float collision_radius = 250.0f;
+
+	////// 移動 //////
 
 	// 移動する地点
 	constexpr VECTOR move_pos[] =
@@ -88,8 +98,16 @@ namespace
 	// 目標の地点に到達したか確かめる時、誤差が発生するため誤差の範囲を設定する
 	constexpr float move_error_range = 10.0f;
 
-	// 待機ステートの継続時間フレーム
-	constexpr int idle_state_continue_frame = 180;
+	////// 死亡 //////
+
+	// 死亡時の横揺れの大きさ
+	constexpr float died_swing_width = 5.0f;
+
+	// 死亡時の横揺れの速さ
+	constexpr float died_swing_speed = 1.0f;
+
+	// 死亡時の演出の継続時間
+	constexpr int died_continue_frame = 60 * 5;
 }
 
 // コンストラクタ
@@ -197,6 +215,11 @@ void BossEnemy::InitState()
 // 更新
 void BossEnemy::Update()
 {
+	if (InputState::IsTriggered(InputType::BOSS_DETH_DEBUG))
+	{
+		stateMachine_.SetState(State::DEID);	
+	}
+
 	// ステートマシンの更新
 	stateMachine_.Update();
 
@@ -274,11 +297,16 @@ void BossEnemy::OnDamage(int damage, VECTOR pos)
 	{
 		stateMachine_.SetState(State::DEID);
 	}
-	// HPが残っていたら、ダメージを受けた時のステートに変更
-	else
-	{
-	//	stateMachine_.SetState(State::DAMAGE);
-	}
+}
+
+int BossEnemy::GetDiedEffectFrame() const
+{
+	return died_continue_frame;
+}
+
+bool BossEnemy::StartDiedEffect()
+{
+	return stateMachine_.GetCurrentState() == State::DEID;
 }
 
 // 移動の初期化
@@ -426,8 +454,8 @@ void BossEnemy::EntarDied()
 
 	pModel_->StopAnim();
 
-	utilTimerTable_["effectIntarval"] = GetRand(30) + 30;
-	utilTimerTable_["continueFrame"] = 300;
+	utilTimerTable_["effectIntarval"] = 20;
+	utilTimerTable_["continueFrame"] = died_continue_frame;
 }
 
 void BossEnemy::EntarStopCubeLaserAttack()
@@ -532,30 +560,63 @@ void BossEnemy::UpdateDamage()
 
 void BossEnemy::UpdateDied()
 {
+	// 横揺れ
+	pos_.x += sinf(utilTimerTable_["continueFrame"].GetTime() * died_swing_speed) * died_swing_width;
+
+	// 徐々にY軸を下げる
+	pos_.y -= 0.5f;
+
 	utilTimerTable_["continueFrame"].Update(1);
 	if (!utilTimerTable_["continueFrame"].IsTimeOut())
 	{
+		// エフェクトの発生間隔タイマーの更新
 		utilTimerTable_["effectIntarval"].Update(1);
 		if (utilTimerTable_["effectIntarval"].IsTimeOut())
 		{
-			float effectSize = GetRand(50) + 30;
-			VECTOR effectPos =
+			// エフェクトの情報
+			DieEffect dieEffect{};
+
+			// エフェクトの発生位置をプレイヤーの周りにランダムに設定
+			dieEffect.pos = 
 			{
-				pos_.x + GetRand(200) - 100,
-				pos_.y + GetRand(200) - 100,
+				// エフェクトの発生位置を-500～500の間でランダムに設定
+				pos_.x + GetRand(1000) - 500,
+				pos_.y + GetRand(1000) - 500,
 				pos_.z
 			};
-			
-			Effekseer3DEffectManager::GetInstance().PlayEffect(
-				diedEffectHandle_,
+
+			// エフェクトの大きさを10倍から100倍の間でランダムに設定
+			dieEffect.scale = GetRand(90) + 10;
+
+			// xyのベクトルをランダム作成
+			dieEffect.vec = { static_cast<float>(GetRand(10) - 5), static_cast<float>(GetRand(10) - 5), 0.0f };
+			dieEffect.vec = VNorm(dieEffect.vec);
+			dieEffect.vec = VScale(dieEffect.vec, 50.0f);
+
+			// エフェクトの再生
+			Effekseer3DEffectManager::GetInstance().PlayEffectFollow(
+				dieEffect.effectHandle,
 				EffectID::enemy_died,
-				effectPos,
-				{ effectSize, effectSize, effectSize },
+				&dieEffect.pos,
+				{ dieEffect.scale, dieEffect.scale, dieEffect.scale },
 				0.5f);
 
+			dieEffectTable_.push_back(dieEffect);
+
+			// タイマーの初期化
 			utilTimerTable_["effectIntarval"].Reset();
-			utilTimerTable_["effectIntarval"] = GetRand(30) + 30;
 		}
+	}
+	else
+	{
+		// インスタンスの削除
+		isEnabled_ = false;
+	}
+
+	// エフェクトの移動
+	for (auto& effect : dieEffectTable_)
+	{
+		effect.pos = VAdd(effect.pos, effect.vec);
 	}
 }
 

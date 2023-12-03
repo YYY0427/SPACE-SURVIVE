@@ -71,10 +71,13 @@ public:
 	T GetTime() const { return time_; }
 
 	/// <summary>
-	/// 制限時間の設定
+	/// タイムの設定
 	/// </summary>
-	/// <param name="limitTime">制限時間</param>
-	void SetLimitTime(T limitTime) { limitTime_ = limitTime; }
+	/// <param name="limitTime">設定したいタイム</param>
+	void SetTime(T time) { time_ = time; }
+
+	// 制限時間の取得
+	T GetLimitTime() const { return limitTime_; }
 
 private:
 	// 現在の時間

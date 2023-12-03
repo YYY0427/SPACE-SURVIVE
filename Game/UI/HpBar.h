@@ -1,4 +1,6 @@
 #pragma once
+#include "../Util/Timer.h"
+
 class HpBar
 {
 public:
@@ -29,4 +31,5 @@ private:
 	float backHp_;
 	float aimHp_;
 	const float maxHp_;
+	Timer<int> damageTimer_;
 };

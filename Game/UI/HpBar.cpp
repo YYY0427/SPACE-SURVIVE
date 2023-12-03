@@ -70,6 +70,7 @@ void HpBar::Draw(const int hpBarSideSpace, const int hpBarStartY, const int hpBa
 void HpBar::OnDamage(float afterHp)
 {
 	aimHp_ = afterHp;
+	damageTimer_.SetTime(60);
 }
 
 bool HpBar::IsEndFirstDirection() const
@@ -80,15 +81,20 @@ bool HpBar::IsEndFirstDirection() const
 void HpBar::NormalUpdate(const float aimHpSpeed)
 {
 	hp_ = aimHp_;
-	if (backHp_ != aimHp_)
-	{
-		// 毎フレーム緩やかに目標に近づく
-		backHp_ -= aimHpSpeed;
 
-		// 目標に合致したら止める
-		if (backHp_ < aimHp_)
+	damageTimer_.Update(-1);
+	if (damageTimer_.GetTime() <= 0)
+	{
+		if (backHp_ != aimHp_)
 		{
-			backHp_ = aimHp_;
+			// 毎フレーム緩やかに目標に近づく
+			backHp_ -= aimHpSpeed;
+
+			// 目標に合致したら止める
+			if (backHp_ < aimHp_)
+			{
+				backHp_ = aimHp_;
+			}
 		}
 	}
 

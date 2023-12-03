@@ -32,6 +32,9 @@ public:
 	void Draw();
 	void DrawUI();
 
+	// ボスの死亡の演出開始
+	bool StartBossDiedEffect(int& bossDiedEffectFrame);
+
 	const std::list<std::shared_ptr<EnemyBase>>& GetEnemies() const;	
 
 private:

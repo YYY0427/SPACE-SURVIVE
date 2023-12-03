@@ -20,13 +20,20 @@
 
 namespace
 {
+	// ゲームクリア時に何フレーム間画面を揺らすか
+	constexpr int game_clear_shake_frame = 60;
 }
 
 // コンストラクタ
 GameMainScene::GameMainScene(SceneManager& manager) :
 	SceneBase(manager),
-	updateFunc_(&GameMainScene::NormalUpdate)
+	updateFunc_(&GameMainScene::NormalUpdate),
+	isGameClear_(false),
+	quakeX_(0.0f)
 {
+	screenHandle_ = MakeScreen(common::screen_width, common::screen_height);
+	assert(screenHandle_ != -1);
+
 	// インスタンス生成
 	pBackground_ = std::make_shared<Background>();
 	pLaserManager_ = std::make_shared<LaserManager>();
@@ -45,7 +52,8 @@ GameMainScene::~GameMainScene()
 // メンバ関数ポインタの更新
 void GameMainScene::Update()
 {
-	timer_.Update(1);
+	gameTimer_.Update(1);
+	pCamera_->Update();
 	
 	(this->*updateFunc_)();
 }
@@ -53,8 +61,11 @@ void GameMainScene::Update()
 // 描画
 void GameMainScene::Draw()
 {
+//	SetDrawScreen(screenHandle_);
+//	pCamera_->Update();
+
 	// 各クラスの描画
-	pBackground_->Draw();
+//	pBackground_->Draw();
 	pEnemyManager_->Draw();
 	pPlayer_->Draw();
 	pLaserManager_->Draw();
@@ -71,6 +82,10 @@ void GameMainScene::Draw()
 
 	// モザイクフェードの描画
 	DrawGaussFade(true);
+
+//	SetDrawScreen(DX_SCREEN_BACK);
+
+//	DrawGraph(static_cast<int>(quakeX_), 0, screenHandle_, false);
 }
 
 // 通常の更新
@@ -101,9 +116,8 @@ void GameMainScene::NormalUpdate()
 
 	// 更新
 	pPlayer_->Update(pCamera_->GetCameraYaw());
-	pEnemyManager_->Update(timer_.GetTime());
+	pEnemyManager_->Update(gameTimer_.GetTime());
 	pLaserManager_->Update();
-	pCamera_->Update();
 
 	if (pPlayer_->GetShield()->IsShield())
 	{
@@ -178,9 +192,6 @@ void GameMainScene::NormalUpdate()
 	// レーザーとプレイヤーの当たり判定
 	for (auto& laser : pLaserManager_->GetLazeres())
 	{
-		// 無敵時間中なら当たらない
-	//	if (pPlayer_->IsUltimate()) continue;
-
 		if (laser.type == LaserType::REFLECT) continue;
 
 		// レーザーとプレイヤーの当たり判定
@@ -189,8 +200,6 @@ void GameMainScene::NormalUpdate()
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0)
 		{
-			// Updateをゲームオーバー時のUpdateに変更
-		//	updateFunc_ = &GameMainScene::CollisionRockUpdate;
 
 			pPlayer_->OnDamage();
 
@@ -211,6 +220,36 @@ void GameMainScene::NormalUpdate()
 		// フェードアウト開始
 		StartFadeOut(200, 64);
 		item_ = SceneItem::PAUSE;
+	}
+
+	
+	if (quakeTimer_.GetTime() > 0)
+	{
+		// 画面を揺らす
+		quakeX_ *= -0.95f;
+		quakeTimer_.Update(-1);
+	}
+	else
+	{
+		quakeX_ = 0.0f;
+	}
+
+	// ゲームクリア
+	int bossDiedEffectFrame = 0;
+	if (pEnemyManager_->StartBossDiedEffect(bossDiedEffectFrame) && !isGameClear_)
+	{
+		isGameClear_ = true;
+		bossDiedEffectFrame_ = bossDiedEffectFrame;
+		bossDiedEffectFrame_.Update(1);
+	}
+	// ゲームクリア時の演出の終了
+	if (bossDiedEffectFrame_.IsTimeOut())
+	{
+		// 画面揺らし開始
+		quakeTimer_.SetTime(game_clear_shake_frame);
+
+		// フラッシュ演出
+
 	}
 
 	// ゲームオーバー

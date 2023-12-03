@@ -31,6 +31,12 @@ public:
 	/// <param name="pos">ダメージを受けた位置</param>
 	void OnDamage(int damage, VECTOR pos) override;
 
+	// 死亡演出に何フレームかけるか
+	int GetDiedEffectFrame() const;
+
+	// 死亡演出の開始
+	bool StartDiedEffect();
+
 private:
 	// ステートの初期化
 	void InitState() override;
@@ -94,6 +100,15 @@ private:
 	};
 
 private:
+	struct DieEffect
+	{
+		int effectHandle;
+		VECTOR pos;
+		VECTOR vec;
+		float scale;
+	};
+
+private:
 	// ステートマシン(ステートを管理する)
 	StateMachine<State> stateMachine_;
 
@@ -102,6 +117,9 @@ private:
 
 	// 攻撃のステートを保存するテーブル
 	std::vector<State> attackStateTable_;
+
+	// 死亡時のエフェクト
+	std::list<DieEffect> dieEffectTable_;
 
 	int attackState_;
 

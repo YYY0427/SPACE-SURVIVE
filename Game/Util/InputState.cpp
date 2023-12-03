@@ -33,7 +33,11 @@ namespace InputState
 		inputMapTable_[InputType::DOWN] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_DOWN } };		// ↓
 		inputMapTable_[InputType::RIGHT] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_RIGHT } };		// →
 		inputMapTable_[InputType::LEFT] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_LEFT } };		// ←
-		inputMapTable_[InputType::NORMAL_ENEMY_DEBUG] = { {InputCategory::KEYBORD, KEY_INPUT_E} };		// ←
+
+#ifdef _DEBUG
+		inputMapTable_[InputType::NORMAL_ENEMY_DEBUG] = { {InputCategory::KEYBORD, KEY_INPUT_E} };	// デバッグ用　雑魚敵を自由に動かせる
+		inputMapTable_[InputType::BOSS_DETH_DEBUG] = { {InputCategory::KEYBORD, KEY_INPUT_R} };		// デバッグ用　ボスの死亡
+#endif
 
 		// 設定したボタンの数によって配列の数を変更
 		currentInput_.resize(static_cast<int>(InputType::TOTAL_VALUE));

@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <memory>
 #include "Util/Range.h"
+#include "Util/Timer.h"
 
 /// <summary>
 /// カメラの管理クラス
@@ -20,6 +21,9 @@ public:
 	/// </summary>
 	/// <param name="playerPos">プレイヤーの位置座標</param>
 	void Update();
+
+	// カメラを決められたフレームの間、x軸に揺らす
+	void ShakeX(int shakeFrame, float shakeSize);
 
 	// 描画
 	void Draw();
@@ -45,6 +49,9 @@ private:
 
 	// 視野角の範囲
 	Range<float> perspectiveRange_;
+
+	// カメラを揺らすフレーム数
+	Timer<int> shakeFrame_;
 
 	// 回転角度
 	float cameraYaw_;	// Y軸

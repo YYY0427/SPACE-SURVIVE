@@ -14,7 +14,7 @@ namespace
 	const std::string down_img_file_path = "Data/Image/WarningDown.png";
 
 	// 文字のフェードの速度
-	constexpr int string_fade_speed = 5;
+	constexpr float string_fade_speed = 0.07f;
 
 	// 上下のバーのスクロール速度
 	constexpr int scroll_speed = 10;
@@ -25,8 +25,6 @@ namespace
 
 Warning::Warning(int drawFrame) :
 	stringAlphaParam_(255),
-	addStringAlphaValue_(string_fade_speed),
-	stringAlphaParamRange_(10, 255),
 	scroll_(0),
 	imgAlphaParam_(0),
 	addImgAlphaValue_(fade_speed),
@@ -77,22 +75,20 @@ void Warning::Update()
 	{
 		isEnd_ = true;
 		addImgAlphaValue_ *= -1;
-		addStringAlphaValue_ = -fade_speed;
 	}
-	else if(!drawFrameTimer_.IsTimeOut())
-	{
-		if (!stringAlphaParamRange_.IsInside(stringAlphaParam_))
-		{
-			addStringAlphaValue_ *= -1;
-			stringAlphaParam_ = stringAlphaParamRange_.Clamp(stringAlphaParam_);
-		}
-	}
-
-	// 文字のフェード
-	stringAlphaParam_ += addStringAlphaValue_;
 
 	// 上下のバーのスクロール
 	scroll_ += scroll_speed;
+
+	// 文字のフェード
+	if (isEnd_)
+	{
+		stringAlphaParam_ -= fade_speed;
+	}
+	else
+	{
+		stringAlphaParam_ = (0.5f * sinf(drawFrameTimer_.GetTime() * string_fade_speed) + 0.5f) * 255.0f;
+	}
 
 	// 画像のフェード
 	imgAlphaParam_ += addImgAlphaValue_;
@@ -130,13 +126,7 @@ void Warning::Draw()
 		}
 	}
 
-	float ratio;
-	(!isEnd_) ?
-		(ratio = (static_cast<float>(stringAlphaParam_) / static_cast<float>(imgAlphaParam_) * 255.0f)) :
-		(ratio = stringAlphaParam_);
-	Debug::Log("ratio", stringAlphaParam_);
-
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA,  ratio);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, stringAlphaParam_);
 	StringManager::GetInstance().DrawStringCenter("WarningUI", common::screen_width / 2, common::screen_height / 2, 0xffffff);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

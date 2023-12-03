@@ -13,8 +13,13 @@ enum class InputType
 	DOWN,		// 下
 	RIGHT,		// 右
 	LEFT,		// 左
-	NORMAL_ENEMY_DEBUG,		// 
-	TOTAL_VALUE	// ボタンの入力タイプの合計値
+
+	// デバッグ用
+	NORMAL_ENEMY_DEBUG,	// 雑魚敵を自由に動かせる
+	BOSS_DETH_DEBUG,	// ボスの死亡
+
+	// ボタンの入力タイプの合計値
+	TOTAL_VALUE	
 };
 
 // パッドのトリガーの左か右かまたはパッドのスティックの左か右か

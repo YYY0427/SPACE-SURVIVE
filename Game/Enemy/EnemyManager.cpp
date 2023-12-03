@@ -24,7 +24,7 @@ namespace
 	const std::string normal_enemy_model_file_path_1 = "Data/Model/NormalEnemy1.mv1";
 
 	// 何フレーム間、ボス出現のWARNING!!を描画するか
-	constexpr int warning_ui_draw_frame = 60 * 4;
+	constexpr int warning_ui_draw_frame = 60 * 1;
 
 	// ゲーム開始から何フレーム経過したらボスを出現させるか
 	constexpr int boss_create_frame = 60 * 1;
@@ -99,6 +99,22 @@ void EnemyManager::DrawUI()
 	}
 }
 
+bool EnemyManager::StartBossDiedEffect(int& bossDiedEffectFrame)
+{
+	for (auto& enemy : pEnemies_)
+	{
+		// ボス敵のポインタにキャストできたらボス敵の死亡演出を開始
+		auto pBossEnemy = std::dynamic_pointer_cast<BossEnemy>(enemy);
+		if (pBossEnemy != nullptr)
+		{
+			bossDiedEffectFrame = pBossEnemy->GetDiedEffectFrame();
+			return pBossEnemy->StartDiedEffect();
+		}
+	}
+	return false;
+}
+
+// 敵の取得
 const std::list<std::shared_ptr<EnemyBase>>& EnemyManager::GetEnemies() const
 {
 	return pEnemies_;
@@ -120,6 +136,8 @@ void EnemyManager::CreateBossEnemyUpdate()
 	// 敵ボス出現のUI演出が終了したか
 	if (pWarning_->IsEnd())
 	{
+		pWarning_.reset();
+
 		// 敵ボスのインスタンス生成
 		pEnemies_.push_back(
 			std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS],

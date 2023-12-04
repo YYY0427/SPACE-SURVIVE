@@ -99,7 +99,7 @@ void EnemyManager::DrawUI()
 	}
 }
 
-bool EnemyManager::StartBossDiedEffect(int& bossDiedEffectFrame)
+bool EnemyManager::StartBossDiedEffect(int& bossDiedEffectFrame, VECTOR& bossPos)
 {
 	for (auto& enemy : pEnemies_)
 	{
@@ -107,11 +107,17 @@ bool EnemyManager::StartBossDiedEffect(int& bossDiedEffectFrame)
 		auto pBossEnemy = std::dynamic_pointer_cast<BossEnemy>(enemy);
 		if (pBossEnemy != nullptr)
 		{
+			bossPos = pBossEnemy->GetPos();
 			bossDiedEffectFrame = pBossEnemy->GetDiedEffectFrame();
 			return pBossEnemy->StartDiedEffect();
 		}
 	}
 	return false;
+}
+
+void EnemyManager::DeleteAllEnemy()
+{
+	pEnemies_.clear();
 }
 
 // “G‚ÌŽæ“¾

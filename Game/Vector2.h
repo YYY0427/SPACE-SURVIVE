@@ -2,7 +2,7 @@
 class Vector2
 {
 public:
-	float x_, y_;
+	float x, y;
 public:
 	Vector2();
 	Vector2(float x, float y);
@@ -10,13 +10,13 @@ public:
 	// Vec2 = Vec2 + Vec2
 	Vector2 operator+ (const Vector2& rval) const
 	{
-		return { x_ + rval.x_, y_ + rval.y_ };
+		return { x + rval.x, y + rval.y };
 	}
 
 	// Vec2 = Vec2 - Vec2
 	Vector2 operator- (const Vector2& rval) const
 	{
-		return { x_ - rval.x_, y_ - rval.y_ };
+		return { x - rval.x, y - rval.y };
 	}
 
 	// Vec2 = (Vec2 += Vec2)

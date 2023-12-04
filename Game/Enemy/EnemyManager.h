@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include "EnemyBase.h"
+#include "../Vector2.h"
 
 class LaserManager;
 class Player;
@@ -33,7 +34,10 @@ public:
 	void DrawUI();
 
 	// ボスの死亡の演出開始
-	bool StartBossDiedEffect(int& bossDiedEffectFrame);
+	bool StartBossDiedEffect(int& bossDiedEffectFrame, VECTOR& bossPos);
+
+	// 全ての敵の削除
+	void DeleteAllEnemy();
 
 	const std::list<std::shared_ptr<EnemyBase>>& GetEnemies() const;	
 

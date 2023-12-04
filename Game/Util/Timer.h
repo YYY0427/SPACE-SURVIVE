@@ -35,11 +35,11 @@ public:
 		// 更新
 		time_ += deltaTime;
 
-		if (limitTime_ > 0)
-		{
-			// 制限時間は超えない
-			time_ = (std::min)(time_, limitTime_);
-		}
+		//if (limitTime_ > 0)
+		//{
+		//	// 制限時間は超えない
+		//	time_ = (std::min)(time_, limitTime_);
+		//}
 	}
 
 	// タイマーの初期化
@@ -78,7 +78,9 @@ public:
 
 	// 制限時間の取得
 	T GetLimitTime() const { return limitTime_; }
-
+	
+	// 制限時間の設定
+	void SetLimitTime(T limitTime) { limitTime_ = limitTime; }
 private:
 	// 現在の時間
 	T time_;

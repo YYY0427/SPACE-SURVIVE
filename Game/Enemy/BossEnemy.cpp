@@ -586,7 +586,7 @@ void BossEnemy::UpdateDied()
 			};
 
 			// エフェクトの大きさを10倍から100倍の間でランダムに設定
-			dieEffect.scale = GetRand(90) + 10;
+			dieEffect.scale = GetRand(30) + 10;
 
 			// xyのベクトルをランダム作成
 			dieEffect.vec = { static_cast<float>(GetRand(10) - 5), static_cast<float>(GetRand(10) - 5), 0.0f };

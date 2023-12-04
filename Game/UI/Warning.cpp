@@ -44,10 +44,10 @@ Warning::Warning(int drawFrame) :
 	}
 
 	// ç¿ïWÇÃèâä˙âª
-	uiDataTable_[static_cast<int>(ID::CENTER)].pos.x_ = static_cast<float>(common::screen_width) / 2;
-	uiDataTable_[static_cast<int>(ID::CENTER)].pos.y_ = static_cast<float>(common::screen_height) / 2;
-	uiDataTable_[static_cast<int>(ID::UP)].pos.y_ = static_cast<float>((common::screen_height / 2) - 300);
-	uiDataTable_[static_cast<int>(ID::DOWN)].pos.y_ = static_cast<float>((common::screen_height / 2) + 300);
+	uiDataTable_[static_cast<int>(ID::CENTER)].pos.x = static_cast<float>(common::screen_width) / 2;
+	uiDataTable_[static_cast<int>(ID::CENTER)].pos.y = static_cast<float>(common::screen_height) / 2;
+	uiDataTable_[static_cast<int>(ID::UP)].pos.y = static_cast<float>((common::screen_height / 2) - 300);
+	uiDataTable_[static_cast<int>(ID::DOWN)].pos.y = static_cast<float>((common::screen_height / 2) + 300);
 
 	uiDataTable_[static_cast<int>(ID::CENTER)].scrollDir = 0;
 	uiDataTable_[static_cast<int>(ID::UP)].scrollDir = 1;
@@ -106,12 +106,12 @@ void Warning::Draw()
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, imgAlphaParam_);
 			DrawRotaGraph(
 				(data.imgWidth * 0.5) + scroll,
-				data.pos.y_,
+				data.pos.y,
 				1.0f, 0.0f, data.imgH, true);
 
 			DrawRotaGraph(
 				(data.imgWidth * (1 * -data.scrollDir + 0.5)) + scroll,
-				data.pos.y_,
+				data.pos.y,
 				1.0f, 0.0f, data.imgH, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
@@ -119,8 +119,8 @@ void Warning::Draw()
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, imgAlphaParam_);
 			DrawRotaGraph(
-				data.pos.x_,
-				data.pos.y_,
+				data.pos.x,
+				data.pos.y,
 				1.0f, 0.0f, data.imgH, true);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}

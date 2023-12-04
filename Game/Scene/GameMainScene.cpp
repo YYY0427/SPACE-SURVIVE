@@ -17,6 +17,9 @@
 #include "../Shield.h"
 #include "../Laser/Laser.h"
 #include "../common.h"
+#include "../Vector2.h"
+#include "../Triangle.h"
+#include "../Flash.h"
 
 namespace
 {
@@ -27,7 +30,6 @@ namespace
 // コンストラクタ
 GameMainScene::GameMainScene(SceneManager& manager) :
 	SceneBase(manager),
-	updateFunc_(&GameMainScene::NormalUpdate),
 	isGameClear_(false),
 	quakeX_(0.0f)
 {
@@ -40,6 +42,27 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 	pPlayer_ = std::make_shared<Player>();
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLaserManager_);
 	pCamera_ = std::make_shared<Camera>();
+
+	// ステートの初期化
+	stateMachine_.AddState(
+		State::NORMAL,
+		[this]() { EntarNormalState(); },
+		[this]() { UpdateNormalState(); },
+		[this]() { ExitNormalState(); }
+		);
+	stateMachine_.AddState(
+		State::GAME_CLEAR,
+		[this]() { EnterGameClearState(); },
+		[this]() { UpdateGameClearState(); },
+		[this]() { ExitGameClearState(); }
+		);
+	stateMachine_.AddState(
+		State::GAME_CLEAR,
+		[this]() { EnterGameOverState(); },
+		[this]() { UpdateGameOverState(); },
+		[this]() { ExitGameOverState(); }
+		);
+	stateMachine_.SetState(State::NORMAL);
 }
 
 // デストラクタ
@@ -54,18 +77,34 @@ void GameMainScene::Update()
 {
 	gameTimer_.Update(1);
 	pCamera_->Update();
+	stateMachine_.Update();
 	
-	(this->*updateFunc_)();
+	if (quakeTimer_.GetTime() > 0)
+	{
+		// 画面を揺らす
+		quakeX_ *= -0.95f;
+		quakeTimer_.Update(-1);
+	}
+	else
+	{
+		quakeX_ = 0.0f;
+	}
 }
 
 // 描画
 void GameMainScene::Draw()
 {
-//	SetDrawScreen(screenHandle_);
-//	pCamera_->Update();
+	// 画面の描画先を変更
+	SetDrawScreen(screenHandle_);
+
+	// SetDrawScreenを使用した場合、カメラが初期化されるので再度更新
+	pCamera_->Update();
+
+	// 画面のクリア
+	ClearDrawScreen();
 
 	// 各クラスの描画
-//	pBackground_->Draw();
+	pBackground_->Draw();
 	pEnemyManager_->Draw();
 	pPlayer_->Draw();
 	pLaserManager_->Draw();
@@ -73,6 +112,15 @@ void GameMainScene::Draw()
 	// 各クラスのUIの描画
 	pPlayer_->DrawUI();
 	pEnemyManager_->DrawUI();
+
+	if (pTriangle_)
+	{
+		pTriangle_->Draw();
+	}
+	if (pFlash_)
+	{
+		pFlash_->Draw();
+	}
 
 	// 現在のシーンのテキスト表示
 	Debug::Log("GameMainScene");
@@ -83,13 +131,38 @@ void GameMainScene::Draw()
 	// モザイクフェードの描画
 	DrawGaussFade(true);
 
-//	SetDrawScreen(DX_SCREEN_BACK);
+	// 画面の描画先を戻す
+	SetDrawScreen(DX_SCREEN_BACK);
 
-//	DrawGraph(static_cast<int>(quakeX_), 0, screenHandle_, false);
+	// SetDrawScreenを使用した場合、カメラが初期化されるので再度更新
+	pCamera_->Update();
+
+	// 画面の描画
+	DrawGraph(static_cast<int>(quakeX_), 0, screenHandle_, false);
 }
 
-// 通常の更新
-void GameMainScene::NormalUpdate()
+void GameMainScene::EntarNormalState()
+{
+}
+
+void GameMainScene::EnterGameClearState()
+{
+	pTriangle_.reset();
+	pEnemyManager_->DeleteAllEnemy();
+
+	// 画面揺らし開始
+	quakeTimer_.SetTime(game_clear_shake_frame);
+	quakeX_ = 100.0f;
+
+	// フラッシュ演出
+	pFlash_ = std::make_unique<Flash>(60);
+}
+
+void GameMainScene::EnterGameOverState()
+{
+}
+
+void GameMainScene::UpdateNormalState()
 {
 	// フェードが終わり次第シーン遷移
 	if (IsStartFadeOutAfterFadingOut())
@@ -119,6 +192,81 @@ void GameMainScene::NormalUpdate()
 	pEnemyManager_->Update(gameTimer_.GetTime());
 	pLaserManager_->Update();
 
+	// 当たり判定
+	Collision();
+
+	// ポーズ画面に遷移
+	if (InputState::IsTriggered(InputType::PAUSE))
+	{
+		// フェードアウト開始
+		StartFadeOut(200, 64);
+		item_ = SceneItem::PAUSE;
+	}
+
+	// ゲームクリア
+	int bossDiedEffectFrame = 0;
+	VECTOR bossPos;
+	if (pEnemyManager_->StartBossDiedEffect(bossDiedEffectFrame, bossPos))
+	{
+		// UIを非表示にする
+
+		// 三角形の描画
+		if (!pTriangle_)
+		{
+			pTriangle_ = std::make_unique<Triangle>(5, bossDiedEffectFrame);
+		}
+		else
+		{
+			pTriangle_->Update(bossPos);
+		}	
+
+		// ボスの死亡演出のフレームを設定
+		bossDiedEffectFrame_.SetLimitTime(bossDiedEffectFrame);
+		bossDiedEffectFrame_.Update(1);
+
+		// ゲームクリア時の演出の終了
+		if (bossDiedEffectFrame_.IsTimeOut())
+		{
+			frashPos_ = { ConvWorldPosToScreenPos(bossPos).x, ConvWorldPosToScreenPos(bossPos).y };
+			stateMachine_.SetState(State::GAME_CLEAR);
+		}
+	}
+
+	// ゲームオーバー
+	if (!pPlayer_->IsLive())
+	{
+		// フェードアウト開始
+		StartFadeOut(255, 10);
+		item_ = SceneItem::TITLE;
+	}
+
+	// フェードの更新
+	UpdateFade();
+}
+
+void GameMainScene::UpdateGameClearState()
+{
+	pFlash_->Update(frashPos_, 0xffffff);
+}
+
+void GameMainScene::UpdateGameOverState()
+{
+}
+
+void GameMainScene::ExitNormalState()
+{
+}
+
+void GameMainScene::ExitGameClearState()
+{
+}
+
+void GameMainScene::ExitGameOverState()
+{
+}
+
+void GameMainScene::Collision()
+{
 	if (pPlayer_->GetShield()->IsShield())
 	{
 		// レーザーとシールドの当たり判定
@@ -213,55 +361,6 @@ void GameMainScene::NormalUpdate()
 		// 当たり判定情報の後始末
 		MV1CollResultPolyDimTerminate(result);
 	}
-
-	// ポーズ画面に遷移
-	if (InputState::IsTriggered(InputType::PAUSE))
-	{
-		// フェードアウト開始
-		StartFadeOut(200, 64);
-		item_ = SceneItem::PAUSE;
-	}
-
-	
-	if (quakeTimer_.GetTime() > 0)
-	{
-		// 画面を揺らす
-		quakeX_ *= -0.95f;
-		quakeTimer_.Update(-1);
-	}
-	else
-	{
-		quakeX_ = 0.0f;
-	}
-
-	// ゲームクリア
-	int bossDiedEffectFrame = 0;
-	if (pEnemyManager_->StartBossDiedEffect(bossDiedEffectFrame) && !isGameClear_)
-	{
-		isGameClear_ = true;
-		bossDiedEffectFrame_ = bossDiedEffectFrame;
-		bossDiedEffectFrame_.Update(1);
-	}
-	// ゲームクリア時の演出の終了
-	if (bossDiedEffectFrame_.IsTimeOut())
-	{
-		// 画面揺らし開始
-		quakeTimer_.SetTime(game_clear_shake_frame);
-
-		// フラッシュ演出
-
-	}
-
-	// ゲームオーバー
-	if (!pPlayer_->IsLive())
-	{
-		// フェードアウト開始
-		StartFadeOut(255, 10);
-		item_ = SceneItem::TITLE;
-	}
-
-	// フェードの更新
-	UpdateFade();
 }
 
 //void GameMainScene::CollisionRockUpdate()

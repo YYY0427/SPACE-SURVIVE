@@ -1,6 +1,8 @@
 #pragma once
 #include "SceneBase.h"
 #include "../Util/Timer.h"
+#include "../StateMachine.h"
+#include "../Vector2.h"
 #include <memory>
 
 // プロトタイプ宣言
@@ -12,6 +14,8 @@ class DataReaderFromUnity;
 class EnemyManager;
 class LaserManager;
 class Background;
+class Triangle;
+class Flash;
 
 // メインシーン
 // ゲームのメインの処理を行うシーン
@@ -34,8 +38,20 @@ public:
 	void Draw() override;
 
 private:
-	// 通常の更新
-	void NormalUpdate();
+	void EntarNormalState();
+	void EnterGameClearState();
+	void EnterGameOverState();
+
+	void UpdateNormalState();
+	void UpdateGameClearState();
+	void UpdateGameOverState();
+
+	void ExitNormalState();
+	void ExitGameClearState();
+	void ExitGameOverState();
+
+	// 当たり判定
+	void Collision();
 
 private:
 	enum class SceneItem
@@ -45,9 +61,21 @@ private:
 		TITLE
 	};
 
+	enum class State
+	{
+		NORMAL,
+		GAME_CLEAR,
+		GAME_OVER,
+	};
+
 private:
+	Vector2 frashPos_;
+
 	// シーンアイテム
 	SceneItem item_;
+
+	// ステートマシン
+	StateMachine<State> stateMachine_;
 
 	// ゲームクリアフラグ
 	bool isGameClear_;
@@ -61,13 +89,10 @@ private:
 	// ボスの死亡演出のフレーム
 	Timer<int> bossDiedEffectFrame_;
 
+	// 画面を揺らす大きさ
 	float quakeX_;
 
 	int screenHandle_;
-
-	// メンバ関数ポインタ
-	// Updateを切り替えるために作成
-	void (GameMainScene::* updateFunc_) ();
 
 	// ポインタ
 	std::shared_ptr<Background> pBackground_;
@@ -78,5 +103,7 @@ private:
 	std::shared_ptr<PlanetManager> pPlanetManager_;
 	std::shared_ptr<EnemyManager> pEnemyManager_;
 	std::shared_ptr<LaserManager> pLaserManager_;
+	std::unique_ptr<Triangle> pTriangle_;
+	std::unique_ptr<Flash> pFlash_;
 };
 

@@ -161,6 +161,12 @@
     <ClCompile Include="Enemy\NormalEnemy.cpp">
       <Filter>ソース ファイル\Enemy\Normal</Filter>
     </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Flash.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Laser\LaserBase.h">
@@ -300,6 +306,12 @@
     </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Flash.h">
+      <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

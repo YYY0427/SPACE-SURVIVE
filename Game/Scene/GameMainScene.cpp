@@ -76,7 +76,6 @@ GameMainScene::~GameMainScene()
 void GameMainScene::Update()
 {
 	gameTimer_.Update(1);
-	pCamera_->Update();
 	stateMachine_.Update();
 	
 	if (quakeTimer_.GetTime() > 0)
@@ -240,6 +239,8 @@ void GameMainScene::UpdateNormalState()
 		item_ = SceneItem::TITLE;
 	}
 
+	pCamera_->Update();
+
 	// フェードの更新
 	UpdateFade();
 }
@@ -247,6 +248,8 @@ void GameMainScene::UpdateNormalState()
 void GameMainScene::UpdateGameClearState()
 {
 	pFlash_->Update(frashPos_, 0xffffff);
+
+	pCamera_->GameClearUpdate(pPlayer_->GetPos());
 }
 
 void GameMainScene::UpdateGameOverState()

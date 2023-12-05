@@ -3,6 +3,8 @@
 #include <string>
 #include <DxLib.h>
 #include <cassert>
+#include "Util/Model.h"
+#include "common.h"
 
 namespace
 {
@@ -15,16 +17,22 @@ namespace
 
 Background::Background()
 {
-	// ”wŒi‚Ì“®‰æ‚Ìƒ[ƒh
-	backgroundMovieH_ = my::MyLoadGraph(movie_file_path.c_str());
+	pModel_ = std::make_unique<Model>("Data/Model/Star.mv1");
 
-	// ”wŒi‚Ì“®‰æ‚ÌÄ¶‘¬“x•ÏX
-	int result = SetPlaySpeedRateMovieToGraph(backgroundMovieH_, playback_speed);
-	assert(result != -1);
+	pModel_->SetPos({ 0, 0, 0 });
+	pModel_->SetRot({ 0, 0, 0 });
+	pModel_->SetScale({ 80, 80, 80 });
 
-	// ”wŒi‚Ì“®‰æ‚ÌÄ¶‚ğŠJn
-	result = PlayMovieToGraph(backgroundMovieH_, DX_PLAYTYPE_LOOP);
-	assert(result != -1);
+	//// ”wŒi‚Ì“®‰æ‚Ìƒ[ƒh
+	//backgroundMovieH_ = my::MyLoadGraph(movie_file_path.c_str());
+
+	//// ”wŒi‚Ì“®‰æ‚ÌÄ¶‘¬“x•ÏX
+	//int result = SetPlaySpeedRateMovieToGraph(backgroundMovieH_, playback_speed);
+	//assert(result != -1);
+
+	//// ”wŒi‚Ì“®‰æ‚ÌÄ¶‚ğŠJn
+	//result = PlayMovieToGraph(backgroundMovieH_, DX_PLAYTYPE_LOOP);
+	//assert(result != -1);
 
 	/*Effekseer3DEffectManager::GetInstance().PlayEffectLoop(
 		windEffectH_,
@@ -45,5 +53,8 @@ Background::~Background()
 void Background::Draw()
 {
 	// ”wŒi‚Ì“®‰æ‚Ì•`‰æ
-	DrawGraph(0, 0, backgroundMovieH_, false);
+//	DrawRotaGraph(0, 0, 1.0, 0.0f,backgroundMovieH_, false);
+ 
+	// ƒ‚ƒfƒ‹‚Ì•`‰æ
+	pModel_->Draw();
 }

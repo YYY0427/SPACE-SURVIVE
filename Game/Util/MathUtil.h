@@ -26,14 +26,14 @@ public:
 	/// </summary>
 	/// <param name="degree">角度</param>
 	/// <returns>ラジアン</returns>
-	static float RadianFromDegree(float degree);
+	static float RadianFromDegree(float radian);
 
 	/// <summary>
 	/// 弧度法から度数法に変換(π->180)
 	/// </summary>
 	/// <param name="degree">ラジアン</param>
 	/// <returns>角度</returns>
-	static float DegreeFromRadian(float radian);
+	static float DegreeFromRadian(float degree);
 
 private:
 	static bool EulerAnglesXYZ(const MATRIX mat, float& xRot, float& yRot, float& zRot);

@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Util/InputState.h"
 #include "Util/SaveData.h"
+#include "Util/MathUtil.h"
 
 namespace
 {
@@ -18,6 +19,12 @@ namespace
 	// 描画距離(near, far)
 	constexpr float near_distance = 5.0f;
 	constexpr float far_distance = 20000.0f;
+
+	// プレイヤーからの距離
+	constexpr float camera_distance = 300.0f;
+
+	// ゲームクリア時のカメラの回転速度
+	constexpr float camera_rotate_speed = 0.03f;
 }
 
 // コンストラクタ
@@ -25,7 +32,9 @@ Camera::Camera() :
 	cameraYaw_(0.0f),
 	cameraPitch_(0.0f),
 	perspective_(normal_perspective),
-	perspectiveRange_({ normal_perspective, boosting_perspective })
+	perspectiveRange_({ normal_perspective, boosting_perspective }),
+	cameraVertical_(0.0f),
+	cameraHorizon_(DX_PI_F)
 {
 	pos_ = camera_pos;
 	target_ = camera_init_target;
@@ -39,6 +48,39 @@ Camera::~Camera()
 // 更新
 void Camera::Update()
 {
+	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
+	SetCameraNearFar(near_distance, far_distance);
+
+	// カメラの視野角を設定(ラジアン)
+	SetupCamera_Perspective(perspective_ * DX_PI_F / 180.0f);
+
+	// カメラの位置、どこを見ているかを設定する
+	SetCameraPositionAndTargetAndUpVec(pos_, target_, VGet(0, 1, 0));
+}
+
+// ゲームクリア時の更新
+void Camera::GameClearUpdate(VECTOR playerPos)
+{
+	cameraHorizon_ -= camera_rotate_speed;
+	cameraHorizon_ = (std::max)(cameraHorizon_, MathUtil::DegreeFromRadian(30));
+
+	// カメラの注視点をプレイヤーの位置に設定
+	target_ = playerPos;
+
+	// 基準の長さを垂直方向に回転させたときの水平分の長さ
+	float verticalLength = camera_distance * cosf(cameraVertical_);
+
+	// 高さ
+	float horizonLength = camera_distance * sinf(cameraVertical_);
+
+	// カメラ座標の設定
+	// xz座標は水平方向の長さ分進めたところ
+	pos_.x = playerPos.x + verticalLength * sinf(cameraHorizon_);
+	pos_.z = playerPos.z + verticalLength * cosf(cameraHorizon_);
+
+	// Ｙ座標は垂直方向分上に
+	pos_.y = playerPos.y + horizonLength;
+
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
 

@@ -23,14 +23,14 @@ VECTOR MathUtil::ToEulerAngles(const MATRIX mtx, bool& isGimbalLock, RotationOrd
 	return { xRot, yRot, zRot };
 }
 
-float MathUtil::RadianFromDegree(float degree)
+float MathUtil::RadianFromDegree(float radian)
 {
-	return DX_PI_F * degree / 180.0f;
+	return radian * 180.0f / DX_PI_F;
 }
 
-float MathUtil::DegreeFromRadian(float radian)
+float MathUtil::DegreeFromRadian(float degree)
 {
-	return DX_PI_F * 180.0f / radian;
+	return degree * DX_PI_F / 180.0f;
 }
 
 bool MathUtil::EulerAnglesXYZ(const MATRIX mat, float& xRot, float& yRot, float& zRot)

@@ -22,6 +22,9 @@ public:
 	/// <param name="playerPos">プレイヤーの位置座標</param>
 	void Update();
 
+	// ゲームクリア時の更新
+	void GameClearUpdate(VECTOR playerPos);
+
 	// カメラを決められたフレームの間、x軸に揺らす
 	void ShakeX(int shakeFrame, float shakeSize);
 
@@ -30,7 +33,7 @@ public:
 
 	// カメラの回転情報の取得
 	float GetCameraYaw() const;// Y軸
-
+	
 	// カメラの位置の取得
 	VECTOR GetPos() const;
 
@@ -52,6 +55,9 @@ private:
 
 	// カメラを揺らすフレーム数
 	Timer<int> shakeFrame_;
+
+	float cameraVertical_;	// 垂直方向
+	float cameraHorizon_;	// 水平方向
 
 	// 回転角度
 	float cameraYaw_;	// Y軸

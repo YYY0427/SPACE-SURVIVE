@@ -5,7 +5,7 @@ Triangle::Triangle(int num, int frame)
 {
 	num_ = num;
 	frame_ = frame;
-	intarvalFrame = frame / num;
+	intarvalFrame = frame / (num + 1);
 	color_ = { 255, 255, 255 };
 }
 

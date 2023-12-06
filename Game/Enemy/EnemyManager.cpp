@@ -30,9 +30,10 @@ namespace
 	constexpr int boss_create_frame = 60 * 1;
 }
 
-EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager) :
+EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect) :
 	pPlayer_(pPlayer),
 	pLaserManager_(pLaserManager),
+	pScreenEffect_(pScreenEffect),
 	isCreateBossEnemy_(false),
 	updateFunc_(&EnemyManager::NormalUpdate)
 {
@@ -99,20 +100,13 @@ void EnemyManager::DrawUI()
 	}
 }
 
-bool EnemyManager::StartBossDiedEffect(int& bossDiedEffectFrame, VECTOR& bossPos)
+bool EnemyManager::IsBossDied()
 {
-	for (auto& enemy : pEnemies_)
-	{
-		// ボス敵のポインタにキャストできたらボス敵の死亡演出を開始
-		auto pBossEnemy = std::dynamic_pointer_cast<BossEnemy>(enemy);
-		if (pBossEnemy != nullptr)
-		{
-			bossPos = pBossEnemy->GetPos();
-			bossDiedEffectFrame = pBossEnemy->GetDiedEffectFrame();
-			return pBossEnemy->StartDiedEffect();
-		}
-	}
-	return false;
+	if(!isCreateBossEnemy_)	return false;
+	if(updateFunc_ == &EnemyManager::CreateBossEnemyUpdate)	return false;
+	if(!pEnemies_.empty())	return false;	
+
+	return true;
 }
 
 void EnemyManager::DeleteAllEnemy()
@@ -148,7 +142,8 @@ void EnemyManager::CreateBossEnemyUpdate()
 		pEnemies_.push_back(
 			std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS],
 				pPlayer_,
-				pLaserManager_));
+				pLaserManager_,
+				pScreenEffect_));
 
 		updateFunc_ = &EnemyManager::NormalUpdate;
 	}

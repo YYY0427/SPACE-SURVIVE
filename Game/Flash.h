@@ -11,6 +11,9 @@ public:
 	void Update(Vector2 pos, unsigned int color);
 	void Draw();
 
+	int GetAlpha() const;
+
+	bool IsEnd() const;
 private:
 	Vector2 pos_;
 	Timer<int> enableFrame_;

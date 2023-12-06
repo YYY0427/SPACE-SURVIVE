@@ -7,6 +7,7 @@ Triangle::Triangle(int num, int frame)
 	frame_ = frame;
 	intarvalFrame = frame / (num + 1);
 	color_ = { 255, 255, 255 };
+	isDraw_ = true;
 }
 
 Triangle::~Triangle()
@@ -72,6 +73,7 @@ void Triangle::Update(VECTOR pos)
 void Triangle::Draw()
 {
 	if (frame_.IsTimeOut()) return;
+	if (!isDraw_) return;
 
 	for (auto& triangle : data_)
 	{
@@ -79,4 +81,9 @@ void Triangle::Draw()
 		DrawTriangle(triangle.pos[0].x, triangle.pos[0].y, triangle.pos[1].x, triangle.pos[1].y, triangle.pos[2].x, triangle.pos[2].y, GetColor(color_.x, color_.y, color_.z), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
+}
+
+void Triangle::SetDraw(bool isDraw)
+{
+	isDraw_ = isDraw;
 }

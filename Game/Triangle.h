@@ -20,6 +20,8 @@ public:
 	// 描画
 	void Draw();
 
+	void SetDraw(bool isDraw);
+
 private:
 	struct Data
 	{
@@ -32,6 +34,8 @@ private:
 
 	int num_;
 	
+	bool isDraw_;
+
 	// 何フレームで演出を行うか
 	Timer<int> frame_;
 

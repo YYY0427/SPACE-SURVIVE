@@ -2,6 +2,9 @@
 #include "EnemyBase.h"
 
 class HpBar;
+class Flash;
+class Triangle;
+class ScreenEffect;
 
 class BossEnemy : public EnemyBase
 {
@@ -12,7 +15,7 @@ public:
 	/// <param name="modelHandle"></param>
 	/// <param name="pPlayer"></param>
 	/// <param name="pLazerManager"></param>
-	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLazerManager);
+	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLazerManager, std::shared_ptr<ScreenEffect> pScreenEffect);
 
 	// デストラクタ
 	~BossEnemy();
@@ -30,12 +33,6 @@ public:
 	/// <param name="damage">受けたダメージ</param>
 	/// <param name="pos">ダメージを受けた位置</param>
 	void OnDamage(int damage, VECTOR pos) override;
-
-	// 死亡演出に何フレームかけるか
-	int GetDiedEffectFrame() const;
-
-	// 死亡演出の開始
-	bool StartDiedEffect();
 
 private:
 	// ステートの初期化
@@ -112,6 +109,11 @@ private:
 	// ステートマシン(ステートを管理する)
 	StateMachine<State> stateMachine_;
 
+	std::shared_ptr<ScreenEffect> pScreenEffect_;
+
+	std::unique_ptr<Triangle> pTriangle_;
+	std::unique_ptr<Flash> pFlash_;
+
 	// HPバー
 	std::unique_ptr<HpBar> pHpBar_;
 
@@ -127,6 +129,8 @@ private:
 
 	// キューブレーザーの移動速度
 	float cubeLaserSpeed_;
+
+	bool isDraw_;
 
 	// 通常レーザーの発射位置
 	VECTOR normalLaserFirePos_;

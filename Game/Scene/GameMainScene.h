@@ -14,8 +14,7 @@ class DataReaderFromUnity;
 class EnemyManager;
 class LaserManager;
 class Background;
-class Triangle;
-class Flash;
+class ScreenEffect;
 
 // メインシーン
 // ゲームのメインの処理を行うシーン
@@ -39,8 +38,8 @@ public:
 
 private:
 	void EntarNormalState();
-	void EnterGameClearState();
-	void EnterGameOverState();
+	void EntarGameClearState();
+	void EntarGameOverState();
 
 	void UpdateNormalState();
 	void UpdateGameClearState();
@@ -69,28 +68,19 @@ private:
 	};
 
 private:
-	Vector2 frashPos_;
-
 	// シーンアイテム
 	SceneItem item_;
 
 	// ステートマシン
 	StateMachine<State> stateMachine_;
 
-	// ゲームクリアフラグ
-	bool isGameClear_;
-
 	// ゲーム開始からの経過時間
 	Timer<int> gameTimer_;
 
-	// ゲームクリア時に何フレーム間画面を揺らすか
-	Timer<int> quakeTimer_;
-	
 	// ボスの死亡演出のフレーム
 	Timer<int> bossDiedEffectFrame_;
 
-	// 画面を揺らす大きさ
-	float quakeX_;
+	Timer<int> waitTimer_;
 
 	int screenHandle_;
 
@@ -103,7 +93,6 @@ private:
 	std::shared_ptr<PlanetManager> pPlanetManager_;
 	std::shared_ptr<EnemyManager> pEnemyManager_;
 	std::shared_ptr<LaserManager> pLaserManager_;
-	std::unique_ptr<Triangle> pTriangle_;
-	std::unique_ptr<Flash> pFlash_;
+	std::shared_ptr<ScreenEffect> pScreenEffect_;
 };
 

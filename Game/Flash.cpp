@@ -40,3 +40,13 @@ void Flash::Draw()
 	DrawCircle(pos_.x, pos_.y, radius_, color_, TRUE);	
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
+
+bool Flash::IsEnd() const
+{
+	return alpha_ <= 0;
+}
+
+int Flash::GetAlpha() const
+{
+	return alpha_;
+}

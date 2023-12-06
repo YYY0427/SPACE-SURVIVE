@@ -158,8 +158,10 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Easing.cpp" />
     <ClCompile Include="Flash.cpp" />
     <ClCompile Include="Laser\ReflectLaser.cpp" />
+    <ClCompile Include="ScreenEffect.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UI\EnergyGage.cpp" />
     <ClCompile Include="UI\HpBar.cpp" />
@@ -204,8 +206,10 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Easing.h" />
     <ClInclude Include="Flash.h" />
     <ClInclude Include="Laser\ReflectLaser.h" />
+    <ClInclude Include="ScreenEffect.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UI\EnergyGage.h" />
@@ -250,9 +254,6 @@
     <ClInclude Include="Util\Effekseer3DEffectManager.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="UI\Warning.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="UFOGame.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

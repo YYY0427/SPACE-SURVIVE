@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneBase.h"
 #include <memory>
+#include "../Vector2.h"
 
 // プロトタイプ宣言
 class Camera;
@@ -33,4 +34,6 @@ private:
 	std::shared_ptr<Warning> pWarning_;
 	std::shared_ptr<HpBar> pHpBar_;
 	int laserEffectHandle_;
+	int imgHandle_;
+	Vector2 imgPos_;
 };

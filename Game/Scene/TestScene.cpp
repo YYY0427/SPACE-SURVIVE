@@ -10,14 +10,18 @@
 #include "../Camera.h"
 #include "../UI/Warning.h"
 #include "../UI/HpBar.h"
+#include "../Util/DrawFunctions.h"
+#include "../Easing.h"
 #include <DxLib.h>
 
 // コンストラクタ
 TestScene::TestScene(SceneManager& manager) :
-	SceneBase(manager)
+	SceneBase(manager),
+	imgPos_({0, common::screen_height / 2})
 {
-	pWarning_ = std::make_shared<Warning>(600);
+	imgHandle_ = my::MyLoadGraph("Data/Image/Test.png");
 
+	pWarning_ = std::make_shared<Warning>(600);
 	pCamera_ = std::make_shared<Camera>();
 
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
@@ -38,6 +42,13 @@ void TestScene::Update()
 	// 各クラスの更新
 //	pHpBar_->Update(30);
 //	pWarning_->Update();
+	static int count = 0;
+	count++;
+
+	// イージング関数を使って画像の位置を変更
+	imgPos_.x = Easing::EaseOutInExpo(count, 0, static_cast<float>(common::screen_width) / 2, common::screen_width, 180);
+//	imgPos_.x = Easing::EaseOutBack(count, 0, static_cast<float>(common::screen_width) / 2, 180);
+	Debug::Log("画像の位置", imgPos_.x);
 
 	pCamera_->Update();
 
@@ -45,7 +56,6 @@ void TestScene::Update()
 	if (InputState::IsTriggered(InputType::UP))
 	{
 		effectManager.SetDynamicEffectParam(laserEffectHandle_, 0, 1.0f);
-
 	}
 	float param = effectManager.GetDynamicEffectParam(laserEffectHandle_, 0);
 	Debug::Log("レーザーのなんかの値", param);
@@ -80,6 +90,8 @@ void TestScene::Draw()
 {
 	// 現在のシーンのテキスト表示
 	Debug::Log("TestScene");
+
+	DrawRotaGraph(imgPos_.x, imgPos_.y, 0.1f, 0.0f, imgHandle_, true);
 
 	// 各クラスの描画
 //	pWarning_->Draw();

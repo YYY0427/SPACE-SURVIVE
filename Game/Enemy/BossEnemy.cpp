@@ -8,6 +8,9 @@
 #include "../Util/Debug.h";
 #include "../Util/MathUtil.h"
 #include "../Util/InputState.h"
+#include "../Triangle.h"
+#include "../Flash.h"
+#include "../ScreenEffect.h"
 #include <random>
 #include <algorithm>
 
@@ -111,15 +114,17 @@ namespace
 }
 
 // コンストラクタ
-BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager) :
+BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect) :
 	isGoal_(false),
 	isMoveEnd_(false),
+	isDraw_(true),
 	movePoint_(0),
 	attackState_(0)
 {
 	// 初期化
 	pPlayer_ = pPlayer;
 	pLaserManager_ = pLaserManager;
+	pScreenEffect_ = pScreenEffect;
 	pos_ = start_init_pos;
 	rot_ = rot;
 	cubeLaserSpeed_ = cube_laser_speed;
@@ -261,7 +266,10 @@ void BossEnemy::Update()
 void BossEnemy::Draw()
 {
 	// モデルの描画
-	pModel_->Draw();
+	if (isDraw_)
+	{
+		pModel_->Draw();
+	}
 
 	// デバッグ用
 #ifdef _DEBUG
@@ -275,6 +283,12 @@ void BossEnemy::DrawUI()
 {
 	// HPバーの描画
 	pHpBar_->Draw(hp_bar_side_space, hp_bar_start_y, hp_bar_height);
+
+	if (State::DEID == stateMachine_.GetCurrentState())
+	{
+		pTriangle_->Draw();
+		pFlash_->Draw();
+	}
 }
 
 // ダメージ
@@ -297,16 +311,6 @@ void BossEnemy::OnDamage(int damage, VECTOR pos)
 	{
 		stateMachine_.SetState(State::DEID);
 	}
-}
-
-int BossEnemy::GetDiedEffectFrame() const
-{
-	return died_continue_frame;
-}
-
-bool BossEnemy::StartDiedEffect()
-{
-	return stateMachine_.GetCurrentState() == State::DEID;
 }
 
 // 移動の初期化
@@ -453,6 +457,9 @@ void BossEnemy::EntarDied()
 	moveVec_ = { 0, 0, 0 };
 
 	pModel_->StopAnim();
+
+	pTriangle_ = std::make_unique<Triangle>(5, died_continue_frame);
+	pFlash_ = std::make_unique<Flash>(60);
 
 	utilTimerTable_["effectIntarval"] = 20;
 	utilTimerTable_["continueFrame"] = died_continue_frame;
@@ -606,11 +613,22 @@ void BossEnemy::UpdateDied()
 			// タイマーの初期化
 			utilTimerTable_["effectIntarval"].Reset();
 		}
+		pTriangle_->Update(pos_);
 	}
 	else
 	{
-		// インスタンスの削除
-		isEnabled_ = false;
+		isDraw_ = false;
+		pTriangle_->SetDraw(false);
+		pScreenEffect_->SetShake(100.0f, 0.0f, 180);
+
+		VECTOR pos = ConvWorldPosToScreenPos(pos_);
+		pFlash_->Update({pos.x, pos.y}, 0xffffff);
+
+		if (pFlash_->IsEnd())
+		{
+			// インスタンスの削除
+			isEnabled_ = false;
+		}
 	}
 
 	// エフェクトの移動

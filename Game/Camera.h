@@ -3,6 +3,7 @@
 #include <memory>
 #include "Util/Range.h"
 #include "Util/Timer.h"
+#include "StateMachine.h"
 
 /// <summary>
 /// カメラの管理クラス
@@ -41,11 +42,33 @@ public:
 	VECTOR GetTarget() const;
 
 private:
+	void EntarNormalState();
+	void EntarGameClearState();
+
+	void UpdateNormalState();
+	void UpdateGameClearState();
+
+	void ExitNormalState();
+	void ExitGameClearState();
+
+private:
+	enum class State
+	{
+		NORMAL,
+		GAME_CLEAR,
+
+	};
+
+private:
+	StateMachine<State> stateMachine_;
+
 	// カメラの位置
 	VECTOR pos_;
+	VECTOR goalPos_;
 
 	// カメラの注視点
 	VECTOR target_;
+	VECTOR goalTarget_;
 
 	// 視野角
 	float perspective_;

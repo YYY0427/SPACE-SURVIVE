@@ -20,6 +20,7 @@
 #include "../Vector2.h"
 #include "../Triangle.h"
 #include "../Flash.h"
+#include "../ScreenEffect.h"
 
 namespace
 {
@@ -29,18 +30,17 @@ namespace
 
 // コンストラクタ
 GameMainScene::GameMainScene(SceneManager& manager) :
-	SceneBase(manager),
-	isGameClear_(false),
-	quakeX_(0.0f)
+	SceneBase(manager)
 {
 	screenHandle_ = MakeScreen(common::screen_width, common::screen_height);
 	assert(screenHandle_ != -1);
 
 	// インスタンス生成
+	pScreenEffect_ = std::make_shared<ScreenEffect>();
 	pBackground_ = std::make_shared<Background>();
 	pLaserManager_ = std::make_shared<LaserManager>();
 	pPlayer_ = std::make_shared<Player>();
-	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLaserManager_);
+	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLaserManager_, pScreenEffect_);
 	pCamera_ = std::make_shared<Camera>();
 
 	// ステートの初期化
@@ -52,13 +52,13 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 		);
 	stateMachine_.AddState(
 		State::GAME_CLEAR,
-		[this]() { EnterGameClearState(); },
+		[this]() { EntarGameClearState(); },
 		[this]() { UpdateGameClearState(); },
 		[this]() { ExitGameClearState(); }
 		);
 	stateMachine_.AddState(
 		State::GAME_CLEAR,
-		[this]() { EnterGameOverState(); },
+		[this]() { EntarGameOverState(); },
 		[this]() { UpdateGameOverState(); },
 		[this]() { ExitGameOverState(); }
 		);
@@ -76,18 +76,11 @@ GameMainScene::~GameMainScene()
 void GameMainScene::Update()
 {
 	gameTimer_.Update(1);
+
+	// ステートマシンの更新
 	stateMachine_.Update();
-	
-	if (quakeTimer_.GetTime() > 0)
-	{
-		// 画面を揺らす
-		quakeX_ *= -0.95f;
-		quakeTimer_.Update(-1);
-	}
-	else
-	{
-		quakeX_ = 0.0f;
-	}
+
+	pScreenEffect_->Update();
 }
 
 // 描画
@@ -112,15 +105,6 @@ void GameMainScene::Draw()
 	pPlayer_->DrawUI();
 	pEnemyManager_->DrawUI();
 
-	if (pTriangle_)
-	{
-		pTriangle_->Draw();
-	}
-	if (pFlash_)
-	{
-		pFlash_->Draw();
-	}
-
 	// 現在のシーンのテキスト表示
 	Debug::Log("GameMainScene");
 
@@ -137,27 +121,20 @@ void GameMainScene::Draw()
 	pCamera_->Update();
 
 	// 画面の描画
-	DrawGraph(static_cast<int>(quakeX_), 0, screenHandle_, false);
+	pScreenEffect_->Draw(screenHandle_);
+//	DrawGraph(static_cast<int>(quakeX_), 0, screenHandle_, false);
 }
 
 void GameMainScene::EntarNormalState()
 {
 }
 
-void GameMainScene::EnterGameClearState()
+void GameMainScene::EntarGameClearState()
 {
-	pTriangle_.reset();
-	pEnemyManager_->DeleteAllEnemy();
-
-	// 画面揺らし開始
-	quakeTimer_.SetTime(game_clear_shake_frame);
-	quakeX_ = 100.0f;
-
-	// フラッシュ演出
-	pFlash_ = std::make_unique<Flash>(60);
+	waitTimer_ = Timer<int>(120);
 }
 
-void GameMainScene::EnterGameOverState()
+void GameMainScene::EntarGameOverState()
 {
 }
 
@@ -202,33 +179,10 @@ void GameMainScene::UpdateNormalState()
 		item_ = SceneItem::PAUSE;
 	}
 
-	// ゲームクリア
-	int bossDiedEffectFrame = 0;
-	VECTOR bossPos;
-	if (pEnemyManager_->StartBossDiedEffect(bossDiedEffectFrame, bossPos))
+	//// ゲームクリア
+	if (pEnemyManager_->IsBossDied())
 	{
-		// UIを非表示にする
-
-		// 三角形の描画
-		if (!pTriangle_)
-		{
-			pTriangle_ = std::make_unique<Triangle>(5, bossDiedEffectFrame);
-		}
-		else
-		{
-			pTriangle_->Update(bossPos);
-		}	
-
-		// ボスの死亡演出のフレームを設定
-		bossDiedEffectFrame_.SetLimitTime(bossDiedEffectFrame);
-		bossDiedEffectFrame_.Update(1);
-
-		// ゲームクリア時の演出の終了
-		if (bossDiedEffectFrame_.IsTimeOut())
-		{
-			frashPos_ = { ConvWorldPosToScreenPos(bossPos).x, ConvWorldPosToScreenPos(bossPos).y };
-			stateMachine_.SetState(State::GAME_CLEAR);
-		}
+		stateMachine_.SetState(State::GAME_CLEAR);
 	}
 
 	// ゲームオーバー
@@ -247,9 +201,11 @@ void GameMainScene::UpdateNormalState()
 
 void GameMainScene::UpdateGameClearState()
 {
-	pFlash_->Update(frashPos_, 0xffffff);
-
-	pCamera_->GameClearUpdate(pPlayer_->GetPos());
+	waitTimer_.Update(1);
+	if (waitTimer_.IsTimeOut())
+	{
+		pCamera_->GameClearUpdate(pPlayer_->GetPos());
+	}
 }
 
 void GameMainScene::UpdateGameOverState()

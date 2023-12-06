@@ -9,6 +9,7 @@
 class LaserManager;
 class Player;
 class Warning;
+class ScreenEffect;
 
 struct NormalEnemyActionData
 {
@@ -26,15 +27,15 @@ struct NormalEnemyActionData
 class EnemyManager
 {
 public:
-	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager);
+	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect);
 	~EnemyManager();
 
 	void Update(int time);
 	void Draw();
 	void DrawUI();
 
-	// ボスの死亡の演出開始
-	bool StartBossDiedEffect(int& bossDiedEffectFrame, VECTOR& bossPos);
+	// ボスの死亡
+	bool IsBossDied();
 
 	// 全ての敵の削除
 	void DeleteAllEnemy();
@@ -57,9 +58,11 @@ private:
 	void (EnemyManager::*updateFunc_) ();
 
 	std::list<std::shared_ptr<EnemyBase>> pEnemies_;
+	std::unique_ptr<Warning> pWarning_;
+
+	std::shared_ptr<ScreenEffect> pScreenEffect_;
 	std::shared_ptr<Player> pPlayer_;
 	std::shared_ptr<LaserManager> pLaserManager_;
-	std::unique_ptr<Warning> pWarning_;
 
 	// モデルハンドルテーブル
 	std::unordered_map<EnemyType, int> modelHandleTable_;

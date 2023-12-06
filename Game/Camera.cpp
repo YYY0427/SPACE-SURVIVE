@@ -38,6 +38,8 @@ Camera::Camera() :
 {
 	pos_ = camera_pos;
 	target_ = camera_init_target;
+
+//	stateMachine_.AddState(State::Normal, std::bind(&Camera::UpdateNormalState, this), std::bind(&Camera::EntarNormalState, this), std::bind(&Camera::ExitNormalState, this));
 }
 
 // デストラクタ
@@ -65,7 +67,7 @@ void Camera::GameClearUpdate(VECTOR playerPos)
 	cameraHorizon_ = (std::max)(cameraHorizon_, MathUtil::DegreeFromRadian(30));
 
 	// カメラの注視点をプレイヤーの位置に設定
-	target_ = playerPos;
+	goalTarget_ = playerPos;
 
 	// 基準の長さを垂直方向に回転させたときの水平分の長さ
 	float verticalLength = camera_distance * cosf(cameraVertical_);
@@ -75,17 +77,23 @@ void Camera::GameClearUpdate(VECTOR playerPos)
 
 	// カメラ座標の設定
 	// xz座標は水平方向の長さ分進めたところ
-	pos_.x = playerPos.x + verticalLength * sinf(cameraHorizon_);
-	pos_.z = playerPos.z + verticalLength * cosf(cameraHorizon_);
+	goalPos_.x = playerPos.x + verticalLength * sinf(cameraHorizon_);
+	goalPos_.z = playerPos.z + verticalLength * cosf(cameraHorizon_);
 
 	// Ｙ座標は垂直方向分上に
-	pos_.y = playerPos.y + horizonLength;
+	goalPos_.y = playerPos.y + horizonLength;
+
+	VECTOR targetVec = VScale(VNorm(VSub(goalTarget_, target_)), 3.0f);
+	target_ = VAdd(target_, targetVec);
+
+	VECTOR moveVec = VScale(VNorm(VSub(goalPos_, pos_)), 3.0f);
+	pos_ = VAdd(pos_, moveVec);
 
 	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
 	SetCameraNearFar(near_distance, far_distance);
 
 	// カメラの視野角を設定(ラジアン)
-	SetupCamera_Perspective(perspective_ * DX_PI_F / 180.0f);
+	SetupCamera_Perspective(MathUtil::DegreeFromRadian(perspective_));
 
 	// カメラの位置、どこを見ているかを設定する
 	SetCameraPositionAndTargetAndUpVec(pos_, target_, VGet(0, 1, 0));
@@ -123,4 +131,28 @@ VECTOR Camera::GetPos() const
 VECTOR Camera::GetTarget() const 
 {
 	return target_;
+}
+
+void Camera::EntarNormalState()
+{
+}
+
+void Camera::EntarGameClearState()
+{
+}
+
+void Camera::UpdateNormalState()
+{
+}
+
+void Camera::UpdateGameClearState()
+{
+}
+
+void Camera::ExitNormalState()
+{
+}
+
+void Camera::ExitGameClearState()
+{
 }

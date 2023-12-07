@@ -17,6 +17,7 @@ public:
 
 	void InitState() override;
 	void Update() override;
+	void GameOverUpdate() override;
 	void Draw() override;
 
 private:

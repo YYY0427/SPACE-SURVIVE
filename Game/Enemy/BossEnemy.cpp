@@ -262,6 +262,12 @@ void BossEnemy::Update()
 	pModel_->Update();				// モデルの当たり判定、アニメーションの更新
 }
 
+void BossEnemy::GameOverUpdate()
+{
+	pModel_->ChangeAnimation(idle_anim_no, true, false, 8);
+	pModel_->Update();
+}
+
 // 描画
 void BossEnemy::Draw()
 {
@@ -620,6 +626,7 @@ void BossEnemy::UpdateDied()
 		isDraw_ = false;
 		pTriangle_->SetDraw(false);
 		pScreenEffect_->SetShake(100.0f, 0.0f, 180);
+		pLaserManager_->GraduallyAlphaDeleteAllLaser();
 
 		VECTOR pos = ConvWorldPosToScreenPos(pos_);
 		pFlash_->Update({pos.x, pos.y}, 0xffffff);

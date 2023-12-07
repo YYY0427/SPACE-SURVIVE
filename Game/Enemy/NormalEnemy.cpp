@@ -133,6 +133,14 @@ void NormalEnemy::Update()
 	Debug::Log("NormalEnemyPos", pos_);
 }
 
+void NormalEnemy::GameOverUpdate()
+{
+	SinWave(50, 5);
+
+	pModel_->SetPos(pos_);			// 位置
+	pModel_->Update();				// アニメーションの更新
+}
+
 void NormalEnemy::Draw()
 {
 	pModel_->Draw();

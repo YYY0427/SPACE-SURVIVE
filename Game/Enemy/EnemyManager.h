@@ -31,6 +31,7 @@ public:
 	~EnemyManager();
 
 	void Update(int time);
+	void GameOverUpdate();
 	void Draw();
 	void DrawUI();
 

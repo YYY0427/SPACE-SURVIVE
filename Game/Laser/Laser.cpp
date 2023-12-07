@@ -60,6 +60,7 @@ Laser::Laser(int modelHandle, VECTOR* firePos, VECTOR* vec, float fireFrameTime,
 	pModel_->SetScale(scale_);		// 拡大率
 	pModel_->SetRotMtx(rotMtx_);	// 回転行列
 	pModel_->SetPos(pos_);			// 位置
+	pModel_->SetOpacity(alpha_);	// 不透明度
 	pModel_->Update();				// 当たり判定の更新
 }
 
@@ -108,6 +109,7 @@ void Laser::Update()
 	pModel_->SetRotMtx(rotMtx_);
 	pModel_->SetScale(scale_);
 	pModel_->SetPos(pos_);
+	pModel_->SetOpacity(alpha_);	// 不透明度
 	pModel_->Update();
 }
 

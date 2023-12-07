@@ -25,6 +25,10 @@ namespace
 
 	// ゲームクリア時のカメラの回転速度
 	constexpr float camera_rotate_speed = 0.03f;
+
+	// ゲームクリア時のカメラの移動速度
+	constexpr float camera_move_speed = 3.0f;
+
 }
 
 // コンストラクタ
@@ -34,12 +38,14 @@ Camera::Camera() :
 	perspective_(normal_perspective),
 	perspectiveRange_({ normal_perspective, boosting_perspective }),
 	cameraVertical_(0.0f),
-	cameraHorizon_(DX_PI_F)
+	cameraHorizon_(DX_PI_F),
+	isFirst_(false),
+	shakeFrame_(0),
+	goalTarget_({}),
+	goalPos_({})
 {
 	pos_ = camera_pos;
 	target_ = camera_init_target;
-
-//	stateMachine_.AddState(State::Normal, std::bind(&Camera::UpdateNormalState, this), std::bind(&Camera::EntarNormalState, this), std::bind(&Camera::ExitNormalState, this));
 }
 
 // デストラクタ
@@ -54,7 +60,7 @@ void Camera::Update()
 	SetCameraNearFar(near_distance, far_distance);
 
 	// カメラの視野角を設定(ラジアン)
-	SetupCamera_Perspective(perspective_ * DX_PI_F / 180.0f);
+	SetupCamera_Perspective(MathUtil::DegreeFromRadian(perspective_));
 
 	// カメラの位置、どこを見ているかを設定する
 	SetCameraPositionAndTargetAndUpVec(pos_, target_, VGet(0, 1, 0));
@@ -63,11 +69,14 @@ void Camera::Update()
 // ゲームクリア時の更新
 void Camera::GameClearUpdate(VECTOR playerPos)
 {
+	if (!isFirst_)
+	{
+		isFirst_ = true;
+		goalTarget_ = playerPos;
+	}
+
 	cameraHorizon_ -= camera_rotate_speed;
 	cameraHorizon_ = (std::max)(cameraHorizon_, MathUtil::DegreeFromRadian(30));
-
-	// カメラの注視点をプレイヤーの位置に設定
-	goalTarget_ = playerPos;
 
 	// 基準の長さを垂直方向に回転させたときの水平分の長さ
 	float verticalLength = camera_distance * cosf(cameraVertical_);
@@ -83,20 +92,28 @@ void Camera::GameClearUpdate(VECTOR playerPos)
 	// Ｙ座標は垂直方向分上に
 	goalPos_.y = playerPos.y + horizonLength;
 
-	VECTOR targetVec = VScale(VNorm(VSub(goalTarget_, target_)), 3.0f);
-	target_ = VAdd(target_, targetVec);
+	if (VSize(VSub(goalPos_, pos_)) > camera_move_speed)
+	{
+		VECTOR moveVec = VScale(VNorm(VSub(goalPos_, pos_)), camera_move_speed);
+		pos_ = VAdd(pos_, moveVec);
+	}
 
-	VECTOR moveVec = VScale(VNorm(VSub(goalPos_, pos_)), 3.0f);
-	pos_ = VAdd(pos_, moveVec);
+	if (VSize(VSub(goalTarget_, target_)) > camera_move_speed)
+	{
+		VECTOR targetVec = VScale(VNorm(VSub(goalTarget_, target_)), camera_move_speed);
+		target_ = VAdd(target_, targetVec);
+	}
+}
 
-	// カメラからどれだけ離れたところ( Near )から、 どこまで( Far )のものを描画するかを設定
-	SetCameraNearFar(near_distance, far_distance);
+void Camera::GameOverUpdate(VECTOR playerPos)
+{
+	goalTarget_ = playerPos;
 
-	// カメラの視野角を設定(ラジアン)
-	SetupCamera_Perspective(MathUtil::DegreeFromRadian(perspective_));
-
-	// カメラの位置、どこを見ているかを設定する
-	SetCameraPositionAndTargetAndUpVec(pos_, target_, VGet(0, 1, 0));
+	if (VSize(VSub(goalTarget_, target_)) > camera_move_speed)
+	{
+		VECTOR targetVec = VScale(VNorm(VSub(goalTarget_, target_)), camera_move_speed);
+		target_ = VAdd(target_, targetVec);
+	}
 }
 
 void Camera::ShakeX(int shakeFrame, float shakeSize)
@@ -131,28 +148,4 @@ VECTOR Camera::GetPos() const
 VECTOR Camera::GetTarget() const 
 {
 	return target_;
-}
-
-void Camera::EntarNormalState()
-{
-}
-
-void Camera::EntarGameClearState()
-{
-}
-
-void Camera::UpdateNormalState()
-{
-}
-
-void Camera::UpdateGameClearState()
-{
-}
-
-void Camera::ExitNormalState()
-{
-}
-
-void Camera::ExitGameClearState()
-{
 }

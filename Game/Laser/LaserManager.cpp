@@ -98,7 +98,6 @@ void LaserManager::Reflect(const VECTOR pos, const VECTOR vec, const VECTOR norm
 	if (it == pLaseres_.end()) 
 	{
 		// 見つからなかった
-
 		// 反射レーザーを作成
 		LaserData data;
 		data.type = LaserType::REFLECT;
@@ -109,8 +108,8 @@ void LaserManager::Reflect(const VECTOR pos, const VECTOR vec, const VECTOR norm
 	}
 	else 
 	{
-
 		// 見つかった
+		// 反射レーザーの更新
 		auto a = std::dynamic_pointer_cast<ReflectLaser>(it->pLaser);
 		a->ReflectLaserUpdate(pos, reflectVec);
 	}
@@ -126,6 +125,14 @@ void LaserManager::DeleteContinueLaser()
 	pLaseres_.remove_if(
 		[](LaserData data)
 		{ return data.type == LaserType::NORMAL_INFINITY; });
+}
+
+void LaserManager::GraduallyAlphaDeleteAllLaser()
+{
+	for (auto& laser : pLaseres_)
+	{
+		laser.pLaser->GraduallyAlphaDelete();
+	}
 }
 
 const std::list<LaserData>& LaserManager::GetLazeres() const

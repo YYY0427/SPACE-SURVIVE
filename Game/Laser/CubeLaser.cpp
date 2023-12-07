@@ -25,6 +25,7 @@ CubeLaser::CubeLaser(int modelHandle, VECTOR pos, VECTOR vec)
 	deltaRot_ = 1.0f * (static_cast<float>(GetRand(10)) * 0.1f);
 	deltaRot_ = deltaRot_ * DX_PI_F / 180.0f;
 
+	pModel_->SetOpacity(alpha_);	// 不透明度
 	pModel_->SetPos(pos_);
 	pModel_->Update();
 }
@@ -54,6 +55,7 @@ void CubeLaser::Update()
 	pModel_->SetScale(scale_);
 	pModel_->SetRot(rot_);
 	pModel_->SetPos(pos_);
+	pModel_->SetOpacity(alpha_);	// 不透明度
 	pModel_->Update();
 }
 
@@ -64,8 +66,4 @@ void CubeLaser::Draw()
 
 void CubeLaser::ConfirmDelete()
 {
-	if (CheckCameraViewClip(pos_))
-	{
-	//	isEnabled_ = false;
-	}
 }

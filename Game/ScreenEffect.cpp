@@ -1,11 +1,15 @@
 #include "ScreenEffect.h"
+#include "common.h"
 #include <DxLib.h>
 
 ScreenEffect::ScreenEffect() :
 	quakeX_(0.0f),
-	quakeY_(0.0f)
+	quakeY_(0.0f),
+	alpha_(0),
+	speed_(0),
+	color_(0x000000)
 {
-	frame_.SetTime(0);
+	quakeFrame_.SetTime(0);
 }
 
 ScreenEffect::~ScreenEffect()
@@ -14,12 +18,16 @@ ScreenEffect::~ScreenEffect()
 
 void ScreenEffect::Update()
 {
-	if (frame_.GetTime() > 0)
+	alpha_ -= speed_;
+	alpha_ = (std::max)(alpha_, 0);
+
+	// —h‚ê‚Ìˆ—
+	if (quakeFrame_.GetTime() > 0)
 	{
 		// ‰æ–Ê‚ð—h‚ç‚·
 		quakeX_ *= -0.95f;
 		quakeY_ *= -0.95f;
-		frame_.Update(-1);
+		quakeFrame_.Update(-1);
 	}
 	else
 	{
@@ -31,13 +39,24 @@ void ScreenEffect::Update()
 void ScreenEffect::Draw(int screenHandle)
 {
 	DrawGraph(static_cast<int>(quakeX_), static_cast<int>(quakeY_), screenHandle, false);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha_);
+	DrawBox(0, 0, common::screen_width, common::screen_height, color_, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void ScreenEffect::SetShake(float quakeXSize, float quakeYSize, int frame)
 {
-	if (frame_.GetTime() > 0)	return;
+	if (quakeFrame_.GetTime() > 0)	return;
 
 	quakeX_ = quakeXSize;
 	quakeY_ = quakeYSize;
-	frame_.SetTime(frame);	
+	quakeFrame_.SetTime(frame);
+}
+
+void ScreenEffect::SetScreenColor(unsigned int color, int alpha, int speed)
+{
+	color_ = color;
+	alpha_ = alpha;
+	speed_ = speed;
 }

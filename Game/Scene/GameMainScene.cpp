@@ -57,7 +57,7 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 		[this]() { ExitGameClearState(); }
 		);
 	stateMachine_.AddState(
-		State::GAME_CLEAR,
+		State::GAME_OVER,
 		[this]() { EntarGameOverState(); },
 		[this]() { UpdateGameOverState(); },
 		[this]() { ExitGameOverState(); }
@@ -75,12 +75,40 @@ GameMainScene::~GameMainScene()
 // メンバ関数ポインタの更新
 void GameMainScene::Update()
 {
+	// フェードが終わり次第シーン遷移
+	if (IsStartFadeOutAfterFadingOut())
+	{
+		switch (item_)
+		{
+			// ポーズシーンに遷移
+		case SceneItem::PAUSE:
+			manager_.PushScene(new PauseScene(manager_));
+			break;
+
+		case SceneItem::TITLE:
+#ifdef _DEBUG
+			manager_.ChangeScene(new DebugScene(manager_));
+#else
+			manager_.ChangeScene(new TitleScene(manager_));
+#endif
+			return;
+		}
+		// PushSceneするのでシーンが残るためフェードインの設定
+		StartFadeIn();
+		return;
+	}
+
+	// タイマーの更新
 	gameTimer_.Update(1);
 
 	// ステートマシンの更新
 	stateMachine_.Update();
 
+	// 画面エフェクトの更新
 	pScreenEffect_->Update();
+
+	// フェードの更新
+	UpdateFade();
 }
 
 // 描画
@@ -122,7 +150,6 @@ void GameMainScene::Draw()
 
 	// 画面の描画
 	pScreenEffect_->Draw(screenHandle_);
-//	DrawGraph(static_cast<int>(quakeX_), 0, screenHandle_, false);
 }
 
 void GameMainScene::EntarNormalState()
@@ -131,7 +158,7 @@ void GameMainScene::EntarNormalState()
 
 void GameMainScene::EntarGameClearState()
 {
-	waitTimer_ = Timer<int>(120);
+	waitTimer_ = 120;
 }
 
 void GameMainScene::EntarGameOverState()
@@ -140,33 +167,11 @@ void GameMainScene::EntarGameOverState()
 
 void GameMainScene::UpdateNormalState()
 {
-	// フェードが終わり次第シーン遷移
-	if (IsStartFadeOutAfterFadingOut())
-	{
-		switch (item_)
-		{
-			// ポーズシーンに遷移
-		case SceneItem::PAUSE:
-			manager_.PushScene(new PauseScene(manager_));
-			break;
-
-		case SceneItem::TITLE:
-#ifdef _DEBUG
-			manager_.ChangeScene(new DebugScene(manager_));
-#else
-			manager_.ChangeScene(new TitleScene(manager_));
-#endif
-			return;
-		}
-		// PushSceneするのでシーンが残るためフェードインの設定
-		StartFadeIn();
-		return;
-	}
-
 	// 更新
 	pPlayer_->Update(pCamera_->GetCameraYaw());
 	pEnemyManager_->Update(gameTimer_.GetTime());
 	pLaserManager_->Update();
+	pCamera_->Update();
 
 	// 当たり判定
 	Collision();
@@ -179,7 +184,7 @@ void GameMainScene::UpdateNormalState()
 		item_ = SceneItem::PAUSE;
 	}
 
-	//// ゲームクリア
+	// ゲームクリア
 	if (pEnemyManager_->IsBossDied())
 	{
 		stateMachine_.SetState(State::GAME_CLEAR);
@@ -188,15 +193,8 @@ void GameMainScene::UpdateNormalState()
 	// ゲームオーバー
 	if (!pPlayer_->IsLive())
 	{
-		// フェードアウト開始
-		StartFadeOut(255, 10);
-		item_ = SceneItem::TITLE;
+		stateMachine_.SetState(State::GAME_OVER);
 	}
-
-	pCamera_->Update();
-
-	// フェードの更新
-	UpdateFade();
 }
 
 void GameMainScene::UpdateGameClearState()
@@ -204,12 +202,36 @@ void GameMainScene::UpdateGameClearState()
 	waitTimer_.Update(1);
 	if (waitTimer_.IsTimeOut())
 	{
+		// ゲームクリア演出
 		pCamera_->GameClearUpdate(pPlayer_->GetPos());
+		
+		// TODO : ゲームクリアの文字を出す演出を追加する
+
+		// タイトルに戻る
+		if (InputState::IsTriggered(InputType::DECISION))
+		{
+			// フェードアウト開始
+			StartFadeOut(255, 5);
+			item_ = SceneItem::TITLE;
+		}	
 	}
 }
 
 void GameMainScene::UpdateGameOverState()
 {
+	pLaserManager_->GraduallyAlphaDeleteAllLaser();
+	pPlayer_->GameOverUpdate();
+	pEnemyManager_->GameOverUpdate();
+	pCamera_->GameOverUpdate(pPlayer_->GetPos());
+
+
+	// タイトルに戻る
+	if (InputState::IsTriggered(InputType::DECISION))
+	{
+		// フェードアウト開始
+		StartFadeOut(255, 5);
+		item_ = SceneItem::TITLE;
+	}
 }
 
 void GameMainScene::ExitNormalState()
@@ -307,8 +329,12 @@ void GameMainScene::Collision()
 		// 1つでもポリゴンと当たっていたら
 		if (result.HitNum > 0)
 		{
-
 			pPlayer_->OnDamage();
+
+			// 画面を揺らす
+			pScreenEffect_->SetShake(3, 3, 10);
+
+			pScreenEffect_->SetScreenColor(0xff0000, 50, 3);
 
 			Debug::Log("あああああああああああああああああああああ");
 

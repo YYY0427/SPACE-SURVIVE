@@ -28,11 +28,16 @@ public:
 	/// <param name="norm">シールドの法線情報</param>
 	void Reflect(const VECTOR pos, const VECTOR vec, const VECTOR normal);
 
+	// 反射レーザーの削除
 	void DeleteReflectLaser();
 
 	// 継続レーザーの削除
 	void DeleteContinueLaser();
 
+	// 全てのレーザーの削除
+	void GraduallyAlphaDeleteAllLaser();
+
+	// レーザーの取得
 	const std::list<LaserData>& GetLazeres() const;
 
 private:

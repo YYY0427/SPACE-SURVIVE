@@ -8,7 +8,8 @@ LaserBase::LaserBase():
 	scale_({}),
 	firePos_(nullptr),
 	isEnabled_(true),
-	isReflect_(false)
+	isReflect_(false),
+	alpha_(1.0f)
 {
 }
 
@@ -29,6 +30,16 @@ int LaserBase::GetModelHandle() const
 VECTOR LaserBase::GetVec() const
 {
 	return vec_;
+}
+
+void LaserBase::GraduallyAlphaDelete()
+{
+	alpha_ -= 0.05f;
+	if (alpha_ < 0.0f)
+	{
+		isEnabled_ = false;
+	}
+	pModel_->SetOpacity(alpha_);
 }
 
 bool LaserBase::IsReflect() const

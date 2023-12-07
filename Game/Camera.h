@@ -3,7 +3,6 @@
 #include <memory>
 #include "Util/Range.h"
 #include "Util/Timer.h"
-#include "StateMachine.h"
 
 /// <summary>
 /// カメラの管理クラス
@@ -26,6 +25,9 @@ public:
 	// ゲームクリア時の更新
 	void GameClearUpdate(VECTOR playerPos);
 
+	// ゲームオーバー時の更新
+	void GameOverUpdate(VECTOR playerPos);	
+
 	// カメラを決められたフレームの間、x軸に揺らす
 	void ShakeX(int shakeFrame, float shakeSize);
 
@@ -42,25 +44,6 @@ public:
 	VECTOR GetTarget() const;
 
 private:
-	void EntarNormalState();
-	void EntarGameClearState();
-
-	void UpdateNormalState();
-	void UpdateGameClearState();
-
-	void ExitNormalState();
-	void ExitGameClearState();
-
-private:
-	enum class State
-	{
-		NORMAL,
-		GAME_CLEAR,
-
-	};
-
-private:
-	StateMachine<State> stateMachine_;
 
 	// カメラの位置
 	VECTOR pos_;
@@ -85,4 +68,7 @@ private:
 	// 回転角度
 	float cameraYaw_;	// Y軸
 	float cameraPitch_;	// X軸
+
+	// 初回かどうか
+	bool isFirst_;	
 };

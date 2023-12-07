@@ -25,6 +25,8 @@ public:
 
 	virtual void InitState() = 0;
 	virtual void Update() = 0;
+	virtual void GameOverUpdate() = 0;
+
 	virtual void Draw() = 0;
 	virtual void DrawUI(){};
 

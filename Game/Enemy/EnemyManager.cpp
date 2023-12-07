@@ -77,7 +77,15 @@ void EnemyManager::Update(int time)
 	}
 
 	(this->*updateFunc_)();
-}	
+}
+
+void EnemyManager::GameOverUpdate()
+{
+	for (auto& enemy : pEnemies_)
+	{
+		enemy->GameOverUpdate();
+	}
+}
 
 void EnemyManager::Draw()
 {

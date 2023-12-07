@@ -44,10 +44,16 @@ namespace
 	constexpr int ultimate_frames = 120;
 
 	// 最大HP
-	constexpr int max_hp = 1000;
+	constexpr int max_hp = 3;
 
 	// 何フレーム前まで位置情報を保存するか
 	constexpr int log_frame = 10;
+
+	// プレイヤーの横幅
+	constexpr float player_width = 50.0f;
+
+	// プレイヤーの縦幅
+	constexpr float player_height = 50.0f;
 }
 
 //  コンストラクタ
@@ -60,9 +66,9 @@ Player::Player() :
 	energyGauge_(energy_gauge_total_amount),
 	playerDeadEffectHandle_(-1),
 	isPlayGameOverEffect_(false),
-	isReverseMoveVec_(false),
 	boostEffectScale_({ 20.0f, 20.0f, 20.0f }),
-	boostEffectSpeed_(1.0f)
+	boostEffectSpeed_(1.0f),
+	waitTimer_(300)
 {
 	pos_ = init_pos;
 	rot_ = init_rot;
@@ -157,34 +163,34 @@ void Player::Update(float cameraYaw)
 		// ワールド座標をスクリーン座標に変換
 		VECTOR screenPos = ConvWorldPosToScreenPos(tempPos);
 
-		if (screenPos.x > common::screen_width)
+		if (screenPos.x > common::screen_width - player_width)
 		{
-			screenPos.x = common::screen_width;
-			VECTOR a = ConvScreenPosToWorldPos(screenPos);
-			pos_.x = a.x;
-			pos_.y = a.y;
+			screenPos.x = common::screen_width - player_width;
+			VECTOR worldPos = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = worldPos.x;
+			pos_.y = worldPos.y;
 		}
-		else if (screenPos.x < 0)
+		else if (screenPos.x < 0 + player_width)
 		{
-			screenPos.x = 0;
-			VECTOR a = ConvScreenPosToWorldPos(screenPos);
-			pos_.x = a.x;
-			pos_.y = a.y;
+			screenPos.x = 0 + player_width;
+			VECTOR worldPos = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = worldPos.x;
+			pos_.y = worldPos.y;
 		}
-		else if (screenPos.y > common::screen_height)
+		else if (screenPos.y > common::screen_height - player_height)
 		{
-			screenPos.y = common::screen_height;
-			VECTOR a = ConvScreenPosToWorldPos(screenPos);
-			pos_.x = a.x;
-			pos_.y = a.y;
+			screenPos.y = common::screen_height - player_height;
+			VECTOR worldPos = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = worldPos.x;
+			pos_.y = worldPos.y;
 
 		}
-		else if (screenPos.y < 0)
+		else if (screenPos.y < 0 + player_height)
 		{
-			screenPos.y = 0;
-			VECTOR a = ConvScreenPosToWorldPos(screenPos);
-			pos_.x = a.x;
-			pos_.y = a.y;
+			screenPos.y = 0 + player_height;
+			VECTOR worldPos = ConvScreenPosToWorldPos(screenPos);
+			pos_.x = worldPos.x;
+			pos_.y = worldPos.y;
 		}
 		else
 		{
@@ -228,64 +234,35 @@ void Player::Update(float cameraYaw)
 	pShield_->Update();
 }
 
-//// 衝突時の更新
-//bool Player::OnDamageUpdate()
-//{
-//	// ブースト時のエフェクトの再生のストップ
-//	Effekseer3DEffectManager::GetInstance().DeleteEffect(boostEffectHandle_);
-//	
-//	// 移動ベクトルを反転していなかったら反転
-//	// 既に反転していたら反転しない
-//	if (!isReverseMoveVec_)
-//	{
-//		isReverseMoveVec_ = true;
-//		moveVec_ = VScale(moveVec_, -1.0f);
-//	}
-//
-//	// ベクトルを徐々に小さくする
-//	moveVec_ = VScale(moveVec_, 0.96f);
-//
-//	// 作成した移動ベクトルで座標の移動
-//	pos_ = VAdd(pos_, moveVec_);
-//
-//	// ベクトルが特定の大きさよりも小さくなったらゲームオーバーエフェクト再生
-//	if(VSize(moveVec_) <= 1.0f)
-//	{
-//		// ダメージ処理
-//		OnDamage();
-//
-//		// エフェクトを再生し終えたらtrueを返す
-//		if (!Effekseer3DEffectManager::GetInstance().IsPlayingEffect(playerDeadEffectHandle_) && isPlayGameOverEffect_)
-//		{
-//			// 初期化
-//			isReverseMoveVec_ = false;
-//
-//			isPlayGameOverEffect_ = false;
-//
-//			return true;
-//		}
-//
-//		// ゲームオーバーエフェクトを再生してなかったら再生
-//		// 既に再生していたら再生しない
-//		if (!isPlayGameOverEffect_)
-//		{
-//			isPlayGameOverEffect_ = true;
-//			Effekseer3DEffectManager::GetInstance().PlayEffect(playerDeadEffectHandle_, EffectID::player_dead, pos_, { 50.0f, 50.0f, 50.0f }, 0.5f);
-//		}
-//	}
-//	
-//	// 位置座標の設定
-//	pModel_->SetPos(pos_);
-//
-//	// 向いている方向の設定
-//	pModel_->SetRot(VGet(VSize(moveVec_) / 5.0f, 0.0f, VSize(moveVec_) / 10.0f));
-//
-//	// アニメーションと当たり判定の更新
-//	pModel_->Update();
-//
-//	// 処理が途中なのでfalseを返す
-//	return false;
-//}
+void Player::GameOverUpdate()
+{
+	waitTimer_.Update(1);
+	if (waitTimer_.IsTimeOut() && !isPlayGameOverEffect_)
+	{
+		isPlayGameOverEffect_ = true;
+		auto& effectManager = Effekseer3DEffectManager::GetInstance();
+		effectManager.DeleteEffect(boostEffectHandle_);
+		effectManager.PlayEffectFollow(playerDeadEffectHandle_, EffectID::player_dead, &pos_, { 50.0f, 50.0f, 50.0f }, 0.5f);
+	}
+	else if(!waitTimer_.IsTimeOut())
+	{
+		moveVec_ = { 0.0f, -0.1f, 1.0f };
+		moveVec_ = VNorm(moveVec_);
+		moveVec_ = VScale(moveVec_, 2.0f);
+
+		// 作成した移動ベクトルで座標の移動
+		pos_ = VAdd(pos_, moveVec_);
+	}
+
+	// 位置座標の設定
+	pModel_->SetPos(pos_);
+
+	// 向いている方向の設定
+	pModel_->SetRot({ VSize(moveVec_), 0.0f, VSize(moveVec_) });
+
+	// アニメーションと当たり判定の更新
+	pModel_->Update();
+}
 
 // エネルギー処理
 void Player::EnergyProcess()
@@ -306,15 +283,6 @@ void Player::Draw()
 	Debug::Log("energyGauge", energyGauge_);
 	Debug::Log("プレイヤーHP", hp_);
 
-	// 無敵時間の点滅
-	/*if (IsUltimate())
-	{
-		if ((ultimateTimer_ / 5) % 2 == 0)
-		{
-			return;
-		}
-	}*/
-
 	// プレイヤーモデルの描画
 	if (!isPlayGameOverEffect_)
 	{
@@ -331,35 +299,12 @@ void Player::DrawUI()
 	pShield_->DrawUI();
 }
 
-//// プレイヤーのリスポーン処理
-//void Player::Respawn(VECTOR restartPos)
-//{
-//	// Y軸の値を大きくする
-//	// そのままだと道にめり込むため
-//	restartPos = VGet(restartPos.x, restartPos.y + 200.0f, restartPos.z);
-//
-//	// リスポーン
-//	pos_ = restartPos;
-//}
-
 // ダメージ処理
 void Player::OnDamage()
 {
-	// 無敵時間中はダメージを受けない
-//	if (IsUltimate()) return;
-
 	// HPを減らす
 	hp_--;
-
-	// 無敵時間の設定
-//	ultimateTimer_ = ultimate_frames;
 }
-
-//// プレイヤーが無敵時間中か
-//bool Player::IsUltimate() const
-//{
-//	return (ultimateTimer_ > 0) ? true : false;
-//}
 
 bool Player::IsLive() const
 {

@@ -20,8 +20,7 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	// ƒJƒƒ‰“à‚É‘¶İ‚·‚é‚©
-	// ‘¶İ‚µ‚È‚©‚Á‚½‚çíœ‚·‚é
+	// ‘¶İ‚·‚é‚©Šm”F‚µ‚Äíœ
 	virtual void ConfirmDelete() {}
 
 	bool IsEnabled() const;
@@ -29,6 +28,8 @@ public:
 	int GetModelHandle() const;
 
 	virtual VECTOR GetVec() const;
+
+	void GraduallyAlphaDelete();
 
 	bool IsReflect() const;
 	void SetIsReflect(bool isReflect);
@@ -41,6 +42,7 @@ protected:
 	VECTOR vec_;
 	VECTOR rot_;
 	VECTOR scale_;
+	float alpha_;
 
 	bool isReflect_;
 	bool isEnabled_;

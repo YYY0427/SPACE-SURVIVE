@@ -19,31 +19,17 @@ public:
 
 	// 更新
 	void Update(float cameraYaw);
+	void GameOverUpdate();
 
 	// 描画
 	void Draw();
 	void DrawUI();
 
-	/// <summary>
-	/// 衝突時の更新
-	/// </summary>
-	/// <returns>処理が終了したか true : 処理終了, false : 処理途中</returns>
-	bool OnDamageUpdate();
-
 	// エネルギーの処理
 	void EnergyProcess();
 
-	// プレイヤーのリスポーン処理
-	void Respawn(VECTOR restartPos);
-
 	// プレイヤーのダメージ処理
 	void OnDamage();
-
-	/// <summary>
-	/// プレイヤーが無敵時間中か
-	/// </summary>
-	/// <returns>true : 無敵時間中, false : 無敵時間中じゃない</returns>
-	bool IsUltimate() const;
 
 	/// <summary>
 	/// プレイヤーが生きているか
@@ -105,12 +91,11 @@ private:
 	// エネルギーゲージ
 	float energyGauge_;
 
-	// 移動ベクトルを反転したか
-	bool isReverseMoveVec_;
-
 	// 左スティックが入力されたか
 	bool isInput_;
 
 	// ゲームオーバーエフェクトを再生したか
 	bool isPlayGameOverEffect_;
+
+	Timer<int> waitTimer_;
 };

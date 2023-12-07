@@ -22,6 +22,7 @@ public:
 
 	// 更新
 	void Update() override;
+	void GameOverUpdate() override;
 
 	// 描画
 	void Draw() override;		// モデル、その他

@@ -5,6 +5,18 @@
 // プロトタイプ宣言
 class SceneBase;
 
+// シーンのID
+enum class SceneID
+{
+	TITLE,
+	GAME_MAIN,
+	OPTION,
+	PAD_CONFIG,
+	TEST,
+	DEBUG,
+	PAUSE,
+};
+
 // シーンの管理クラス
 class SceneManager
 {
@@ -38,14 +50,14 @@ public:
 	/// main.cppでwhile分を抜けるために作成
 	/// </summary>
 	/// <returns>true : ゲーム終了, false : 終了しない</returns>
-	bool GetIsGameEnd() const;
+	bool GetGameEnd() const;
 
 	/// <summary>
 	/// ゲームを終了するかどうかの設定
 	/// main.cppでwhile分を抜けるために作成
 	/// </summary>
 	/// <param name="isGameEnd">true : ゲーム終了, false : 終了しない</param>
-	void SetIsGameEnd(bool isGameEnd);
+	void SetGameEnd(bool isGameEnd);
 
 	// シーンの更新
 	// 一番上のシーンだけ更新

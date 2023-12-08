@@ -144,7 +144,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 		// ゲームを終了するかのフラグのチェック
 		// フラグが立っていた場合ループを抜けてゲームを終了
-		if (sceneManager.GetIsGameEnd())	break;
+		if (sceneManager.GetGameEnd())	break;
 
 #ifdef _DEBUG
 		// escキーを押したら終了する

@@ -24,7 +24,7 @@ namespace
 	constexpr int draw_text_pos_y = common::screen_height / 2 + 100;
 
 	// テキストの文字間
-	constexpr int text_space_y = 70;
+	constexpr int text_space_y = 50;
 }
 
 // コンストラクタ
@@ -102,7 +102,7 @@ void TitleScene::NormalUpdate()
 			manager_.ChangeScene(new DebugScene(manager_));
 			return;
 #else 
-			manager_.SetIsGameEnd(true);
+			manager_.SetGameEnd(true);
 #endif
 			return;
 
@@ -125,23 +125,26 @@ void TitleScene::NormalUpdate()
 void TitleScene::Draw()
 {
 	// 背景の描画
-	DrawRotaGraph(common::screen_width / 2, common::screen_height / 2, 1.0, 0.0, backGroundHandle_, true);
+//	DrawRotaGraph(common::screen_width / 2, common::screen_height / 2, 1.0, 0.0, backGroundHandle_, true);
 
 	// タイトルのロゴの描画
-	DrawRotaGraph(common::screen_width / 2, common::screen_height / 2 - 150, 0.3, 0.0, titleLogoHandle_, true);
+//	DrawRotaGraph(common::screen_width / 2, common::screen_height / 2 - 150, 0.3, 0.0, titleLogoHandle_, true);
 
 	// 現在のシーンのテキスト描画
 	Debug::Log("TitleScne");
 
-	// 項目の描画
+	// タイトルの描画
 	auto& stringManager = StringManager::GetInstance();
+	stringManager.DrawStringCenter("TitleLogo", common::screen_width / 2, 300, 0xffffff);
+
+	// 項目の描画
 	stringManager.DrawStringCenter("TitleItemStart", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::START), 0xffffff);
 	stringManager.DrawStringCenter("TitleItemOption", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::OPSITON), 0xffffff);
-	stringManager.DrawStringCenter("TitleItemEnd", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::END), 0xffffff);
+	stringManager.DrawStringCenter("TitleItemExit", common::screen_width / 2, draw_text_pos_y + text_space_y * static_cast<int>(Item::END), 0xffffff);
 
 	// 選択中の項目にバーを描画
-	stringManager.DrawString("TitleItemSelectBarRight", common::screen_width / 2 - 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
-	stringManager.DrawString("TitleItemSelectBarLeft", common::screen_width / 2  + 90, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
+	stringManager.DrawStringCenter("TitleItemSelectBarRight", common::screen_width / 2 - 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
+	stringManager.DrawStringCenter("TitleItemSelectBarLeft", common::screen_width / 2 + 100, draw_text_pos_y + text_space_y * currentSelectItem_, 0xffffff);
 
 	// モザイクフェードの描画
 	DrawGaussFade(fadeDataTable_[currentSelectItem_].isFade);

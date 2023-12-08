@@ -163,6 +163,8 @@
     <ClCompile Include="Laser\ReflectLaser.cpp" />
     <ClCompile Include="ScreenEffect.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UI\EnergyGage.cpp" />
     <ClCompile Include="UI\HpBar.cpp" />
     <ClCompile Include="Laser\CubeLaser.cpp" />
@@ -212,6 +214,8 @@
     <ClInclude Include="ScreenEffect.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="UI\EnergyGage.h" />
     <ClInclude Include="UI\HpBar.h" />
     <ClInclude Include="Laser\CubeLaser.h" />

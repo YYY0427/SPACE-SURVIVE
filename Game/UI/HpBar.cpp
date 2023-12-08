@@ -81,6 +81,7 @@ bool HpBar::IsEndFirstDirection() const
 void HpBar::NormalUpdate(const float aimHpSpeed)
 {
 	hp_ = aimHp_;
+	hp_ = (std::max)(hp_, 0.0f);
 
 	damageTimer_.Update(-1);
 	if (damageTimer_.GetTime() <= 0)
@@ -97,7 +98,6 @@ void HpBar::NormalUpdate(const float aimHpSpeed)
 			}
 		}
 	}
-
 	Debug::Log("aimHp", aimHp_);
 }
 

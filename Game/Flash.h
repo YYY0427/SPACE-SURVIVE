@@ -1,8 +1,9 @@
 #pragma once
 #include "Vector2.h"
 #include "Util/Timer.h"
+#include "UIBase.h"
 
-class Flash
+class Flash : public UIBase
 {
 public:
 	Flash(int enableFrame);

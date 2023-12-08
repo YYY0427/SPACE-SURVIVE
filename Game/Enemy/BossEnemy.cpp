@@ -143,6 +143,15 @@ BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shar
 	// ステートの設定
 	stateMachine_.SetState(State::ENTRY);
 
+	// 攻撃のステートを保存
+	attackStateTable_.push_back(State::MOVE_ATTACK_CUBE_LASER);
+	attackStateTable_.push_back(State::MOVE_ATTACK_NORMAL_LASER);
+	attackStateTable_.push_back(State::STOP_ATTACK_CUBE_LASER);
+	attackStateTable_.push_back(State::STOP_ATTACK_NORMAL_LASER);
+
+	// 攻撃の順序をシャッフル
+	attackState_ = GetRand(static_cast<int>(attackStateTable_.size()) - 1);
+
 	// インスタンス生成
 	pModel_ = std::make_unique<Model>(modelHandle);
 	pHpBar_ = std::make_unique<HpBar>(max_hp);
@@ -209,12 +218,6 @@ void BossEnemy::InitState()
 		[this]() { this->EntarMoveNormalLaserAttack(); },
 		[this]() { this->UpdateMoveNormalLaserAttack(); },
 		[this]() { this->ExitMoveNormalLaserAttack(); });
-
-	// 攻撃のステートを保存
-	attackStateTable_.push_back(State::MOVE_ATTACK_CUBE_LASER);
-	attackStateTable_.push_back(State::MOVE_ATTACK_NORMAL_LASER);
-	attackStateTable_.push_back(State::STOP_ATTACK_CUBE_LASER);
-	attackStateTable_.push_back(State::STOP_ATTACK_NORMAL_LASER);
 }
 
 // 更新

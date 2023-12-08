@@ -57,13 +57,13 @@ void SceneManager::PopScene()
 }
 
 // ゲームを終了するかどうかの取得
-bool SceneManager::GetIsGameEnd() const
+bool SceneManager::GetGameEnd() const
 {
 	return isGameEnd_;
 }
 
 // ゲームを終了するかどうかの設定
-void SceneManager::SetIsGameEnd(bool isGameEnd)
+void SceneManager::SetGameEnd(bool isGameEnd)
 {
 	isGameEnd_ = isGameEnd;
 }
@@ -98,10 +98,12 @@ void SceneManager::Draw()
 
 	drawTime_ = GetNowHiPerformanceCount() - start;
 
+	// 1フレームにかかった描画時間を表示
 	float rate = static_cast<float>(updateTime_ + drawTime_) / static_cast<float>((1000 / common::fps) * 1000);
 	int width = static_cast<int>(common::screen_width * rate);
 	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0xff0000, true);
 
+	// 1フレームにかかった更新時間を表示
 	rate = static_cast<float>(updateTime_) / static_cast<float>((1000 / common::fps) * 1000);
 	width = static_cast<int>(common::screen_width * rate);
 	DrawBox(0, common::screen_height - 16, width, common::screen_height, 0x0000ff, true);

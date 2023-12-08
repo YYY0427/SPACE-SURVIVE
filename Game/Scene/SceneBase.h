@@ -66,7 +66,7 @@ public:
 	/// フェードアウトスタート後にフェードアウト中ではないか 
 	/// </summary>
 	/// <returns>true : フェードアウト処理をスタートしていてフェードアウト中ではない,
-	///			false : フェードアウト処理をスタートしていない,　スタートしているがフェードアウト中</returns>
+	///			 false : フェードアウト処理をスタートしていない,　スタートしているがフェードアウト中</returns>
 	bool IsStartFadeOutAfterFadingOut();
 
 	// フェードの明るさの取得
@@ -83,6 +83,7 @@ protected:
 	SceneManager& manager_;
 
 private:
+	/*フェード*/
 	// フェードの色
 	unsigned int fadeColor_;		
 
@@ -103,5 +104,7 @@ private:
 	// フェードの上限値
 	// 0(フェードしない)～255(最後までフェードを行う)
 	int fadeBrightUpperLimitValue_;
+
+
 };
 

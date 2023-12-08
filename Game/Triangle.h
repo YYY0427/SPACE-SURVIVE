@@ -4,8 +4,9 @@
 #include <array>
 #include <vector>
 #include <DxLib.h>
+#include "UIBase.h"
 
-class Triangle
+class Triangle : public UIBase
 {
 public:
 	// コンストラクタ

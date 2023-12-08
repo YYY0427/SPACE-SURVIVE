@@ -1,9 +1,10 @@
 ID,文字列,フォント,サイズ,太さ
-TitleItemStart,START,Abel,25,3
-TitleItemOption,OPTION,Abel,25,3
-TitleItemEnd,END,Abel,25,3
-TitleItemSelectBarRight,[,Abel,25,3
-TitleItemSelectBarLeft,],Abel,25,3
+TitleLogo,SPACE REFLECT,Abel,100,10
+TitleItemStart,START,Abel,20,3
+TitleItemOption,OPTION,Abel,20,3
+TitleItemExit,EXIT,Abel,20,3
+TitleItemSelectBarRight,[,Abel,20,3
+TitleItemSelectBarLeft,],Abel,20,3
 OptionTitle,OPTION,Abel,50,5
 OptionItemLanguage,LANGUAGE,Abel,20,3
 OptionItemWindowMode,WINDOW MODE,Abel,20,3
@@ -23,7 +24,7 @@ PadSettingItemReverseOn,ON,Abel,20,3
 PadSettingItemReverseOff,OFF,Abel,20,3
 PadSettingNumber,-,Abel,20,3
 PadSettingItemBack,BACK,Abel,20,3
-PauseTitle,PAUSE MENU,Abel,50,5
+PauseTitle,PAUSE,Abel,75,10
 PauseItemContinue,CONTINUE,Abel,20,3
 PauseItemOption,OPTION,Abel,20,3
 PauseItemTitle,TITLE,Abel,20,3

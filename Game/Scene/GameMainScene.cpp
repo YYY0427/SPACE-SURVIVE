@@ -21,6 +21,7 @@
 #include "../Triangle.h"
 #include "../Flash.h"
 #include "../ScreenEffect.h"
+#include "../UIManager.h"
 
 namespace
 {
@@ -36,11 +37,12 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 	assert(screenHandle_ != -1);
 
 	// インスタンス生成
+	pUIManager_ = std::make_shared<UIManager>();
 	pScreenEffect_ = std::make_shared<ScreenEffect>();
 	pBackground_ = std::make_shared<Background>();
 	pLaserManager_ = std::make_shared<LaserManager>();
 	pPlayer_ = std::make_shared<Player>();
-	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLaserManager_, pScreenEffect_);
+	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLaserManager_, pScreenEffect_, pUIManager_);
 	pCamera_ = std::make_shared<Camera>();
 
 	// ステートの初期化
@@ -106,6 +108,9 @@ void GameMainScene::Update()
 
 	// 画面エフェクトの更新
 	pScreenEffect_->Update();
+
+	// UIの削除確認
+	pUIManager_->DeleteCheck();
 
 	// フェードの更新
 	UpdateFade();

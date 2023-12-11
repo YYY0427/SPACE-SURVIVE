@@ -17,13 +17,19 @@ namespace
 	constexpr float add_speed = 50.0f;
 }
 
-HpBar::HpBar(float maxHp) :
-	maxHp_(maxHp),
-	backHp_(0),
-	aimHp_(maxHp),
+HpBar::HpBar(float maxHp, int hpBarSideSpace, int hpBarStartY, int hpBarHeight) :
 	hp_(0),
+	backHp_(0),
+	maxHp_(maxHp),
+	aimHp_(maxHp),
+	hpBarSideSpace_(hpBarSideSpace),
+	hpBarStartY_(hpBarStartY),
+	hpBarHeight_(hpBarHeight),
 	updateFunc_(&HpBar::FirstDirectionUpdate)
 {
+	pos_.x = static_cast<float>(common::screen_width) / 2;
+	pos_.y = hpBarStartY + (hpBarHeight / 2);
+
 	hpFrameImgH_ = my::MyLoadGraph(hp_frame_img_file_path.c_str());
 	hpImgH_ = my::MyLoadGraph(hp1_img_file_path.c_str());
 	hpBackImgH_ = my::MyLoadGraph(hp2_img_file_path.c_str());
@@ -38,11 +44,27 @@ void HpBar::Update(const float aimHpSpeed)
 	(this->*updateFunc_)(aimHpSpeed);
 }
 
-void HpBar::Draw(const int hpBarSideSpace, const int hpBarStartY, const int hpBarHeight)
+void HpBar::Draw()
 {
 	if (backHp_ > 0.0f)
 	{
 		DrawExtendGraph(
+			hpBarSideSpace_,
+			pos_.y - (hpBarHeight_ / 2),
+			hpBarSideSpace_ + static_cast<int>((common::screen_width - (hpBarSideSpace_ * 2)) * (static_cast<float>(backHp_ / maxHp_))),
+			pos_.y + (hpBarHeight_ / 2),
+			hpBackImgH_,
+			true);
+
+		DrawExtendGraph(
+			hpBarSideSpace_,
+			pos_.y - (hpBarHeight_ / 2),
+			hpBarSideSpace_ + static_cast<int>((common::screen_width - (hpBarSideSpace_ * 2)) * (static_cast<float>(hp_ / maxHp_))),
+			pos_.y + (hpBarHeight_ / 2),
+			hpImgH_,
+			true);
+
+		/*DrawExtendGraph(
 			hpBarSideSpace,
 			hpBarStartY,
 			hpBarSideSpace + static_cast<int>((common::screen_width - (hpBarSideSpace * 2)) * (static_cast<float>(backHp_ / maxHp_))),
@@ -56,7 +78,7 @@ void HpBar::Draw(const int hpBarSideSpace, const int hpBarStartY, const int hpBa
 			hpBarSideSpace + static_cast<int>((common::screen_width - (hpBarSideSpace * 2)) * (static_cast<float>(hp_ / maxHp_))),
 			hpBarStartY + hpBarHeight,
 			hpImgH_,
-			true);
+			true);*/
 	}
 	/*DrawExtendGraph(
 		hpBarSideSpace,

@@ -15,6 +15,7 @@ class EnemyManager;
 class LaserManager;
 class Background;
 class ScreenEffect;
+class UIManager;
 
 // メインシーン
 // ゲームのメインの処理を行うシーン
@@ -94,5 +95,6 @@ private:
 	std::shared_ptr<EnemyManager> pEnemyManager_;
 	std::shared_ptr<LaserManager> pLaserManager_;
 	std::shared_ptr<ScreenEffect> pScreenEffect_;
+	std::shared_ptr<UIManager> pUIManager_;
 };
 

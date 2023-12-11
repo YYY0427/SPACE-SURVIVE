@@ -1,14 +1,15 @@
 #pragma once
 #include "../Util/Timer.h"
+#include "../UIBase.h"
 
-class HpBar
+class HpBar : public UIBase
 {
 public:
-	HpBar(float maxHp);
+	HpBar(float maxHp, int hpBarSideSpace, int hpBarStartY, int hpBarHeight);
 	~HpBar();
 
 	void Update(const float aimHpSpeed);
-	void Draw(const int hpBarSideSpace, const int hpBarStartY, const int hpBarHeight);
+	void Draw();
 	void OnDamage(float afterHp);
 
 	/// <summary>
@@ -27,9 +28,15 @@ private:
 	int hpFrameImgH_;
 	int hpImgH_;
 	int hpBackImgH_;
+
 	float hp_;
 	float backHp_;
 	float aimHp_;
 	const float maxHp_;
+
+	int hpBarSideSpace_;
+	int hpBarStartY_;
+	int hpBarHeight_;
+
 	Timer<int> damageTimer_;
 };

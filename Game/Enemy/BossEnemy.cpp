@@ -11,6 +11,8 @@
 #include "../Triangle.h"
 #include "../Flash.h"
 #include "../ScreenEffect.h"
+#include "../UIManager.h"
+#include "../Vector2.h"
 #include <random>
 #include <algorithm>
 
@@ -114,7 +116,7 @@ namespace
 }
 
 // コンストラクタ
-BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect) :
+BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect, std::shared_ptr<UIManager> pUIManager) :
 	isGoal_(false),
 	isMoveEnd_(false),
 	isDraw_(true),
@@ -125,6 +127,7 @@ BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shar
 	pPlayer_ = pPlayer;
 	pLaserManager_ = pLaserManager;
 	pScreenEffect_ = pScreenEffect;
+	pUIManager_ = pUIManager;
 	pos_ = start_init_pos;
 	rot_ = rot;
 	cubeLaserSpeed_ = cube_laser_speed;
@@ -154,7 +157,10 @@ BossEnemy::BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shar
 
 	// インスタンス生成
 	pModel_ = std::make_unique<Model>(modelHandle);
-	pHpBar_ = std::make_unique<HpBar>(max_hp);
+
+	pHpBar_ = std::make_shared<HpBar>(max_hp, hp_bar_side_space, hp_bar_start_y, hp_bar_height);
+	Vector2 vec = { 0, -1 };
+	pUIManager_->AddStoreUI(static_cast<std::shared_ptr<UIBase>>(pHpBar_), vec, 2.0f);
 
 	// モデルの設定
 	pModel_->SetOpacity(opacity_);	// 不透明度
@@ -291,7 +297,7 @@ void BossEnemy::Draw()
 void BossEnemy::DrawUI()
 {
 	// HPバーの描画
-	pHpBar_->Draw(hp_bar_side_space, hp_bar_start_y, hp_bar_height);
+	pHpBar_->Draw();
 
 	if (State::DEID == stateMachine_.GetCurrentState())
 	{
@@ -472,6 +478,7 @@ void BossEnemy::EntarDied()
 
 	utilTimerTable_["effectIntarval"] = 20;
 	utilTimerTable_["continueFrame"] = died_continue_frame;
+	utilTimerTable_["waitFrame"] = 120;
 }
 
 void BossEnemy::EntarStopCubeLaserAttack()
@@ -576,76 +583,84 @@ void BossEnemy::UpdateDamage()
 
 void BossEnemy::UpdateDied()
 {
-	// 横揺れ
-	pos_.x += sinf(utilTimerTable_["continueFrame"].GetTime() * died_swing_speed) * died_swing_width;
+	// UIを格納
+	pUIManager_->StoreUI();
 
-	// 徐々にY軸を下げる
-	pos_.y -= 0.5f;
-
-	utilTimerTable_["continueFrame"].Update(1);
-	if (!utilTimerTable_["continueFrame"].IsTimeOut())
+	utilTimerTable_["waitFrame"].Update(1);
+	if (utilTimerTable_["waitFrame"].IsTimeOut())
 	{
-		// エフェクトの発生間隔タイマーの更新
-		utilTimerTable_["effectIntarval"].Update(1);
-		if (utilTimerTable_["effectIntarval"].IsTimeOut())
-		{
-			// エフェクトの情報
-			DieEffect dieEffect{};
+		// 横揺れ
+		pos_.x += sinf(utilTimerTable_["continueFrame"].GetTime() * died_swing_speed) * died_swing_width;
 
-			// エフェクトの発生位置をプレイヤーの周りにランダムに設定
-			dieEffect.pos = 
+		// 徐々にY軸を下げる
+		pos_.y -= 0.5f;
+
+		utilTimerTable_["continueFrame"].Update(1);
+		if (!utilTimerTable_["continueFrame"].IsTimeOut())
+		{
+			// エフェクトの発生間隔タイマーの更新
+			utilTimerTable_["effectIntarval"].Update(1);
+			if (utilTimerTable_["effectIntarval"].IsTimeOut())
 			{
-				// エフェクトの発生位置を-500～500の間でランダムに設定
-				pos_.x + GetRand(1000) - 500,
-				pos_.y + GetRand(1000) - 500,
-				pos_.z
-			};
+				// エフェクトの情報
+				DieEffect dieEffect{};
 
-			// エフェクトの大きさを10倍から100倍の間でランダムに設定
-			dieEffect.scale = GetRand(30) + 10;
+				// エフェクトの発生位置をプレイヤーの周りにランダムに設定
+				dieEffect.pos =
+				{
+					// エフェクトの発生位置を-500～500の間でランダムに設定
+					pos_.x + GetRand(1000) - 500,
+					pos_.y + GetRand(1000) - 500,
+					pos_.z
+				};
 
-			// xyのベクトルをランダム作成
-			dieEffect.vec = { static_cast<float>(GetRand(10) - 5), static_cast<float>(GetRand(10) - 5), 0.0f };
-			dieEffect.vec = VNorm(dieEffect.vec);
-			dieEffect.vec = VScale(dieEffect.vec, 50.0f);
+				// エフェクトの大きさを10倍から100倍の間でランダムに設定
+				dieEffect.scale = GetRand(30) + 10;
 
-			// エフェクトの再生
-			Effekseer3DEffectManager::GetInstance().PlayEffectFollow(
-				dieEffect.effectHandle,
-				EffectID::enemy_died,
-				&dieEffect.pos,
-				{ dieEffect.scale, dieEffect.scale, dieEffect.scale },
-				0.5f);
+				// xyのベクトルをランダム作成
+				dieEffect.vec = { static_cast<float>(GetRand(10) - 5), static_cast<float>(GetRand(10) - 5), 0.0f };
+				dieEffect.vec = VNorm(dieEffect.vec);
+				dieEffect.vec = VScale(dieEffect.vec, 50.0f);
 
-			dieEffectTable_.push_back(dieEffect);
+				// エフェクトの再生
+				Effekseer3DEffectManager::GetInstance().PlayEffectFollow(
+					dieEffect.effectHandle,
+					EffectID::enemy_died,
+					&dieEffect.pos,
+					{ dieEffect.scale, dieEffect.scale, dieEffect.scale },
+					0.5f);
 
-			// タイマーの初期化
-			utilTimerTable_["effectIntarval"].Reset();
+				dieEffectTable_.push_back(dieEffect);
+
+				// タイマーの初期化
+				utilTimerTable_["effectIntarval"].Reset();
+			}
+			pTriangle_->Update(pos_);
 		}
-		pTriangle_->Update(pos_);
-	}
-	else
-	{
-		isDraw_ = false;
-		pTriangle_->SetDraw(false);
-		pScreenEffect_->SetShake(100.0f, 0.0f, 180);
-		pLaserManager_->GraduallyAlphaDeleteAllLaser();
-
-		VECTOR pos = ConvWorldPosToScreenPos(pos_);
-		pFlash_->Update({pos.x, pos.y}, 0xffffff);
-
-		if (pFlash_->IsEnd())
+		else
 		{
-			// インスタンスの削除
-			isEnabled_ = false;
+			isDraw_ = false;
+			pTriangle_->SetDraw(false);
+			pScreenEffect_->SetShake(100.0f, 0.0f, 180);
+			pLaserManager_->GraduallyAlphaDeleteAllLaser();
+
+			VECTOR pos = ConvWorldPosToScreenPos(pos_);
+			pFlash_->Update({ pos.x, pos.y }, 0xffffff);
+
+			if (pFlash_->IsEnd())
+			{
+				// インスタンスの削除
+				isEnabled_ = false;
+			}
+		}
+
+		// エフェクトの移動
+		for (auto& effect : dieEffectTable_)
+		{
+			effect.pos = VAdd(effect.pos, effect.vec);
 		}
 	}
-
-	// エフェクトの移動
-	for (auto& effect : dieEffectTable_)
-	{
-		effect.pos = VAdd(effect.pos, effect.vec);
-	}
+	
 }
 
 void BossEnemy::UpdateStopCubeLaserAttack()

@@ -10,6 +10,7 @@ class LaserManager;
 class Player;
 class Warning;
 class ScreenEffect;
+class UIManager;
 
 struct NormalEnemyActionData
 {
@@ -27,7 +28,7 @@ struct NormalEnemyActionData
 class EnemyManager
 {
 public:
-	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect);
+	EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect, std::shared_ptr<UIManager> pUIManager);
 	~EnemyManager();
 
 	void Update(int time);
@@ -64,6 +65,7 @@ private:
 	std::shared_ptr<ScreenEffect> pScreenEffect_;
 	std::shared_ptr<Player> pPlayer_;
 	std::shared_ptr<LaserManager> pLaserManager_;
+	std::shared_ptr<UIManager> pUIManager_;
 
 	// モデルハンドルテーブル
 	std::unordered_map<EnemyType, int> modelHandleTable_;

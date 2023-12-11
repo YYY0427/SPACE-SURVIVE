@@ -30,10 +30,11 @@ namespace
 	constexpr int boss_create_frame = 60 * 1;
 }
 
-EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect) :
+EnemyManager::EnemyManager(std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLaserManager, std::shared_ptr<ScreenEffect> pScreenEffect, std::shared_ptr<UIManager> pUIManager) :
 	pPlayer_(pPlayer),
 	pLaserManager_(pLaserManager),
 	pScreenEffect_(pScreenEffect),
+	pUIManager_(pUIManager),
 	isCreateBossEnemy_(false),
 	updateFunc_(&EnemyManager::NormalUpdate)
 {
@@ -151,7 +152,8 @@ void EnemyManager::CreateBossEnemyUpdate()
 			std::make_shared<BossEnemy>(modelHandleTable_[EnemyType::BOSS],
 				pPlayer_,
 				pLaserManager_,
-				pScreenEffect_));
+				pScreenEffect_,
+				pUIManager_));
 
 		updateFunc_ = &EnemyManager::NormalUpdate;
 	}

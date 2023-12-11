@@ -8,9 +8,15 @@ public:
 	UIBase();
 	virtual ~UIBase();
 
-	// UI‚ÌŠi”[
-	virtual void Store(Vector2 vec, float speed);
+	virtual void Draw() {};
 
-private:
+	// UI‚ÌŠi”[
+	void Store(Vector2 vec);
+
+
+	bool IsEnabled() const;
+
+protected:
 	Vector2 pos_;
+	bool isEnabled_;
 };

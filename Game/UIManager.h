@@ -1,7 +1,8 @@
 #pragma once
 #include "UIBase.h"
-#include <vector>
+#include <list>
 #include <memory>
+#include "Vector2.h"
 
 enum class ID
 {
@@ -17,11 +18,20 @@ public:
 	UIManager();
 	~UIManager();
 
-	void Update();
-	void Draw();
+	void DeleteCheck();
 
-	std::shared_ptr<UIBase> CreateUI(std::shared_ptr<UIBase> ui);
+	void AddStoreUI(std::shared_ptr<UIBase> ui, Vector2 vec, float speed);
+
+	void StoreUI();
 
 private:
-	std::vector<std::shared_ptr<UIBase>> uiTable_;
+	struct Store
+	{
+		std::shared_ptr<UIBase> ui;
+		Vector2 vec;
+	};
+	
+private:
+	// ゲームクリア時やゲームオーバー時に格納するUI
+	std::list<Store> uiStoreTable_;
 };

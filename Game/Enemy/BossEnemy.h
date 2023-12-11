@@ -5,6 +5,8 @@ class HpBar;
 class Flash;
 class Triangle;
 class ScreenEffect;
+class UIManager;
+class UIBase;
 
 class BossEnemy : public EnemyBase
 {
@@ -15,7 +17,7 @@ public:
 	/// <param name="modelHandle"></param>
 	/// <param name="pPlayer"></param>
 	/// <param name="pLazerManager"></param>
-	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLazerManager, std::shared_ptr<ScreenEffect> pScreenEffect);
+	BossEnemy(int modelHandle, std::shared_ptr<Player> pPlayer, std::shared_ptr<LaserManager> pLazerManager, std::shared_ptr<ScreenEffect> pScreenEffect, std::shared_ptr<UIManager> pUIManager);
 
 	// デストラクタ
 	~BossEnemy();
@@ -111,12 +113,13 @@ private:
 	StateMachine<State> stateMachine_;
 
 	std::shared_ptr<ScreenEffect> pScreenEffect_;
+	std::shared_ptr<UIManager> pUIManager_;
 
 	std::unique_ptr<Triangle> pTriangle_;
 	std::unique_ptr<Flash> pFlash_;
 
 	// HPバー
-	std::unique_ptr<HpBar> pHpBar_;
+	std::shared_ptr<HpBar> pHpBar_;
 
 	// 攻撃のステートを保存するテーブル
 	std::vector<State> attackStateTable_;

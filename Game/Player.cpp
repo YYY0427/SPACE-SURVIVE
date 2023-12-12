@@ -5,6 +5,7 @@
 #include "Util//Effekseer3DEffectManager.h"
 #include "Util/Debug.h"
 #include "Util/Range.h"
+#include "UIManager.h"
 #include "common.h"
 #include <string>
 
@@ -57,7 +58,7 @@ namespace
 }
 
 //  コンストラクタ
-Player::Player() :
+Player::Player(std::shared_ptr<UIManager> pUIManager) :
 	moveVec_(VGet(0.0f, 0.0f, 0.0f)),
 	hp_(max_hp),
 	ultimateTimer_(0),
@@ -68,7 +69,8 @@ Player::Player() :
 	isPlayGameOverEffect_(false),
 	boostEffectScale_({ 20.0f, 20.0f, 20.0f }),
 	boostEffectSpeed_(1.0f),
-	waitTimer_(300)
+	waitTimer_(300),
+	pUIManager_(pUIManager)
 {
 	pos_ = init_pos;
 	rot_ = init_rot;
@@ -236,6 +238,9 @@ void Player::Update(float cameraYaw)
 
 void Player::GameOverUpdate()
 {
+	// UIを格納
+	pUIManager_->StoreUI();
+
 	waitTimer_.Update(1);
 	if (waitTimer_.IsTimeOut() && !isPlayGameOverEffect_)
 	{

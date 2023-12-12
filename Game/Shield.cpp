@@ -35,69 +35,78 @@ Shield::~Shield()
 
 void Shield::Update()
 {
-	// 初期化
-	auto& effectManager = Effekseer3DEffectManager::GetInstance();
-	effectManager.DeleteEffect(effectHandle_);
-	isInput_ = false;
-	const Range<int> enerugyGageRange(0, max_enerugy_gage);
-
-	// 右スティックの入力情報の取得
-	int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
-	int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
-	int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
-	int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
-
-	// 右スティックが入力されたか
-	if (up > 5 || down > 5 || right > 5 || left > 5)
+	// プレイヤーが生きているか
+	if (player_.IsLive())
 	{
-		isInput_ = true;
-	}
+		// 初期化
+		auto& effectManager = Effekseer3DEffectManager::GetInstance();
+		effectManager.DeleteEffect(effectHandle_);
+		isInput_ = false;
+		const Range<int> enerugyGageRange(0, max_enerugy_gage);
 
-	// スティックの入力情報からベクトルを作成
-	int z = (up + -down) * 10;
-	int x = (right + -left) * 10;
-	VECTOR vec = { x, 0.0f, z };
+		// 右スティックの入力情報の取得
+		int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
+		int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
+		int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
+		int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
 
-	// ベクトルから角度を作成
-	float rot = -atan2f(z, x);
-	Debug::Log("角度", rot * 180.0f / DX_PI_F);
-
-	// プレイヤーの平行移動行列の取得
-	MATRIX playerMtx = MGetTranslate(player_.GetPos());
-
-	// シールドの相対位置とプレイヤーの平行行列から位置情報を作成
-	pos_ = VTransform(vec, playerMtx);
-
-	if (isInput_)
-	{
-		if (enerugyGage_ > 0)
+		// 右スティックが入力されたか
+		if (up > 5 || down > 5 || right > 5 || left > 5)
 		{
-			// シールドを出している間は常にエネルギーゲージを減らす
-			enerugyGage_--;
-
-			// シールドエフェクトの再生
-			effectManager.PlayEffect(effectHandle_, EffectID::player_shield, { pos_.x, pos_.y - 100.0f, pos_.z }, effect_scale, 1.0f, { 0.0f, rot, 0.0f });
+			isInput_ = true;
 		}
+
+		// スティックの入力情報からベクトルを作成
+		int z = (up + -down) * 10;
+		int x = (right + -left) * 10;
+		VECTOR vec = { x, 0.0f, z };
+
+		// ベクトルから角度を作成
+		float rot = -atan2f(z, x);
+		Debug::Log("角度", rot * 180.0f / DX_PI_F);
+
+		// プレイヤーの平行移動行列の取得
+		MATRIX playerMtx = MGetTranslate(player_.GetPos());
+
+		// シールドの相対位置とプレイヤーの平行行列から位置情報を作成
+		pos_ = VTransform(vec, playerMtx);
+
+		if (isInput_)
+		{
+			if (enerugyGage_ > 0)
+			{
+				// シールドを出している間は常にエネルギーゲージを減らす
+				enerugyGage_--;
+
+				// シールドエフェクトの再生
+				effectManager.PlayEffect(effectHandle_, EffectID::player_shield, { pos_.x, pos_.y - 100.0f, pos_.z }, effect_scale, 1.0f, { 0.0f, rot, 0.0f });
+			}
+		}
+		else
+		{
+			enerugyGage_++;
+		}
+
+		enerugyGage_ = enerugyGageRange.Clamp(enerugyGage_);
+		Debug::Log("エネルギーゲージ", enerugyGage_);
+
+		pShiled_->SetPos(pos_);
+		pShiled_->SetRot({ 0.0f, rot + (90.0f * DX_PI_F / 180.0f), 0.0f });
+		pShiled_->Update();
 	}
 	else
 	{
-		enerugyGage_++;
+		auto& effectManager = Effekseer3DEffectManager::GetInstance();
+		effectManager.DeleteEffect(effectHandle_);
 	}
-
-	enerugyGage_ = enerugyGageRange.Clamp(enerugyGage_);
-	Debug::Log("エネルギーゲージ", enerugyGage_);
-
-	pShiled_->SetPos(pos_);
-	pShiled_->SetRot({0.0f, rot + (90.0f * DX_PI_F / 180.0f), 0.0f});
-	pShiled_->Update();
 }
 
 void Shield::Draw()
 {
-	if (IsShield())
+	if (IsShield() && player_.IsLive())
 	{
-		pShiled_->Draw();
 #ifdef _DEBUG
+		pShiled_->Draw();
 #endif
 	}
 }

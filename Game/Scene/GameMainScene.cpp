@@ -41,7 +41,7 @@ GameMainScene::GameMainScene(SceneManager& manager) :
 	pScreenEffect_ = std::make_shared<ScreenEffect>();
 	pBackground_ = std::make_shared<Background>();
 	pLaserManager_ = std::make_shared<LaserManager>();
-	pPlayer_ = std::make_shared<Player>();
+	pPlayer_ = std::make_shared<Player>(pUIManager_);
 	pEnemyManager_ = std::make_shared<EnemyManager>(pPlayer_, pLaserManager_, pScreenEffect_, pUIManager_);
 	pCamera_ = std::make_shared<Camera>();
 
@@ -224,11 +224,11 @@ void GameMainScene::UpdateGameClearState()
 
 void GameMainScene::UpdateGameOverState()
 {
-	pLaserManager_->GraduallyAlphaDeleteAllLaser();
+	// 更新
+	pLaserManager_->Update();
 	pPlayer_->GameOverUpdate();
 	pEnemyManager_->GameOverUpdate();
 	pCamera_->GameOverUpdate(pPlayer_->GetPos());
-
 
 	// タイトルに戻る
 	if (InputState::IsTriggered(InputType::DECISION))

@@ -6,13 +6,14 @@
 
 class Model;
 class Shield;
+class UIManager;
 
 // プレイヤークラス
 class Player
 {
 public:
 	// コンストラクタ
-	Player();
+	Player(std::shared_ptr<UIManager> pUIManager);
 
 	// デストラクタ
 	~Player();
@@ -56,6 +57,7 @@ private:
 	// ポインタ
 	std::shared_ptr<Model> pModel_;
 	std::shared_ptr<Shield> pShield_;
+	std::shared_ptr<UIManager> pUIManager_;
 
 	// 決められたフレーム前まで位置情報を保存しているテーブル
 	std::deque<VECTOR> posLogTable_;

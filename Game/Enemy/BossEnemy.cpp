@@ -229,6 +229,7 @@ void BossEnemy::InitState()
 // 更新
 void BossEnemy::Update()
 {
+	// デバッグ用
 	if (InputState::IsTriggered(InputType::BOSS_DETH_DEBUG))
 	{
 		stateMachine_.SetState(State::DEID);	
@@ -274,6 +275,7 @@ void BossEnemy::Update()
 void BossEnemy::GameOverUpdate()
 {
 	pModel_->ChangeAnimation(idle_anim_no, true, false, 8);
+	pLaserManager_->GraduallyAlphaDeleteAllLaser();
 	pModel_->Update();
 }
 
@@ -471,6 +473,7 @@ void BossEnemy::EntarDied()
 {
 	moveVec_ = { 0, 0, 0 };
 
+	// 死亡時のアニメーションを止める
 	pModel_->StopAnim();
 
 	pTriangle_ = std::make_unique<Triangle>(5, died_continue_frame);
@@ -586,6 +589,9 @@ void BossEnemy::UpdateDied()
 	// UIを格納
 	pUIManager_->StoreUI();
 
+	// レーザーの削除
+	pLaserManager_->GraduallyAlphaDeleteAllLaser();
+	
 	utilTimerTable_["waitFrame"].Update(1);
 	if (utilTimerTable_["waitFrame"].IsTimeOut())
 	{
@@ -642,7 +648,6 @@ void BossEnemy::UpdateDied()
 			isDraw_ = false;
 			pTriangle_->SetDraw(false);
 			pScreenEffect_->SetShake(100.0f, 0.0f, 180);
-			pLaserManager_->GraduallyAlphaDeleteAllLaser();
 
 			VECTOR pos = ConvWorldPosToScreenPos(pos_);
 			pFlash_->Update({ pos.x, pos.y }, 0xffffff);

@@ -276,6 +276,12 @@ void GameMainScene::Collision()
 			{
 				laser.pLaser->SetIsReflect(true);
 
+				VECTOR hitPos{};
+				if (result.HitNum > 0)
+					hitPos = VAdd(VAdd(result.Dim->Position[0], result.Dim->Position[1]), result.Dim->Position[2]);
+				else
+					hitPos = VAdd(VAdd(result2.Dim->Position[0], result2.Dim->Position[1]), result2.Dim->Position[2]);
+
 				// レーザーを止める
 				auto pLaser = std::dynamic_pointer_cast<Laser>(laser.pLaser);
 				pLaser->Stop(pPlayer_->GetShield()->GetPos());
@@ -284,6 +290,12 @@ void GameMainScene::Collision()
 				// シールドの法線情報
 				VECTOR shieldNorm = pPlayer_->GetShield()->GetVertex()[0].norm;
 				pLaserManager_->Reflect(pPlayer_->GetShield()->GetPos(), laser.pLaser->GetVec(), shieldNorm);
+
+				// 画面を揺らす
+				pScreenEffect_->SetShake(1, 1, 5);
+
+				int handle = 0;
+				Effekseer3DEffectManager::GetInstance().PlayEffect(handle, EffectID::enemy_boss_hit_effect, pPlayer_->GetShield()->GetPos(), {50, 50, 50});
 			}
 			else
 			{

@@ -7,6 +7,7 @@
 #include "Util/Debug.h"
 #include "Util/Range.h"
 #include "Util/Timer.h"
+#include "Util/MathUtil.h"
 #include <string>
 
 namespace
@@ -14,6 +15,7 @@ namespace
 	const std::string model_file_path = "Data/Image/Shield.png";
 	constexpr VECTOR effect_scale = { 80.0f,  80.0f, 80.0f, };
 	constexpr int max_enerugy_gage = 10000;
+	constexpr float player_distance = 70.0f;
 }
 
 Shield::Shield(Player& player) :
@@ -25,8 +27,8 @@ Shield::Shield(Player& player) :
 	pShiled_ = std::make_shared<Image3D>(model_file_path);
 	pEnergyGage_ = std::make_unique<EnergyGage>(max_enerugy_gage);
 	pShiled_->SetPos(player_.GetPos());
-	pShiled_->SetImgWidth(100.0f);
-	pShiled_->SetImgHeight(100.0f);
+	pShiled_->SetImgWidth(70.0f);
+	pShiled_->SetImgHeight(70.0f);
 }
 
 Shield::~Shield()
@@ -44,32 +46,29 @@ void Shield::Update()
 		isInput_ = false;
 		const Range<int> enerugyGageRange(0, max_enerugy_gage);
 
+		if (InputState::IsPressed(InputType::SHIELD))
+		{
+			isInput_ = true;
+		}
+
 		// 右スティックの入力情報の取得
 		int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
 		int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
 		int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
 		int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
 
-		// 右スティックが入力されたか
-		if (up > 5 || down > 5 || right > 5 || left > 5)
-		{
-			isInput_ = true;
-		}
-
-		// スティックの入力情報からベクトルを作成
-		int z = (up + -down) * 10;
-		int x = (right + -left) * 10;
-		VECTOR vec = { x, 0.0f, z };
-
-		// ベクトルから角度を作成
-		float rot = -atan2f(z, x);
-		Debug::Log("角度", rot * 180.0f / DX_PI_F);
+		VECTOR testVec = { (right + -left) * 10.0f, (up + -down) * 10.0f, player_distance};
 
 		// プレイヤーの平行移動行列の取得
 		MATRIX playerMtx = MGetTranslate(player_.GetPos());
 
 		// シールドの相対位置とプレイヤーの平行行列から位置情報を作成
-		pos_ = VTransform(vec, playerMtx);
+		pos_ = VTransform(testVec, playerMtx);
+	//	pos_ = { player_.GetPos().x, player_.GetPos().y, player_.GetPos().z + player_distance };
+
+		// ベクトルから角度を求める
+		bool isGimbalLock = false;
+		rot_ = MathUtil::ToEulerAngles(MGetRotVec2(VGet(0, 0, 1), testVec), isGimbalLock);
 
 		if (isInput_)
 		{
@@ -79,7 +78,7 @@ void Shield::Update()
 				enerugyGage_--;
 
 				// シールドエフェクトの再生
-				effectManager.PlayEffect(effectHandle_, EffectID::player_shield, { pos_.x, pos_.y - 100.0f, pos_.z }, effect_scale, 1.0f, { 0.0f, rot, 0.0f });
+				effectManager.PlayEffect(effectHandle_, EffectID::player_shield, { pos_.x, pos_.y - 100.0f, pos_.z }, effect_scale, 1.0f, { rot_});
 			}
 		}
 		else
@@ -91,7 +90,7 @@ void Shield::Update()
 		Debug::Log("エネルギーゲージ", enerugyGage_);
 
 		pShiled_->SetPos(pos_);
-		pShiled_->SetRot({ 0.0f, rot + (90.0f * DX_PI_F / 180.0f), 0.0f });
+		pShiled_->SetRot({ rot_ });
 		pShiled_->Update();
 	}
 	else

@@ -49,7 +49,6 @@ void TestScene::Update()
 	imgPos_.x = Easing::EaseOutInExpo(count, 0, static_cast<float>(common::screen_width) / 2, common::screen_width, 180);
 //	imgPos_.x = Easing::EaseOutBack(count, 0, static_cast<float>(common::screen_width) / 2, 180);
 	Debug::Log("画像の位置", imgPos_.x);
-
 	pCamera_->Update();
 
 	auto& effectManager = Effekseer3DEffectManager::GetInstance();
@@ -60,6 +59,26 @@ void TestScene::Update()
 	float param = effectManager.GetDynamicEffectParam(laserEffectHandle_, 0);
 	Debug::Log("レーザーのなんかの値", param);
 
+	{
+		// 右スティックの入力情報の取得
+		int up = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::UP);
+		int down = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::DOWN);
+		int right = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::RIGHT);
+		int left = InputState::IsPadStick(PadLR::RIGHT, PadStickInputType::LEFT);
+
+		Debug::Log("up", up);
+		Debug::Log("down", down);
+		Debug::Log("right", right);
+		Debug::Log("left", left);
+	}
+
+	Vector2 p1{ 10, 10 }, p2{ 100, 10 }, p3{ 100, 100};
+	DrawTriangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, GetColor(255, 0, 0), false);
+	Vector2 add = p1 + p2 + p3;
+	add /= 3;
+	DrawCircle(70.0f, 40.0f, GetColor(0, 255, 0), true);
+//	DrawCircle(add.x, add.y, GetColor(0, 255, 0), true);
+	
 	// ポーズ画面に遷移
 	if (InputState::IsTriggered(InputType::PAUSE))
 	{

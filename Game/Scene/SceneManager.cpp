@@ -73,11 +73,11 @@ void SceneManager::Update()
 {
 	LONGLONG start = GetNowHiPerformanceCount();
 
+	scene_.front()->Update();
 	if (static_cast<int>(scene_.size()) == 1)
 	{
 		Effekseer3DEffectManager::GetInstance().Update();
 	}
-	scene_.front()->Update();
 
 	updateTime_ = GetNowHiPerformanceCount() - start;
 }

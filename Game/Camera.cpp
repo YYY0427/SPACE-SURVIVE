@@ -7,7 +7,7 @@
 namespace
 {
 	// カメラの初期位置
-	constexpr VECTOR camera_pos = { 0, 0, -300 };
+	constexpr VECTOR camera_pos = { 0, 0, -200 };
 
 	// カメラの初期注視点
 	constexpr VECTOR camera_init_target = { 0, 0, 0 };
@@ -21,7 +21,7 @@ namespace
 	constexpr float far_distance = 20000.0f;
 
 	// プレイヤーからの距離
-	constexpr float camera_distance = 300.0f;
+	constexpr float camera_distance = 200.0f;
 
 	// ゲームクリア時のカメラの回転速度
 	constexpr float camera_rotate_speed = 0.03f;

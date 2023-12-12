@@ -28,7 +28,7 @@ namespace InputState
 		inputMapTable_[InputType::PAUSE] = { {InputCategory::PAD, XINPUT_BUTTON_START } };			// スタートボタン
 		inputMapTable_[InputType::SLOW] = { {InputCategory::PAD, XINPUT_BUTTON_B } };				// スロー
 		inputMapTable_[InputType::BOOST] = { {InputCategory::PAD, XINPUT_BUTTON_A } };				// ブースト
-		inputMapTable_[InputType::CAMERA_INVERSION] = { {InputCategory::PAD, XINPUT_BUTTON_RIGHT_SHOULDER } };	// カメラ反転
+		inputMapTable_[InputType::SHIELD] = { {InputCategory::PAD, XINPUT_BUTTON_RIGHT_SHOULDER} }; // シールド
 		inputMapTable_[InputType::UP] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_UP } };			// ↑
 		inputMapTable_[InputType::DOWN] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_DOWN } };		// ↓
 		inputMapTable_[InputType::RIGHT] = { {InputCategory::PAD, XINPUT_BUTTON_DPAD_RIGHT } };		// →
@@ -112,13 +112,13 @@ namespace InputState
 		float x, y;
 		if (stick == PadLR::LEFT)
 		{
-			// padStateから取得した値を-10.0~10.0に変換
+			// padStateから取得した値を0.0~10.0に変換
 			x = static_cast<float>(padState.ThumbLX / 32767.0f * 10);
 			y = static_cast<float>(padState.ThumbLY / 32767.0f * 10);
 		}
 		else
 		{
-			// padStateから取得した値を-10.0~10.0に変換
+			// padStateから取得した値を0.0~10.0に変換
 			x = static_cast<float>(padState.ThumbRX / 32767.0f * 10);
 			y = static_cast<float>(padState.ThumbRY / 32767.0f * 10);
 		}

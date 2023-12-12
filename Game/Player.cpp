@@ -45,7 +45,7 @@ namespace
 	constexpr int ultimate_frames = 120;
 
 	// 最大HP
-	constexpr int max_hp = 3;
+	constexpr int max_hp = 300;
 
 	// 何フレーム前まで位置情報を保存するか
 	constexpr int log_frame = 10;

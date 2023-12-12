@@ -1,2031 +1,980 @@
 ﻿0:ChangeWindowMode実行 
 0:ウインドウモードフラグが立てられました
-2:ＤＸライブラリの初期化処理開始
-3:	システムの情報を出力します
+1:ＤＸライブラリの初期化処理開始
+2:	システムの情報を出力します
 3:		ＤＸライブラリ Ver3.24b
 3:		論理プロセッサの数 : 16
 3:		ＯＳ  Windows11 ( Build 22621  )
-104:		現時点のＣＰＵ動作速度：大体3.75GHz
+104:		現時点のＣＰＵ動作速度：大体3.76GHz
 104:		ＭＭＸ命令を使用します
 104:		ＳＳＥ命令が使用可能です
 104:		ＳＳＥ２命令が使用可能です
-105:		ＣＰＵベンダ：GenuineIntel
+104:		ＣＰＵベンダ：GenuineIntel
 106:		ＣＰＵ名：Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz
 106:	ＣＯＭの初期化... 成功
-108:	非同期読み込み処理の初期化...成功
+107:	非同期読み込み処理の初期化...成功
 108:	ファイルアクセス処理の初期化...成功
-109:	メモリ総量:32601.56MB  空きメモリ領域:20727.86MB 
-110:	タイマーの精度を検査します
-110:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
-110:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
-110:	 
+109:	メモリ総量:32601.56MB  空きメモリ領域:18614.97MB 
+109:	タイマーの精度を検査します
+109:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
+109:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
+109:	 
 111:	ソフトの二重起動検査... 二重起動はされていませんでした
 111:	ウインドウクラスを登録します... 登録に成功しました
 112:	ウインドウモード起動用のウインドウを作成します
 112:	ディスプレイ情報のセットアップ開始
 113:		モニターの数：2  ディスプレイデバイスの数：7
 113:		No.0  モニター名：\\.\DISPLAY1　2560x1080　32bit　144Hz  96x96dpi
-114:		No.1  モニター名：\\.\DISPLAY2　2560x1080　32bit　144Hz  96x96dpi
-218:	ディスプレイ情報のセットアップ完了
-218:	ウインドウ矩形 ( 624, 129 )-( 1920, 888 )
-221:	ウインドウの作成に成功しました
-221:	ウインドウを表示します
-239:	ＩＭＥを無効にしました
-240:	ウインドウスタイルをウインドウモード用に変更します... 完了
-270:	XInput DLL の読み込み中... 成功
-273:	DirectInput関係初期化処理
-273:		DirectInput8 の取得を試みます...成功
-350:			引き続き初期化処理... 初期化成功
-351:		ジョイパッドの初期化... 
-351:			XInput 対応コントローラーのチェックを開始します
-351:				XInput 対応コントローラー No.0 をチェック
-354:				XInput 対応コントローラー No.0 の接続を確認しました
-354:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
-354:				XInput 対応コントローラー No.1 をチェック
-355:				XInput 対応コントローラー No.1 の接続は確認できませんでした
-355:				XInput 対応コントローラー No.2 をチェック
-355:				XInput 対応コントローラー No.2 の接続は確認できませんでした
-355:				XInput 対応コントローラー No.3 をチェック
-356:				XInput 対応コントローラー No.3 の接続は確認できませんでした
-356:			XInput 対応コントローラーのチェック完了
-356:			DirectInput 対応ジョイパッドの列挙を開始します
-363:				DirectInput 対応入力装置を検出しました
-363:						Device Product GUID  : c21d046d,0000,0000,00,00,50,49,44,56,49,44
-363:						Device Instance GUID : a080bb30,e2c1,11ed,80,01,44,45,53,54,00,00
-364:					DirectInputDevice8 の作成... 成功
-364:					DirectInputDevice の情報を取得します... 成功
-365:						Device Product Name  : Controller (Gamepad F310)
-365:						Device Instance Name : Controller (Gamepad F310)
-365:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-366:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-366:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
-568:				検出した DirectInput 対応入力装置の初期化を中断します
-576:			DirectInput 対応ジョイパッドの列挙終了
-576:		ジョイパッドの初期化は正常に終了しました
-576:		マウスデバイスの初期化... 初期化成功
-576:		キーボードデバイスの初期化... 初期化成功
-579:	DirectInput 関連の初期化は正常に終了しました
-581:	XAudio2 の初期化を行います
-584:		XAudio2_8.dll を使用します
-587:		XAudio2 インターフェースの取得と初期化を行います....  成功 Ver2.8
-706:	XAudio2 の初期化は正常に終了しました
-709:	d3d11.dll の読み込み.... 成功
-712:	dxgi.dll の読み込み.... 成功
-712:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
-713:	IDXGIFactory2 を作成します.... 成功
-716:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
-716:	IDXGIAdapter を列挙
-717:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8043MB
-717:			Output Device No.0 Name:\\.\DISPLAY2 ( 0, 0 )-( 2560, 1080 )
-717:			Output Device No.1 Name:\\.\DISPLAY1 ( 0, -1080 )-( 2560, 0 )
-717:		Adapter No.1 Desc:Intel(R) UHD Graphics 630  VRAM:128MB
-718:		Adapter No.2 Desc:Microsoft Basic Render Driver  VRAM:0MB
-718:	API D3D11CreateDevice のアドレスを取得します.... 成功
-718:	IDXGIAdapter を取得します.... 成功
-719:	IDXGIAdapter1 を取得します.... 成功
-719:	IDXGIAdapter2 を取得します.... 成功
-719:	IDXGIAdapter3 を取得します.... 成功
-720:	IDXGIAdapter4 を取得します.... 成功
-720:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
-720:	ID3D11Device オブジェクトを取得します.... 成功
-801:	IDXGIDevice1 を取得します.... 成功
-801:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
-801:	[ウインドウモード 1280x720 ( 640, 167 )-( 1920, 887 )]
-802:	IDXGISwapChain2 を作成します.... 成功
-803:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
-803:	IDXGIOutput を取得します.... 成功
-804:	Graphics Device:NVIDIA GeForce RTX 3070
-804:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-804:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
-805:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
-805:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
-805:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-805:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-806:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
-806:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-806:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
-806:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-806:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
-807:	ＤＸＴ２テクスチャフォーマットは使えません
-807:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
-807:	ＤＸＴ４テクスチャフォーマットは使えません
-807:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
-807:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
-807:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
-808:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-808:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-808:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-808:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-808:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-809:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-809:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-809:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-809:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-810:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-810:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-810:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-810:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-811:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-811:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-811:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-811:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-811:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-812:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-812:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-812:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-812:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-812:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-813:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-813:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-813:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
-813:	同時にレンダリングできるバッファの数:8
-813:	最大テクスチャサイズ　幅:16384 高さ:16384
-813:	標準描画用の頂点バッファの作成.... 成功
-815:	シェーダーコード関係の初期化.... 成功
-824:	各種シェーダー用定数バッファの作成.... 成功
-825:	各種 ID3D11InputLayout の作成.... 成功
-847:	画像の単純転送処理の初期化... 成功
-849:	深度バッファを作成します.... 成功
-850:	フォントの初期化を行います
-852:	フォントの初期化は正常に終了しました
-888:	文字コードバッファの初期化を行います... 完了しました
-896:ＤＸライブラリの初期化処理終了
-2468:ChangeWindowMode実行 
-2480:ChangeWindowMode実行 
-2496:ChangeWindowMode実行 
-2512:ChangeWindowMode実行 
-2529:ChangeWindowMode実行 
-2545:ChangeWindowMode実行 
-2560:ChangeWindowMode実行 
-2576:ChangeWindowMode実行 
-2593:ChangeWindowMode実行 
-2608:ChangeWindowMode実行 
-2624:ChangeWindowMode実行 
-2640:ChangeWindowMode実行 
-2657:ChangeWindowMode実行 
-2672:ChangeWindowMode実行 
-2688:ChangeWindowMode実行 
-2705:ChangeWindowMode実行 
-2721:ChangeWindowMode実行 
-2737:ChangeWindowMode実行 
-2753:ChangeWindowMode実行 
-2769:ChangeWindowMode実行 
-2785:ChangeWindowMode実行 
-2800:ChangeWindowMode実行 
-2816:ChangeWindowMode実行 
-2833:ChangeWindowMode実行 
-2849:ChangeWindowMode実行 
-2865:ChangeWindowMode実行 
-2881:ChangeWindowMode実行 
-2897:ChangeWindowMode実行 
-2913:ChangeWindowMode実行 
-2928:ChangeWindowMode実行 
-2945:ChangeWindowMode実行 
-2961:ChangeWindowMode実行 
-2977:ChangeWindowMode実行 
-2994:ChangeWindowMode実行 
-3010:ChangeWindowMode実行 
-3025:ChangeWindowMode実行 
-3041:ChangeWindowMode実行 
-3057:ChangeWindowMode実行 
-3074:ChangeWindowMode実行 
-3090:ChangeWindowMode実行 
-3105:ChangeWindowMode実行 
-3122:ChangeWindowMode実行 
-3138:ChangeWindowMode実行 
-3154:ChangeWindowMode実行 
-3170:ChangeWindowMode実行 
-3185:ChangeWindowMode実行 
-3202:ChangeWindowMode実行 
-3218:ChangeWindowMode実行 
-3234:ChangeWindowMode実行 
-3250:ChangeWindowMode実行 
-3266:ChangeWindowMode実行 
-3282:ChangeWindowMode実行 
-3298:ChangeWindowMode実行 
-3314:ChangeWindowMode実行 
-3330:ChangeWindowMode実行 
-3346:ChangeWindowMode実行 
-3362:ChangeWindowMode実行 
-3378:ChangeWindowMode実行 
-3395:ChangeWindowMode実行 
-3410:ChangeWindowMode実行 
-3426:ChangeWindowMode実行 
-3443:ChangeWindowMode実行 
-3458:ChangeWindowMode実行 
-3474:ChangeWindowMode実行 
-3491:ChangeWindowMode実行 
-3506:ChangeWindowMode実行 
-3522:ChangeWindowMode実行 
-3538:ChangeWindowMode実行 
-3554:ChangeWindowMode実行 
-3571:ChangeWindowMode実行 
-3586:ChangeWindowMode実行 
-3602:ChangeWindowMode実行 
-3619:ChangeWindowMode実行 
-3634:ChangeWindowMode実行 
-3650:ChangeWindowMode実行 
-3667:ChangeWindowMode実行 
-3682:ChangeWindowMode実行 
-3699:ChangeWindowMode実行 
-3715:ChangeWindowMode実行 
-3731:ChangeWindowMode実行 
-3747:ChangeWindowMode実行 
-3763:ChangeWindowMode実行 
-3779:ChangeWindowMode実行 
-3795:ChangeWindowMode実行 
-3811:ChangeWindowMode実行 
-3827:ChangeWindowMode実行 
-3843:ChangeWindowMode実行 
-3860:ChangeWindowMode実行 
-3875:ChangeWindowMode実行 
-3891:ChangeWindowMode実行 
-3907:ChangeWindowMode実行 
-3923:ChangeWindowMode実行 
-3940:ChangeWindowMode実行 
-3955:ChangeWindowMode実行 
-3971:ChangeWindowMode実行 
-5624:ChangeWindowMode実行 
-5626:ChangeWindowMode実行 
-5683:ChangeWindowMode実行 
-5698:ChangeWindowMode実行 
-5716:ChangeWindowMode実行 
+113:		No.1  モニター名：\\.\DISPLAY2　2560x1080　32bit　144Hz  96x96dpi
+191:	ディスプレイ情報のセットアップ完了
+192:	ウインドウ矩形 ( 624, 129 )-( 1920, 888 )
+197:	ウインドウの作成に成功しました
+197:	ウインドウを表示します
+221:	ＩＭＥを無効にしました
+222:	ウインドウスタイルをウインドウモード用に変更します... 完了
+255:	XInput DLL の読み込み中... 成功
+260:	DirectInput関係初期化処理
+260:		DirectInput8 の取得を試みます...成功
+339:			引き続き初期化処理... 初期化成功
+341:		ジョイパッドの初期化... 
+341:			XInput 対応コントローラーのチェックを開始します
+341:				XInput 対応コントローラー No.0 をチェック
+344:				XInput 対応コントローラー No.0 の接続を確認しました
+344:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+344:				XInput 対応コントローラー No.1 をチェック
+345:				XInput 対応コントローラー No.1 の接続は確認できませんでした
+345:				XInput 対応コントローラー No.2 をチェック
+345:				XInput 対応コントローラー No.2 の接続は確認できませんでした
+346:				XInput 対応コントローラー No.3 をチェック
+346:				XInput 対応コントローラー No.3 の接続は確認できませんでした
+346:			XInput 対応コントローラーのチェック完了
+347:			DirectInput 対応ジョイパッドの列挙を開始します
+354:				DirectInput 対応入力装置を検出しました
+354:						Device Product GUID  : c21d046d,0000,0000,00,00,50,49,44,56,49,44
+354:						Device Instance GUID : a080bb30,e2c1,11ed,80,01,44,45,53,54,00,00
+355:					DirectInputDevice8 の作成... 成功
+355:					DirectInputDevice の情報を取得します... 成功
+356:						Device Product Name  : Controller (Gamepad F310)
+356:						Device Instance Name : Controller (Gamepad F310)
+356:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+357:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+357:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
+554:				検出した DirectInput 対応入力装置の初期化を中断します
+561:			DirectInput 対応ジョイパッドの列挙終了
+561:		ジョイパッドの初期化は正常に終了しました
+561:		マウスデバイスの初期化... 初期化成功
+562:		キーボードデバイスの初期化... 初期化成功
+566:	DirectInput 関連の初期化は正常に終了しました
+569:	XAudio2 の初期化を行います
+571:		XAudio2_8.dll を使用します
+574:		XAudio2 インターフェースの取得と初期化を行います....  成功 Ver2.8
+631:	XAudio2 の初期化は正常に終了しました
+634:	d3d11.dll の読み込み.... 成功
+636:	dxgi.dll の読み込み.... 成功
+637:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
+637:	IDXGIFactory2 を作成します.... 成功
+642:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
+643:	IDXGIAdapter を列挙
+643:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8043MB
+643:			Output Device No.0 Name:\\.\DISPLAY2 ( 0, 0 )-( 2560, 1080 )
+644:			Output Device No.1 Name:\\.\DISPLAY1 ( 0, -1080 )-( 2560, 0 )
+644:		Adapter No.1 Desc:Intel(R) UHD Graphics 630  VRAM:128MB
+644:		Adapter No.2 Desc:Microsoft Basic Render Driver  VRAM:0MB
+644:	API D3D11CreateDevice のアドレスを取得します.... 成功
+645:	IDXGIAdapter を取得します.... 成功
+645:	IDXGIAdapter1 を取得します.... 成功
+646:	IDXGIAdapter2 を取得します.... 成功
+646:	IDXGIAdapter3 を取得します.... 成功
+646:	IDXGIAdapter4 を取得します.... 成功
+647:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
+647:	ID3D11Device オブジェクトを取得します.... 成功
+719:	IDXGIDevice1 を取得します.... 成功
+720:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
+720:	[ウインドウモード 1280x720 ( 640, 167 )-( 1920, 887 )]
+720:	IDXGISwapChain2 を作成します.... 成功
+721:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
+722:	IDXGIOutput を取得します.... 成功
+722:	Graphics Device:NVIDIA GeForce RTX 3070
+723:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+723:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
+723:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
+723:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
+723:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+723:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+724:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
+724:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+724:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
+724:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+724:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
+725:	ＤＸＴ２テクスチャフォーマットは使えません
+725:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
+725:	ＤＸＴ４テクスチャフォーマットは使えません
+725:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
+725:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
+725:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
+726:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+726:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+726:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+726:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+726:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+727:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+727:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+727:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+727:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+727:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+727:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+727:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+727:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+727:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+728:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+728:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+728:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+728:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+728:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+729:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+729:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+729:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+729:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+729:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+729:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+729:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
+729:	同時にレンダリングできるバッファの数:8
+729:	最大テクスチャサイズ　幅:16384 高さ:16384
+731:	標準描画用の頂点バッファの作成.... 成功
+731:	シェーダーコード関係の初期化.... 成功
+739:	各種シェーダー用定数バッファの作成.... 成功
+740:	各種 ID3D11InputLayout の作成.... 成功
+760:	画像の単純転送処理の初期化... 成功
+761:	深度バッファを作成します.... 成功
+763:	フォントの初期化を行います
+764:	フォントの初期化は正常に終了しました
+804:	文字コードバッファの初期化を行います... 完了しました
+811:ＤＸライブラリの初期化処理終了
+2383:ChangeWindowMode実行 
+2396:ChangeWindowMode実行 
+2411:ChangeWindowMode実行 
+2427:ChangeWindowMode実行 
+2443:ChangeWindowMode実行 
+2459:ChangeWindowMode実行 
+2475:ChangeWindowMode実行 
+2491:ChangeWindowMode実行 
+2507:ChangeWindowMode実行 
+2524:ChangeWindowMode実行 
+2540:ChangeWindowMode実行 
+2556:ChangeWindowMode実行 
+2572:ChangeWindowMode実行 
+2587:ChangeWindowMode実行 
+2604:ChangeWindowMode実行 
+2619:ChangeWindowMode実行 
+2636:ChangeWindowMode実行 
+2651:ChangeWindowMode実行 
+2667:ChangeWindowMode実行 
+2683:ChangeWindowMode実行 
+2699:ChangeWindowMode実行 
+2716:ChangeWindowMode実行 
+2731:ChangeWindowMode実行 
+2747:ChangeWindowMode実行 
+2764:ChangeWindowMode実行 
+2780:ChangeWindowMode実行 
+2796:ChangeWindowMode実行 
+2812:ChangeWindowMode実行 
+2827:ChangeWindowMode実行 
+2844:ChangeWindowMode実行 
+2860:ChangeWindowMode実行 
+2876:ChangeWindowMode実行 
+2892:ChangeWindowMode実行 
+2907:ChangeWindowMode実行 
+2924:ChangeWindowMode実行 
+2941:ChangeWindowMode実行 
+2956:ChangeWindowMode実行 
+2972:ChangeWindowMode実行 
+2988:ChangeWindowMode実行 
+3005:ChangeWindowMode実行 
+3021:ChangeWindowMode実行 
+3037:ChangeWindowMode実行 
+3052:ChangeWindowMode実行 
+3069:ChangeWindowMode実行 
+3085:ChangeWindowMode実行 
+3101:ChangeWindowMode実行 
+3116:ChangeWindowMode実行 
+3133:ChangeWindowMode実行 
+3149:ChangeWindowMode実行 
+3165:ChangeWindowMode実行 
+3181:ChangeWindowMode実行 
+3197:ChangeWindowMode実行 
+3212:ChangeWindowMode実行 
+3229:ChangeWindowMode実行 
+3245:ChangeWindowMode実行 
+3261:ChangeWindowMode実行 
+3277:ChangeWindowMode実行 
+3293:ChangeWindowMode実行 
+3309:ChangeWindowMode実行 
+3325:ChangeWindowMode実行 
+3341:ChangeWindowMode実行 
+3357:ChangeWindowMode実行 
+3373:ChangeWindowMode実行 
+3389:ChangeWindowMode実行 
+3405:ChangeWindowMode実行 
+3421:ChangeWindowMode実行 
+3437:ChangeWindowMode実行 
+3453:ChangeWindowMode実行 
+3469:ChangeWindowMode実行 
+3485:ChangeWindowMode実行 
+3502:ChangeWindowMode実行 
+3517:ChangeWindowMode実行 
+3533:ChangeWindowMode実行 
+3550:ChangeWindowMode実行 
+3565:ChangeWindowMode実行 
+3581:ChangeWindowMode実行 
+3598:ChangeWindowMode実行 
+3613:ChangeWindowMode実行 
+3629:ChangeWindowMode実行 
+3646:ChangeWindowMode実行 
+3661:ChangeWindowMode実行 
+3678:ChangeWindowMode実行 
+3694:ChangeWindowMode実行 
+3710:ChangeWindowMode実行 
+3726:ChangeWindowMode実行 
+3741:ChangeWindowMode実行 
+3758:ChangeWindowMode実行 
+3773:ChangeWindowMode実行 
+3790:ChangeWindowMode実行 
+3806:ChangeWindowMode実行 
+3822:ChangeWindowMode実行 
+3837:ChangeWindowMode実行 
+3854:ChangeWindowMode実行 
+3870:ChangeWindowMode実行 
+3886:ChangeWindowMode実行 
+3902:ChangeWindowMode実行 
+3918:ChangeWindowMode実行 
+3934:ChangeWindowMode実行 
+3950:ChangeWindowMode実行 
+3966:ChangeWindowMode実行 
+3982:ChangeWindowMode実行 
+3997:ChangeWindowMode実行 
+4014:ChangeWindowMode実行 
+4030:ChangeWindowMode実行 
+4046:ChangeWindowMode実行 
+4062:ChangeWindowMode実行 
+4079:ChangeWindowMode実行 
+4095:ChangeWindowMode実行 
+4110:ChangeWindowMode実行 
+4127:ChangeWindowMode実行 
+4142:ChangeWindowMode実行 
+4158:ChangeWindowMode実行 
+4174:ChangeWindowMode実行 
+4191:ChangeWindowMode実行 
+4207:ChangeWindowMode実行 
+4223:ChangeWindowMode実行 
+4239:ChangeWindowMode実行 
+4255:ChangeWindowMode実行 
+4272:ChangeWindowMode実行 
+4288:ChangeWindowMode実行 
+4304:ChangeWindowMode実行 
+4320:ChangeWindowMode実行 
+4336:ChangeWindowMode実行 
+4351:ChangeWindowMode実行 
+4367:ChangeWindowMode実行 
+4384:ChangeWindowMode実行 
+4399:ChangeWindowMode実行 
+4416:ChangeWindowMode実行 
+4432:ChangeWindowMode実行 
+4448:ChangeWindowMode実行 
+4464:ChangeWindowMode実行 
+4479:ChangeWindowMode実行 
+4495:ChangeWindowMode実行 
+4512:ChangeWindowMode実行 
+4527:ChangeWindowMode実行 
+4543:ChangeWindowMode実行 
+4560:ChangeWindowMode実行 
+4576:ChangeWindowMode実行 
+4592:ChangeWindowMode実行 
+4608:ChangeWindowMode実行 
+4624:ChangeWindowMode実行 
+4640:ChangeWindowMode実行 
+4656:ChangeWindowMode実行 
+4672:ChangeWindowMode実行 
+4689:ChangeWindowMode実行 
+4704:ChangeWindowMode実行 
+4720:ChangeWindowMode実行 
+4737:ChangeWindowMode実行 
+4752:ChangeWindowMode実行 
+4769:ChangeWindowMode実行 
+4785:ChangeWindowMode実行 
+4800:ChangeWindowMode実行 
+4816:ChangeWindowMode実行 
+4833:ChangeWindowMode実行 
+4849:ChangeWindowMode実行 
+4864:ChangeWindowMode実行 
+4880:ChangeWindowMode実行 
+4897:ChangeWindowMode実行 
+4913:ChangeWindowMode実行 
+4929:ChangeWindowMode実行 
+4945:ChangeWindowMode実行 
+4961:ChangeWindowMode実行 
+4977:ChangeWindowMode実行 
+4993:ChangeWindowMode実行 
+5009:ChangeWindowMode実行 
+5025:ChangeWindowMode実行 
+5041:ChangeWindowMode実行 
+5057:ChangeWindowMode実行 
+5073:ChangeWindowMode実行 
+5089:ChangeWindowMode実行 
+5106:ChangeWindowMode実行 
+5121:ChangeWindowMode実行 
+5137:ChangeWindowMode実行 
+5154:ChangeWindowMode実行 
+5170:ChangeWindowMode実行 
+5185:ChangeWindowMode実行 
+5202:ChangeWindowMode実行 
+5217:ChangeWindowMode実行 
+5234:ChangeWindowMode実行 
+5249:ChangeWindowMode実行 
+5265:ChangeWindowMode実行 
+5282:ChangeWindowMode実行 
+5297:ChangeWindowMode実行 
+5313:ChangeWindowMode実行 
+5329:ChangeWindowMode実行 
+5345:ChangeWindowMode実行 
+5361:ChangeWindowMode実行 
+5377:ChangeWindowMode実行 
+5394:ChangeWindowMode実行 
+5410:ChangeWindowMode実行 
+5426:ChangeWindowMode実行 
+5442:ChangeWindowMode実行 
+5457:ChangeWindowMode実行 
+5474:ChangeWindowMode実行 
+5490:ChangeWindowMode実行 
+5506:ChangeWindowMode実行 
+5522:ChangeWindowMode実行 
+5538:ChangeWindowMode実行 
+5554:ChangeWindowMode実行 
+5570:ChangeWindowMode実行 
+5587:ChangeWindowMode実行 
+5603:ChangeWindowMode実行 
+5619:ChangeWindowMode実行 
+5635:ChangeWindowMode実行 
+5651:ChangeWindowMode実行 
+5666:ChangeWindowMode実行 
+5682:ChangeWindowMode実行 
+5699:ChangeWindowMode実行 
+5715:ChangeWindowMode実行 
 5731:ChangeWindowMode実行 
 5747:ChangeWindowMode実行 
 5763:ChangeWindowMode実行 
-5780:ChangeWindowMode実行 
+5779:ChangeWindowMode実行 
 5796:ChangeWindowMode実行 
 5811:ChangeWindowMode実行 
-5827:ChangeWindowMode実行 
+5828:ChangeWindowMode実行 
 5843:ChangeWindowMode実行 
-5859:ChangeWindowMode実行 
+5860:ChangeWindowMode実行 
 5876:ChangeWindowMode実行 
-5891:ChangeWindowMode実行 
-5906:ChangeWindowMode実行 
-5923:ChangeWindowMode実行 
-5939:ChangeWindowMode実行 
-5955:ChangeWindowMode実行 
-5971:ChangeWindowMode実行 
-5987:ChangeWindowMode実行 
-6004:ChangeWindowMode実行 
-6019:ChangeWindowMode実行 
-6035:ChangeWindowMode実行 
+5892:ChangeWindowMode実行 
+5908:ChangeWindowMode実行 
+5924:ChangeWindowMode実行 
+5940:ChangeWindowMode実行 
+5956:ChangeWindowMode実行 
+5972:ChangeWindowMode実行 
+5988:ChangeWindowMode実行 
+6005:ChangeWindowMode実行 
+6020:ChangeWindowMode実行 
+6037:ChangeWindowMode実行 
 6052:ChangeWindowMode実行 
-6067:ChangeWindowMode実行 
-6084:ChangeWindowMode実行 
-6100:ChangeWindowMode実行 
-6116:ChangeWindowMode実行 
-6131:ChangeWindowMode実行 
-6148:ChangeWindowMode実行 
-6163:ChangeWindowMode実行 
-6180:ChangeWindowMode実行 
-6196:ChangeWindowMode実行 
-6212:ChangeWindowMode実行 
-6228:ChangeWindowMode実行 
-6244:ChangeWindowMode実行 
-6260:ChangeWindowMode実行 
-6276:ChangeWindowMode実行 
-6292:ChangeWindowMode実行 
-6308:ChangeWindowMode実行 
-6324:ChangeWindowMode実行 
-6340:ChangeWindowMode実行 
-6356:ChangeWindowMode実行 
-6372:ChangeWindowMode実行 
-6388:ChangeWindowMode実行 
-6404:ChangeWindowMode実行 
-6420:ChangeWindowMode実行 
-6437:ChangeWindowMode実行 
-6452:ChangeWindowMode実行 
-6468:ChangeWindowMode実行 
-6484:ChangeWindowMode実行 
-6501:ChangeWindowMode実行 
-6517:ChangeWindowMode実行 
-6532:ChangeWindowMode実行 
-6549:ChangeWindowMode実行 
-6564:ChangeWindowMode実行 
-6581:ChangeWindowMode実行 
-6596:ChangeWindowMode実行 
-6612:ChangeWindowMode実行 
-6650:ChangeWindowMode実行 
-6651:ChangeWindowMode実行 
-6667:ChangeWindowMode実行 
-6683:ChangeWindowMode実行 
-6700:ChangeWindowMode実行 
-6716:ChangeWindowMode実行 
-6732:ChangeWindowMode実行 
-6748:ChangeWindowMode実行 
-6764:ChangeWindowMode実行 
-6779:ChangeWindowMode実行 
-6796:ChangeWindowMode実行 
-6812:ChangeWindowMode実行 
-6828:ChangeWindowMode実行 
-6844:ChangeWindowMode実行 
-6860:ChangeWindowMode実行 
-6876:ChangeWindowMode実行 
-6892:ChangeWindowMode実行 
-6908:ChangeWindowMode実行 
-6924:ChangeWindowMode実行 
-6940:ChangeWindowMode実行 
-6956:ChangeWindowMode実行 
-6972:ChangeWindowMode実行 
-6988:ChangeWindowMode実行 
-7004:ChangeWindowMode実行 
-7020:ChangeWindowMode実行 
-7037:ChangeWindowMode実行 
-7053:ChangeWindowMode実行 
-7068:ChangeWindowMode実行 
-7084:ChangeWindowMode実行 
-7101:ChangeWindowMode実行 
-7117:ChangeWindowMode実行 
-7133:ChangeWindowMode実行 
-7149:ChangeWindowMode実行 
-7165:ChangeWindowMode実行 
-7181:ChangeWindowMode実行 
-7197:ChangeWindowMode実行 
-7213:ChangeWindowMode実行 
-7229:ChangeWindowMode実行 
-7245:ChangeWindowMode実行 
-7261:ChangeWindowMode実行 
-7277:ChangeWindowMode実行 
-7293:ChangeWindowMode実行 
-7309:ChangeWindowMode実行 
-7326:ChangeWindowMode実行 
-7342:ChangeWindowMode実行 
-7357:ChangeWindowMode実行 
-7373:ChangeWindowMode実行 
-7389:ChangeWindowMode実行 
-7405:ChangeWindowMode実行 
-7421:ChangeWindowMode実行 
-7437:ChangeWindowMode実行 
-7453:ChangeWindowMode実行 
-7469:ChangeWindowMode実行 
-7485:ChangeWindowMode実行 
-7502:ChangeWindowMode実行 
-7517:ChangeWindowMode実行 
-7534:ChangeWindowMode実行 
-7550:ChangeWindowMode実行 
-7566:ChangeWindowMode実行 
-7582:ChangeWindowMode実行 
-7598:ChangeWindowMode実行 
-7614:ChangeWindowMode実行 
-7630:ChangeWindowMode実行 
-7646:ChangeWindowMode実行 
-7662:ChangeWindowMode実行 
-7678:ChangeWindowMode実行 
-7694:ChangeWindowMode実行 
-7711:ChangeWindowMode実行 
-7726:ChangeWindowMode実行 
-7743:ChangeWindowMode実行 
-7758:ChangeWindowMode実行 
-7775:ChangeWindowMode実行 
-7790:ChangeWindowMode実行 
-7806:ChangeWindowMode実行 
-7822:ChangeWindowMode実行 
-7839:ChangeWindowMode実行 
-7855:ChangeWindowMode実行 
-7870:ChangeWindowMode実行 
-7887:ChangeWindowMode実行 
-7903:ChangeWindowMode実行 
-7919:ChangeWindowMode実行 
-7935:ChangeWindowMode実行 
-7950:ChangeWindowMode実行 
-7967:ChangeWindowMode実行 
-7983:ChangeWindowMode実行 
-7999:ChangeWindowMode実行 
-8015:ChangeWindowMode実行 
-8031:ChangeWindowMode実行 
-8047:ChangeWindowMode実行 
-8063:ChangeWindowMode実行 
-8079:ChangeWindowMode実行 
-8095:ChangeWindowMode実行 
-8111:ChangeWindowMode実行 
-8127:ChangeWindowMode実行 
-8143:ChangeWindowMode実行 
-8159:ChangeWindowMode実行 
-8175:ChangeWindowMode実行 
-8191:ChangeWindowMode実行 
-8206:ChangeWindowMode実行 
-8223:ChangeWindowMode実行 
-8240:ChangeWindowMode実行 
-8256:ChangeWindowMode実行 
-8272:ChangeWindowMode実行 
-8287:ChangeWindowMode実行 
-8304:ChangeWindowMode実行 
-8319:ChangeWindowMode実行 
-8335:ChangeWindowMode実行 
-8351:ChangeWindowMode実行 
-8367:ChangeWindowMode実行 
-8385:ChangeWindowMode実行 
-8399:ChangeWindowMode実行 
-8415:ChangeWindowMode実行 
-8431:ChangeWindowMode実行 
-8448:ChangeWindowMode実行 
-8463:ChangeWindowMode実行 
-8479:ChangeWindowMode実行 
-8496:ChangeWindowMode実行 
-8511:ChangeWindowMode実行 
-8528:ChangeWindowMode実行 
-8544:ChangeWindowMode実行 
-8560:ChangeWindowMode実行 
-8576:ChangeWindowMode実行 
-8592:ChangeWindowMode実行 
-8608:ChangeWindowMode実行 
-8624:ChangeWindowMode実行 
-8640:ChangeWindowMode実行 
-8656:ChangeWindowMode実行 
-8672:ChangeWindowMode実行 
-8688:ChangeWindowMode実行 
-8704:ChangeWindowMode実行 
-8720:ChangeWindowMode実行 
-8736:ChangeWindowMode実行 
-8752:ChangeWindowMode実行 
-8768:ChangeWindowMode実行 
-8784:ChangeWindowMode実行 
-8800:ChangeWindowMode実行 
-8817:ChangeWindowMode実行 
-8833:ChangeWindowMode実行 
-8849:ChangeWindowMode実行 
-8865:ChangeWindowMode実行 
-8880:ChangeWindowMode実行 
-8897:ChangeWindowMode実行 
-8912:ChangeWindowMode実行 
-8928:ChangeWindowMode実行 
-8944:ChangeWindowMode実行 
-8960:ChangeWindowMode実行 
-8976:ChangeWindowMode実行 
-8992:ChangeWindowMode実行 
-9009:ChangeWindowMode実行 
-9025:ChangeWindowMode実行 
-9041:ChangeWindowMode実行 
-9057:ChangeWindowMode実行 
-9072:ChangeWindowMode実行 
-9089:ChangeWindowMode実行 
-9105:ChangeWindowMode実行 
-9121:ChangeWindowMode実行 
-9137:ChangeWindowMode実行 
-9152:ChangeWindowMode実行 
-9168:ChangeWindowMode実行 
-9185:ChangeWindowMode実行 
-9201:ChangeWindowMode実行 
-9217:ChangeWindowMode実行 
-9233:ChangeWindowMode実行 
-9249:ChangeWindowMode実行 
-9265:ChangeWindowMode実行 
-9281:ChangeWindowMode実行 
-9297:ChangeWindowMode実行 
-9313:ChangeWindowMode実行 
-9329:ChangeWindowMode実行 
-9345:ChangeWindowMode実行 
-9361:ChangeWindowMode実行 
-9377:ChangeWindowMode実行 
-9393:ChangeWindowMode実行 
-9410:ChangeWindowMode実行 
-9425:ChangeWindowMode実行 
-9441:ChangeWindowMode実行 
-9457:ChangeWindowMode実行 
-9473:ChangeWindowMode実行 
-9489:ChangeWindowMode実行 
-9505:ChangeWindowMode実行 
-9521:ChangeWindowMode実行 
-9537:ChangeWindowMode実行 
-9553:ChangeWindowMode実行 
-9569:ChangeWindowMode実行 
-9586:ChangeWindowMode実行 
-9601:ChangeWindowMode実行 
-9617:ChangeWindowMode実行 
-9633:ChangeWindowMode実行 
-9650:ChangeWindowMode実行 
-9665:ChangeWindowMode実行 
-9681:ChangeWindowMode実行 
-9697:ChangeWindowMode実行 
-9714:ChangeWindowMode実行 
-9729:ChangeWindowMode実行 
-9746:ChangeWindowMode実行 
-9761:ChangeWindowMode実行 
-9778:ChangeWindowMode実行 
-9794:ChangeWindowMode実行 
-9810:ChangeWindowMode実行 
-9826:ChangeWindowMode実行 
-9842:ChangeWindowMode実行 
-9858:ChangeWindowMode実行 
-9874:ChangeWindowMode実行 
-9890:ChangeWindowMode実行 
-9906:ChangeWindowMode実行 
-9922:ChangeWindowMode実行 
+6069:ChangeWindowMode実行 
+6085:ChangeWindowMode実行 
+6101:ChangeWindowMode実行 
+6117:ChangeWindowMode実行 
+6133:ChangeWindowMode実行 
+6150:ChangeWindowMode実行 
+6165:ChangeWindowMode実行 
+6182:ChangeWindowMode実行 
+6198:ChangeWindowMode実行 
+6214:ChangeWindowMode実行 
+6230:ChangeWindowMode実行 
+6246:ChangeWindowMode実行 
+6262:ChangeWindowMode実行 
+6279:ChangeWindowMode実行 
+6295:ChangeWindowMode実行 
+6312:ChangeWindowMode実行 
+6327:ChangeWindowMode実行 
+6343:ChangeWindowMode実行 
+6360:ChangeWindowMode実行 
+6376:ChangeWindowMode実行 
+6392:ChangeWindowMode実行 
+6407:ChangeWindowMode実行 
+6424:ChangeWindowMode実行 
+6440:ChangeWindowMode実行 
+6456:ChangeWindowMode実行 
+6472:ChangeWindowMode実行 
+6489:ChangeWindowMode実行 
+6504:ChangeWindowMode実行 
+6520:ChangeWindowMode実行 
+6536:ChangeWindowMode実行 
+6553:ChangeWindowMode実行 
+6569:ChangeWindowMode実行 
+6584:ChangeWindowMode実行 
+6600:ChangeWindowMode実行 
+6617:ChangeWindowMode実行 
+6632:ChangeWindowMode実行 
+6649:ChangeWindowMode実行 
+6665:ChangeWindowMode実行 
+6681:ChangeWindowMode実行 
+6696:ChangeWindowMode実行 
+6713:ChangeWindowMode実行 
+6729:ChangeWindowMode実行 
+6745:ChangeWindowMode実行 
+6761:ChangeWindowMode実行 
+6777:ChangeWindowMode実行 
+6793:ChangeWindowMode実行 
+6809:ChangeWindowMode実行 
+6825:ChangeWindowMode実行 
+6841:ChangeWindowMode実行 
+6857:ChangeWindowMode実行 
+6873:ChangeWindowMode実行 
+6889:ChangeWindowMode実行 
+6905:ChangeWindowMode実行 
+6921:ChangeWindowMode実行 
+6937:ChangeWindowMode実行 
+6953:ChangeWindowMode実行 
+6969:ChangeWindowMode実行 
+6985:ChangeWindowMode実行 
+7001:ChangeWindowMode実行 
+7017:ChangeWindowMode実行 
+7033:ChangeWindowMode実行 
+7049:ChangeWindowMode実行 
+7065:ChangeWindowMode実行 
+7081:ChangeWindowMode実行 
+7098:ChangeWindowMode実行 
+7113:ChangeWindowMode実行 
+7129:ChangeWindowMode実行 
+7145:ChangeWindowMode実行 
+7162:ChangeWindowMode実行 
+7177:ChangeWindowMode実行 
+7193:ChangeWindowMode実行 
+7210:ChangeWindowMode実行 
+7226:ChangeWindowMode実行 
+7242:ChangeWindowMode実行 
+7257:ChangeWindowMode実行 
+7274:ChangeWindowMode実行 
+7290:ChangeWindowMode実行 
+7306:ChangeWindowMode実行 
+7322:ChangeWindowMode実行 
+7338:ChangeWindowMode実行 
+7354:ChangeWindowMode実行 
+7370:ChangeWindowMode実行 
+7386:ChangeWindowMode実行 
+7402:ChangeWindowMode実行 
+7418:ChangeWindowMode実行 
+7434:ChangeWindowMode実行 
+7450:ChangeWindowMode実行 
+7466:ChangeWindowMode実行 
+7482:ChangeWindowMode実行 
+7497:ChangeWindowMode実行 
+7515:ChangeWindowMode実行 
+7531:ChangeWindowMode実行 
+7547:ChangeWindowMode実行 
+7562:ChangeWindowMode実行 
+7579:ChangeWindowMode実行 
+7595:ChangeWindowMode実行 
+7610:ChangeWindowMode実行 
+7627:ChangeWindowMode実行 
+7642:ChangeWindowMode実行 
+7659:ChangeWindowMode実行 
+7675:ChangeWindowMode実行 
+7691:ChangeWindowMode実行 
+7707:ChangeWindowMode実行 
+7722:ChangeWindowMode実行 
+7739:ChangeWindowMode実行 
+7754:ChangeWindowMode実行 
+7771:ChangeWindowMode実行 
+7786:ChangeWindowMode実行 
+7803:ChangeWindowMode実行 
+7819:ChangeWindowMode実行 
+7835:ChangeWindowMode実行 
+7851:ChangeWindowMode実行 
+7867:ChangeWindowMode実行 
+7883:ChangeWindowMode実行 
+7899:ChangeWindowMode実行 
+7915:ChangeWindowMode実行 
+7931:ChangeWindowMode実行 
+7947:ChangeWindowMode実行 
+7963:ChangeWindowMode実行 
+7979:ChangeWindowMode実行 
+7995:ChangeWindowMode実行 
+8011:ChangeWindowMode実行 
+8027:ChangeWindowMode実行 
+8043:ChangeWindowMode実行 
+8059:ChangeWindowMode実行 
+8075:ChangeWindowMode実行 
+8091:ChangeWindowMode実行 
+8107:ChangeWindowMode実行 
+8123:ChangeWindowMode実行 
+8139:ChangeWindowMode実行 
+8156:ChangeWindowMode実行 
+8171:ChangeWindowMode実行 
+8187:ChangeWindowMode実行 
+8203:ChangeWindowMode実行 
+8220:ChangeWindowMode実行 
+8235:ChangeWindowMode実行 
+8251:ChangeWindowMode実行 
+8267:ChangeWindowMode実行 
+8283:ChangeWindowMode実行 
+8300:ChangeWindowMode実行 
+8316:ChangeWindowMode実行 
+8331:ChangeWindowMode実行 
+8347:ChangeWindowMode実行 
+8364:ChangeWindowMode実行 
+8379:ChangeWindowMode実行 
+8396:ChangeWindowMode実行 
+8411:ChangeWindowMode実行 
+8428:ChangeWindowMode実行 
+8444:ChangeWindowMode実行 
+8460:ChangeWindowMode実行 
+8476:ChangeWindowMode実行 
+8492:ChangeWindowMode実行 
+8508:ChangeWindowMode実行 
+8524:ChangeWindowMode実行 
+8540:ChangeWindowMode実行 
+8556:ChangeWindowMode実行 
+8572:ChangeWindowMode実行 
+8587:ChangeWindowMode実行 
+8604:ChangeWindowMode実行 
+8620:ChangeWindowMode実行 
+8636:ChangeWindowMode実行 
+8652:ChangeWindowMode実行 
+8668:ChangeWindowMode実行 
+8684:ChangeWindowMode実行 
+8700:ChangeWindowMode実行 
+8716:ChangeWindowMode実行 
+8732:ChangeWindowMode実行 
+8749:ChangeWindowMode実行 
+8764:ChangeWindowMode実行 
+8780:ChangeWindowMode実行 
+8797:ChangeWindowMode実行 
+8813:ChangeWindowMode実行 
+8827:ChangeWindowMode実行 
+8844:ChangeWindowMode実行 
+8861:ChangeWindowMode実行 
+8876:ChangeWindowMode実行 
+8893:ChangeWindowMode実行 
+8909:ChangeWindowMode実行 
+9033:ChangeWindowMode実行 
+9034:ChangeWindowMode実行 
+9051:ChangeWindowMode実行 
+9067:ChangeWindowMode実行 
+9083:ChangeWindowMode実行 
+9099:ChangeWindowMode実行 
+9115:ChangeWindowMode実行 
+9131:ChangeWindowMode実行 
+9147:ChangeWindowMode実行 
+9163:ChangeWindowMode実行 
+9179:ChangeWindowMode実行 
+9195:ChangeWindowMode実行 
+9211:ChangeWindowMode実行 
+9227:ChangeWindowMode実行 
+9244:ChangeWindowMode実行 
+9259:ChangeWindowMode実行 
+9275:ChangeWindowMode実行 
+9291:ChangeWindowMode実行 
+9308:ChangeWindowMode実行 
+9323:ChangeWindowMode実行 
+9340:ChangeWindowMode実行 
+9356:ChangeWindowMode実行 
+9371:ChangeWindowMode実行 
+9388:ChangeWindowMode実行 
+9404:ChangeWindowMode実行 
+9419:ChangeWindowMode実行 
+9436:ChangeWindowMode実行 
+9452:ChangeWindowMode実行 
+9468:ChangeWindowMode実行 
+9484:ChangeWindowMode実行 
+9500:ChangeWindowMode実行 
+9516:ChangeWindowMode実行 
+9532:ChangeWindowMode実行 
+9549:ChangeWindowMode実行 
+9565:ChangeWindowMode実行 
+9580:ChangeWindowMode実行 
+9597:ChangeWindowMode実行 
+9613:ChangeWindowMode実行 
+9629:ChangeWindowMode実行 
+9645:ChangeWindowMode実行 
+9662:ChangeWindowMode実行 
+9677:ChangeWindowMode実行 
+9694:ChangeWindowMode実行 
+9711:ChangeWindowMode実行 
+9727:ChangeWindowMode実行 
+9743:ChangeWindowMode実行 
+9759:ChangeWindowMode実行 
+9775:ChangeWindowMode実行 
+9791:ChangeWindowMode実行 
+9808:ChangeWindowMode実行 
+9824:ChangeWindowMode実行 
+9840:ChangeWindowMode実行 
+9856:ChangeWindowMode実行 
+9873:ChangeWindowMode実行 
+9889:ChangeWindowMode実行 
+9905:ChangeWindowMode実行 
+9921:ChangeWindowMode実行 
 9938:ChangeWindowMode実行 
-9954:ChangeWindowMode実行 
+9953:ChangeWindowMode実行 
 9970:ChangeWindowMode実行 
-9986:ChangeWindowMode実行 
+9985:ChangeWindowMode実行 
 10002:ChangeWindowMode実行 
-10018:ChangeWindowMode実行 
-10034:ChangeWindowMode実行 
-10050:ChangeWindowMode実行 
+10017:ChangeWindowMode実行 
+10035:ChangeWindowMode実行 
+10051:ChangeWindowMode実行 
 10067:ChangeWindowMode実行 
-10082:ChangeWindowMode実行 
-10098:ChangeWindowMode実行 
-10114:ChangeWindowMode実行 
-10130:ChangeWindowMode実行 
-10146:ChangeWindowMode実行 
-10162:ChangeWindowMode実行 
-10179:ChangeWindowMode実行 
-10195:ChangeWindowMode実行 
-10210:ChangeWindowMode実行 
-10226:ChangeWindowMode実行 
-10242:ChangeWindowMode実行 
-10258:ChangeWindowMode実行 
-10274:ChangeWindowMode実行 
-10290:ChangeWindowMode実行 
-10307:ChangeWindowMode実行 
-10322:ChangeWindowMode実行 
-10339:ChangeWindowMode実行 
-10355:ChangeWindowMode実行 
-10371:ChangeWindowMode実行 
-10387:ChangeWindowMode実行 
-10403:ChangeWindowMode実行 
-10418:ChangeWindowMode実行 
-10435:ChangeWindowMode実行 
-10451:ChangeWindowMode実行 
-10467:ChangeWindowMode実行 
-10482:ChangeWindowMode実行 
-10499:ChangeWindowMode実行 
-10515:ChangeWindowMode実行 
-10531:ChangeWindowMode実行 
-10547:ChangeWindowMode実行 
-10563:ChangeWindowMode実行 
-10579:ChangeWindowMode実行 
-10595:ChangeWindowMode実行 
-10611:ChangeWindowMode実行 
-10627:ChangeWindowMode実行 
-10643:ChangeWindowMode実行 
-10659:ChangeWindowMode実行 
-10676:ChangeWindowMode実行 
-10691:ChangeWindowMode実行 
-10707:ChangeWindowMode実行 
-10723:ChangeWindowMode実行 
-10740:ChangeWindowMode実行 
-10755:ChangeWindowMode実行 
-10772:ChangeWindowMode実行 
-10787:ChangeWindowMode実行 
-10804:ChangeWindowMode実行 
-10819:ChangeWindowMode実行 
-10835:ChangeWindowMode実行 
-10852:ChangeWindowMode実行 
-10867:ChangeWindowMode実行 
-10883:ChangeWindowMode実行 
-10899:ChangeWindowMode実行 
-10915:ChangeWindowMode実行 
-10931:ChangeWindowMode実行 
-10947:ChangeWindowMode実行 
-10963:ChangeWindowMode実行 
-10979:ChangeWindowMode実行 
-10996:ChangeWindowMode実行 
-11011:ChangeWindowMode実行 
-11027:ChangeWindowMode実行 
-11044:ChangeWindowMode実行 
-11060:ChangeWindowMode実行 
-11076:ChangeWindowMode実行 
-11092:ChangeWindowMode実行 
-11107:ChangeWindowMode実行 
-11124:ChangeWindowMode実行 
-11139:ChangeWindowMode実行 
-11156:ChangeWindowMode実行 
-11171:ChangeWindowMode実行 
-11188:ChangeWindowMode実行 
-11203:ChangeWindowMode実行 
-11220:ChangeWindowMode実行 
-11236:ChangeWindowMode実行 
-11252:ChangeWindowMode実行 
-11268:ChangeWindowMode実行 
-11284:ChangeWindowMode実行 
-11300:ChangeWindowMode実行 
-11316:ChangeWindowMode実行 
-11332:ChangeWindowMode実行 
-11348:ChangeWindowMode実行 
-11364:ChangeWindowMode実行 
-11380:ChangeWindowMode実行 
-11396:ChangeWindowMode実行 
-11413:ChangeWindowMode実行 
-11428:ChangeWindowMode実行 
-11444:ChangeWindowMode実行 
-11460:ChangeWindowMode実行 
-11477:ChangeWindowMode実行 
-11493:ChangeWindowMode実行 
-11509:ChangeWindowMode実行 
-11524:ChangeWindowMode実行 
-11540:ChangeWindowMode実行 
-11557:ChangeWindowMode実行 
-11572:ChangeWindowMode実行 
-11589:ChangeWindowMode実行 
-11605:ChangeWindowMode実行 
-11621:ChangeWindowMode実行 
-11637:ChangeWindowMode実行 
-11653:ChangeWindowMode実行 
-11668:ChangeWindowMode実行 
-11685:ChangeWindowMode実行 
-11700:ChangeWindowMode実行 
-11716:ChangeWindowMode実行 
-11732:ChangeWindowMode実行 
-11748:ChangeWindowMode実行 
-11764:ChangeWindowMode実行 
-11781:ChangeWindowMode実行 
-11797:ChangeWindowMode実行 
-11812:ChangeWindowMode実行 
-11829:ChangeWindowMode実行 
-11845:ChangeWindowMode実行 
-11861:ChangeWindowMode実行 
-11877:ChangeWindowMode実行 
-11893:ChangeWindowMode実行 
-11909:ChangeWindowMode実行 
-11925:ChangeWindowMode実行 
-11941:ChangeWindowMode実行 
-11957:ChangeWindowMode実行 
-11973:ChangeWindowMode実行 
-11989:ChangeWindowMode実行 
-12005:ChangeWindowMode実行 
-12021:ChangeWindowMode実行 
-12037:ChangeWindowMode実行 
-12053:ChangeWindowMode実行 
-12069:ChangeWindowMode実行 
-12086:ChangeWindowMode実行 
-12101:ChangeWindowMode実行 
-12118:ChangeWindowMode実行 
-12134:ChangeWindowMode実行 
-12149:ChangeWindowMode実行 
-12166:ChangeWindowMode実行 
-12181:ChangeWindowMode実行 
-12197:ChangeWindowMode実行 
-12213:ChangeWindowMode実行 
-12230:ChangeWindowMode実行 
-12245:ChangeWindowMode実行 
-12261:ChangeWindowMode実行 
-12278:ChangeWindowMode実行 
-12294:ChangeWindowMode実行 
-12309:ChangeWindowMode実行 
-12325:ChangeWindowMode実行 
-12341:ChangeWindowMode実行 
-12357:ChangeWindowMode実行 
-12374:ChangeWindowMode実行 
-12390:ChangeWindowMode実行 
-12406:ChangeWindowMode実行 
-12422:ChangeWindowMode実行 
-12438:ChangeWindowMode実行 
-12454:ChangeWindowMode実行 
-12470:ChangeWindowMode実行 
-12486:ChangeWindowMode実行 
-12502:ChangeWindowMode実行 
-12518:ChangeWindowMode実行 
-12534:ChangeWindowMode実行 
-12550:ChangeWindowMode実行 
-12566:ChangeWindowMode実行 
-12582:ChangeWindowMode実行 
-12598:ChangeWindowMode実行 
-12614:ChangeWindowMode実行 
-12630:ChangeWindowMode実行 
-12646:ChangeWindowMode実行 
-12662:ChangeWindowMode実行 
-12679:ChangeWindowMode実行 
-12695:ChangeWindowMode実行 
-12710:ChangeWindowMode実行 
-12727:ChangeWindowMode実行 
-12743:ChangeWindowMode実行 
-12758:ChangeWindowMode実行 
-12774:ChangeWindowMode実行 
-12791:ChangeWindowMode実行 
-12806:ChangeWindowMode実行 
-12823:ChangeWindowMode実行 
-12839:ChangeWindowMode実行 
-12854:ChangeWindowMode実行 
-12870:ChangeWindowMode実行 
-12886:ChangeWindowMode実行 
-12902:ChangeWindowMode実行 
-12918:ChangeWindowMode実行 
-12935:ChangeWindowMode実行 
-12950:ChangeWindowMode実行 
-12966:ChangeWindowMode実行 
-12982:ChangeWindowMode実行 
-12999:ChangeWindowMode実行 
-13015:ChangeWindowMode実行 
-13030:ChangeWindowMode実行 
-13047:ChangeWindowMode実行 
-13063:ChangeWindowMode実行 
-13079:ChangeWindowMode実行 
-13095:ChangeWindowMode実行 
-13111:ChangeWindowMode実行 
-13127:ChangeWindowMode実行 
-13143:ChangeWindowMode実行 
-13159:ChangeWindowMode実行 
-13175:ChangeWindowMode実行 
-13190:ChangeWindowMode実行 
-13207:ChangeWindowMode実行 
-13223:ChangeWindowMode実行 
-13239:ChangeWindowMode実行 
-13255:ChangeWindowMode実行 
-13271:ChangeWindowMode実行 
-13287:ChangeWindowMode実行 
-13303:ChangeWindowMode実行 
-13319:ChangeWindowMode実行 
-13335:ChangeWindowMode実行 
-13351:ChangeWindowMode実行 
-13367:ChangeWindowMode実行 
-13383:ChangeWindowMode実行 
-13399:ChangeWindowMode実行 
-13415:ChangeWindowMode実行 
-13431:ChangeWindowMode実行 
-13447:ChangeWindowMode実行 
-13463:ChangeWindowMode実行 
-13479:ChangeWindowMode実行 
-13496:ChangeWindowMode実行 
-13511:ChangeWindowMode実行 
-13527:ChangeWindowMode実行 
-13543:ChangeWindowMode実行 
-13559:ChangeWindowMode実行 
-13575:ChangeWindowMode実行 
-13591:ChangeWindowMode実行 
-13608:ChangeWindowMode実行 
-13623:ChangeWindowMode実行 
-13639:ChangeWindowMode実行 
-13655:ChangeWindowMode実行 
-13671:ChangeWindowMode実行 
-13687:ChangeWindowMode実行 
-13703:ChangeWindowMode実行 
-13720:ChangeWindowMode実行 
-13736:ChangeWindowMode実行 
-13752:ChangeWindowMode実行 
-13768:ChangeWindowMode実行 
-13784:ChangeWindowMode実行 
-13800:ChangeWindowMode実行 
-13816:ChangeWindowMode実行 
-13832:ChangeWindowMode実行 
-13848:ChangeWindowMode実行 
-13864:ChangeWindowMode実行 
-13880:ChangeWindowMode実行 
-13896:ChangeWindowMode実行 
-13912:ChangeWindowMode実行 
-13928:ChangeWindowMode実行 
-13944:ChangeWindowMode実行 
-13959:ChangeWindowMode実行 
-13976:ChangeWindowMode実行 
-13992:ChangeWindowMode実行 
-14008:ChangeWindowMode実行 
-14024:ChangeWindowMode実行 
-14040:ChangeWindowMode実行 
-14056:ChangeWindowMode実行 
-14072:ChangeWindowMode実行 
-14088:ChangeWindowMode実行 
-14104:ChangeWindowMode実行 
-14120:ChangeWindowMode実行 
-14137:ChangeWindowMode実行 
-14152:ChangeWindowMode実行 
-14168:ChangeWindowMode実行 
-14185:ChangeWindowMode実行 
-14200:ChangeWindowMode実行 
-14216:ChangeWindowMode実行 
-14232:ChangeWindowMode実行 
-14249:ChangeWindowMode実行 
-14264:ChangeWindowMode実行 
-14280:ChangeWindowMode実行 
-14297:ChangeWindowMode実行 
-14312:ChangeWindowMode実行 
-14328:ChangeWindowMode実行 
-14344:ChangeWindowMode実行 
-14361:ChangeWindowMode実行 
-14376:ChangeWindowMode実行 
-14393:ChangeWindowMode実行 
-14408:ChangeWindowMode実行 
-14425:ChangeWindowMode実行 
-14441:ChangeWindowMode実行 
-14457:ChangeWindowMode実行 
-14473:ChangeWindowMode実行 
-14489:ChangeWindowMode実行 
-14505:ChangeWindowMode実行 
-14521:ChangeWindowMode実行 
-14537:ChangeWindowMode実行 
-14553:ChangeWindowMode実行 
-14569:ChangeWindowMode実行 
-14585:ChangeWindowMode実行 
-14602:ChangeWindowMode実行 
-14617:ChangeWindowMode実行 
-14634:ChangeWindowMode実行 
-14649:ChangeWindowMode実行 
-14666:ChangeWindowMode実行 
-14681:ChangeWindowMode実行 
-14698:ChangeWindowMode実行 
-14714:ChangeWindowMode実行 
-14730:ChangeWindowMode実行 
-14745:ChangeWindowMode実行 
-14761:ChangeWindowMode実行 
-14777:ChangeWindowMode実行 
-14794:ChangeWindowMode実行 
-14809:ChangeWindowMode実行 
-14826:ChangeWindowMode実行 
-14842:ChangeWindowMode実行 
-14857:ChangeWindowMode実行 
-14873:ChangeWindowMode実行 
-14890:ChangeWindowMode実行 
-14906:ChangeWindowMode実行 
-14921:ChangeWindowMode実行 
-14938:ChangeWindowMode実行 
-14954:ChangeWindowMode実行 
-14969:ChangeWindowMode実行 
-14986:ChangeWindowMode実行 
-15002:ChangeWindowMode実行 
-15018:ChangeWindowMode実行 
-15034:ChangeWindowMode実行 
-15050:ChangeWindowMode実行 
+10083:ChangeWindowMode実行 
+10099:ChangeWindowMode実行 
+10116:ChangeWindowMode実行 
+10132:ChangeWindowMode実行 
+10148:ChangeWindowMode実行 
+10165:ChangeWindowMode実行 
+10181:ChangeWindowMode実行 
+10198:ChangeWindowMode実行 
+10214:ChangeWindowMode実行 
+10230:ChangeWindowMode実行 
+10245:ChangeWindowMode実行 
+10262:ChangeWindowMode実行 
+10278:ChangeWindowMode実行 
+10295:ChangeWindowMode実行 
+10310:ChangeWindowMode実行 
+10327:ChangeWindowMode実行 
+10343:ChangeWindowMode実行 
+10359:ChangeWindowMode実行 
+10375:ChangeWindowMode実行 
+10391:ChangeWindowMode実行 
+10407:ChangeWindowMode実行 
+10423:ChangeWindowMode実行 
+10439:ChangeWindowMode実行 
+10455:ChangeWindowMode実行 
+10472:ChangeWindowMode実行 
+10487:ChangeWindowMode実行 
+10503:ChangeWindowMode実行 
+10519:ChangeWindowMode実行 
+10535:ChangeWindowMode実行 
+10551:ChangeWindowMode実行 
+10567:ChangeWindowMode実行 
+10583:ChangeWindowMode実行 
+10600:ChangeWindowMode実行 
+10616:ChangeWindowMode実行 
+10632:ChangeWindowMode実行 
+10647:ChangeWindowMode実行 
+10664:ChangeWindowMode実行 
+10680:ChangeWindowMode実行 
+10697:ChangeWindowMode実行 
+10712:ChangeWindowMode実行 
+10729:ChangeWindowMode実行 
+10746:ChangeWindowMode実行 
+10763:ChangeWindowMode実行 
+10779:ChangeWindowMode実行 
+10795:ChangeWindowMode実行 
+10811:ChangeWindowMode実行 
+10827:ChangeWindowMode実行 
+10843:ChangeWindowMode実行 
+10858:ChangeWindowMode実行 
+10875:ChangeWindowMode実行 
+10891:ChangeWindowMode実行 
+10907:ChangeWindowMode実行 
+10923:ChangeWindowMode実行 
+10939:ChangeWindowMode実行 
+10955:ChangeWindowMode実行 
+10971:ChangeWindowMode実行 
+10987:ChangeWindowMode実行 
+11003:ChangeWindowMode実行 
+11019:ChangeWindowMode実行 
+11035:ChangeWindowMode実行 
+11051:ChangeWindowMode実行 
+11067:ChangeWindowMode実行 
+11083:ChangeWindowMode実行 
+11099:ChangeWindowMode実行 
+11115:ChangeWindowMode実行 
+11131:ChangeWindowMode実行 
+11147:ChangeWindowMode実行 
+11164:ChangeWindowMode実行 
+11179:ChangeWindowMode実行 
+11196:ChangeWindowMode実行 
+11212:ChangeWindowMode実行 
+11227:ChangeWindowMode実行 
+11244:ChangeWindowMode実行 
+11260:ChangeWindowMode実行 
+11276:ChangeWindowMode実行 
+11292:ChangeWindowMode実行 
+11309:ChangeWindowMode実行 
+11324:ChangeWindowMode実行 
+11340:ChangeWindowMode実行 
+11357:ChangeWindowMode実行 
+11372:ChangeWindowMode実行 
+11389:ChangeWindowMode実行 
+11404:ChangeWindowMode実行 
+11420:ChangeWindowMode実行 
+11437:ChangeWindowMode実行 
+11453:ChangeWindowMode実行 
+11469:ChangeWindowMode実行 
+11485:ChangeWindowMode実行 
+11500:ChangeWindowMode実行 
+11517:ChangeWindowMode実行 
+11533:ChangeWindowMode実行 
+11549:ChangeWindowMode実行 
+11565:ChangeWindowMode実行 
+11581:ChangeWindowMode実行 
+11597:ChangeWindowMode実行 
+11613:ChangeWindowMode実行 
+11629:ChangeWindowMode実行 
+11644:ChangeWindowMode実行 
+11661:ChangeWindowMode実行 
+11677:ChangeWindowMode実行 
+11693:ChangeWindowMode実行 
+11709:ChangeWindowMode実行 
+11725:ChangeWindowMode実行 
+11741:ChangeWindowMode実行 
+11757:ChangeWindowMode実行 
+11773:ChangeWindowMode実行 
+11789:ChangeWindowMode実行 
+11806:ChangeWindowMode実行 
+11822:ChangeWindowMode実行 
+11837:ChangeWindowMode実行 
+11854:ChangeWindowMode実行 
+11869:ChangeWindowMode実行 
+11885:ChangeWindowMode実行 
+11902:ChangeWindowMode実行 
+11917:ChangeWindowMode実行 
+11934:ChangeWindowMode実行 
+11950:ChangeWindowMode実行 
+11967:ChangeWindowMode実行 
+11982:ChangeWindowMode実行 
+11998:ChangeWindowMode実行 
+12015:ChangeWindowMode実行 
+12031:ChangeWindowMode実行 
+12047:ChangeWindowMode実行 
+12062:ChangeWindowMode実行 
+12079:ChangeWindowMode実行 
+12094:ChangeWindowMode実行 
+12110:ChangeWindowMode実行 
+12127:ChangeWindowMode実行 
+12143:ChangeWindowMode実行 
+12159:ChangeWindowMode実行 
+12174:ChangeWindowMode実行 
+12191:ChangeWindowMode実行 
+12206:ChangeWindowMode実行 
+12223:ChangeWindowMode実行 
+12239:ChangeWindowMode実行 
+12255:ChangeWindowMode実行 
+12271:ChangeWindowMode実行 
+12287:ChangeWindowMode実行 
+12302:ChangeWindowMode実行 
+12319:ChangeWindowMode実行 
+12335:ChangeWindowMode実行 
+12351:ChangeWindowMode実行 
+12367:ChangeWindowMode実行 
+12383:ChangeWindowMode実行 
+12399:ChangeWindowMode実行 
+12415:ChangeWindowMode実行 
+12431:ChangeWindowMode実行 
+12447:ChangeWindowMode実行 
+12463:ChangeWindowMode実行 
+12479:ChangeWindowMode実行 
+12496:ChangeWindowMode実行 
+12511:ChangeWindowMode実行 
+12527:ChangeWindowMode実行 
+12544:ChangeWindowMode実行 
+12560:ChangeWindowMode実行 
+12575:ChangeWindowMode実行 
+12592:ChangeWindowMode実行 
+12607:ChangeWindowMode実行 
+12624:ChangeWindowMode実行 
+12639:ChangeWindowMode実行 
+12656:ChangeWindowMode実行 
+12672:ChangeWindowMode実行 
+12687:ChangeWindowMode実行 
+12704:ChangeWindowMode実行 
+12720:ChangeWindowMode実行 
+12736:ChangeWindowMode実行 
+12752:ChangeWindowMode実行 
+12767:ChangeWindowMode実行 
+12784:ChangeWindowMode実行 
+12800:ChangeWindowMode実行 
+12816:ChangeWindowMode実行 
+12832:ChangeWindowMode実行 
+12848:ChangeWindowMode実行 
+12864:ChangeWindowMode実行 
+12880:ChangeWindowMode実行 
+12896:ChangeWindowMode実行 
+12912:ChangeWindowMode実行 
+12928:ChangeWindowMode実行 
+12944:ChangeWindowMode実行 
+12960:ChangeWindowMode実行 
+12976:ChangeWindowMode実行 
+12992:ChangeWindowMode実行 
+13008:ChangeWindowMode実行 
+13024:ChangeWindowMode実行 
+13040:ChangeWindowMode実行 
+13057:ChangeWindowMode実行 
+13072:ChangeWindowMode実行 
+13089:ChangeWindowMode実行 
+13105:ChangeWindowMode実行 
+13121:ChangeWindowMode実行 
+13137:ChangeWindowMode実行 
+13152:ChangeWindowMode実行 
+13169:ChangeWindowMode実行 
+13185:ChangeWindowMode実行 
+13201:ChangeWindowMode実行 
+13217:ChangeWindowMode実行 
+13233:ChangeWindowMode実行 
+13249:ChangeWindowMode実行 
+13265:ChangeWindowMode実行 
+13281:ChangeWindowMode実行 
+13296:ChangeWindowMode実行 
+13313:ChangeWindowMode実行 
+13329:ChangeWindowMode実行 
+13345:ChangeWindowMode実行 
+13361:ChangeWindowMode実行 
+13377:ChangeWindowMode実行 
+13393:ChangeWindowMode実行 
+13409:ChangeWindowMode実行 
+13425:ChangeWindowMode実行 
+13442:ChangeWindowMode実行 
+13457:ChangeWindowMode実行 
+13473:ChangeWindowMode実行 
+13489:ChangeWindowMode実行 
+13505:ChangeWindowMode実行 
+13521:ChangeWindowMode実行 
+13538:ChangeWindowMode実行 
+13553:ChangeWindowMode実行 
+13570:ChangeWindowMode実行 
+13586:ChangeWindowMode実行 
+13602:ChangeWindowMode実行 
+13617:ChangeWindowMode実行 
+13634:ChangeWindowMode実行 
+13649:ChangeWindowMode実行 
+13666:ChangeWindowMode実行 
+13681:ChangeWindowMode実行 
+13698:ChangeWindowMode実行 
+13714:ChangeWindowMode実行 
+13729:ChangeWindowMode実行 
+13745:ChangeWindowMode実行 
+13761:ChangeWindowMode実行 
+13778:ChangeWindowMode実行 
+13793:ChangeWindowMode実行 
+13810:ChangeWindowMode実行 
+13825:ChangeWindowMode実行 
+13842:ChangeWindowMode実行 
+13857:ChangeWindowMode実行 
+13873:ChangeWindowMode実行 
+13890:ChangeWindowMode実行 
+13905:ChangeWindowMode実行 
+13921:ChangeWindowMode実行 
+13937:ChangeWindowMode実行 
+13954:ChangeWindowMode実行 
+13969:ChangeWindowMode実行 
+13986:ChangeWindowMode実行 
+14002:ChangeWindowMode実行 
+14017:ChangeWindowMode実行 
+14034:ChangeWindowMode実行 
+14049:ChangeWindowMode実行 
+14066:ChangeWindowMode実行 
+14082:ChangeWindowMode実行 
+14097:ChangeWindowMode実行 
+14115:ChangeWindowMode実行 
+14130:ChangeWindowMode実行 
+14147:ChangeWindowMode実行 
+14163:ChangeWindowMode実行 
+14179:ChangeWindowMode実行 
+14196:ChangeWindowMode実行 
+14212:ChangeWindowMode実行 
+14228:ChangeWindowMode実行 
+14244:ChangeWindowMode実行 
+14260:ChangeWindowMode実行 
+14277:ChangeWindowMode実行 
+14293:ChangeWindowMode実行 
+14309:ChangeWindowMode実行 
+14325:ChangeWindowMode実行 
+14341:ChangeWindowMode実行 
+14357:ChangeWindowMode実行 
+14373:ChangeWindowMode実行 
+14389:ChangeWindowMode実行 
+14406:ChangeWindowMode実行 
+14421:ChangeWindowMode実行 
+14437:ChangeWindowMode実行 
+14454:ChangeWindowMode実行 
+14470:ChangeWindowMode実行 
+14486:ChangeWindowMode実行 
+14502:ChangeWindowMode実行 
+14517:ChangeWindowMode実行 
+14534:ChangeWindowMode実行 
+14549:ChangeWindowMode実行 
+14565:ChangeWindowMode実行 
+14582:ChangeWindowMode実行 
+14598:ChangeWindowMode実行 
+14614:ChangeWindowMode実行 
+14630:ChangeWindowMode実行 
+14646:ChangeWindowMode実行 
+14662:ChangeWindowMode実行 
+14678:ChangeWindowMode実行 
+14694:ChangeWindowMode実行 
+14710:ChangeWindowMode実行 
+14726:ChangeWindowMode実行 
+14742:ChangeWindowMode実行 
+14757:ChangeWindowMode実行 
+14774:ChangeWindowMode実行 
+14790:ChangeWindowMode実行 
+14806:ChangeWindowMode実行 
+14823:ChangeWindowMode実行 
+14839:ChangeWindowMode実行 
+14855:ChangeWindowMode実行 
+14871:ChangeWindowMode実行 
+14888:ChangeWindowMode実行 
+14904:ChangeWindowMode実行 
+14920:ChangeWindowMode実行 
+14936:ChangeWindowMode実行 
+14952:ChangeWindowMode実行 
+14967:ChangeWindowMode実行 
+14984:ChangeWindowMode実行 
+15000:ChangeWindowMode実行 
+15017:ChangeWindowMode実行 
+15033:ChangeWindowMode実行 
+15049:ChangeWindowMode実行 
 15066:ChangeWindowMode実行 
 15082:ChangeWindowMode実行 
 15098:ChangeWindowMode実行 
-15114:ChangeWindowMode実行 
-15130:ChangeWindowMode実行 
-15146:ChangeWindowMode実行 
-15162:ChangeWindowMode実行 
-15178:ChangeWindowMode実行 
-15195:ChangeWindowMode実行 
-15210:ChangeWindowMode実行 
-15227:ChangeWindowMode実行 
-15243:ChangeWindowMode実行 
-15259:ChangeWindowMode実行 
-15275:ChangeWindowMode実行 
-15290:ChangeWindowMode実行 
-15307:ChangeWindowMode実行 
-15323:ChangeWindowMode実行 
-15338:ChangeWindowMode実行 
-15354:ChangeWindowMode実行 
-15371:ChangeWindowMode実行 
-15386:ChangeWindowMode実行 
-15402:ChangeWindowMode実行 
-15419:ChangeWindowMode実行 
-15435:ChangeWindowMode実行 
-15450:ChangeWindowMode実行 
-15467:ChangeWindowMode実行 
-15482:ChangeWindowMode実行 
-15498:ChangeWindowMode実行 
-15515:ChangeWindowMode実行 
-15531:ChangeWindowMode実行 
-15546:ChangeWindowMode実行 
-15563:ChangeWindowMode実行 
-15579:ChangeWindowMode実行 
-15595:ChangeWindowMode実行 
-15611:ChangeWindowMode実行 
-15627:ChangeWindowMode実行 
-15643:ChangeWindowMode実行 
-15659:ChangeWindowMode実行 
-15675:ChangeWindowMode実行 
-15691:ChangeWindowMode実行 
-15707:ChangeWindowMode実行 
-15723:ChangeWindowMode実行 
-15739:ChangeWindowMode実行 
-15755:ChangeWindowMode実行 
-15771:ChangeWindowMode実行 
-15787:ChangeWindowMode実行 
-15803:ChangeWindowMode実行 
-15819:ChangeWindowMode実行 
-15835:ChangeWindowMode実行 
-15851:ChangeWindowMode実行 
-15867:ChangeWindowMode実行 
-15883:ChangeWindowMode実行 
-15900:ChangeWindowMode実行 
-15916:ChangeWindowMode実行 
-15932:ChangeWindowMode実行 
-15947:ChangeWindowMode実行 
-15964:ChangeWindowMode実行 
-15979:ChangeWindowMode実行 
-15996:ChangeWindowMode実行 
-16011:ChangeWindowMode実行 
-16027:ChangeWindowMode実行 
-16043:ChangeWindowMode実行 
-16060:ChangeWindowMode実行 
-16076:ChangeWindowMode実行 
-16092:ChangeWindowMode実行 
-16108:ChangeWindowMode実行 
-16124:ChangeWindowMode実行 
-16140:ChangeWindowMode実行 
-16156:ChangeWindowMode実行 
-16172:ChangeWindowMode実行 
-16188:ChangeWindowMode実行 
-16204:ChangeWindowMode実行 
-16220:ChangeWindowMode実行 
-16236:ChangeWindowMode実行 
-16252:ChangeWindowMode実行 
-16268:ChangeWindowMode実行 
-16284:ChangeWindowMode実行 
-16300:ChangeWindowMode実行 
-16316:ChangeWindowMode実行 
-16332:ChangeWindowMode実行 
-16348:ChangeWindowMode実行 
-16364:ChangeWindowMode実行 
-16380:ChangeWindowMode実行 
-16396:ChangeWindowMode実行 
-16412:ChangeWindowMode実行 
-16429:ChangeWindowMode実行 
-16444:ChangeWindowMode実行 
-16460:ChangeWindowMode実行 
-16477:ChangeWindowMode実行 
-16492:ChangeWindowMode実行 
-16508:ChangeWindowMode実行 
-16524:ChangeWindowMode実行 
-16541:ChangeWindowMode実行 
-16556:ChangeWindowMode実行 
-16573:ChangeWindowMode実行 
-16589:ChangeWindowMode実行 
-16605:ChangeWindowMode実行 
-16621:ChangeWindowMode実行 
-16637:ChangeWindowMode実行 
-16653:ChangeWindowMode実行 
-16669:ChangeWindowMode実行 
-16684:ChangeWindowMode実行 
-16701:ChangeWindowMode実行 
-16717:ChangeWindowMode実行 
-16732:ChangeWindowMode実行 
-16749:ChangeWindowMode実行 
-16765:ChangeWindowMode実行 
-16781:ChangeWindowMode実行 
-16797:ChangeWindowMode実行 
-16813:ChangeWindowMode実行 
-16829:ChangeWindowMode実行 
-16844:ChangeWindowMode実行 
-16861:ChangeWindowMode実行 
-16877:ChangeWindowMode実行 
-16893:ChangeWindowMode実行 
-16909:ChangeWindowMode実行 
-16925:ChangeWindowMode実行 
-16941:ChangeWindowMode実行 
-16957:ChangeWindowMode実行 
-16973:ChangeWindowMode実行 
-16990:ChangeWindowMode実行 
-17005:ChangeWindowMode実行 
-17021:ChangeWindowMode実行 
-17037:ChangeWindowMode実行 
-17053:ChangeWindowMode実行 
-17070:ChangeWindowMode実行 
-17085:ChangeWindowMode実行 
-17101:ChangeWindowMode実行 
-17117:ChangeWindowMode実行 
-17134:ChangeWindowMode実行 
-17149:ChangeWindowMode実行 
-17166:ChangeWindowMode実行 
-17181:ChangeWindowMode実行 
-17197:ChangeWindowMode実行 
-17213:ChangeWindowMode実行 
-17229:ChangeWindowMode実行 
-17245:ChangeWindowMode実行 
-17261:ChangeWindowMode実行 
-17277:ChangeWindowMode実行 
-17293:ChangeWindowMode実行 
-17310:ChangeWindowMode実行 
-17326:ChangeWindowMode実行 
-17341:ChangeWindowMode実行 
-17357:ChangeWindowMode実行 
-17374:ChangeWindowMode実行 
-17390:ChangeWindowMode実行 
-17406:ChangeWindowMode実行 
-17422:ChangeWindowMode実行 
-17438:ChangeWindowMode実行 
-17454:ChangeWindowMode実行 
-17470:ChangeWindowMode実行 
-17486:ChangeWindowMode実行 
-17502:ChangeWindowMode実行 
-17518:ChangeWindowMode実行 
-17534:ChangeWindowMode実行 
-17550:ChangeWindowMode実行 
-17566:ChangeWindowMode実行 
-17582:ChangeWindowMode実行 
-17598:ChangeWindowMode実行 
-17614:ChangeWindowMode実行 
-17630:ChangeWindowMode実行 
-17646:ChangeWindowMode実行 
-17663:ChangeWindowMode実行 
-17679:ChangeWindowMode実行 
-17695:ChangeWindowMode実行 
-17711:ChangeWindowMode実行 
-17726:ChangeWindowMode実行 
-17743:ChangeWindowMode実行 
-17759:ChangeWindowMode実行 
-17774:ChangeWindowMode実行 
-17790:ChangeWindowMode実行 
-17807:ChangeWindowMode実行 
-17822:ChangeWindowMode実行 
-17839:ChangeWindowMode実行 
-17855:ChangeWindowMode実行 
-17870:ChangeWindowMode実行 
-17887:ChangeWindowMode実行 
-17902:ChangeWindowMode実行 
-17919:ChangeWindowMode実行 
-17935:ChangeWindowMode実行 
-17951:ChangeWindowMode実行 
-17967:ChangeWindowMode実行 
-17983:ChangeWindowMode実行 
-17998:ChangeWindowMode実行 
-18015:ChangeWindowMode実行 
-18031:ChangeWindowMode実行 
-18047:ChangeWindowMode実行 
-18063:ChangeWindowMode実行 
-18080:ChangeWindowMode実行 
-18096:ChangeWindowMode実行 
-18111:ChangeWindowMode実行 
-18127:ChangeWindowMode実行 
-18143:ChangeWindowMode実行 
-18159:ChangeWindowMode実行 
-18175:ChangeWindowMode実行 
-18191:ChangeWindowMode実行 
-18207:ChangeWindowMode実行 
-18224:ChangeWindowMode実行 
-18239:ChangeWindowMode実行 
-18256:ChangeWindowMode実行 
-18271:ChangeWindowMode実行 
-18288:ChangeWindowMode実行 
-18303:ChangeWindowMode実行 
-18319:ChangeWindowMode実行 
-18336:ChangeWindowMode実行 
-18351:ChangeWindowMode実行 
-18367:ChangeWindowMode実行 
-18384:ChangeWindowMode実行 
-18400:ChangeWindowMode実行 
-18416:ChangeWindowMode実行 
-18432:ChangeWindowMode実行 
-18448:ChangeWindowMode実行 
-18464:ChangeWindowMode実行 
-18479:ChangeWindowMode実行 
-18496:ChangeWindowMode実行 
-18512:ChangeWindowMode実行 
-18528:ChangeWindowMode実行 
-18544:ChangeWindowMode実行 
-18560:ChangeWindowMode実行 
-18576:ChangeWindowMode実行 
-18592:ChangeWindowMode実行 
-18608:ChangeWindowMode実行 
-18624:ChangeWindowMode実行 
-18639:ChangeWindowMode実行 
-18656:ChangeWindowMode実行 
-18672:ChangeWindowMode実行 
-18688:ChangeWindowMode実行 
-18704:ChangeWindowMode実行 
-18720:ChangeWindowMode実行 
-18736:ChangeWindowMode実行 
-18753:ChangeWindowMode実行 
-18768:ChangeWindowMode実行 
-18784:ChangeWindowMode実行 
-18800:ChangeWindowMode実行 
-18817:ChangeWindowMode実行 
-18832:ChangeWindowMode実行 
-18848:ChangeWindowMode実行 
-18864:ChangeWindowMode実行 
-18880:ChangeWindowMode実行 
-18897:ChangeWindowMode実行 
-18912:ChangeWindowMode実行 
-18929:ChangeWindowMode実行 
-18945:ChangeWindowMode実行 
-18961:ChangeWindowMode実行 
-18977:ChangeWindowMode実行 
-18993:ChangeWindowMode実行 
-19008:ChangeWindowMode実行 
-19025:ChangeWindowMode実行 
-19041:ChangeWindowMode実行 
-19057:ChangeWindowMode実行 
-19073:ChangeWindowMode実行 
-19088:ChangeWindowMode実行 
-19105:ChangeWindowMode実行 
-19121:ChangeWindowMode実行 
-19137:ChangeWindowMode実行 
-19153:ChangeWindowMode実行 
-19169:ChangeWindowMode実行 
-19185:ChangeWindowMode実行 
-19201:ChangeWindowMode実行 
-19217:ChangeWindowMode実行 
-19233:ChangeWindowMode実行 
-19250:ChangeWindowMode実行 
-19266:ChangeWindowMode実行 
-19282:ChangeWindowMode実行 
-19297:ChangeWindowMode実行 
-19313:ChangeWindowMode実行 
-19329:ChangeWindowMode実行 
-19346:ChangeWindowMode実行 
-19361:ChangeWindowMode実行 
-19377:ChangeWindowMode実行 
-19393:ChangeWindowMode実行 
-19409:ChangeWindowMode実行 
-19425:ChangeWindowMode実行 
-19442:ChangeWindowMode実行 
-19457:ChangeWindowMode実行 
-19474:ChangeWindowMode実行 
-19490:ChangeWindowMode実行 
-19506:ChangeWindowMode実行 
-19521:ChangeWindowMode実行 
-19538:ChangeWindowMode実行 
-19553:ChangeWindowMode実行 
-19570:ChangeWindowMode実行 
-19586:ChangeWindowMode実行 
-19601:ChangeWindowMode実行 
-19618:ChangeWindowMode実行 
-19634:ChangeWindowMode実行 
-19650:ChangeWindowMode実行 
-19666:ChangeWindowMode実行 
-19682:ChangeWindowMode実行 
-19698:ChangeWindowMode実行 
-19714:ChangeWindowMode実行 
-19730:ChangeWindowMode実行 
-19746:ChangeWindowMode実行 
-19762:ChangeWindowMode実行 
-19778:ChangeWindowMode実行 
-19794:ChangeWindowMode実行 
-19810:ChangeWindowMode実行 
-19826:ChangeWindowMode実行 
-19842:ChangeWindowMode実行 
-19859:ChangeWindowMode実行 
-19874:ChangeWindowMode実行 
-19891:ChangeWindowMode実行 
-19906:ChangeWindowMode実行 
-19922:ChangeWindowMode実行 
-19938:ChangeWindowMode実行 
-19954:ChangeWindowMode実行 
-19970:ChangeWindowMode実行 
-19986:ChangeWindowMode実行 
-20002:ChangeWindowMode実行 
-20018:ChangeWindowMode実行 
-20034:ChangeWindowMode実行 
-20050:ChangeWindowMode実行 
-20066:ChangeWindowMode実行 
-20082:ChangeWindowMode実行 
-20099:ChangeWindowMode実行 
-20115:ChangeWindowMode実行 
-20130:ChangeWindowMode実行 
-20147:ChangeWindowMode実行 
-20163:ChangeWindowMode実行 
-20179:ChangeWindowMode実行 
-20195:ChangeWindowMode実行 
-20211:ChangeWindowMode実行 
-20226:ChangeWindowMode実行 
-20243:ChangeWindowMode実行 
-20259:ChangeWindowMode実行 
-20275:ChangeWindowMode実行 
-20291:ChangeWindowMode実行 
-20307:ChangeWindowMode実行 
-20323:ChangeWindowMode実行 
-20339:ChangeWindowMode実行 
-20355:ChangeWindowMode実行 
-20371:ChangeWindowMode実行 
-20387:ChangeWindowMode実行 
-20403:ChangeWindowMode実行 
-20419:ChangeWindowMode実行 
-20435:ChangeWindowMode実行 
-20451:ChangeWindowMode実行 
-20467:ChangeWindowMode実行 
-20483:ChangeWindowMode実行 
-20499:ChangeWindowMode実行 
-20515:ChangeWindowMode実行 
-20532:ChangeWindowMode実行 
-20547:ChangeWindowMode実行 
-20563:ChangeWindowMode実行 
-20580:ChangeWindowMode実行 
-20596:ChangeWindowMode実行 
-20612:ChangeWindowMode実行 
-20627:ChangeWindowMode実行 
-20643:ChangeWindowMode実行 
-20659:ChangeWindowMode実行 
-20676:ChangeWindowMode実行 
-20691:ChangeWindowMode実行 
-20707:ChangeWindowMode実行 
-20723:ChangeWindowMode実行 
-20739:ChangeWindowMode実行 
-20756:ChangeWindowMode実行 
-20771:ChangeWindowMode実行 
-20787:ChangeWindowMode実行 
-20804:ChangeWindowMode実行 
-20820:ChangeWindowMode実行 
-20835:ChangeWindowMode実行 
-20851:ChangeWindowMode実行 
-20868:ChangeWindowMode実行 
-20884:ChangeWindowMode実行 
-20899:ChangeWindowMode実行 
-20916:ChangeWindowMode実行 
-20932:ChangeWindowMode実行 
-20948:ChangeWindowMode実行 
-20964:ChangeWindowMode実行 
-20980:ChangeWindowMode実行 
-20996:ChangeWindowMode実行 
-21012:ChangeWindowMode実行 
-21028:ChangeWindowMode実行 
-21044:ChangeWindowMode実行 
-21060:ChangeWindowMode実行 
-21076:ChangeWindowMode実行 
-21092:ChangeWindowMode実行 
-21108:ChangeWindowMode実行 
-21124:ChangeWindowMode実行 
-21140:ChangeWindowMode実行 
-21156:ChangeWindowMode実行 
-21173:ChangeWindowMode実行 
-21188:ChangeWindowMode実行 
-21205:ChangeWindowMode実行 
-21220:ChangeWindowMode実行 
-21236:ChangeWindowMode実行 
-21253:ChangeWindowMode実行 
-21269:ChangeWindowMode実行 
-21284:ChangeWindowMode実行 
-21301:ChangeWindowMode実行 
-21316:ChangeWindowMode実行 
-21332:ChangeWindowMode実行 
-21349:ChangeWindowMode実行 
-21365:ChangeWindowMode実行 
-21380:ChangeWindowMode実行 
-21396:ChangeWindowMode実行 
-21413:ChangeWindowMode実行 
-21428:ChangeWindowMode実行 
-21444:ChangeWindowMode実行 
-21461:ChangeWindowMode実行 
-21476:ChangeWindowMode実行 
-21492:ChangeWindowMode実行 
-21508:ChangeWindowMode実行 
-21525:ChangeWindowMode実行 
-21541:ChangeWindowMode実行 
-21557:ChangeWindowMode実行 
-21573:ChangeWindowMode実行 
-21589:ChangeWindowMode実行 
-21605:ChangeWindowMode実行 
-21621:ChangeWindowMode実行 
-21637:ChangeWindowMode実行 
-21653:ChangeWindowMode実行 
-21669:ChangeWindowMode実行 
-21685:ChangeWindowMode実行 
-21701:ChangeWindowMode実行 
-21717:ChangeWindowMode実行 
-21733:ChangeWindowMode実行 
-21749:ChangeWindowMode実行 
-21765:ChangeWindowMode実行 
-21781:ChangeWindowMode実行 
-21797:ChangeWindowMode実行 
-21813:ChangeWindowMode実行 
-21829:ChangeWindowMode実行 
-21845:ChangeWindowMode実行 
-21861:ChangeWindowMode実行 
-21877:ChangeWindowMode実行 
-21893:ChangeWindowMode実行 
-21909:ChangeWindowMode実行 
-21926:ChangeWindowMode実行 
-21941:ChangeWindowMode実行 
-21957:ChangeWindowMode実行 
-21973:ChangeWindowMode実行 
-21990:ChangeWindowMode実行 
-22005:ChangeWindowMode実行 
-22021:ChangeWindowMode実行 
-22037:ChangeWindowMode実行 
-22053:ChangeWindowMode実行 
-22070:ChangeWindowMode実行 
-22085:ChangeWindowMode実行 
-22102:ChangeWindowMode実行 
-22117:ChangeWindowMode実行 
-22133:ChangeWindowMode実行 
-22150:ChangeWindowMode実行 
-22166:ChangeWindowMode実行 
-22182:ChangeWindowMode実行 
-22198:ChangeWindowMode実行 
-22214:ChangeWindowMode実行 
-22230:ChangeWindowMode実行 
-22246:ChangeWindowMode実行 
-22262:ChangeWindowMode実行 
-22278:ChangeWindowMode実行 
-22294:ChangeWindowMode実行 
-22310:ChangeWindowMode実行 
-22326:ChangeWindowMode実行 
-22342:ChangeWindowMode実行 
-22358:ChangeWindowMode実行 
-22374:ChangeWindowMode実行 
-22390:ChangeWindowMode実行 
-22406:ChangeWindowMode実行 
-22422:ChangeWindowMode実行 
-22438:ChangeWindowMode実行 
-22454:ChangeWindowMode実行 
-22471:ChangeWindowMode実行 
-22486:ChangeWindowMode実行 
-22502:ChangeWindowMode実行 
-22519:ChangeWindowMode実行 
-22534:ChangeWindowMode実行 
-22550:ChangeWindowMode実行 
-22566:ChangeWindowMode実行 
-22582:ChangeWindowMode実行 
-22599:ChangeWindowMode実行 
-22615:ChangeWindowMode実行 
-22631:ChangeWindowMode実行 
-22647:ChangeWindowMode実行 
-22662:ChangeWindowMode実行 
-22679:ChangeWindowMode実行 
-22695:ChangeWindowMode実行 
-22711:ChangeWindowMode実行 
-22727:ChangeWindowMode実行 
-22743:ChangeWindowMode実行 
-22759:ChangeWindowMode実行 
-22775:ChangeWindowMode実行 
-22791:ChangeWindowMode実行 
-22807:ChangeWindowMode実行 
-22823:ChangeWindowMode実行 
-22839:ChangeWindowMode実行 
-22855:ChangeWindowMode実行 
-22871:ChangeWindowMode実行 
-22887:ChangeWindowMode実行 
-22903:ChangeWindowMode実行 
-22920:ChangeWindowMode実行 
-22935:ChangeWindowMode実行 
-22951:ChangeWindowMode実行 
-22967:ChangeWindowMode実行 
-22983:ChangeWindowMode実行 
-23000:ChangeWindowMode実行 
-23015:ChangeWindowMode実行 
-23032:ChangeWindowMode実行 
-23047:ChangeWindowMode実行 
-23064:ChangeWindowMode実行 
-23079:ChangeWindowMode実行 
-23095:ChangeWindowMode実行 
-23111:ChangeWindowMode実行 
-23128:ChangeWindowMode実行 
-23143:ChangeWindowMode実行 
-23160:ChangeWindowMode実行 
-23175:ChangeWindowMode実行 
-23192:ChangeWindowMode実行 
-23208:ChangeWindowMode実行 
-23223:ChangeWindowMode実行 
-23239:ChangeWindowMode実行 
-23256:ChangeWindowMode実行 
-23271:ChangeWindowMode実行 
-23288:ChangeWindowMode実行 
-23304:ChangeWindowMode実行 
-23319:ChangeWindowMode実行 
-23336:ChangeWindowMode実行 
-23352:ChangeWindowMode実行 
-23368:ChangeWindowMode実行 
-23384:ChangeWindowMode実行 
-23400:ChangeWindowMode実行 
-23416:ChangeWindowMode実行 
-23432:ChangeWindowMode実行 
-23448:ChangeWindowMode実行 
-23464:ChangeWindowMode実行 
-23480:ChangeWindowMode実行 
-23496:ChangeWindowMode実行 
-23512:ChangeWindowMode実行 
-23528:ChangeWindowMode実行 
-23544:ChangeWindowMode実行 
-23560:ChangeWindowMode実行 
-23576:ChangeWindowMode実行 
-23592:ChangeWindowMode実行 
-23608:ChangeWindowMode実行 
-23624:ChangeWindowMode実行 
-23641:ChangeWindowMode実行 
-23656:ChangeWindowMode実行 
-23672:ChangeWindowMode実行 
-23688:ChangeWindowMode実行 
-23704:ChangeWindowMode実行 
-23720:ChangeWindowMode実行 
-23736:ChangeWindowMode実行 
-23753:ChangeWindowMode実行 
-23769:ChangeWindowMode実行 
-23785:ChangeWindowMode実行 
-23800:ChangeWindowMode実行 
-23816:ChangeWindowMode実行 
-23832:ChangeWindowMode実行 
-23849:ChangeWindowMode実行 
-23864:ChangeWindowMode実行 
-23880:ChangeWindowMode実行 
-23897:ChangeWindowMode実行 
-23913:ChangeWindowMode実行 
-23928:ChangeWindowMode実行 
-23945:ChangeWindowMode実行 
-23960:ChangeWindowMode実行 
-23977:ChangeWindowMode実行 
-23993:ChangeWindowMode実行 
-24009:ChangeWindowMode実行 
-24025:ChangeWindowMode実行 
-24040:ChangeWindowMode実行 
-24057:ChangeWindowMode実行 
-24073:ChangeWindowMode実行 
-24089:ChangeWindowMode実行 
-24105:ChangeWindowMode実行 
-24121:ChangeWindowMode実行 
-24137:ChangeWindowMode実行 
-24154:ChangeWindowMode実行 
-24169:ChangeWindowMode実行 
-24185:ChangeWindowMode実行 
-24201:ChangeWindowMode実行 
-24217:ChangeWindowMode実行 
-24233:ChangeWindowMode実行 
-24250:ChangeWindowMode実行 
-24265:ChangeWindowMode実行 
-24281:ChangeWindowMode実行 
-24297:ChangeWindowMode実行 
-24313:ChangeWindowMode実行 
-24330:ChangeWindowMode実行 
-24345:ChangeWindowMode実行 
-24361:ChangeWindowMode実行 
-24377:ChangeWindowMode実行 
-24394:ChangeWindowMode実行 
-24409:ChangeWindowMode実行 
-24426:ChangeWindowMode実行 
-24441:ChangeWindowMode実行 
-24458:ChangeWindowMode実行 
-24474:ChangeWindowMode実行 
-24490:ChangeWindowMode実行 
-24506:ChangeWindowMode実行 
-24522:ChangeWindowMode実行 
-24538:ChangeWindowMode実行 
-24554:ChangeWindowMode実行 
-24570:ChangeWindowMode実行 
-24586:ChangeWindowMode実行 
-24602:ChangeWindowMode実行 
-24618:ChangeWindowMode実行 
-24635:ChangeWindowMode実行 
-24650:ChangeWindowMode実行 
-24667:ChangeWindowMode実行 
-24682:ChangeWindowMode実行 
-24698:ChangeWindowMode実行 
-24714:ChangeWindowMode実行 
-24730:ChangeWindowMode実行 
-24746:ChangeWindowMode実行 
-24762:ChangeWindowMode実行 
-24779:ChangeWindowMode実行 
-24794:ChangeWindowMode実行 
-24811:ChangeWindowMode実行 
-24826:ChangeWindowMode実行 
-24842:ChangeWindowMode実行 
-24858:ChangeWindowMode実行 
-24874:ChangeWindowMode実行 
-24891:ChangeWindowMode実行 
-24906:ChangeWindowMode実行 
-24923:ChangeWindowMode実行 
-24939:ChangeWindowMode実行 
-24955:ChangeWindowMode実行 
-24970:ChangeWindowMode実行 
-24986:ChangeWindowMode実行 
-25003:ChangeWindowMode実行 
-25019:ChangeWindowMode実行 
-25035:ChangeWindowMode実行 
-25051:ChangeWindowMode実行 
-25067:ChangeWindowMode実行 
-25083:ChangeWindowMode実行 
-25099:ChangeWindowMode実行 
-25115:ChangeWindowMode実行 
-25131:ChangeWindowMode実行 
-25147:ChangeWindowMode実行 
-25163:ChangeWindowMode実行 
-25179:ChangeWindowMode実行 
-25195:ChangeWindowMode実行 
-25211:ChangeWindowMode実行 
-25227:ChangeWindowMode実行 
-25243:ChangeWindowMode実行 
-25259:ChangeWindowMode実行 
-25275:ChangeWindowMode実行 
-25291:ChangeWindowMode実行 
-25307:ChangeWindowMode実行 
-25324:ChangeWindowMode実行 
-25340:ChangeWindowMode実行 
-25355:ChangeWindowMode実行 
-25372:ChangeWindowMode実行 
-25387:ChangeWindowMode実行 
-25403:ChangeWindowMode実行 
-25420:ChangeWindowMode実行 
-25435:ChangeWindowMode実行 
-25452:ChangeWindowMode実行 
-25468:ChangeWindowMode実行 
-25484:ChangeWindowMode実行 
-25500:ChangeWindowMode実行 
-25516:ChangeWindowMode実行 
-25532:ChangeWindowMode実行 
-25548:ChangeWindowMode実行 
-25564:ChangeWindowMode実行 
-25580:ChangeWindowMode実行 
-25596:ChangeWindowMode実行 
-25612:ChangeWindowMode実行 
-25628:ChangeWindowMode実行 
-25644:ChangeWindowMode実行 
-25661:ChangeWindowMode実行 
-25676:ChangeWindowMode実行 
-25692:ChangeWindowMode実行 
-25708:ChangeWindowMode実行 
-25724:ChangeWindowMode実行 
-25740:ChangeWindowMode実行 
-25756:ChangeWindowMode実行 
-25773:ChangeWindowMode実行 
-25789:ChangeWindowMode実行 
-25804:ChangeWindowMode実行 
-25821:ChangeWindowMode実行 
-25836:ChangeWindowMode実行 
-25853:ChangeWindowMode実行 
-25869:ChangeWindowMode実行 
-25885:ChangeWindowMode実行 
-25901:ChangeWindowMode実行 
-25917:ChangeWindowMode実行 
-25933:ChangeWindowMode実行 
-25948:ChangeWindowMode実行 
-25964:ChangeWindowMode実行 
-25981:ChangeWindowMode実行 
-25997:ChangeWindowMode実行 
-26013:ChangeWindowMode実行 
-26028:ChangeWindowMode実行 
-26045:ChangeWindowMode実行 
-26060:ChangeWindowMode実行 
-26077:ChangeWindowMode実行 
-26093:ChangeWindowMode実行 
-26109:ChangeWindowMode実行 
-26125:ChangeWindowMode実行 
-26141:ChangeWindowMode実行 
-26157:ChangeWindowMode実行 
-26173:ChangeWindowMode実行 
-26189:ChangeWindowMode実行 
-26205:ChangeWindowMode実行 
-26221:ChangeWindowMode実行 
-26237:ChangeWindowMode実行 
-26253:ChangeWindowMode実行 
-26269:ChangeWindowMode実行 
-26285:ChangeWindowMode実行 
-26302:ChangeWindowMode実行 
-26317:ChangeWindowMode実行 
-26334:ChangeWindowMode実行 
-26349:ChangeWindowMode実行 
-26365:ChangeWindowMode実行 
-26382:ChangeWindowMode実行 
-26397:ChangeWindowMode実行 
-26413:ChangeWindowMode実行 
-26430:ChangeWindowMode実行 
-26445:ChangeWindowMode実行 
-26461:ChangeWindowMode実行 
-26477:ChangeWindowMode実行 
-26493:ChangeWindowMode実行 
-26510:ChangeWindowMode実行 
-26526:ChangeWindowMode実行 
-26541:ChangeWindowMode実行 
-26557:ChangeWindowMode実行 
-26573:ChangeWindowMode実行 
-26590:ChangeWindowMode実行 
-26605:ChangeWindowMode実行 
-26621:ChangeWindowMode実行 
-26637:ChangeWindowMode実行 
-26653:ChangeWindowMode実行 
-26670:ChangeWindowMode実行 
-26685:ChangeWindowMode実行 
-26702:ChangeWindowMode実行 
-26718:ChangeWindowMode実行 
-26734:ChangeWindowMode実行 
-26749:ChangeWindowMode実行 
-26765:ChangeWindowMode実行 
-26782:ChangeWindowMode実行 
-26798:ChangeWindowMode実行 
-26814:ChangeWindowMode実行 
-26830:ChangeWindowMode実行 
-26845:ChangeWindowMode実行 
-26862:ChangeWindowMode実行 
-26878:ChangeWindowMode実行 
-26894:ChangeWindowMode実行 
-26910:ChangeWindowMode実行 
-26926:ChangeWindowMode実行 
-26942:ChangeWindowMode実行 
-26958:ChangeWindowMode実行 
-26974:ChangeWindowMode実行 
-26990:ChangeWindowMode実行 
-27006:ChangeWindowMode実行 
-27022:ChangeWindowMode実行 
-27038:ChangeWindowMode実行 
-27054:ChangeWindowMode実行 
-27070:ChangeWindowMode実行 
-27086:ChangeWindowMode実行 
-27102:ChangeWindowMode実行 
-27119:ChangeWindowMode実行 
-27135:ChangeWindowMode実行 
-27151:ChangeWindowMode実行 
-27166:ChangeWindowMode実行 
-27183:ChangeWindowMode実行 
-27199:ChangeWindowMode実行 
-27215:ChangeWindowMode実行 
-27231:ChangeWindowMode実行 
-27247:ChangeWindowMode実行 
-27263:ChangeWindowMode実行 
-27280:ChangeWindowMode実行 
-27295:ChangeWindowMode実行 
-27311:ChangeWindowMode実行 
-27327:ChangeWindowMode実行 
-27343:ChangeWindowMode実行 
-27358:ChangeWindowMode実行 
-27375:ChangeWindowMode実行 
-27391:ChangeWindowMode実行 
-27407:ChangeWindowMode実行 
-27423:ChangeWindowMode実行 
-27439:ChangeWindowMode実行 
-27455:ChangeWindowMode実行 
-27471:ChangeWindowMode実行 
-27487:ChangeWindowMode実行 
-27504:ChangeWindowMode実行 
-27520:ChangeWindowMode実行 
-27536:ChangeWindowMode実行 
-27552:ChangeWindowMode実行 
-27567:ChangeWindowMode実行 
-27584:ChangeWindowMode実行 
-27599:ChangeWindowMode実行 
-27616:ChangeWindowMode実行 
-27632:ChangeWindowMode実行 
-27646:ChangeWindowMode実行 
-27663:ChangeWindowMode実行 
-27679:ChangeWindowMode実行 
-27695:ChangeWindowMode実行 
-27711:ChangeWindowMode実行 
-27727:ChangeWindowMode実行 
-27743:ChangeWindowMode実行 
-27760:ChangeWindowMode実行 
-27776:ChangeWindowMode実行 
-27792:ChangeWindowMode実行 
-27808:ChangeWindowMode実行 
-27824:ChangeWindowMode実行 
-27840:ChangeWindowMode実行 
-27856:ChangeWindowMode実行 
-27872:ChangeWindowMode実行 
-27888:ChangeWindowMode実行 
-27904:ChangeWindowMode実行 
-27920:ChangeWindowMode実行 
-27936:ChangeWindowMode実行 
-27952:ChangeWindowMode実行 
-27968:ChangeWindowMode実行 
-27984:ChangeWindowMode実行 
-28000:ChangeWindowMode実行 
-28016:ChangeWindowMode実行 
-28032:ChangeWindowMode実行 
-28048:ChangeWindowMode実行 
-28064:ChangeWindowMode実行 
-28080:ChangeWindowMode実行 
-28096:ChangeWindowMode実行 
-28112:ChangeWindowMode実行 
-28128:ChangeWindowMode実行 
-28144:ChangeWindowMode実行 
-28161:ChangeWindowMode実行 
-28176:ChangeWindowMode実行 
-28192:ChangeWindowMode実行 
-28208:ChangeWindowMode実行 
-28224:ChangeWindowMode実行 
-28240:ChangeWindowMode実行 
-28257:ChangeWindowMode実行 
-28272:ChangeWindowMode実行 
-28288:ChangeWindowMode実行 
-28304:ChangeWindowMode実行 
-28321:ChangeWindowMode実行 
-28336:ChangeWindowMode実行 
-28353:ChangeWindowMode実行 
-28368:ChangeWindowMode実行 
-28384:ChangeWindowMode実行 
-28401:ChangeWindowMode実行 
-28416:ChangeWindowMode実行 
-28433:ChangeWindowMode実行 
-28449:ChangeWindowMode実行 
-28464:ChangeWindowMode実行 
-28480:ChangeWindowMode実行 
-28496:ChangeWindowMode実行 
-28513:ChangeWindowMode実行 
-28528:ChangeWindowMode実行 
-28545:ChangeWindowMode実行 
-28561:ChangeWindowMode実行 
-28577:ChangeWindowMode実行 
-28593:ChangeWindowMode実行 
-28608:ChangeWindowMode実行 
-28625:ChangeWindowMode実行 
-28641:ChangeWindowMode実行 
-28657:ChangeWindowMode実行 
-28673:ChangeWindowMode実行 
-28689:ChangeWindowMode実行 
-28705:ChangeWindowMode実行 
-28721:ChangeWindowMode実行 
-28737:ChangeWindowMode実行 
-28753:ChangeWindowMode実行 
-28769:ChangeWindowMode実行 
-28786:ChangeWindowMode実行 
-28802:ChangeWindowMode実行 
-28817:ChangeWindowMode実行 
-28833:ChangeWindowMode実行 
-28849:ChangeWindowMode実行 
-28865:ChangeWindowMode実行 
-28881:ChangeWindowMode実行 
-28897:ChangeWindowMode実行 
-28913:ChangeWindowMode実行 
-28929:ChangeWindowMode実行 
-28945:ChangeWindowMode実行 
-28961:ChangeWindowMode実行 
-28977:ChangeWindowMode実行 
-28993:ChangeWindowMode実行 
-29009:ChangeWindowMode実行 
-29026:ChangeWindowMode実行 
-29041:ChangeWindowMode実行 
-29057:ChangeWindowMode実行 
-29073:ChangeWindowMode実行 
-29089:ChangeWindowMode実行 
-29106:ChangeWindowMode実行 
-29122:ChangeWindowMode実行 
-29137:ChangeWindowMode実行 
-29154:ChangeWindowMode実行 
-29170:ChangeWindowMode実行 
-29186:ChangeWindowMode実行 
-29202:ChangeWindowMode実行 
-29218:ChangeWindowMode実行 
-29234:ChangeWindowMode実行 
-29250:ChangeWindowMode実行 
-29266:ChangeWindowMode実行 
-29282:ChangeWindowMode実行 
-29299:ChangeWindowMode実行 
-29314:ChangeWindowMode実行 
-29330:ChangeWindowMode実行 
-29346:ChangeWindowMode実行 
-29362:ChangeWindowMode実行 
-29378:ChangeWindowMode実行 
-29394:ChangeWindowMode実行 
-29410:ChangeWindowMode実行 
-29426:ChangeWindowMode実行 
-29442:ChangeWindowMode実行 
-29458:ChangeWindowMode実行 
-29474:ChangeWindowMode実行 
-29491:ChangeWindowMode実行 
-29506:ChangeWindowMode実行 
-29522:ChangeWindowMode実行 
-29538:ChangeWindowMode実行 
-29554:ChangeWindowMode実行 
-29571:ChangeWindowMode実行 
-29587:ChangeWindowMode実行 
-29603:ChangeWindowMode実行 
-29619:ChangeWindowMode実行 
-29635:ChangeWindowMode実行 
-29650:ChangeWindowMode実行 
-29667:ChangeWindowMode実行 
-29682:ChangeWindowMode実行 
-29699:ChangeWindowMode実行 
-29714:ChangeWindowMode実行 
-29730:ChangeWindowMode実行 
-29746:ChangeWindowMode実行 
-29763:ChangeWindowMode実行 
-29779:ChangeWindowMode実行 
-29794:ChangeWindowMode実行 
-29811:ChangeWindowMode実行 
-29827:ChangeWindowMode実行 
-29843:ChangeWindowMode実行 
-29859:ChangeWindowMode実行 
-29875:ChangeWindowMode実行 
-29891:ChangeWindowMode実行 
-29907:ChangeWindowMode実行 
-29923:ChangeWindowMode実行 
-29939:ChangeWindowMode実行 
-29955:ChangeWindowMode実行 
-29971:ChangeWindowMode実行 
-29987:ChangeWindowMode実行 
-30003:ChangeWindowMode実行 
-30019:ChangeWindowMode実行 
-30035:ChangeWindowMode実行 
-30051:ChangeWindowMode実行 
-30067:ChangeWindowMode実行 
-30083:ChangeWindowMode実行 
-30099:ChangeWindowMode実行 
-30115:ChangeWindowMode実行 
-30131:ChangeWindowMode実行 
-30147:ChangeWindowMode実行 
-30163:ChangeWindowMode実行 
-30179:ChangeWindowMode実行 
-30195:ChangeWindowMode実行 
-30212:ChangeWindowMode実行 
-30227:ChangeWindowMode実行 
-30243:ChangeWindowMode実行 
-30259:ChangeWindowMode実行 
-30275:ChangeWindowMode実行 
-30291:ChangeWindowMode実行 
-30307:ChangeWindowMode実行 
-30323:ChangeWindowMode実行 
-30339:ChangeWindowMode実行 
-30355:ChangeWindowMode実行 
-30371:ChangeWindowMode実行 
-30387:ChangeWindowMode実行 
-30403:ChangeWindowMode実行 
-30419:ChangeWindowMode実行 
-30436:ChangeWindowMode実行 
-30451:ChangeWindowMode実行 
-30467:ChangeWindowMode実行 
-30483:ChangeWindowMode実行 
-30500:ChangeWindowMode実行 
-30516:ChangeWindowMode実行 
-30532:ChangeWindowMode実行 
-30547:ChangeWindowMode実行 
-30564:ChangeWindowMode実行 
-30580:ChangeWindowMode実行 
-30596:ChangeWindowMode実行 
-30612:ChangeWindowMode実行 
-30628:ChangeWindowMode実行 
-30643:ChangeWindowMode実行 
-30660:ChangeWindowMode実行 
-30676:ChangeWindowMode実行 
-30692:ChangeWindowMode実行 
-30708:ChangeWindowMode実行 
-30724:ChangeWindowMode実行 
-30740:ChangeWindowMode実行 
-30756:ChangeWindowMode実行 
-30772:ChangeWindowMode実行 
-30788:ChangeWindowMode実行 
-30804:ChangeWindowMode実行 
-30820:ChangeWindowMode実行 
-30836:ChangeWindowMode実行 
-30852:ChangeWindowMode実行 
-30869:ChangeWindowMode実行 
-30884:ChangeWindowMode実行 
-30900:ChangeWindowMode実行 
-30917:ChangeWindowMode実行 
-30932:ChangeWindowMode実行 
-30949:ChangeWindowMode実行 
-30964:ChangeWindowMode実行 
-30981:ChangeWindowMode実行 
-30997:ChangeWindowMode実行 
-31012:ChangeWindowMode実行 
-31028:ChangeWindowMode実行 
-31044:ChangeWindowMode実行 
-31061:ChangeWindowMode実行 
-31076:ChangeWindowMode実行 
-31092:ChangeWindowMode実行 
-31108:ChangeWindowMode実行 
-31125:ChangeWindowMode実行 
-31140:ChangeWindowMode実行 
-31157:ChangeWindowMode実行 
-31173:ChangeWindowMode実行 
-31188:ChangeWindowMode実行 
-31205:ChangeWindowMode実行 
-31221:ChangeWindowMode実行 
-31237:ChangeWindowMode実行 
-31253:ChangeWindowMode実行 
-31269:ChangeWindowMode実行 
-31285:ChangeWindowMode実行 
-31301:ChangeWindowMode実行 
-31317:ChangeWindowMode実行 
-31333:ChangeWindowMode実行 
-31349:ChangeWindowMode実行 
-31365:ChangeWindowMode実行 
-31382:ChangeWindowMode実行 
-31397:ChangeWindowMode実行 
-31413:ChangeWindowMode実行 
-31429:ChangeWindowMode実行 
-31446:ChangeWindowMode実行 
-31462:ChangeWindowMode実行 
-31477:ChangeWindowMode実行 
-31494:ChangeWindowMode実行 
-31509:ChangeWindowMode実行 
-31525:ChangeWindowMode実行 
-31541:ChangeWindowMode実行 
-31557:ChangeWindowMode実行 
-31573:ChangeWindowMode実行 
-31589:ChangeWindowMode実行 
-31606:ChangeWindowMode実行 
-31622:ChangeWindowMode実行 
-31637:ChangeWindowMode実行 
-31654:ChangeWindowMode実行 
-31670:ChangeWindowMode実行 
-31686:ChangeWindowMode実行 
-31701:ChangeWindowMode実行 
-31718:ChangeWindowMode実行 
-31734:ChangeWindowMode実行 
-31750:ChangeWindowMode実行 
-31766:ChangeWindowMode実行 
-31782:ChangeWindowMode実行 
-31798:ChangeWindowMode実行 
-31814:ChangeWindowMode実行 
-31830:ChangeWindowMode実行 
-31846:ChangeWindowMode実行 
-31862:ChangeWindowMode実行 
-31878:ChangeWindowMode実行 
-31894:ChangeWindowMode実行 
-31910:ChangeWindowMode実行 
-31926:ChangeWindowMode実行 
-31942:ChangeWindowMode実行 
-31959:ChangeWindowMode実行 
-31975:ChangeWindowMode実行 
-31990:ChangeWindowMode実行 
-32007:ChangeWindowMode実行 
-32022:ChangeWindowMode実行 
-32038:ChangeWindowMode実行 
-32054:ChangeWindowMode実行 
-32070:ChangeWindowMode実行 
-32087:ChangeWindowMode実行 
-32102:ChangeWindowMode実行 
-32118:ChangeWindowMode実行 
-32135:ChangeWindowMode実行 
-32150:ChangeWindowMode実行 
-32166:ChangeWindowMode実行 
-32182:ChangeWindowMode実行 
-32199:ChangeWindowMode実行 
-32215:ChangeWindowMode実行 
-32231:ChangeWindowMode実行 
-32247:ChangeWindowMode実行 
-32262:ChangeWindowMode実行 
-32279:ChangeWindowMode実行 
-32295:ChangeWindowMode実行 
-32311:ChangeWindowMode実行 
-32327:ChangeWindowMode実行 
-32343:ChangeWindowMode実行 
-32359:ChangeWindowMode実行 
-32375:ChangeWindowMode実行 
-32391:ChangeWindowMode実行 
-32407:ChangeWindowMode実行 
-32423:ChangeWindowMode実行 
-32439:ChangeWindowMode実行 
-32455:ChangeWindowMode実行 
-32471:ChangeWindowMode実行 
-32487:ChangeWindowMode実行 
-32503:ChangeWindowMode実行 
-32519:ChangeWindowMode実行 
-32535:ChangeWindowMode実行 
-32551:ChangeWindowMode実行 
-32567:ChangeWindowMode実行 
-32583:ChangeWindowMode実行 
-32599:ChangeWindowMode実行 
-32616:ChangeWindowMode実行 
-32632:ChangeWindowMode実行 
-32647:ChangeWindowMode実行 
-32664:ChangeWindowMode実行 
-32680:ChangeWindowMode実行 
-32696:ChangeWindowMode実行 
-32711:ChangeWindowMode実行 
-32727:ChangeWindowMode実行 
-32743:ChangeWindowMode実行 
-32759:ChangeWindowMode実行 
-32776:ChangeWindowMode実行 
-32792:ChangeWindowMode実行 
-32808:ChangeWindowMode実行 
-32823:ChangeWindowMode実行 
-32839:ChangeWindowMode実行 
-32855:ChangeWindowMode実行 
-32872:ChangeWindowMode実行 
-32888:ChangeWindowMode実行 
-32904:ChangeWindowMode実行 
-32920:ChangeWindowMode実行 
-32936:ChangeWindowMode実行 
-32952:ChangeWindowMode実行 
-32968:ChangeWindowMode実行 
-32984:ChangeWindowMode実行 
-33000:ChangeWindowMode実行 
-33016:ChangeWindowMode実行 
-33032:ChangeWindowMode実行 
-33048:ChangeWindowMode実行 
-33064:ChangeWindowMode実行 
-33080:ChangeWindowMode実行 
-33096:ChangeWindowMode実行 
-33112:ChangeWindowMode実行 
-33128:ChangeWindowMode実行 
-33144:ChangeWindowMode実行 
-33160:ChangeWindowMode実行 
-33176:ChangeWindowMode実行 
-33192:ChangeWindowMode実行 
-33209:ChangeWindowMode実行 
-33224:ChangeWindowMode実行 
-33241:ChangeWindowMode実行 
-33257:ChangeWindowMode実行 
-33273:ChangeWindowMode実行 
-33288:ChangeWindowMode実行 
-33305:ChangeWindowMode実行 
-33321:ChangeWindowMode実行 
-33337:ChangeWindowMode実行 
-33353:ChangeWindowMode実行 
-33369:ChangeWindowMode実行 
-33385:ChangeWindowMode実行 
-33401:ChangeWindowMode実行 
-33417:ChangeWindowMode実行 
-33433:ChangeWindowMode実行 
-33449:ChangeWindowMode実行 
-33465:ChangeWindowMode実行 
-33481:ChangeWindowMode実行 
-33497:ChangeWindowMode実行 
-33513:ChangeWindowMode実行 
-33529:ChangeWindowMode実行 
-33545:ChangeWindowMode実行 
-33561:ChangeWindowMode実行 
-33577:ChangeWindowMode実行 
-33593:ChangeWindowMode実行 
-33609:ChangeWindowMode実行 
-33625:ChangeWindowMode実行 
-33641:ChangeWindowMode実行 
-33657:ChangeWindowMode実行 
-33673:ChangeWindowMode実行 
-33690:ChangeWindowMode実行 
-33705:ChangeWindowMode実行 
-33721:ChangeWindowMode実行 
-33737:ChangeWindowMode実行 
-33753:ChangeWindowMode実行 
-33770:ChangeWindowMode実行 
-33786:ChangeWindowMode実行 
-33801:ChangeWindowMode実行 
-33817:ChangeWindowMode実行 
-33833:ChangeWindowMode実行 
-33849:ChangeWindowMode実行 
-33866:ChangeWindowMode実行 
-33881:ChangeWindowMode実行 
-33897:ChangeWindowMode実行 
-33913:ChangeWindowMode実行 
-33930:ChangeWindowMode実行 
-33946:ChangeWindowMode実行 
-33962:ChangeWindowMode実行 
-33982:フォントの初期化を行います
-33983:フォントの初期化は正常に終了しました
-34014:d3d11.dll の解放 1
-34014:dxgi.dll の解放 1
-34015:Direct3D11 のオブジェクト数を出力
-34015:Direct3D11 のオブジェクト合計数 : 0
-34026:DirectInput 関連の終了処理... 完了
-34027:サウンド関連の終了処理... 完了
-34112:ウィンドウ関連の終了処理... ウインドウを閉じようとしています
-34116:ウインドウが破棄されようとしています
-34116:ソフトを終了する準備が整いました
-34181:完了
-34188:ＣＯＭを終了... 完了
-34188:
-34188:Alloc memory dump
-34188:	Total size:0(0.000kb)  Alloc num:0
-34189:
+15113:ChangeWindowMode実行 
+15131:ChangeWindowMode実行 
+15147:ChangeWindowMode実行 
+15164:ChangeWindowMode実行 
+15180:ChangeWindowMode実行 
+15196:ChangeWindowMode実行 
+15212:ChangeWindowMode実行 
+15229:ChangeWindowMode実行 
+15244:ChangeWindowMode実行 
+15260:ChangeWindowMode実行 
+15277:ChangeWindowMode実行 
+15294:ChangeWindowMode実行 
+15310:ChangeWindowMode実行 
+15326:ChangeWindowMode実行 
+15342:ChangeWindowMode実行 
+15359:ChangeWindowMode実行 
+15375:ChangeWindowMode実行 
+15391:ChangeWindowMode実行 
+15407:ChangeWindowMode実行 
+15424:ChangeWindowMode実行 
+15439:ChangeWindowMode実行 
+15455:ChangeWindowMode実行 
+15472:ChangeWindowMode実行 
+15488:ChangeWindowMode実行 
+15569:ウインドウを閉じようとしています
+15575:ウインドウが破棄されようとしています
+15575:ソフトを終了する準備が整いました
+15602:フォントの初期化を行います
+15603:フォントの初期化は正常に終了しました
+15635:d3d11.dll の解放 1
+15635:dxgi.dll の解放 1
+15636:Direct3D11 のオブジェクト数を出力
+15637:Direct3D11 のオブジェクト合計数 : 0
+15637:DirectInput 関連の終了処理... 完了
+15639:サウンド関連の終了処理... 完了
+15678:ウィンドウ関連の終了処理... 完了
+15747:ＣＯＭを終了... 完了
+15747:
+15747:Alloc memory dump
+15747:	Total size:0(0.000kb)  Alloc num:0
+15747:

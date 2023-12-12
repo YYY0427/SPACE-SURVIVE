@@ -33,6 +33,24 @@ float MathUtil::DegreeFromRadian(float degree)
 	return degree * DX_PI_F / 180.0f;
 }
 
+VECTOR MathUtil::ReflectVector(const VECTOR vec, const VECTOR normal)
+{
+	// 反射ベクトル = 入射ベクトル - 2 * 法線ベクトル * (入射ベクトル・法線ベクトル)
+	VECTOR result = VScale(normal, 2.0f * VDot(vec, normal));
+	result = VSub(vec, result);
+	return result;
+}
+
+VECTOR MathUtil::CalculateMidPoint(const VECTOR& p1, const VECTOR& p2)
+{
+	return VECTOR();
+}
+
+VECTOR MathUtil::CircleCenter(const VECTOR p1, const VECTOR p2, const VECTOR p3)
+{
+	return VECTOR();
+}
+
 bool MathUtil::EulerAnglesXYZ(const MATRIX mat, float& xRot, float& yRot, float& zRot)
 {
 	const float Threshold = 0.0001f;

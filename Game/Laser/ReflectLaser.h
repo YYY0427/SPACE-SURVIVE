@@ -16,4 +16,6 @@ private:
 	int laserEffectHandle_;
 
 	MATRIX rotMtx_;
+
+	VECTOR goalVec_;
 };

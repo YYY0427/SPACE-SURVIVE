@@ -35,6 +35,19 @@ public:
 	/// <returns>角度</returns>
 	static float DegreeFromRadian(float degree);
 
+	/// <summary>
+	/// 反射ベクトルの作成
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <param name="normal"></param>
+	/// <returns></returns>
+	static VECTOR ReflectVector(const VECTOR vec, const VECTOR normal);
+
+	VECTOR CalculateMidPoint(const VECTOR& p1, const VECTOR& p2);
+
+	// 3点を通る円の中心の座標を求める
+	static VECTOR CircleCenter(const VECTOR p1, const VECTOR p2, const VECTOR p3);
+
 private:
 	static bool EulerAnglesXYZ(const MATRIX mat, float& xRot, float& yRot, float& zRot);
 	static bool EulerAnglesYZX(const MATRIX mat, float& xRot, float& yRot, float& zRot);

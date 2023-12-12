@@ -4,6 +4,7 @@
 #include "ReflectLaser.h"
 #include "../Util/DrawFunctions.h"
 #include "../Util/Debug.h"
+#include "../Util/MathUtil.h"
 #include <string>
 #include <cassert>
 
@@ -88,11 +89,7 @@ void LaserManager::Reflect(const VECTOR pos, const VECTOR vec, const VECTOR norm
 		[](LaserData data) { return data.type == LaserType::REFLECT; });
 
 	// 反射ベクトルの作成
-	VECTOR inversionVec = VScale(vec, -1);
-	float dot = VDot(inversionVec, normal);
-	dot *= 2.0f;
-	VECTOR normVec = VScale(normal, dot);
-	VECTOR reflectVec = VAdd(vec, normVec);
+	VECTOR reflectVec = MathUtil::ReflectVector(vec, normal);
 
 	// 反射レーザーが存在するか
 	if (it == pLaseres_.end()) 

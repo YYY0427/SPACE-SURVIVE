@@ -46,6 +46,22 @@ ReflectLaser::~ReflectLaser()
 
 void ReflectLaser::Update()
 {
+	//VECTOR vec = VSub(goalVec_, vec_);
+	//vec = VNorm(vec);
+	//vec = VScale(vec, 10.0f);
+
+	// ベクトル方向の回転行列からオイラー角を出力
+	//MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, vec);
+	//bool isGimbalLock = false;
+	//VECTOR effectRot = MathUtil::ToEulerAngles(rotEffectMtx, isGimbalLock);
+	//auto& effectManager = Effekseer3DEffectManager::GetInstance();
+	//effectManager.SetEffectRot(laserEffectHandle_, effectRot);
+
+	// ベクトル方向の回転行列を作成
+	//rotMtx_ = MGetRotVec2(init_model_direction, vec);
+
+	//pModel_->SetRotMtx(rotMtx_);	// 回転行列
+	//pModel_->Update();				// 当たり判定の更新
 }
 
 void ReflectLaser::Draw()
@@ -58,7 +74,11 @@ void ReflectLaser::Draw()
 void ReflectLaser::ReflectLaserUpdate(VECTOR pos, VECTOR vec)
 {
 	pos_ = pos;
+	goalVec_ = vec;
 	vec_ = vec;
+
+	pModel_->SetPos(pos_);			// 位置
+	pModel_->Update();				// 当たり判定の更新
 
 	// ベクトル方向の回転行列からオイラー角を出力
 	MATRIX rotEffectMtx = MGetRotVec2(init_effect_direction, vec_);

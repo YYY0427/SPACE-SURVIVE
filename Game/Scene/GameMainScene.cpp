@@ -21,6 +21,8 @@
 #include "../Triangle.h"
 #include "../Flash.h"
 #include "../ScreenEffect.h"
+#include "../Vector3.h"
+#include "../Matrix.h"
 #include "../UIManager.h"
 
 namespace
@@ -276,11 +278,27 @@ void GameMainScene::Collision()
 			{
 				laser.pLaser->SetIsReflect(true);
 
-				VECTOR hitPos{};
+				/*VECTOR hitPos{};
 				if (result.HitNum > 0)
 					hitPos = VAdd(VAdd(result.Dim->Position[0], result.Dim->Position[1]), result.Dim->Position[2]);
 				else
-					hitPos = VAdd(VAdd(result2.Dim->Position[0], result2.Dim->Position[1]), result2.Dim->Position[2]);
+					hitPos = VAdd(VAdd(result2.Dim->Position[0], result2.Dim->Position[1]), result2.Dim->Position[2]);*/
+
+				Vector3 hitPos{};
+				if (result.HitNum > 0)
+				{
+					Vector3 resultPos0{ result.Dim->Position[0].x, result.Dim->Position[0].y, result.Dim->Position[0].z };
+					Vector3 resultPos1{ result.Dim->Position[1].x, result.Dim->Position[1].y, result.Dim->Position[1].z };
+					Vector3 resultPos2{ result.Dim->Position[2].x, result.Dim->Position[2].y, result.Dim->Position[2].z };
+					hitPos = (resultPos0 + resultPos1 + resultPos2) / 3;
+				}
+				else
+				{
+					Vector3 resultPos0{ result2.Dim->Position[0].x, result2.Dim->Position[0].y, result2.Dim->Position[0].z };
+					Vector3 resultPos1{ result2.Dim->Position[1].x, result2.Dim->Position[1].y, result2.Dim->Position[1].z };
+					Vector3 resultPos2{ result2.Dim->Position[2].x, result2.Dim->Position[2].y, result2.Dim->Position[2].z };
+					hitPos = (resultPos0 + resultPos1 + resultPos2) / 3;
+				}
 
 				// レーザーを止める
 				auto pLaser = std::dynamic_pointer_cast<Laser>(laser.pLaser);
@@ -289,13 +307,13 @@ void GameMainScene::Collision()
 				// 反射レーザーを作成(既に作成されていた場合更新を行う)
 				// シールドの法線情報
 				VECTOR shieldNorm = pPlayer_->GetShield()->GetVertex()[0].norm;
-				pLaserManager_->Reflect(pPlayer_->GetShield()->GetPos(), laser.pLaser->GetVec(), shieldNorm);
+				pLaserManager_->Reflect(hitPos, laser.pLaser->GetVec(), shieldNorm);
 
 				// 画面を揺らす
 				pScreenEffect_->SetShake(1, 1, 5);
 
 				int handle = 0;
-				Effekseer3DEffectManager::GetInstance().PlayEffect(handle, EffectID::enemy_boss_hit_effect, pPlayer_->GetShield()->GetPos(), {50, 50, 50});
+				Effekseer3DEffectManager::GetInstance().PlayEffect(handle, EffectID::enemy_boss_hit_effect, hitPos, {50, 50, 50});
 			}
 			else
 			{

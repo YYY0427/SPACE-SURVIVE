@@ -5,6 +5,7 @@
 #include "../Util/DrawFunctions.h"
 #include "../Util/Debug.h"
 #include "../Util/MathUtil.h"
+#include "../Vector3.h"
 #include <string>
 #include <cassert>
 
@@ -82,14 +83,15 @@ void LaserManager::Draw()
 	}
 }
 
-void LaserManager::Reflect(const VECTOR pos, const VECTOR vec, const VECTOR normal)
+void LaserManager::Reflect(const VECTOR pos, const Vector3 vec, const VECTOR normal)
 {
 	auto it = std::find_if(
 		pLaseres_.begin(), pLaseres_.end(), 
 		[](LaserData data) { return data.type == LaserType::REFLECT; });
 
 	// 反射ベクトルの作成
-	VECTOR reflectVec = MathUtil::ReflectVector(vec, normal);
+//	VECTOR reflectVec = MathUtil::ReflectVector(vec, normal);
+	Vector3 reflectVec = vec.Reflect();
 
 	// 反射レーザーが存在するか
 	if (it == pLaseres_.end()) 

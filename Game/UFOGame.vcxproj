@@ -161,6 +161,7 @@
     <ClCompile Include="Easing.cpp" />
     <ClCompile Include="Flash.cpp" />
     <ClCompile Include="Laser\ReflectLaser.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ScreenEffect.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UIBase.cpp" />
@@ -204,6 +205,7 @@
     <ClCompile Include="Util\Effekseer3DEffectManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="UI\Warning.cpp" />
+    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
@@ -211,6 +213,7 @@
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Flash.h" />
     <ClInclude Include="Laser\ReflectLaser.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="ScreenEffect.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Triangle.h" />
@@ -258,6 +261,7 @@
     <ClInclude Include="Util\Effekseer3DEffectManager.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="UI\Warning.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
